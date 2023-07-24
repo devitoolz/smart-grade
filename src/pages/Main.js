@@ -34,19 +34,19 @@ const Main = () => {
     user: {
       index: 2,
       icon: faUser,
-      title: '홈',
+      title: '계정관리',
       subtitle: { professor: '교수 계정 관리', student: '학생 계정 관리' },
     },
     bachelor: {
       index: 3,
       icon: faGraduationCap,
-      title: '홈',
+      title: '학사관리',
       subtitle: { lecture: '통합 강의 관리', grade: '통합 성적 관리' },
     },
     college: {
       index: 4,
       icon: faBuildingColumns,
-      title: '홈',
+      title: '대학관리',
       subtitle: { 'lecture-room': '강의실 관리', major: '전공 관리' },
     },
   };
