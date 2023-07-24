@@ -8,13 +8,34 @@ const Lecture = () => {
 
   // JSX
   return (
-    <div style={{ background: 'aliceblue' }}>
+    <div style={{ background: 'aliceblue', width: '100vw' }}>
       <>Lecture</>
       <h3 style={{ color: '#1363DF', fontSize: 33 }}>통합 강의관리</h3>
       <hr />
-      <div className="search-area" style={{ background: '#D9D9D9', margin: '72px 0', height: 96 }}>
-        <input type="text" />
-        <button>Q</button>
+      <div
+        className="search-area"
+        style={{
+          background: '#D9D9D9',
+          margin: '72px 0',
+          height: 96,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: 12,
+        }}
+      >
+        <select name="" id="lecture-state" style={{ height: 32 }}>
+          <option value="00">강의상태</option>
+          <option value="01">1번</option>
+          <option value="02">2번</option>
+        </select>
+        <select name="" id="lecture-list" style={{ height: 32 }}>
+          <option value="00">강의명</option>
+          <option value="01">1번강의</option>
+          <option value="02">2번강의</option>
+        </select>
+        <input type="text" placeholder="교수명" style={{ height: 32 }} />
+        <button style={{ width: 32, height: 32, borderRadius: '50%' }}>Q</button>
       </div>
       <div className="table-area">
         <table style={{ textAlign: 'center' }}>
