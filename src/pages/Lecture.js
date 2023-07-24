@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { LectureContainer, TableArea, SearchArea, TempStyle } from '../styles/MyStyleCSS';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -8,37 +9,25 @@ const Lecture = () => {
 
   // JSX
   return (
-    <div style={{ background: 'aliceblue', width: '100vw' }}>
-      <>Lecture</>
+    <LectureContainer>
       <h3 style={{ color: '#1363DF', fontSize: 33 }}>통합 강의관리</h3>
       <hr />
-      <div
-        className="search-area"
-        style={{
-          background: '#D9D9D9',
-          margin: '72px 0',
-          height: 96,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: 12,
-        }}
-      >
-        <select name="" id="lecture-state" style={{ height: 32 }}>
+      <SearchArea>
+        <select name="" className="search-option" id="lecture-state">
           <option value="00">강의상태</option>
           <option value="01">1번</option>
           <option value="02">2번</option>
         </select>
-        <select name="" id="lecture-list" style={{ height: 32 }}>
+        <select name="" className="search-option" id="lecture-list">
           <option value="00">강의명</option>
           <option value="01">1번강의</option>
           <option value="02">2번강의</option>
         </select>
-        <input type="text" placeholder="교수명" style={{ height: 32 }} />
-        <button style={{ width: 32, height: 32, borderRadius: '50%' }}>Q</button>
-      </div>
-      <div className="table-area">
-        <table style={{ textAlign: 'center' }}>
+        <input type="text" className="search-option" placeholder="교수명" />
+        <button>Q</button>
+      </SearchArea>
+      <TableArea>
+        <table>
           <thead>
             {/* 
               pink = short
@@ -83,78 +72,58 @@ const Lecture = () => {
               ))}
           </tbody>
         </table>
-      </div>
+      </TableArea>
       {display ? <TempModal setDisplay={setDisplay} /> : <></>}
-    </div>
+    </LectureContainer>
   );
 };
 
 const TempModal = ({ setDisplay }) => {
-  const tempStyle = {
-    // background: '#00173C',
-    background: 'rgba(0, 23, 60, 0.7)',
-    // opacity: 0.7,
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
   // JSX
   return (
-    <div style={tempStyle}>
-      <div
-        style={{
-          width: '72%',
-          height: '72%',
-          background: 'white',
-          paddingTop: 40,
-          borderRadius: 20,
-        }}
-      >
-        <button onClick={() => setDisplay(false)}>닫기</button>
+    <TempStyle>
+      <div className="modal-box">
         <p>호텔조리학과</p>
-        <table style={{ border: '1px solid red' }}>
-          <thead>
-            <tr>
-              <th>학번</th>
-              <th>이름</th>
-              <th>성별</th>
-              <th>전공</th>
-              <th>출석</th>
-              <th>중간</th>
-              <th>기말</th>
-              <th>평점</th>
-              <th>최종성적</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array(5)
-              .fill()
-              .map(() => (
-                <tr key={0}>
-                  <td>001</td>
-                  <td>002</td>
-                  <td>003</td>
-                  <td>004</td>
-                  <td>005</td>
-                  <td>006</td>
-                  <td>007</td>
-                  <td>008</td>
-                  <td>009</td>
-                </tr>
-              ))}
-          </tbody>
-        </table>
+        <TableArea>
+          <table>
+            <thead>
+              <tr>
+                <th>학번</th>
+                <th>이름</th>
+                <th>성별</th>
+                <th>전공</th>
+                <th>출석</th>
+                <th>중간</th>
+                <th>기말</th>
+                <th>평점</th>
+                <th>최종성적</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array(5)
+                .fill()
+                .map(() => (
+                  <tr key={0}>
+                    <td>001</td>
+                    <td>002</td>
+                    <td>003</td>
+                    <td>004</td>
+                    <td>005</td>
+                    <td>006</td>
+                    <td>007</td>
+                    <td>008</td>
+                    <td>009</td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+        </TableArea>
         <div className="pagination" style={{ background: 'pink' }}>
           <span>1 2 3 4 5 6 7 8 9 </span>
         </div>
+        <button onClick={() => setDisplay(false)}>닫기</button>
       </div>
-    </div>
+    </TempStyle>
   );
 };
 
