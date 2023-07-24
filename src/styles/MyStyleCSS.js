@@ -42,8 +42,7 @@ export const SearchArea = styled.div`
 `;
 
 export const LectureContainer = styled.div`
-  /* background-color: aliceblue; */
-  width: 100vw;
+  width: 100%;
 `;
 
 export const TempStyle = styled.div`

@@ -10,8 +10,6 @@ const Lecture = () => {
   // JSX
   return (
     <LectureContainer>
-      <h3 style={{ color: '#1363DF', fontSize: 33 }}>통합 강의관리</h3>
-      <hr />
       <SearchArea>
         <select name="" className="search-option" id="lecture-state">
           <option value="00">강의상태</option>
