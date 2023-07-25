@@ -1,11 +1,9 @@
 import React from 'react';
+import { TableArea } from '../styles/MyStyleCSS';
 
 const Grade = () => {
   return (
-    <div style={{ background: 'lightblue' }}>
-      <>Grade</>
-      <h3 style={{ color: '#1363DF', fontSize: 33 }}>통합 성적관리</h3>
-      <hr />
+    <div>
       <div className="search-area" style={{ background: '#D9D9D9', margin: '72px 0', height: 96 }}>
         <select name="" id="student-semester">
           <option value="00">학기</option>
@@ -24,7 +22,7 @@ const Grade = () => {
         <input type="number" id="student-id" placeholder="학번" />
         <button>Q</button>
       </div>
-      <div className="table-area">
+      <TableArea>
         <table style={{ textAlign: 'center' }}>
           <thead>
             {/* 
@@ -35,7 +33,7 @@ const Grade = () => {
             <tr>
               <th style={{ background: 'pink' }}>학기</th>
               <th style={{ background: 'pink' }}>학년</th>
-              <th>강의명</th>
+              <th>강의명zzzzzzzzzzzzzzzzzzzz</th>
               <th style={{ background: 'yellow' }}>담당교수</th>
               <th style={{ background: 'pink' }}>학점</th>
               <th style={{ background: 'pink' }}>성적</th>
@@ -45,8 +43,8 @@ const Grade = () => {
           <tbody>
             {Array(5)
               .fill()
-              .map(() => (
-                <tr key={0}>
+              .map((item, idx) => (
+                <tr key={idx}>
                   <td>1</td>
                   <td>2</td>
                   <td>생명윤리</td>
@@ -58,7 +56,7 @@ const Grade = () => {
               ))}
           </tbody>
         </table>
-      </div>
+      </TableArea>
       <div className="pagination">
         <span>1 2 3 4 5 6 7 8 9 </span>
       </div>
