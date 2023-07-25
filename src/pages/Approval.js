@@ -52,10 +52,10 @@ const Approval = () => {
                   <td>30</td>
                   <td>
                     <div>
-                      <button onClick={handleRejectLecture} style={{ background: 'skyblue' }}>
+                      <button onClick={handleAcceptLecture} style={{ background: 'skyblue' }}>
                         승인
                       </button>
-                      <button onClick={handleAcceptLecture} style={{ background: 'coral' }}>
+                      <button onClick={handleRejectLecture} style={{ background: 'coral' }}>
                         거절
                       </button>
                     </div>
