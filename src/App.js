@@ -12,6 +12,7 @@ import Grade from './pages/Grade';
 import LectureRoom from './pages/LectureRoom';
 import Major from './pages/Major';
 import { GlobalLayout } from './styles/AppStyle';
+import Approval from './pages/Approval';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="user/student" element={<Student />} />
           <Route path="bachelor" element={<Navigate to="lecture" />} />
           <Route path="bachelor/lecture" element={<Lecture />} />
+          <Route path="bachelor/lecture/approval" element={<Approval />} />
           <Route path="bachelor/grade" element={<Grade />} />
           <Route path="college" element={<Navigate to="lecture-room" />} />
           <Route path="college/lecture-room" element={<LectureRoom />} />

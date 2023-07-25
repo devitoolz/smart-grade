@@ -5,18 +5,14 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Input from './Input';
 import Dropdown from './Dropdown';
 
-const SearchBar = () => {
+const SearchBar = ({ children }) => {
   const [value, setValue] = useState('');
 
   console.log(value);
 
   return (
     <SearchLayout>
-      <select>
-        <option>강의 상태</option>
-      </select>
-      <input type="text" placeholder="강의명" />
-      <input type="text" placeholder="교수명" />
+      {children}
       <SearchButton>
         <FontAwesomeIcon icon={faMagnifyingGlass} />
       </SearchButton>
