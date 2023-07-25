@@ -1,18 +1,4 @@
-@font-face {
-  font-family: 'HakgyoansimBareondotum';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBareondotumR.woff2')
-    format('woff2');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'HakgyoansimBareondotum';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimBareondotumB.woff2')
-    format('woff2');
-  font-weight: bold;
-  font-style: normal;
-}
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard-dynamic-subset.css');
 
 :root {
   --main-bg-color: #dff6ff;
@@ -52,7 +38,7 @@ body,
 }
 
 body {
-  font-family: 'HakgyoansimBareondotum', sans-serif;
+  font-family: 'Pretendard', sans-serif;
   font-size: 16px;
   color: #000;
   user-select: none;
