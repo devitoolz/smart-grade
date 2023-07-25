@@ -20,6 +20,12 @@ export const TableArea = styled.div`
     td {
       border: 1px solid #dae8ff;
     }
+    &.notice {
+      th,
+      td {
+        border: 1px solid var(--main-border-color);
+      }
+    }
   }
 `;
 export const SearchArea = styled.div`
