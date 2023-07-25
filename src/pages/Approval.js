@@ -1,3 +1,4 @@
+import React from 'react';
 import { TableArea } from '../styles/MyStyleCSS';
 
 const Approval = () => {
@@ -70,4 +71,5 @@ const Approval = () => {
     </div>
   );
 };
+
 export default Approval;

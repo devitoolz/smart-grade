@@ -29,25 +29,25 @@ const Main = () => {
       index: 1,
       icon: faHouse,
       title: '홈',
-      subtitle: { dashboard: '대시보드', notice: '공지사항' },
+      submenu: { dashboard: '대시보드', notice: '공지사항' },
     },
     user: {
       index: 2,
       icon: faUser,
       title: '계정관리',
-      subtitle: { professor: '교수 계정 관리', student: '학생 계정 관리' },
+      submenu: { professor: '교수 계정 관리', student: '학생 계정 관리' },
     },
     bachelor: {
       index: 3,
       icon: faGraduationCap,
       title: '학사관리',
-      subtitle: { lecture: '통합 강의 관리', grade: '통합 성적 관리' },
+      submenu: { lecture: '통합 강의 관리', grade: '통합 성적 관리' },
     },
     college: {
       index: 4,
       icon: faBuildingColumns,
       title: '대학관리',
-      subtitle: { 'lecture-room': '강의실 관리', major: '전공 관리' },
+      submenu: { 'lecture-room': '강의실 관리', major: '전공 관리' },
     },
   };
 
@@ -57,7 +57,7 @@ const Main = () => {
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    setTitle(menuData[mainPath].subtitle[subPath] || '');
+    setTitle(menuData[mainPath].submenu[subPath] || '');
   }, [pathname]);
 
   return (
@@ -75,9 +75,9 @@ const Main = () => {
         </MainMenu>
         <SubMenu>
           <span>{menuData[mainPath].title}</span>
-          {Object.keys(menuData[mainPath].subtitle).map(key => (
+          {Object.keys(menuData[mainPath].submenu).map(key => (
             <NavLink key={key} to={`${mainPath}/${key}`}>
-              {menuData[mainPath].subtitle[key]}
+              {menuData[mainPath].submenu[key]}
             </NavLink>
           ))}
         </SubMenu>

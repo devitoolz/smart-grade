@@ -11,27 +11,33 @@ import Lecture from './pages/Lecture';
 import Grade from './pages/Grade';
 import LectureRoom from './pages/LectureRoom';
 import Major from './pages/Major';
+import { GlobalLayout } from './styles/AppStyle';
+import Approval from './pages/Approval';
 
 const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Login />} />
-      <Route element={<Main />}>
-        <Route path="home" element={<Navigate to="dashboard" />} />
-        <Route path="home/dashboard" element={<Dashboard />} />
-        <Route path="home/notice" element={<Notice />} />
-        <Route path="user" element={<Navigate to="professor" />} />
-        <Route path="user/professor" element={<Professor />} />
-        <Route path="user/student" element={<Student />} />
-        <Route path="bachelor" element={<Navigate to="lecture" />} />
-        <Route path="bachelor/lecture" element={<Lecture />} />
-        <Route path="bachelor/grade" element={<Grade />} />
-        <Route path="college" element={<Navigate to="lecture-room" />} />
-        <Route path="college/lecture-room" element={<LectureRoom />} />
-        <Route path="college/major" element={<Major />} />
-      </Route>
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <>
+      <GlobalLayout isDark={false} />
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route element={<Main />}>
+          <Route path="home" element={<Navigate to="dashboard" />} />
+          <Route path="home/dashboard" element={<Dashboard />} />
+          <Route path="home/notice" element={<Notice />} />
+          <Route path="user" element={<Navigate to="professor" />} />
+          <Route path="user/professor" element={<Professor />} />
+          <Route path="user/student" element={<Student />} />
+          <Route path="bachelor" element={<Navigate to="lecture" />} />
+          <Route path="bachelor/lecture" element={<Lecture />} />
+          <Route path="bachelor/lecture/approval" element={<Approval />} />
+          <Route path="bachelor/grade" element={<Grade />} />
+          <Route path="college" element={<Navigate to="lecture-room" />} />
+          <Route path="college/lecture-room" element={<LectureRoom />} />
+          <Route path="college/major" element={<Major />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </>
   );
 };
 
