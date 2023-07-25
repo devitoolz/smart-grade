@@ -77,3 +77,16 @@ export const TempStyle = styled.div`
     }
   }
 `;
+
+export const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 180px;
+  color: gray;
+  p {
+    margin-top: 20px;
+    font-size: 80px;
+  }
+`;
