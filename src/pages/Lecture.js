@@ -6,6 +6,7 @@ const Lecture = () => {
   const handleShowDetail = () => {
     setDisplay(true);
   };
+  const arr = [1, 2, 3];
 
   // JSX
   return (
@@ -25,33 +26,34 @@ const Lecture = () => {
         <button>Q</button>
       </SearchArea>
       <TableArea>
-        <table>
-          <thead>
-            {/* 
+        {arr.length === 0 ? (
+          <p>검색해보세요</p>
+        ) : (
+          <table>
+            <thead>
+              {/* 
               pink = short
               yellow = middle
               lightgreen = 고정
              */}
-            <tr>
-              <th style={{ background: 'pink' }}>학기</th>
-              <th style={{ background: 'pink' }}>학년</th>
-              <th>전공</th>
-              <th>강의명</th>
-              <th style={{ background: 'yellow' }}>담당교수</th>
-              <th style={{ background: 'pink' }}>학점</th>
-              <th>강의실</th>
-              <th>강의 기간</th>
-              <th>강의 시간</th>
-              <th style={{ background: 'pink' }}>정원</th>
-              <th style={{ background: 'yellow' }}>상태</th>
-              <th style={{ background: 'lightgreen' }}>상세</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array(5)
-              .fill()
-              .map(() => (
-                <tr key={0}>
+              <tr>
+                <th style={{ background: 'pink' }}>학기</th>
+                <th style={{ background: 'pink' }}>학년</th>
+                <th>전공</th>
+                <th>강의명</th>
+                <th style={{ background: 'yellow' }}>담당교수</th>
+                <th style={{ background: 'pink' }}>학점</th>
+                <th>강의실</th>
+                <th>강의 기간</th>
+                <th>강의 시간</th>
+                <th style={{ background: 'pink' }}>정원</th>
+                <th style={{ background: 'yellow' }}>상태</th>
+                <th style={{ background: 'lightgreen' }}>상세</th>
+              </tr>
+            </thead>
+            <tbody>
+              {arr.map(item => (
+                <tr key={item}>
                   <td>1</td>
                   <td>2</td>
                   <td>전공이름도 길어질 수 있다</td>
@@ -68,8 +70,9 @@ const Lecture = () => {
                   </td>
                 </tr>
               ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        )}
       </TableArea>
       {display ? <TempModal setDisplay={setDisplay} /> : <></>}
     </LectureContainer>
