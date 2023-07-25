@@ -20,6 +20,12 @@ export const TableArea = styled.div`
     td {
       border: 1px solid #dae8ff;
     }
+    &.notice {
+      th,
+      td {
+        border: 1px solid var(--main-border-color);
+      }
+    }
   }
 `;
 export const SearchArea = styled.div`
@@ -42,8 +48,7 @@ export const SearchArea = styled.div`
 `;
 
 export const LectureContainer = styled.div`
-  /* background-color: aliceblue; */
-  width: 100vw;
+  width: 100%;
 `;
 
 export const TempStyle = styled.div`
@@ -76,5 +81,18 @@ export const TempStyle = styled.div`
       line-height: 2.5;
       padding-bottom: 1rem;
     }
+  }
+`;
+
+export const NoData = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 180px;
+  color: gray;
+  p {
+    margin-top: 20px;
+    font-size: 80px;
   }
 `;
