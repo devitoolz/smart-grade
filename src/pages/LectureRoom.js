@@ -35,10 +35,11 @@ const LectureRoom = () => {
         <div className="protect"></div>
       </QuestionWindow>
 
-      <Ltable>
+      <table border={1} width={570} height={650}>
         <th>번호</th>
         <th>장소</th>
         <th>최대 수용인원</th>
+        <th>관리</th>
         <th>비고</th>
         <tr>
           <td>1</td>
@@ -64,7 +65,7 @@ const LectureRoom = () => {
           <td>15</td>
           <td>16</td>
         </tr>
-      </Ltable>
+      </table>
     </Lwrap>
   );
 };
