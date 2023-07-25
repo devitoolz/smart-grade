@@ -1,4 +1,31 @@
+import { Global, css } from '@emotion/react';
 import styled from '@emotion/styled';
+
+const light = css`
+  :root {
+    --main-bg-color: #dff6ff;
+    --main-border-color: rgba(41, 49, 65, 0.2);
+    --side-bg-color: #293141;
+    --title-txt-color: #1363df;
+    --primary-color: #47b5ff;
+    --primary-border-color: #cacaca;
+    --negative-color: #ff6b6b;
+    --table-bg-color: #f8f8f8;
+    --table-border-color: #dae8ff;
+    --search-bg-color: #d9d9d9;
+    --search-ph-color: #a6a6a6;
+    --white: #fff;
+  }
+`;
+
+const dark = css`
+  :root {
+  }
+`;
+
+const GlobalLayout = ({ isDark }) => {
+  return <Global styles={isDark ? dark : light} />;
+};
 
 const Layout = styled.div`
   display: flex;
@@ -47,12 +74,12 @@ const SubMenu = styled.ul`
   padding-top: 30px;
   padding-left: 40px;
   > span {
-    color: #fff;
+    color: var(--white);
     font-size: 24px;
     padding-bottom: 40px;
   }
   > a {
-    color: #fff;
+    color: var(--white);
     font-size: 16px;
     padding-bottom: 20px;
     &.active {
@@ -74,4 +101,4 @@ const Title = styled.div`
   padding: 15px 30px;
 `;
 
-export { Layout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };
+export { GlobalLayout, Layout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };
