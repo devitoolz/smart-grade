@@ -10,22 +10,6 @@ const Lecture = () => {
     setDisplay(true);
   };
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const array = [
-    `(o^^)o`,
-    `(^-^*)`,
-    `(·_·)`,
-    `(^_^)b`,
-    `(≥o≤)`,
-    `(;-;)`,
-    `(>_<)`,
-    `(='X'=)`,
-    `(·.·)`,
-    `(^Д^)/`,
-    `(o_o)/`,
-    `(o^^)o`,
-    `(˚Δ˚)b'`,
-  ];
-  let randomValue = array[Math.floor(Math.random() * array.length)];
 
   // JSX
   return (
@@ -50,7 +34,6 @@ const Lecture = () => {
 
       {arr.length === 0 ? (
         <NoData>
-          <div>{randomValue}</div>
           <p>검색해주세요</p>
         </NoData>
       ) : (
