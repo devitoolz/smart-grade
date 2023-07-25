@@ -4,7 +4,53 @@ import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
 
 const Grade = () => {
-  const arr = [1, 2, 3, 4, 5];
+  const arr = [
+    {
+      aa: '1',
+      bb: '1',
+      cc: '생명윤리',
+      dd: '이그린',
+      ee: 3,
+      ff: 96,
+      gg: 'A+',
+    },
+    {
+      aa: '1',
+      bb: '2',
+      cc: '기술과학윤리',
+      dd: '이그린',
+      ee: 2,
+      ff: 94,
+      gg: 'A+',
+    },
+    {
+      aa: '1',
+      bb: '3',
+      cc: '생명윤리',
+      dd: '이그린',
+      ee: 3,
+      ff: 97,
+      gg: 'A+',
+    },
+    {
+      aa: '1',
+      bb: '4',
+      cc: '생활속의물리',
+      dd: '이그린',
+      ee: 3,
+      ff: 100,
+      gg: 'A+',
+    },
+    {
+      aa: '1',
+      bb: '2',
+      cc: '데이터베이스',
+      dd: '이그린',
+      ee: 3,
+      ff: 96,
+      gg: 'A+',
+    },
+  ];
   const array = [
     `(o^^)o`,
     `(^-^*)`,
@@ -69,13 +115,13 @@ const Grade = () => {
               <tbody>
                 {arr.map((item, idx) => (
                   <tr key={idx}>
-                    <td>1</td>
-                    <td>2</td>
-                    <td>생명윤리</td>
-                    <td>이그린</td>
-                    <td>3</td>
-                    <td>96</td>
-                    <td>A+</td>
+                    <td>{item.aa}</td>
+                    <td>{item.bb}</td>
+                    <td>{item.cc}</td>
+                    <td>{item.dd}</td>
+                    <td>{item.ee}</td>
+                    <td>{item.ff}</td>
+                    <td>{item.gg}</td>
                   </tr>
                 ))}
               </tbody>
