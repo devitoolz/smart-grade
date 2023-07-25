@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { LectureContainer, TableArea, SearchArea, TempStyle, NoData } from '../styles/MyStyleCSS';
+import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyleCSS';
+import SearchBar from '../components/SearchBar';
+import Input from '../components/Input';
+import { Link } from 'react-router-dom';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -27,7 +30,7 @@ const Lecture = () => {
   // JSX
   return (
     <LectureContainer>
-      <SearchArea>
+      <SearchBar>
         <select name="" className="search-option" id="lecture-state">
           <option value="00">강의상태</option>
           <option value="01">1번</option>
@@ -38,9 +41,13 @@ const Lecture = () => {
           <option value="01">1번강의</option>
           <option value="02">2번강의</option>
         </select>
-        <input type="text" className="search-option" placeholder="교수명" />
-        <button>Q</button>
-      </SearchArea>
+        <Input length="short" placeholder="교수명" />
+      </SearchBar>
+
+      <Link to="/bachelor/lecture/approval">
+        <button>강의 개강</button>
+      </Link>
+
       {arr.length === 0 ? (
         <NoData>
           <div>{randomValue}</div>
