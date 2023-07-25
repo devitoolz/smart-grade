@@ -96,3 +96,19 @@ export const NoData = styled.div`
     font-size: 80px;
   }
 `;
+
+// 공통 버튼
+export const CommonBtn = styled.button`
+  display: ${({ onClick }) => (onClick ? 'block' : 'none')};
+
+  margin: 10px;
+  width: 105px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dff6ff;
+  color: #7e7e7e;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+`;

@@ -3,6 +3,7 @@ import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyl
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
 import { Link } from 'react-router-dom';
+import CommonButton from '../components/CommonButton';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -10,6 +11,10 @@ const Lecture = () => {
     setDisplay(true);
   };
   const arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+  const handleBtnClick = () => {
+    console.log('btn click');
+  };
 
   // JSX
   return (
@@ -29,8 +34,10 @@ const Lecture = () => {
       </SearchBar>
 
       <Link to="/bachelor/lecture/approval">
-        <button>강의 개강</button>
+        <CommonButton value="강의 개강" onClick={handleBtnClick} />
       </Link>
+      <CommonButton value="테스트" onClick={handleBtnClick} />
+      <CommonButton value="onclick없음" />
 
       {arr.length === 0 ? (
         <NoData>
