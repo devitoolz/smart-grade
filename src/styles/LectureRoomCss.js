@@ -55,11 +55,11 @@ export const QuestionWindow = styled.div`
     border-radius: 50%;
   }
 `;
-export const Ltable = styled.table`
-  border: 10px;
-  width: 800px;
-  height: 300px;
-  border-color: green;
-  background: skyblue;
-  text-align: center;
-`;
+// export const Ltable = styled.table`
+//   border: 1;
+//   width: 800px;
+//   height: 300px;
+//   border-color: green;
+//   background: skyblue;
+//   text-align: center;
+// `;
