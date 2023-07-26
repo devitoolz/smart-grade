@@ -21,7 +21,6 @@ const CustomInput = styled.input`
 
 const CustomDropdown = styled.div`
   position: relative;
-  cursor: pointer;
   border: 1px solid var(--primary-border-color);
   width: ${({ length }) =>
     length === 'long'
@@ -30,7 +29,7 @@ const CustomDropdown = styled.div`
       ? '140px'
       : length === 'short'
       ? '100px'
-      : 'auto'};
+      : '100px'};
   height: 35px;
   font-size: 14px;
   background: var(--white);
@@ -51,7 +50,7 @@ const CustomDropdown = styled.div`
           ? 'calc(140px - 12px - 32px)'
           : length === 'short'
           ? 'calc(100px - 12px - 32px)'
-          : 'auto'};
+          : 'calc(100px - 12px -32px)'};
       height: 100%;
       font-size: 14px;
       background: var(--white);
@@ -73,6 +72,7 @@ const CustomDropdown = styled.div`
       color: var(--search-ph-color);
       transition: 0.2s all ease-in-out;
       &.reset {
+        cursor: pointer;
         font-size: 16px;
         background: var(--white);
         position: absolute;
@@ -99,7 +99,7 @@ const CustomDropdown = styled.div`
           ? '140px'
           : length === 'short'
           ? '100px'
-          : 'auto'};
+          : '100px'};
       height: 35px;
       border: 1px solid var(--primary-border-color);
       border-top: none;
@@ -112,6 +112,19 @@ const CustomDropdown = styled.div`
       }
       &:last-of-type {
         border-bottom: ${props => (props.open ? 'none' : null)};
+      }
+      &.data-error {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        height: auto;
+        > svg {
+          font-size: 30px;
+          color: red;
+          padding-bottom: 10px;
+        }
       }
     }
   }

@@ -31,9 +31,9 @@ const Professor = () => {
         <Dropdown
           length="long"
           placeholder="전공"
-          data={data}
-          value={value}
-          setValue={setValue}
+          // data={data}
+          // value={value}
+          // setValue={setValue}
           reset={true}
           search={true}
         />
