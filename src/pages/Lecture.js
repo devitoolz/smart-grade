@@ -138,7 +138,12 @@ const Lecture = () => {
                     <td>{item.j}</td>
                     <td>{item.k}</td>
                     <td>
-                      <button onClick={() => handleShowDetail(item)}>상세보기</button>
+                      <CommonButton
+                        value="상세보기"
+                        color="gray"
+                        btnType="table"
+                        onClick={() => handleShowDetail(item)}
+                      />
                     </td>
                   </tr>
                 ))}

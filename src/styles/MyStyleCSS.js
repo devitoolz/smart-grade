@@ -134,12 +134,15 @@ export const CommonBtn = styled.button`
   text-align: center;
   cursor: pointer;
 `;
-const box = `
+const btnContainer = `
   display: flex;
   justify-content: flex-end;
   align-items: center;
   padding: 30px;
 `;
+const btnBox = `
+  display: inline-block;
+`;
 export const CommonBtnArea = styled.div`
-  ${({ btnType }) => (btnType === 'page' ? box : '')};
+  ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
 `;
