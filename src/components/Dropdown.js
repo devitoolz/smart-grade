@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { CustomDropdown } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronDown, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronDown,
+  faCircleXmark,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Dropdown = ({ length, placeholder, data, value, setValue, reset, search }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -15,7 +19,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
     itemRef.current?.scrollIntoView({ block: 'start' });
     setIsOpen(!isOpen);
     if (!isOpen) {
-      setResult(data);
+      setResult(data || []);
     }
     isOpen ? inputRef.current?.blur() : inputRef.current?.focus();
   };
@@ -35,8 +39,8 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
 
   useEffect(() => {
     if (!isOpen) {
-      setTimeout(() => setResult(data), 200);
-      if (data.length !== 0 && data.filter(item => item.title === searchValue).length === 0) {
+      setTimeout(() => setResult(data || []), 200);
+      if (data?.length !== 0 && data?.filter(item => item.title === searchValue).length === 0) {
         setSearchValue('');
       }
     }
@@ -50,22 +54,23 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
 
   const handleResetClick = e => {
     e.stopPropagation();
-    setResult(data);
-    setValue('');
+    setResult(data || []);
+    setValue && setValue('');
     setSearchValue('');
+    setIsOpen(false);
   };
 
   const handleSearchValueChange = e => {
     setSearchValue(e.target.value);
-    data.filter(item => item.title === e.target.value).length !== 0
-      ? setValue(e.target.value)
-      : setValue('');
-    setResult(data.filter(item => item.title.includes(e.target.value)));
+    data?.filter(item => item.title === e.target.value).length !== 0
+      ? setValue && setValue(e.target.value)
+      : setValue && setValue('');
+    setResult(data?.filter(item => item.title.includes(e.target.value)) || []);
     itemRef.current?.scrollIntoView({ block: 'start' });
   };
 
   return (
-    <CustomDropdown ref={menuRef} open={isOpen} length={length} value={value}>
+    <CustomDropdown ref={menuRef} open={isOpen} length={length} value={searchValue}>
       <div onClick={handleMenuOpen}>
         {search ? (
           <input
@@ -96,7 +101,14 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
             </li>
           ))
         ) : (
-          <li>NO DATA</li>
+          <li className="data-error">
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <span>
+              데이터를 불러오지
+              <br />
+              못했습니다.
+            </span>
+          </li>
         )}
       </ul>
     </CustomDropdown>
