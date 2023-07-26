@@ -120,6 +120,8 @@ const CustomDropdown = styled.div`
         justify-content: center;
         text-align: center;
         height: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
         > svg {
           font-size: 30px;
           color: red;

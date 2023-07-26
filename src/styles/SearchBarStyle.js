@@ -23,6 +23,7 @@ const SearchButton = styled.span`
   height: 35px;
   border-radius: 50%;
   background: var(--white);
+  border: 1px solid var(--primary-border-color);
 `;
 
 export { SearchLayout, SearchButton };

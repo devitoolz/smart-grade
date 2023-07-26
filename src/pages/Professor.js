@@ -34,8 +34,8 @@ const Professor = () => {
           // data={data}
           // value={value}
           // setValue={setValue}
-          reset={true}
-          search={true}
+          // reset={true}
+          // search={true}
         />
       </SearchBar>
     </div>

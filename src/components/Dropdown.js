@@ -81,7 +81,9 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
             onChange={handleSearchValueChange}
           />
         ) : (
-          <span className={value ? null : 'placeholder'}>{value ? value : placeholder}</span>
+          <span className={value ? null : 'placeholder'}>
+            {value ? value : '전체 ' + placeholder}
+          </span>
         )}
         <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
         {reset && (
@@ -103,11 +105,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
         ) : (
           <li className="data-error">
             <FontAwesomeIcon icon={faTriangleExclamation} />
-            <span>
-              데이터를 불러오지
-              <br />
-              못했습니다.
-            </span>
+            <span>데이터를 불러오지 못했습니다.</span>
           </li>
         )}
       </ul>
