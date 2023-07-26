@@ -38,10 +38,25 @@ const CustomDropdown = styled.div`
   align-items: center;
   > div {
     width: 100%;
+    height: 100%;
     display: flex;
-    padding: 10px;
+    padding: 0 10px;
     justify-content: space-between;
     align-items: center;
+    > input {
+      width: ${({ length }) =>
+        length === 'long'
+          ? 'calc(180px - 12px - 32px)'
+          : length === 'middle'
+          ? 'calc(140px - 12px - 32px)'
+          : length === 'short'
+          ? 'calc(100px - 12px - 32px)'
+          : 'auto'};
+      height: 100%;
+      font-size: 14px;
+      background: var(--white);
+      border: none;
+    }
     > span {
       &.placeholder {
         color: var(--search-ph-color);

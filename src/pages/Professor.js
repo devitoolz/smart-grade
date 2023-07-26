@@ -23,7 +23,6 @@ const Professor = () => {
     ];
 
     setData(data);
-    setValue(data[0]?.title);
   }, []);
 
   return (
@@ -35,7 +34,8 @@ const Professor = () => {
           data={data}
           value={value}
           setValue={setValue}
-          reset={false}
+          reset={true}
+          search={true}
         />
       </SearchBar>
     </div>

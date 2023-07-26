@@ -3,9 +3,22 @@ import { CustomDropdown } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Dropdown = ({ length, placeholder, data, value, setValue, reset }) => {
+const Dropdown = ({ length, placeholder, data, value, setValue, reset, search }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [result, setResult] = useState([]);
   const menuRef = useRef(null);
+  const inputRef = useRef(null);
+  const itemRef = useRef(null);
+
+  const handleMenuOpen = () => {
+    itemRef.current?.scrollIntoView({ block: 'start' });
+    setIsOpen(!isOpen);
+    if (!isOpen) {
+      setResult(data);
+    }
+    isOpen ? inputRef.current?.blur() : inputRef.current?.focus();
+  };
 
   const handleOutsideClick = e => {
     if (!menuRef.current?.contains(e.target)) {
@@ -20,31 +33,62 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isOpen) {
+      setTimeout(() => setResult(data), 200);
+      if (data.length !== 0 && data.filter(item => item.title === searchValue).length === 0) {
+        setSearchValue('');
+      }
+    }
+  }, [isOpen]);
+
   const handleItemClick = item => {
     setValue && setValue(item.title);
-    setIsOpen(false);
+    setSearchValue(item.title);
+    handleMenuOpen();
   };
 
   const handleResetClick = e => {
     e.stopPropagation();
-    setIsOpen(false);
+    setResult(data);
     setValue('');
+    setSearchValue('');
+  };
+
+  const handleSearchValueChange = e => {
+    setSearchValue(e.target.value);
+    data.filter(item => item.title === e.target.value).length !== 0
+      ? setValue(e.target.value)
+      : setValue('');
+    setResult(data.filter(item => item.title.includes(e.target.value)));
+    itemRef.current?.scrollIntoView({ block: 'start' });
   };
 
   return (
     <CustomDropdown ref={menuRef} open={isOpen} length={length} value={value}>
-      <div onClick={() => setIsOpen(!isOpen)}>
-        <span className={value ? null : 'placeholder'}>{value ? value : placeholder}</span>
+      <div onClick={handleMenuOpen}>
+        {search ? (
+          <input
+            ref={inputRef}
+            type="text"
+            placeholder={'전체 ' + placeholder}
+            value={searchValue}
+            onChange={handleSearchValueChange}
+          />
+        ) : (
+          <span className={value ? null : 'placeholder'}>{value ? value : placeholder}</span>
+        )}
         <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
         {reset && (
           <FontAwesomeIcon className="reset" icon={faCircleXmark} onClick={handleResetClick} />
         )}
       </div>
       <ul>
-        {data.length !== 0 ? (
-          data.map(item => (
+        {result.length !== 0 ? (
+          result.map(item => (
             <li
-              className={item.title === value ? 'active' : null}
+              ref={item.title === searchValue ? itemRef : null}
+              className={item.title === searchValue ? 'active' : null}
               key={item.id}
               onClick={() => handleItemClick(item)}
             >
