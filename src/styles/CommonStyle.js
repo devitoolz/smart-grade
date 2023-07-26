@@ -1,21 +1,42 @@
 import styled from '@emotion/styled';
 
-const CustomInput = styled.input`
-  border: 1px solid var(--primary-border-color);
-  width: ${({ length }) =>
-    length === 'long'
-      ? '180px'
-      : length === 'middle'
-      ? '140px'
-      : length === 'short'
-      ? '100px'
-      : 'auto'};
-  height: 35px;
-  padding: 10px;
-  font-size: 14px;
-  background: var(--white);
-  ::placeholder {
+const CustomInput = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:hover {
+    > svg {
+      visibility: ${props => (props.value ? 'visible' : 'hidden')};
+      opacity: ${props => (props.value ? 1 : 0)};
+    }
+  }
+  > input {
+    border: 1px solid var(--primary-border-color);
+    width: ${({ length }) =>
+      length === 'long'
+        ? '180px'
+        : length === 'middle'
+        ? '140px'
+        : length === 'short'
+        ? '100px'
+        : 'auto'};
+    height: 35px;
+    padding: 10px;
+    font-size: 14px;
+    background: var(--white);
+    &::placeholder {
+      color: var(--search-ph-color);
+    }
+  }
+  > svg {
+    cursor: pointer;
+    position: absolute;
+    right: 8px;
+    font-size: 16px;
     color: var(--search-ph-color);
+    transition: 0.2s all ease-in-out;
+    visibility: hidden;
+    opacity: 0;
   }
 `;
 

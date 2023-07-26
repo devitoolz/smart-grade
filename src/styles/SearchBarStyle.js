@@ -8,6 +8,7 @@ const flexCenter = `
 const SearchLayout = styled.div`
   width: 100%;
   height: 80px;
+  min-height: 80px;
   display: flex;
   ${flexCenter};
   background: var(--search-bg-color);

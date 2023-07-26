@@ -3,6 +3,7 @@ import { TableArea } from '../styles/MyStyleCSS';
 import { Layout } from '../styles/CommonStyle';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
+import Input from '../components/Input';
 
 const Student = () => {
   const gradeList = Array(4)
@@ -11,11 +12,15 @@ const Student = () => {
       return { id: index + 1, title: index + 1 + '학년' };
     });
 
-  const [grade, setGrade] = useState(null);
   const [majorList, setMajorList] = useState([]);
+
+  const [grade, setGrade] = useState(null);
   const [major, setMajor] = useState(null);
+  const [studentId, setStudentId] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
+    // TODO: 추후 axios GET으로 변경
     const majorData = [
       { id: 1, title: '내용 1' },
       { id: 2, title: '내용 2' },
@@ -27,38 +32,21 @@ const Student = () => {
     setMajorList(majorData);
   }, []);
 
-  const arr = [
-    {
-      a: '1',
-      b: '2',
-      c: '컴퓨터공학과',
-      d: '데이터베이스',
-      e: '김그린',
-      f: '2',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '09:00~11:00',
-      j: 30,
-      k: '상태',
-    },
-    {
-      a: '1',
-      b: '3',
-      c: '컴퓨터공학과',
-      d: '웹프로그래밍',
-      e: '김그린',
-      f: '3',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '14:00~17:00',
-      j: 30,
-      k: '상태',
-    },
+  const tableHeader = [
+    { title: '학번', width: null },
+    { title: '학년', width: null },
+    { title: '전공', width: null },
+    { title: '이름', width: null },
+    { title: '성별', width: null },
+    { title: '생년월일', width: null },
+    { title: '입학년도', width: null },
+    { title: '졸업\n여부', width: null },
+    { title: '이수\n학점', width: null },
   ];
 
   return (
     <Layout>
-      <SearchBar onSearch={() => console.log(grade, major)}>
+      <SearchBar onSearch={() => console.log(grade, major, studentId, name)}>
         <Dropdown
           length="short"
           placeholder="학년"
@@ -76,49 +64,38 @@ const Student = () => {
           reset
           search
         />
+        <Input
+          length="middle"
+          type="number"
+          placeholder="학번"
+          value={studentId}
+          setValue={setStudentId}
+        />
+        <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
       <TableArea>
         <table>
           <thead>
-            {/*
-      pink = short
-      yellow = middle
-      lightgreen = 고정
-     */}
             <tr>
-              <th style={{ background: 'pink' }}>학기</th>
-              <th style={{ background: 'pink' }}>학년</th>
-              <th>전공</th>
-              <th>강의명</th>
-              <th style={{ background: 'yellow' }}>담당교수</th>
-              <th style={{ background: 'pink' }}>학점</th>
-              <th>강의실</th>
-              <th>강의 기간</th>
-              <th>강의 시간</th>
-              <th style={{ background: 'pink' }}>정원</th>
-              <th style={{ background: 'yellow' }}>상태</th>
-              <th style={{ background: 'lightgreen' }}>상세</th>
+              {tableHeader.map((item, index) => (
+                <th key={index} style={item.width ? { width: item.width } : null}>
+                  {item.title}
+                </th>
+              ))}
             </tr>
           </thead>
           <tbody>
-            {arr.map((item, idx) => (
-              <tr key={idx}>
-                <td>{item.a}</td>
-                <td>{item.b}</td>
-                <td>{item.c}</td>
-                <td>{item.d}</td>
-                <td>{item.e}</td>
-                <td>{item.f}</td>
-                <td>{item.g}</td>
-                <td>{item.h}</td>
-                <td>{item.i}</td>
-                <td>{item.j}</td>
-                <td>{item.k}</td>
-                <td>
-                  <button>상세보기</button>
-                </td>
-              </tr>
-            ))}
+            {Array(10)
+              .fill()
+              .map((_, idx) => (
+                <tr key={idx}>
+                  {tableHeader.map((item, index) => (
+                    <td key={index} style={item.width ? { width: item.width } : null}>
+                      {index}
+                    </td>
+                  ))}
+                </tr>
+              ))}
           </tbody>
         </table>
       </TableArea>
