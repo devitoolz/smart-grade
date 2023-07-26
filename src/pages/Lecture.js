@@ -82,10 +82,12 @@ const Lecture = () => {
         <Input length="short" placeholder="교수명" />
       </SearchBar>
 
-      <Link to="/bachelor/lecture/approval" style={{ display: 'inline-block' }}>
-        <CommonButton value="강의 개강" onClick={handleBtnClick} />
-      </Link>
-      <CommonButton value="테스트" onClick={handleBtnClick} />
+      <CommonButton btnType="page" value="강의 개강" onClick={handleBtnClick}>
+        <Link to="/bachelor/lecture/approval" style={{ display: 'inline-block' }} />
+      </CommonButton>
+      <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
+      <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
+      <CommonButton value="테스트" color="gray" onClick={handleBtnClick} />
       <CommonButton value="onclick없음" />
 
       {arr.length === 0 ? (

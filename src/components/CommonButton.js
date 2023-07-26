@@ -1,10 +1,12 @@
 import React from 'react';
 import { CommonBtn } from '../styles/MyStyleCSS';
 
-const CommonButton = ({ value, onClick }) => {
+const CommonButton = ({ btnType, color, value, onClick }) => {
   return (
     <>
-      <CommonBtn onClick={onClick}>{value}</CommonBtn>
+      <CommonBtn btnType={btnType} color={color} onClick={onClick}>
+        {value}
+      </CommonBtn>
     </>
   );
 };
