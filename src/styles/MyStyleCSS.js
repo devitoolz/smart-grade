@@ -98,8 +98,7 @@ export const NoData = styled.div`
 `;
 
 // 공통 버튼
-const pageBtn = ` 
-  margin: 36px 0;
+const pageBtn = `
   padding: 6px 18px;
   border-radius: 5px; 
   color: #7e7e7e;
@@ -134,4 +133,13 @@ export const CommonBtn = styled.button`
   font-weight: 500;
   text-align: center;
   cursor: pointer;
+`;
+const box = `
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px;
+`;
+export const CommonBtnArea = styled.div`
+  ${({ btnType }) => (btnType === 'page' ? box : '')};
 `;

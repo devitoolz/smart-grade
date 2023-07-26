@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyleCSS';
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import Dropdown from '../components/Dropdown';
 
@@ -42,6 +42,10 @@ const Lecture = () => {
     },
   ];
 
+  const handlePageBtnClick = () => {
+    console.log('btn click');
+    navigate('/bachelor/lecture/approval');
+  };
   const handleBtnClick = () => {
     console.log('btn click');
   };
@@ -58,6 +62,7 @@ const Lecture = () => {
       title: '2번',
     },
   ];
+  const navigate = useNavigate();
 
   // JSX
   return (
@@ -82,9 +87,8 @@ const Lecture = () => {
         <Input length="short" placeholder="교수명" />
       </SearchBar>
 
-      <CommonButton btnType="page" value="강의 개강" onClick={handleBtnClick}>
-        <Link to="/bachelor/lecture/approval" style={{ display: 'inline-block' }} />
-      </CommonButton>
+      <CommonButton btnType="page" value="강의 개강" onClick={handlePageBtnClick} />
+
       <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
       <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
       <CommonButton value="테스트" color="gray" onClick={handleBtnClick} />
