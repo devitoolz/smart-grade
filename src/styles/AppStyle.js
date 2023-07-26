@@ -27,7 +27,7 @@ const GlobalLayout = ({ isDark }) => {
   return <Global styles={isDark ? dark : light} />;
 };
 
-const Layout = styled.div`
+const MainLayout = styled.div`
   display: flex;
   height: 100%;
 `;
@@ -94,11 +94,14 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
+  display: flex;
+  height: 70px;
+  align-items: center;
   border-bottom: 1px solid var(--main-border-color);
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
-  padding: 15px 30px;
+  padding-left: 30px;
 `;
 
-export { GlobalLayout, Layout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };
+export { GlobalLayout, MainLayout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };

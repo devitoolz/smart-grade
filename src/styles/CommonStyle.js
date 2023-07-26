@@ -1,21 +1,42 @@
 import styled from '@emotion/styled';
 
-const CustomInput = styled.input`
-  border: 1px solid var(--primary-border-color);
-  width: ${({ length }) =>
-    length === 'long'
-      ? '180px'
-      : length === 'middle'
-      ? '140px'
-      : length === 'short'
-      ? '100px'
-      : 'auto'};
-  height: 35px;
-  padding: 10px;
-  font-size: 14px;
-  background: var(--white);
-  ::placeholder {
+const CustomInput = styled.div`
+  display: flex;
+  align-items: center;
+  position: relative;
+  &:hover {
+    > svg {
+      visibility: ${props => (props.value ? 'visible' : 'hidden')};
+      opacity: ${props => (props.value ? 1 : 0)};
+    }
+  }
+  > input {
+    border: 1px solid var(--primary-border-color);
+    width: ${({ length }) =>
+      length === 'long'
+        ? '180px'
+        : length === 'middle'
+        ? '140px'
+        : length === 'short'
+        ? '100px'
+        : 'auto'};
+    height: 35px;
+    padding: 10px;
+    font-size: 14px;
+    background: var(--white);
+    &::placeholder {
+      color: var(--search-ph-color);
+    }
+  }
+  > svg {
+    cursor: pointer;
+    position: absolute;
+    right: 8px;
+    font-size: 16px;
     color: var(--search-ph-color);
+    transition: 0.2s all ease-in-out;
+    visibility: hidden;
+    opacity: 0;
   }
 `;
 
@@ -55,6 +76,9 @@ const CustomDropdown = styled.div`
       font-size: 14px;
       background: var(--white);
       border: none;
+      &::placeholder {
+        color: var(--search-ph-color);
+      }
     }
     > span {
       &.placeholder {
@@ -120,6 +144,8 @@ const CustomDropdown = styled.div`
         justify-content: center;
         text-align: center;
         height: auto;
+        padding-top: 30px;
+        padding-bottom: 30px;
         > svg {
           font-size: 30px;
           color: red;
@@ -130,4 +156,11 @@ const CustomDropdown = styled.div`
   }
 `;
 
-export { CustomInput, CustomDropdown };
+const Layout = styled.div`
+  width: 100%;
+  height: calc(100% - 70px);
+  display: flex;
+  flex-direction: column;
+`;
+
+export { CustomInput, CustomDropdown, Layout };

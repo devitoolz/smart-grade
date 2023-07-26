@@ -3,7 +3,7 @@ import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 import {
   Content,
-  Layout,
+  MainLayout,
   MainMenu,
   MainMenuItem,
   Sidebar,
@@ -61,7 +61,7 @@ const Main = () => {
   }, [pathname]);
 
   return (
-    <Layout>
+    <MainLayout>
       <Sidebar>
         <MainMenu activeIndex={activeIndex}>
           {Object.keys(menuData).map(key => {
@@ -86,7 +86,7 @@ const Main = () => {
         <Title>{title}</Title>
         <Outlet />
       </Content>
-    </Layout>
+    </MainLayout>
   );
 };
 

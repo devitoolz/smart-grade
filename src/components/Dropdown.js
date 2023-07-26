@@ -47,7 +47,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
   }, [isOpen]);
 
   const handleItemClick = item => {
-    setValue && setValue(item.title);
+    setValue && setValue(item.id);
     setSearchValue(item.title);
     handleMenuOpen();
   };
@@ -55,16 +55,15 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
   const handleResetClick = e => {
     e.stopPropagation();
     setResult(data || []);
-    setValue && setValue('');
+    setValue && setValue(null);
     setSearchValue('');
     setIsOpen(false);
   };
 
   const handleSearchValueChange = e => {
     setSearchValue(e.target.value);
-    data?.filter(item => item.title === e.target.value).length !== 0
-      ? setValue && setValue(e.target.value)
-      : setValue && setValue('');
+    const find = data?.find(item => item.title === e.target.value);
+    find ? setValue && setValue(find.id) : setValue && setValue(null);
     setResult(data?.filter(item => item.title.includes(e.target.value)) || []);
     itemRef.current?.scrollIntoView({ block: 'start' });
   };
@@ -81,7 +80,9 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
             onChange={handleSearchValueChange}
           />
         ) : (
-          <span className={value ? null : 'placeholder'}>{value ? value : placeholder}</span>
+          <span className={value ? null : 'placeholder'}>
+            {value ? data?.find(item => item.id === value).title : '전체 ' + placeholder}
+          </span>
         )}
         <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
         {reset && (
@@ -103,11 +104,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
         ) : (
           <li className="data-error">
             <FontAwesomeIcon icon={faTriangleExclamation} />
-            <span>
-              데이터를 불러오지
-              <br />
-              못했습니다.
-            </span>
+            <span>데이터를 불러오지 못했습니다.</span>
           </li>
         )}
       </ul>
