@@ -55,6 +55,9 @@ const CustomDropdown = styled.div`
       font-size: 14px;
       background: var(--white);
       border: none;
+      &::placeholder {
+        color: var(--search-ph-color);
+      }
     }
     > span {
       &.placeholder {
@@ -132,4 +135,11 @@ const CustomDropdown = styled.div`
   }
 `;
 
-export { CustomInput, CustomDropdown };
+const Layout = styled.div`
+  width: 100%;
+  height: calc(100% - 70px);
+  display: flex;
+  flex-direction: column;
+`;
+
+export { CustomInput, CustomDropdown, Layout };

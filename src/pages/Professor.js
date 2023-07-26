@@ -3,7 +3,7 @@ import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
 
 const Professor = () => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(null);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -31,11 +31,11 @@ const Professor = () => {
         <Dropdown
           length="long"
           placeholder="전공"
-          // data={data}
-          // value={value}
-          // setValue={setValue}
-          // reset={true}
-          // search={true}
+          data={data}
+          value={value}
+          setValue={setValue}
+          reset={true}
+          search={true}
         />
       </SearchBar>
     </div>

@@ -47,7 +47,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
   }, [isOpen]);
 
   const handleItemClick = item => {
-    setValue && setValue(item.title);
+    setValue && setValue(item.id);
     setSearchValue(item.title);
     handleMenuOpen();
   };
@@ -55,16 +55,15 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
   const handleResetClick = e => {
     e.stopPropagation();
     setResult(data || []);
-    setValue && setValue('');
+    setValue && setValue(null);
     setSearchValue('');
     setIsOpen(false);
   };
 
   const handleSearchValueChange = e => {
     setSearchValue(e.target.value);
-    data?.filter(item => item.title === e.target.value).length !== 0
-      ? setValue && setValue(e.target.value)
-      : setValue && setValue('');
+    const find = data?.find(item => item.title === e.target.value);
+    find ? setValue && setValue(find.id) : setValue && setValue(null);
     setResult(data?.filter(item => item.title.includes(e.target.value)) || []);
     itemRef.current?.scrollIntoView({ block: 'start' });
   };
@@ -82,7 +81,7 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
           />
         ) : (
           <span className={value ? null : 'placeholder'}>
-            {value ? value : '전체 ' + placeholder}
+            {value ? data?.find(item => item.id === value).title : '전체 ' + placeholder}
           </span>
         )}
         <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
