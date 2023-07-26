@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { TableArea, NoData } from '../styles/MyStyleCSS';
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
+import Dropdown from '../components/Dropdown';
 
 const Grade = () => {
   const arr = [
@@ -68,22 +69,39 @@ const Grade = () => {
   ];
   let randomValue = array[Math.floor(Math.random() * array.length)];
 
+  // 드롭다운
+  const data = [
+    { id: 1, title: '1학기' },
+    { id: 2, title: '2학기' },
+  ];
+  const gradeData = [
+    { id: 1, title: '1학년' },
+    { id: 2, title: '2학년' },
+    { id: 3, title: '3학년' },
+    { id: 4, title: '4학년' },
+  ];
+  const [semester, setSemester] = useState();
+  const [grade, setGrade] = useState();
+
   return (
     <div>
       <SearchBar>
-        <select name="" id="student-semester">
-          <option value="00">학기</option>
-          <option value="01">1학기</option>
-          <option value="02">2학기</option>
-        </select>
-        <select name="" id="student-grade">
-          <option value="00">학년</option>
-          <option value="01">1학년</option>
-          <option value="02">2학년</option>
-          <option value="03">3학년</option>
-          <option value="04">4학년</option>
-          <option value="05">5학년</option>
-        </select>
+        <Dropdown
+          length="short"
+          placeholder="학기"
+          data={data}
+          value={semester}
+          setValue={setSemester}
+          reset={true}
+        />
+        <Dropdown
+          length="short"
+          placeholder="학년"
+          data={gradeData}
+          value={grade}
+          setValue={setGrade}
+          reset={true}
+        />
         <Input length="short" placeholder="이름" />
         <Input length="middle" placeholder="학번" />
       </SearchBar>
