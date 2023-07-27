@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyleCSS';
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
+import Dropdown from '../components/Dropdown';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -41,31 +42,56 @@ const Lecture = () => {
     },
   ];
 
+  const handlePageBtnClick = () => {
+    console.log('btn click');
+    navigate('/bachelor/lecture/approval');
+  };
   const handleBtnClick = () => {
     console.log('btn click');
   };
+  // 드롭다운 테스트
+  const [lectureName, setLectureName] = useState();
+  const [lectureStatus, setLectureStatus] = useState();
+  const data = [
+    {
+      id: 1,
+      title: '1번',
+    },
+    {
+      id: 2,
+      title: '2번',
+    },
+  ];
+  const navigate = useNavigate();
 
   // JSX
   return (
     <LectureContainer>
       <SearchBar>
-        <select name="" className="search-option" id="lecture-state">
-          <option value="00">강의상태</option>
-          <option value="01">1번</option>
-          <option value="02">2번</option>
-        </select>
-        <select name="" className="search-option" id="lecture-list">
-          <option value="00">강의명</option>
-          <option value="01">1번강의</option>
-          <option value="02">2번강의</option>
-        </select>
+        <Dropdown
+          length="short"
+          placeholder="강의상태"
+          data={data}
+          value={lectureStatus}
+          setValue={setLectureStatus}
+          reset={true}
+        />
+        <Dropdown
+          length="long"
+          placeholder="강의명"
+          data={data}
+          value={lectureName}
+          setValue={setLectureName}
+          reset={true}
+        />
         <Input length="short" placeholder="교수명" />
       </SearchBar>
 
-      <Link to="/bachelor/lecture/approval" style={{ display: 'inline-block' }}>
-        <CommonButton value="강의 개강" onClick={handleBtnClick} />
-      </Link>
-      <CommonButton value="테스트" onClick={handleBtnClick} />
+      <CommonButton btnType="page" value="강의 개강" onClick={handlePageBtnClick} />
+
+      <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
+      <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
+      <CommonButton value="테스트" color="gray" onClick={handleBtnClick} />
       <CommonButton value="onclick없음" />
 
       {arr.length === 0 ? (
@@ -112,7 +138,12 @@ const Lecture = () => {
                     <td>{item.j}</td>
                     <td>{item.k}</td>
                     <td>
-                      <button onClick={() => handleShowDetail(item)}>상세보기</button>
+                      <CommonButton
+                        value="상세보기"
+                        color="gray"
+                        btnType="table"
+                        onClick={() => handleShowDetail(item)}
+                      />
                     </td>
                   </tr>
                 ))}

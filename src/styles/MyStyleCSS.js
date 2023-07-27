@@ -98,17 +98,51 @@ export const NoData = styled.div`
 `;
 
 // 공통 버튼
-export const CommonBtn = styled.button`
-  display: ${({ onClick }) => (onClick ? 'block' : 'none')};
-
-  margin: 10px;
-  width: 105px;
-  height: 30px;
-  border: none;
-  border-radius: 5px;
-  background-color: #dff6ff;
+const pageBtn = `
+  padding: 6px 18px;
+  border-radius: 5px; 
   color: #7e7e7e;
   font-size: 16px;
+`;
+const tableBtn = `
+  padding: 4px 8px;
+  border-radius: 3px; 
+  color: #fff;
+  font-size: 12px;
+`;
+const modalBtn = `
+  padding: 6px 18px;
+  border-radius: 10px; 
+  color: #fff;
+  font-size: 12px;
+`;
+export const CommonBtn = styled.button`
+  margin: 10px;
+  display: ${({ onClick }) => (onClick ? 'block' : 'none')};
+  ${({ btnType }) => (btnType === 'page' ? pageBtn : btnType === 'modal' ? modalBtn : tableBtn)};
+  background-color: ${({ color }) =>
+    color === 'gray'
+      ? '#C0C3C6'
+      : color === 'blue'
+      ? 'var(--primary-color)'
+      : color === 'red'
+      ? 'var(--negative-color)'
+      : '#dff6ff'};
+
+  border: none;
   font-weight: 500;
+  text-align: center;
   cursor: pointer;
+`;
+const btnContainer = `
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 30px;
+`;
+const btnBox = `
+  display: inline-block;
+`;
+export const CommonBtnArea = styled.div`
+  ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
 `;
