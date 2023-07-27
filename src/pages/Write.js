@@ -29,15 +29,23 @@ const Write = () => {
         <td className="leftTitle">
           <strong>상태</strong>
         </td>
-        <td>
-          <input type="checkbox" value={check} onClick={e => handleCheck(e)} />
+        <td className="importantCheck">
+          <input type="checkbox" value={check} />
+          <p>
+            <strong>*중요</strong>
+          </p>
         </td>
       </tr>
       <tr>
+        <td>
+          <input type="file" multiple />
+        </td>
         <td className="leftTitle">
           <strong>내용</strong>
         </td>
-        <td></td>
+        <td>
+          <textarea name="hi" id="hi" cols="80" rows="20"></textarea>
+        </td>
       </tr>
     </Ltable>
   );

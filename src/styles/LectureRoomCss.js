@@ -30,6 +30,25 @@ export const Ltable = styled.table`
   .leftTitle {
     background: #dff6ff;
   }
+  .importantCheck {
+    display: flex;
+    padding-left: 33px;
+
+    input[type='checkbox'] {
+      transform: scale(1.5);
+
+      cursor: pointer;
+    }
+    p {
+      padding-left: 30px;
+      color: red;
+    }
+  }
+  textarea {
+    display: block;
+    text-align: justify;
+    margin-left: 32px;
+  }
 `;
 
 export const Pagenation = styled.div`
