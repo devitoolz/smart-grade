@@ -162,7 +162,10 @@ const Lecture = () => {
           contents={contents}
           modalSize="small"
           modalTitle="강의실 추가"
-        />
+        >
+          <p>모달 작은 창 버전</p>
+          <p>내용추가</p>
+        </CommonModal>
       ) : (
         <></>
       )}

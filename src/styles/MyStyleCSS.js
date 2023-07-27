@@ -110,6 +110,15 @@ export const ModalStyle = styled.div`
       line-height: 2.5;
       padding-bottom: 1rem;
     }
+    .modal-contents {
+      width: 92%;
+      height: 65%;
+      font-size: 24px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
   }
 `;
 

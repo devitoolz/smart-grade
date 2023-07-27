@@ -1,9 +1,9 @@
 import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 
-const CommonModal = ({ setDisplay, contents, modalSize, modalTitle }) => {
+const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) => {
   console.log(contents);
-  console.log(modalSize);
+
   // JSX
   return (
     <ModalStyle modalSize={modalSize}>
@@ -16,9 +16,7 @@ const CommonModal = ({ setDisplay, contents, modalSize, modalTitle }) => {
         ) : (
           <p className="modal-title">{contents.lecture}</p>
         )}
-        <div className="modal-contents">
-          <p>modal contents</p>
-        </div>
+        <div className="modal-contents">{children}</div>
 
         <div className="modal-footer">
           <CommonButton value="확인" onClick={() => setDisplay(false)} btnType="modal" />
