@@ -105,6 +105,7 @@ const pageBtn = `
   font-size: 16px;
 `;
 const tableBtn = `
+  margin: 0 4px;
   padding: 4px 8px;
   border-radius: 3px; 
   color: #fff;
@@ -117,7 +118,6 @@ const modalBtn = `
   font-size: 12px;
 `;
 export const CommonBtn = styled.button`
-  margin: 10px;
   display: ${({ onClick }) => (onClick ? 'block' : 'none')};
   ${({ btnType }) => (btnType === 'page' ? pageBtn : btnType === 'modal' ? modalBtn : tableBtn)};
   background-color: ${({ color }) =>

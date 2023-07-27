@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { TableArea, TempStyle } from '../styles/MyStyleCSS';
+import { useNavigate } from 'react-router-dom';
+import CommonButton from '../components/CommonButton';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -34,6 +36,12 @@ const Approval = () => {
     },
   ];
 
+  //
+  const navigate = useNavigate();
+  const handlePageBtnClick = () => {
+    navigate(-1);
+  };
+
   // JSX
   return (
     <div>
@@ -47,6 +55,7 @@ const Approval = () => {
       >
         강의승인
       </p>
+      <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
       <TableArea>
         <table>
           <thead>
@@ -75,15 +84,18 @@ const Approval = () => {
                 <td>{item.peopleNum}</td>
                 <td>
                   <div>
-                    <button
+                    <CommonButton
+                      btnType="table"
+                      value="승인"
+                      color="blue"
                       onClick={() => handleAcceptLecture(item)}
-                      style={{ background: 'skyblue' }}
-                    >
-                      승인
-                    </button>
-                    <button onClick={handleRejectLecture} style={{ background: 'coral' }}>
-                      거절
-                    </button>
+                    />
+                    <CommonButton
+                      btnType="table"
+                      value="거절"
+                      color="red"
+                      onClick={handleRejectLecture}
+                    />
                   </div>
                 </td>
               </tr>

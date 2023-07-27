@@ -89,10 +89,10 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개강" onClick={handlePageBtnClick} />
 
-      <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
+      {/* <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
       <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
       <CommonButton value="테스트" color="gray" onClick={handleBtnClick} />
-      <CommonButton value="onclick없음" />
+      <CommonButton value="onclick없음" /> */}
 
       {arr.length === 0 ? (
         <NoData>
