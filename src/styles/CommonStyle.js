@@ -13,6 +13,8 @@ const CustomInput = styled.div`
       ? '160px'
       : length === 'short'
       ? '120px'
+      : length === 'full'
+      ? '100%'
       : '120px'};
   height: 35px;
   padding: 0 10px;

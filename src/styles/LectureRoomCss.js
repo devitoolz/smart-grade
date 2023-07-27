@@ -11,17 +11,24 @@ export const Ltable = styled.table`
   border-collapse: collapse;
   /* margin-top: 70px; */
   text-align: center;
-  background: #f8f8f8;
+  background: #fff;
   th {
     background-color: #dff6ff;
     border-top: 1px solid #1363df;
     border-right: 1px solid #dae8ff;
-    padding: 15px 0;
+    padding: 10px 0;
   }
 
   td {
     border: 1px solid #dae8ff;
     padding: 15px 0;
+  }
+  .inputTitle {
+    padding: 11px 30px;
+    background: #fff;
+  }
+  .leftTitle {
+    background: #dff6ff;
   }
 `;
 

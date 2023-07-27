@@ -1,7 +1,9 @@
 import React from 'react';
 import { TableArea } from '../styles/MyStyleCSS';
+import { useNavigate } from 'react-router-dom';
 
 const Notice = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div style={{ borderRadius: 5, width: 80, height: 30, background: 'coral' }}>Notice</div>
@@ -30,15 +32,21 @@ const Notice = () => {
                   <td>2023-07-19</td>
                   <td>
                     <button>수정</button>
-                    <button>수정</button>
-                    <button>수정</button>
+                    <button>보기</button>
+                    <button>삭제</button>
                   </td>
                 </tr>
               ))}
           </tbody>
         </table>
       </TableArea>
-      <button>글쓰기</button>
+      <button
+        onClick={() => {
+          navigate('/home/notice/write');
+        }}
+      >
+        글쓰기
+      </button>
       <div className="pagination">
         <span>1 2 3 4 5 6 7 8 9 </span>
       </div>
