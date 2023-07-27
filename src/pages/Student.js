@@ -32,17 +32,18 @@ const Student = () => {
     setMajorList(majorData);
   }, []);
 
-  const tableHeader = [
-    { title: '학번', width: null },
-    { title: '학년', width: null },
-    { title: '전공', width: null },
-    { title: '이름', width: null },
-    { title: '성별', width: null },
-    { title: '생년월일', width: null },
-    { title: '입학년도', width: null },
-    { title: '졸업\n여부', width: null },
-    { title: '이수\n학점', width: null },
-  ];
+  // const tableHeader = [
+  //   { title: '학번', width: null },
+  //   { title: '학년', width: null },
+  //   { title: '전공', width: null },
+  //   { title: '이름', width: null },
+  //   { title: '성별', width: null },
+  //   { title: '생년월일', width: null },
+  //   { title: '입학년도', width: null },
+  //   { title: '졸업\n여부', width: null },
+  //   { title: '이수\n학점', width: null },
+  //   { title: '상세\n보기', width: null },
+  // ];
 
   return (
     <Layout>
@@ -73,32 +74,6 @@ const Student = () => {
         />
         <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
-      <TableArea>
-        <table>
-          <thead>
-            <tr>
-              {tableHeader.map((item, index) => (
-                <th key={index} style={item.width ? { width: item.width } : null}>
-                  {item.title}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {Array(10)
-              .fill()
-              .map((_, idx) => (
-                <tr key={idx}>
-                  {tableHeader.map((item, index) => (
-                    <td key={index} style={item.width ? { width: item.width } : null}>
-                      {index}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-          </tbody>
-        </table>
-      </TableArea>
     </Layout>
   );
 };

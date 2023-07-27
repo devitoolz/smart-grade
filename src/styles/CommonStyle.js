@@ -2,8 +2,20 @@ import styled from '@emotion/styled';
 
 const CustomInput = styled.div`
   display: flex;
+  border: 1px solid var(--primary-border-color);
+  background: var(--white);
   align-items: center;
   position: relative;
+  width: ${({ length }) =>
+    length === 'long'
+      ? '200px'
+      : length === 'middle'
+      ? '160px'
+      : length === 'short'
+      ? '120px'
+      : '120px'};
+  height: 35px;
+  padding: 0 10px;
   &:hover {
     > svg {
       visibility: ${props => (props.value ? 'visible' : 'hidden')};
@@ -11,19 +23,10 @@ const CustomInput = styled.div`
     }
   }
   > input {
-    border: 1px solid var(--primary-border-color);
-    width: ${({ length }) =>
-      length === 'long'
-        ? '180px'
-        : length === 'middle'
-        ? '140px'
-        : length === 'short'
-        ? '100px'
-        : 'auto'};
-    height: 35px;
-    padding: 10px;
+    border: none;
+    height: 100%;
+    width: 100%;
     font-size: 14px;
-    background: var(--white);
     &::placeholder {
       color: var(--search-ph-color);
     }
@@ -31,6 +34,8 @@ const CustomInput = styled.div`
   > svg {
     cursor: pointer;
     position: absolute;
+    background: var(--white);
+    padding-left: 5px;
     right: 8px;
     font-size: 16px;
     color: var(--search-ph-color);
@@ -45,12 +50,12 @@ const CustomDropdown = styled.div`
   border: 1px solid var(--primary-border-color);
   width: ${({ length }) =>
     length === 'long'
-      ? '180px'
+      ? '200px'
       : length === 'middle'
-      ? '140px'
+      ? '160px'
       : length === 'short'
-      ? '100px'
-      : '100px'};
+      ? '120px'
+      : '120px'};
   height: 35px;
   font-size: 14px;
   background: var(--white);
@@ -66,12 +71,12 @@ const CustomDropdown = styled.div`
     > input {
       width: ${({ length }) =>
         length === 'long'
-          ? 'calc(180px - 12px - 32px)'
+          ? 'calc(200px - 12px - 27px)'
           : length === 'middle'
-          ? 'calc(140px - 12px - 32px)'
+          ? 'calc(160px - 12px - 27px)'
           : length === 'short'
-          ? 'calc(100px - 12px - 32px)'
-          : 'calc(100px - 12px -32px)'};
+          ? 'calc(120px - 12px - 27px)'
+          : 'calc(120px - 12px - 27px)'};
       height: 100%;
       font-size: 14px;
       background: var(--white);
@@ -98,6 +103,7 @@ const CustomDropdown = styled.div`
       &.reset {
         cursor: pointer;
         font-size: 16px;
+        padding-left: 5px;
         background: var(--white);
         position: absolute;
         right: 8px;
@@ -118,12 +124,12 @@ const CustomDropdown = styled.div`
       background: var(--white);
       width: ${({ length }) =>
         length === 'long'
-          ? '180px'
+          ? '200px'
           : length === 'middle'
-          ? '140px'
+          ? '160px'
           : length === 'short'
-          ? '100px'
-          : '100px'};
+          ? '120px'
+          : '120px'};
       height: 35px;
       border: 1px solid var(--primary-border-color);
       border-top: none;
