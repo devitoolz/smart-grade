@@ -17,6 +17,8 @@ import {
   faHouse,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
+import majorSlice from '../slices/majorSlice';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -59,6 +61,22 @@ const Main = () => {
     setActiveIndex(menuData[mainPath].index || 1);
     setTitle(menuData[mainPath].submenu[subPath] || '');
   }, [pathname]);
+
+  const dispatch = useDispatch();
+  const major = majorSlice.actions;
+
+  // TODO: 추후 axios GET 으로 변경 예정
+  useEffect(() => {
+    const result = [
+      { id: 1, title: '내용 1' },
+      { id: 2, title: '내용 2' },
+      { id: 3, title: '내용 3' },
+      { id: 4, title: '내용 4' },
+      { id: 5, title: '내용 5' },
+    ];
+
+    dispatch(major.loadMajorList(result));
+  }, []);
 
   return (
     <MainLayout>
