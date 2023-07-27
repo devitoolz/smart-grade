@@ -156,7 +156,16 @@ const Lecture = () => {
           </div>
         </>
       )}
-      {display ? <CommonModal setDisplay={setDisplay} contents={contents} /> : <></>}
+      {display ? (
+        <CommonModal
+          setDisplay={setDisplay}
+          contents={contents}
+          modalSize="small"
+          modalTitle="강의실 추가"
+        />
+      ) : (
+        <></>
+      )}
     </LectureContainer>
   );
 };

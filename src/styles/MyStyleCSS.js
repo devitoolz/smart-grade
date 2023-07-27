@@ -51,39 +51,6 @@ export const LectureContainer = styled.div`
   width: 100%;
 `;
 
-export const TempStyle = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(0, 23, 60, 0.7);
-  .modal-box {
-    width: 72%;
-    height: 72%;
-    background-color: #fff;
-    padding-top: 2rem;
-    border-radius: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-    button {
-      width: 48px;
-      height: 48px;
-    }
-    p {
-      font-size: 32px;
-      text-align: center;
-      line-height: 2.5;
-      padding-bottom: 1rem;
-    }
-  }
-`;
-
 export const NoData = styled.div`
   display: flex;
   justify-content: center;
@@ -94,6 +61,55 @@ export const NoData = styled.div`
   p {
     margin-top: 20px;
     font-size: 80px;
+  }
+`;
+
+// 공통 모달
+export const ModalStyle = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  background-color: rgba(0, 23, 60, 0.7);
+  .modal-box {
+    width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
+    min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
+    height: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '72%')};
+    background-color: #fff;
+    padding-top: 1rem;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    .modal-title-small {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 24px;
+      font-weight: 700;
+
+      padding: 2px 32px 16px 32px;
+      border-bottom: 1px solid #dae8ff;
+      button {
+        font-size: 24px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+      }
+    }
+    .modal-title {
+      font-size: 32px;
+      text-align: center;
+      line-height: 2.5;
+      padding-bottom: 1rem;
+    }
   }
 `;
 
@@ -112,10 +128,11 @@ const tableBtn = `
   font-size: 12px;
 `;
 const modalBtn = `
-  padding: 6px 18px;
+  margin: 2px 8px;
+  padding: 6px 24px;
   border-radius: 10px; 
-  color: #fff;
-  font-size: 12px;
+  color: #7e7e7e;
+  font-size: 18px;
 `;
 export const CommonBtn = styled.button`
   display: ${({ onClick }) => (onClick ? 'block' : 'none')};
