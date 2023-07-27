@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TableArea, TempStyle } from '../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
+import CommonModal from '../components/CommonModal';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -106,23 +107,8 @@ const Approval = () => {
       <div className="pagination" style={{ background: 'pink' }}>
         <span>1 2 3 4 5 6 7 8 9 </span>
       </div>
-      {display ? <TempModal setDisplay={setDisplay} contents={contents} /> : null}
+      {display ? <CommonModal setDisplay={setDisplay} contents={contents} /> : null}
     </div>
-  );
-};
-
-const TempModal = ({ setDisplay, contents }) => {
-  // JSX
-  return (
-    <TempStyle>
-      <div className="modal-box">
-        <p>{contents.lecture}</p>
-        <div>
-          <button onClick={() => setDisplay(false)}>확인</button>
-          <button onClick={() => setDisplay(false)}>취소</button>
-        </div>
-      </div>
-    </TempStyle>
   );
 };
 

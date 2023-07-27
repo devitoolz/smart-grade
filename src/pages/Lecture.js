@@ -5,6 +5,7 @@ import Input from '../components/Input';
 import { Link, useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import Dropdown from '../components/Dropdown';
+import CommonModal from '../components/CommonModal';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -18,7 +19,7 @@ const Lecture = () => {
       a: '1',
       b: '2',
       c: '컴퓨터공학과',
-      d: '데이터베이스',
+      lecture: '데이터베이스',
       e: '김그린',
       f: '2',
       g: '6호관 404호',
@@ -31,7 +32,7 @@ const Lecture = () => {
       a: '1',
       b: '3',
       c: '컴퓨터공학과',
-      d: '웹프로그래밍',
+      lecture: '웹프로그래밍',
       e: '김그린',
       f: '3',
       g: '6호관 404호',
@@ -87,7 +88,7 @@ const Lecture = () => {
         <Input length="short" placeholder="교수명" />
       </SearchBar>
 
-      <CommonButton btnType="page" value="강의 개강" onClick={handlePageBtnClick} />
+      <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
       {/* <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
       <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
@@ -129,7 +130,7 @@ const Lecture = () => {
                     <td>{item.a}</td>
                     <td>{item.b}</td>
                     <td>{item.c}</td>
-                    <td>{item.d}</td>
+                    <td>{item.lecture}</td>
                     <td>{item.e}</td>
                     <td>{item.f}</td>
                     <td>{item.g}</td>
@@ -155,57 +156,8 @@ const Lecture = () => {
           </div>
         </>
       )}
-      {display ? <TempModal setDisplay={setDisplay} contents={contents} /> : <></>}
+      {display ? <CommonModal setDisplay={setDisplay} contents={contents} /> : <></>}
     </LectureContainer>
-  );
-};
-
-const TempModal = ({ setDisplay, contents }) => {
-  // JSX
-  return (
-    <TempStyle>
-      <div className="modal-box">
-        <p>{contents.d}</p>
-        <TableArea>
-          <table>
-            <thead>
-              <tr>
-                <th>학번</th>
-                <th>이름</th>
-                <th>성별</th>
-                <th>전공</th>
-                <th>출석</th>
-                <th>중간</th>
-                <th>기말</th>
-                <th>평점</th>
-                <th>최종성적</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Array(5)
-                .fill()
-                .map(() => (
-                  <tr key={0}>
-                    <td>001</td>
-                    <td>002</td>
-                    <td>003</td>
-                    <td>004</td>
-                    <td>005</td>
-                    <td>006</td>
-                    <td>007</td>
-                    <td>008</td>
-                    <td>009</td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </TableArea>
-        <div className="pagination" style={{ background: 'pink' }}>
-          <span>1 2 3 4 5 6 7 8 9 </span>
-        </div>
-        <button onClick={() => setDisplay(false)}>닫기</button>
-      </div>
-    </TempStyle>
   );
 };
 

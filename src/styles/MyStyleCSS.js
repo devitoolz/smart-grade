@@ -99,7 +99,7 @@ export const NoData = styled.div`
 
 // 공통 버튼
 const pageBtn = `
-  padding: 6px 18px;
+  padding: 8px 18px;
   border-radius: 5px; 
   color: #7e7e7e;
   font-size: 16px;
