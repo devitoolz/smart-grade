@@ -87,7 +87,8 @@ export const ModalStyle = styled.div`
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    .modal-title-small {
+    .modal-title-small,
+    .modal-title {
       width: 100%;
       display: flex;
       justify-content: space-between;
@@ -106,18 +107,22 @@ export const ModalStyle = styled.div`
     }
     .modal-title {
       font-size: 32px;
-      text-align: center;
-      line-height: 2.5;
-      padding-bottom: 1rem;
+      padding-top: 8px;
+      border-bottom-color: transparent;
+      /* text-align: center;
+      line-height: 2.5; */
     }
     .modal-contents {
       width: 92%;
-      height: 65%;
+      height: ${({ modalSize }) => (modalSize === 'big' ? '80%' : '65%')};
       font-size: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+    }
+    .modal-footer {
+      display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'block')};
     }
   }
 `;

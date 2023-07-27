@@ -107,7 +107,18 @@ const Approval = () => {
       <div className="pagination" style={{ background: 'pink' }}>
         <span>1 2 3 4 5 6 7 8 9 </span>
       </div>
-      {display ? <CommonModal setDisplay={setDisplay} contents={contents} /> : null}
+      {display ? (
+        <CommonModal
+          setDisplay={setDisplay}
+          contents={contents}
+          modalSize="small"
+          modalTitle="개설 승인"
+        >
+          <p>모달 작은 창 버전</p>
+          <p>{contents.lecture}</p>
+          <p>내용추가</p>
+        </CommonModal>
+      ) : null}
     </div>
   );
 };

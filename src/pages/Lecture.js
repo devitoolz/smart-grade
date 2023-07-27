@@ -160,10 +160,10 @@ const Lecture = () => {
         <CommonModal
           setDisplay={setDisplay}
           contents={contents}
-          modalSize="small"
           modalTitle="강의실 추가"
+          modalSize="big"
         >
-          <p>모달 작은 창 버전</p>
+          <p>모달창 큰 버전</p>
           <p>내용추가</p>
         </CommonModal>
       ) : (
