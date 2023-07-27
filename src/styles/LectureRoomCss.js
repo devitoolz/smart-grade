@@ -1,29 +1,24 @@
 import styled from '@emotion/styled';
 
-export const Lwrap = styled.div``;
-
+export const Lwrap = styled.div`
+  width: 100%;
+`;
+export const CommonButton = styled.div`
+  margin: 35px 0;
+`;
 export const Ltable = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-top: 70px;
+  /* margin-top: 70px; */
   text-align: center;
   background: #f8f8f8;
-
-  colgroup {
-    .number {
-      width: 7%;
-    }
-    .place {
-      width: 35%;
-    }
-    .capacity {
-      width: 15%;
-    }
-    .management {
-      width: 20%;
-    }
+  th {
+    background-color: #dff6ff;
+    border-top: 1px solid #1363df;
+    border-right: 1px solid #dae8ff;
+    padding: 15px 0;
   }
-  th,
+
   td {
     border: 1px solid #dae8ff;
     padding: 15px 0;
