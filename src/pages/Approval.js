@@ -111,7 +111,7 @@ const Approval = () => {
         <CommonModal
           setDisplay={setDisplay}
           contents={contents}
-          modalSize="small"
+          modalSize="middle"
           modalTitle="개설 승인"
         >
           <p>모달 작은 창 버전</p>

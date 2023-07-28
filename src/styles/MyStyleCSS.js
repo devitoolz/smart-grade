@@ -77,9 +77,12 @@ export const ModalStyle = styled.div`
   padding: 20px;
   background-color: rgba(0, 23, 60, 0.7);
   .modal-box {
-    width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
-    min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
-    height: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '72%')};
+    width: ${({ modalSize }) =>
+      modalSize === 'small' ? '720px' : modalSize === 'middle' ? '980px' : '1136px'};
+    min-width: ${({ modalSize }) =>
+      modalSize === 'small' ? '480px' : modalSize === 'middle' ? '600px' : '800px'};
+    height: ${({ modalSize }) =>
+      modalSize === 'small' ? '480px' : modalSize === 'middle' ? '612px' : '72%'};
     background-color: #fff;
     padding-top: 1rem;
     border-radius: 20px;
@@ -108,21 +111,26 @@ export const ModalStyle = styled.div`
     .modal-title {
       font-size: 32px;
       padding-top: 8px;
-      border-bottom-color: transparent;
-      /* text-align: center;
-      line-height: 2.5; */
+      border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
       width: 92%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '80%' : '65%')};
+      height: ${({ modalSize }) =>
+        modalSize === 'big' ? '80%' : modalSize === 'middle' ? '70%' : '65%'};
       font-size: 24px;
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      /* ${({ modalSize }) => (modalSize === 'middle' ? 'row' : 'column')}; */
     }
     .modal-footer {
       display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'block')};
+      width: 100%;
+      text-align: center;
+      padding: 12px 0;
+      border-top: 1px solid
+        ${({ modalSize }) => (modalSize === 'middle' ? '#dae8ff' : 'transparent')};
     }
   }
 `;

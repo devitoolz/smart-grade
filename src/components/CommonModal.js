@@ -15,7 +15,7 @@ const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) 
           </div>
         ) : (
           <div className="modal-title">
-            <div>{contents.lecture}</div>
+            <div>{contents?.lecture}</div>
             <button onClick={() => setDisplay(false)}>X</button>
           </div>
         )}
