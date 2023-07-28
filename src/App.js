@@ -13,6 +13,7 @@ import LectureRoom from './pages/LectureRoom';
 import Major from './pages/Major';
 import { GlobalLayout } from './styles/AppStyle';
 import Approval from './pages/Approval';
+import Write from './pages/Write';
 
 const App = () => {
   return (
@@ -24,6 +25,7 @@ const App = () => {
           <Route path="home" element={<Navigate to="dashboard" />} />
           <Route path="home/dashboard" element={<Dashboard />} />
           <Route path="home/notice" element={<Notice />} />
+          <Route path="/home/notice/write" element={<Write />} />
           <Route path="user" element={<Navigate to="professor" />} />
           <Route path="user/professor" element={<Professor />} />
           <Route path="user/student" element={<Student />} />
