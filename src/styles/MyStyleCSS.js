@@ -131,6 +131,8 @@ export const ModalStyle = styled.div`
       padding: 12px 0;
       border-top: 1px solid
         ${({ modalSize }) => (modalSize === 'middle' ? '#dae8ff' : 'transparent')};
+      ${({ modalSize }) =>
+        modalSize === 'middle' ? `button { margin: 12px 18px; padding: 8px 32px; }` : ''};
     }
   }
 `;
