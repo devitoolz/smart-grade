@@ -69,27 +69,42 @@ export const PlusModal = styled.div`
       padding: 15px 20px;
     }
   }
-  .palceTitle {
+  .placeTitle {
+    padding-left: 5px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-
     border-bottom: 1px solid #dae8ff;
+    .dropDownControl {
+      z-index: 99;
+    }
+    .controls {
+      display: flex;
+      align-items: center;
+    }
 
     .inputControl {
       display: flex;
       padding: 12px 20px;
+      align-items: center;
+      p {
+        margin-left: 5px;
+      }
     }
   }
   .capacityTitle {
     display: flex;
-    justify-content: space-around;
+    justify-content: flex-start;
     border-bottom: 1px solid #dae8ff;
     align-items: center;
 
     .inputControl {
       display: flex;
       padding: 12px 20px;
+      align-items: center;
+      p {
+        margin-left: 5px;
+      }
     }
   }
   .btns {

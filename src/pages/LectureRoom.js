@@ -27,14 +27,16 @@ const LectureRoom = () => {
           </p>
           <p>X</p>
         </div>
-        <div className="palceTitle">
+        <div className="placeTitle">
           <p>장소 :</p>
-          <div className="dropDownControl">
-            <Dropdown />
-          </div>
-          <div className="inputControl">
-            <Input text="text" length="short" />
-            <p>호</p>
+          <div className="controls">
+            <div className="dropDownControl">
+              <Dropdown placeholder="건물명" />
+            </div>
+            <div className="inputControl">
+              <Input text="text" length="short" />
+              <p>호</p>
+            </div>
           </div>
         </div>
         <div className="capacityTitle">
