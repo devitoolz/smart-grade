@@ -1,8 +1,15 @@
 import React from 'react';
 import { TableBody, TableHead, TableContainer, Pagination } from '../styles/TableStyle';
+import { useSearchParams } from 'react-router-dom';
 
 const Table = ({ header, data, children }) => {
   const width = header.map(item => item.width + 'fr').join(' ');
+
+  const [query, setQuery] = useSearchParams();
+  const test = () => {
+    query.set('page', 1);
+    setQuery(query);
+  };
 
   return (
     <>
@@ -27,7 +34,9 @@ const Table = ({ header, data, children }) => {
             ))}
         </TableBody>
       </TableContainer>
-      <Pagination>gdgd</Pagination>
+      <Pagination>
+        <button onClick={test}>Test</button>
+      </Pagination>
     </>
   );
 };

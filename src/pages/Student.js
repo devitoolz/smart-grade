@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Layout } from '../styles/CommonStyle';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
@@ -6,7 +6,8 @@ import Input from '../components/Input';
 import { useSelector } from 'react-redux';
 import ButtonBar from '../components/ButtonBar';
 import Table from '../components/Table';
-import { useLocation, useSearchParams } from 'react-router-dom';
+
+import useSearchFetch from '../hooks/useSearchFetch';
 
 const Student = () => {
   const gradeList = Array(4)
@@ -178,9 +179,13 @@ const Student = () => {
     ],
   };
 
+  const queries = { grade, major, studentId, name };
+
+  useSearchFetch('/api/students');
+
   return (
     <Layout>
-      <SearchBar onSearch={() => console.log('search')}>
+      <SearchBar queries={queries} setPage={false}>
         <Dropdown
           length="short"
           placeholder="학년"
