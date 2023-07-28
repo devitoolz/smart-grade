@@ -3,6 +3,7 @@ import CommonButton from './CommonButton';
 
 const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) => {
   console.log(contents);
+  console.log(modalSize);
 
   // JSX
   return (
@@ -22,7 +23,11 @@ const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) 
         <div className="modal-contents">{children}</div>
 
         <div className="modal-footer">
-          <CommonButton value="확인" onClick={() => setDisplay(false)} btnType="modal" />
+          <CommonButton
+            value={modalSize === 'middle' ? '등록' : '확인'}
+            onClick={() => setDisplay(false)}
+            btnType="modal"
+          />
           <CommonButton value="취소" onClick={() => setDisplay(false)} btnType="modal" />
         </div>
       </div>
