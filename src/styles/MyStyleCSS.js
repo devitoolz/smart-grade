@@ -77,29 +77,25 @@ export const ModalStyle = styled.div`
   padding: 20px;
   background-color: rgba(0, 23, 60, 0.7);
   .modal-box {
-    width: ${({ modalSize }) =>
-      modalSize === 'small' ? '720px' : modalSize === 'middle' ? '980px' : '1136px'};
-    min-width: ${({ modalSize }) =>
-      modalSize === 'small' ? '480px' : modalSize === 'middle' ? '600px' : '800px'};
-    height: ${({ modalSize }) =>
-      modalSize === 'small' ? '480px' : modalSize === 'middle' ? '612px' : '72%'};
+    width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
+    min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
+    height: ${({ modalSize }) => (modalSize === 'small' ? '420px' : '72%')};
     background-color: #fff;
-    padding-top: 1rem;
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
     .modal-title-small,
     .modal-title {
       width: 100%;
+      height: ${({ modalSize }) => (modalSize === 'big' ? '12%' : '18%')};
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 24px;
       font-weight: 700;
 
-      padding: 2px 32px 16px 32px;
+      padding: 0 32px;
       border-bottom: 1px solid #dae8ff;
       button {
         font-size: 24px;
@@ -110,29 +106,58 @@ export const ModalStyle = styled.div`
     }
     .modal-title {
       font-size: 32px;
-      padding-top: 8px;
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
-      width: 92%;
-      height: ${({ modalSize }) =>
-        modalSize === 'big' ? '80%' : modalSize === 'middle' ? '70%' : '65%'};
-      font-size: 24px;
+      width: 100%;
+      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '60%')};
       display: flex;
-      justify-content: center;
+      justify-content: ${({ modalSize }) => (modalSize === 'middle' ? 'space-around' : 'center')};
       align-items: center;
       flex-direction: column;
+      font-size: 24px;
+
+      & > * {
+        line-height: 2;
+      }
       /* ${({ modalSize }) => (modalSize === 'middle' ? 'row' : 'column')}; */
+      /* & > div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: 0 5%;
+        &:first-of-type {
+          border-bottom: 1px solid #dae8ff;
+        }
+        label {
+          flex-basis: 32%;
+          font-size: 20px;
+        }
+        label + div {
+          flex-basis: 100%;
+          margin: 0 10px;
+        }
+      } */
     }
     .modal-footer {
-      display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'block')};
+      display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'flex')};
+      justify-content: center;
       width: 100%;
       text-align: center;
-      padding: 12px 0;
-      border-top: 1px solid
-        ${({ modalSize }) => (modalSize === 'middle' ? '#dae8ff' : 'transparent')};
-      ${({ modalSize }) =>
-        modalSize === 'middle' ? `button { margin: 12px 18px; padding: 8px 32px; }` : ''};
+      /* padding: 8px 0; */
+      /* border-top: 1px solid #dae8ff; */
+      /* ${({ modalSize }) => (modalSize === 'middle' ? '#dae8ff' : 'transparent')}; */
+      /* ${({ modalSize }) =>
+        modalSize === 'middle'
+          ? `
+        `
+          : ''}; */
+      button {
+        margin: 12px 18px;
+        padding: 8px 32px;
+      }
     }
   }
 `;
