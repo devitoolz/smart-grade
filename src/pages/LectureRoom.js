@@ -1,7 +1,8 @@
 // import React, { useEffect, useState } from 'react';
-import { Lwrap, Ltable, Pagenation } from '../styles/LectureRoomCss';
+import { Lwrap, Ltable, PlusModal, Pagenation } from '../styles/LectureRoomCss';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
+import Input from '../components/Input';
 import CommonButton from '../components/CommonButton';
 
 const LectureRoom = () => {
@@ -19,7 +20,47 @@ const LectureRoom = () => {
         <Dropdown placeholder="건물명" />
       </SearchBar>
       <CommonButton btnType="page" value="강의실 추가" onClick={gogo} />
-
+      <PlusModal>
+        <div className="majorTitle">
+          <p>
+            <strong>강의실 추가</strong>
+          </p>
+          <p>X</p>
+        </div>
+        <div className="palceTitle">
+          <p>장소 :</p>
+          <div className="dropDownControl">
+            <Dropdown />
+          </div>
+          <div className="inputControl">
+            <Input text="text" length="short" />
+            <p>호</p>
+          </div>
+        </div>
+        <div className="capacityTitle">
+          <p>최대수용인원 : </p>
+          <div className="inputControl">
+            <Input text="text" length="short" />
+            <p>명</p>
+          </div>
+        </div>
+        <div className="btns">
+          <CommonButton
+            btnType="modal"
+            color="blue"
+            value="등록"
+            onClick={gogo}
+            className="registeration"
+          ></CommonButton>
+          <CommonButton
+            btnType="modal"
+            color="blue"
+            value="취소"
+            onClick={gogo}
+            className="cancellation"
+          ></CommonButton>
+        </div>
+      </PlusModal>
       <Ltable>
         <colgroup>
           <col className="number" width="7%" />
@@ -41,7 +82,7 @@ const LectureRoom = () => {
               <td>2</td>
               <td>3</td>
               <td>
-                <CommonButton color="blue" btnType="table" value="삭제" onClick={bye} />
+                <CommonButton color="red" btnType="table" value="삭제" onClick={bye} />
               </td>
               <td>5</td>
             </tr>

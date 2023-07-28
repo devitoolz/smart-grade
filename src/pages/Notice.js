@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPen } from '@fortawesome/free-solid-svg-icons';
 import { TableArea } from '../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
 
@@ -40,12 +42,9 @@ const Notice = () => {
           </tbody>
         </table>
       </TableArea>
-      <button
-        onClick={() => {
-          navigate('/home/notice/write');
-        }}
-      >
+      <button onClick={() => navigate('/home/notice/write')}>
         글쓰기
+        <FontAwesomeIcon icon={faPen} />
       </button>
       <div className="pagination">
         <span>1 2 3 4 5 6 7 8 9 </span>

@@ -6,7 +6,7 @@ const Write = () => {
   const [title, setTitle] = useState('');
 
   //공지사항 체크박스
-  const [check, setCheck] = useState('unchecked');
+  const [check, setCheck] = useState();
 
   const handleCheck = e => {
     if (e.target.check) {
@@ -30,16 +30,17 @@ const Write = () => {
           <strong>상태</strong>
         </td>
         <td className="importantCheck">
-          <input type="checkbox" value={check} />
+          <input type="checkbox" value="1" />
           <p>
             <strong>*중요</strong>
           </p>
         </td>
       </tr>
       <tr>
-        <td>
-          <input type="file" multiple />
-        </td>
+        <td>첨부파일</td>
+        <td></td>
+      </tr>
+      <tr>
         <td className="leftTitle">
           <strong>내용</strong>
         </td>

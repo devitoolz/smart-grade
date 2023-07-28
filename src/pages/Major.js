@@ -3,6 +3,7 @@ import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
 import { Ltable, Lwrap, Pagenation } from '../styles/LectureRoomCss';
 import CommonButton from '../components/CommonButton';
+import { useNavigate } from 'react-router-dom';
 const Major = () => {
   const gogo = () => {
     console.log('gogo');
@@ -14,6 +15,7 @@ const Major = () => {
   const bye = () => {
     alert('삭제하시겠습니까?');
   };
+  const navigate = useNavigate();
   return (
     <Lwrap>
       <SearchBar>
@@ -46,7 +48,7 @@ const Major = () => {
               <td>O</td>
               <td>
                 <CommonButton color="blue" btnType="table" value="수정" onClick={hi} />
-                <CommonButton color="blue" btnType="table" value="삭제" onClick={bye} />
+                <CommonButton color="red" btnType="table" value="삭제" onClick={bye} />
               </td>
               <td>4</td>
             </tr>
@@ -116,7 +118,7 @@ const Major = () => {
         </tr> */}
       </Ltable>
       <Pagenation>
-        <p>1</p>
+        <p onClick={() => navigate('/home/notice/write')}>1</p>
         <p>2</p>
         <p>3</p>
         <p>4</p>

@@ -21,7 +21,6 @@ export const Ltable = styled.table`
 
   td {
     border: 1px solid #dae8ff;
-    padding: 15px 0;
   }
   .inputTitle {
     padding: 11px 30px;
@@ -51,9 +50,58 @@ export const Ltable = styled.table`
   }
 `;
 
+export const PlusModal = styled.div`
+  margin-left: 20px;
+  width: 400px;
+  height: 238px;
+  background-color: skyblue;
+  border: #000;
+  border-radius: 20px;
+
+  display: flex;
+  flex-direction: column;
+  .majorTitle {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #dae8ff;
+
+    p {
+      padding: 15px 20px;
+    }
+  }
+  .palceTitle {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    border-bottom: 1px solid #dae8ff;
+
+    .inputControl {
+      display: flex;
+      padding: 12px 20px;
+    }
+  }
+  .capacityTitle {
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #dae8ff;
+    align-items: center;
+
+    .inputControl {
+      display: flex;
+      padding: 12px 20px;
+    }
+  }
+  .btns {
+    display: flex;
+    justify-content: center;
+  }
+`;
+
 export const Pagenation = styled.div`
   display: flex;
   justify-content: center;
   p {
+    padding: 10px;
   }
 `;
