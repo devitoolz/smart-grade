@@ -2,20 +2,21 @@ import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
-const useSearchFetch = url => {
+const useQuerySearch = (url, click) => {
   const location = useLocation();
 
-  useEffect(() => {
-    const fetch = async () => {
-      try {
-        await axios.get(`${url}${location.search}`);
-      } catch (error) {
-        console.log(error);
-      }
-    };
+  const fetch = async () => {
+    try {
+      await axios.get(`${url}${location.search}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  useEffect(() => {
+    if (!url) return;
     fetch();
-  }, [location]);
+  }, [location.search, click]);
 };
 
-export default useSearchFetch;
+export default useQuerySearch;

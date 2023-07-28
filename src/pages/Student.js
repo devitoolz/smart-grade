@@ -7,8 +7,6 @@ import { useSelector } from 'react-redux';
 import ButtonBar from '../components/ButtonBar';
 import Table from '../components/Table';
 
-import useSearchFetch from '../hooks/useSearchFetch';
-
 const Student = () => {
   const gradeList = Array(4)
     .fill()
@@ -33,7 +31,7 @@ const Student = () => {
     { title: '전화번호', width: 3 },
     { title: '입학년도', width: 3 },
     { title: '졸업여부', width: 2 },
-    { title: '이수학점', width: 1 },
+    { title: '이수학점', width: 2 },
     { title: '상세보기', width: 2 },
   ];
 
@@ -180,12 +178,12 @@ const Student = () => {
   };
 
   const queries = { grade, major, studentId, name };
-
-  useSearchFetch('/api/students');
+  // const url = '/api/students';
+  const url = '';
 
   return (
     <Layout>
-      <SearchBar queries={queries} setPage={false}>
+      <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
           placeholder="학년"
@@ -213,7 +211,7 @@ const Student = () => {
         <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => console.log('학생 추가')} />
-      <Table header={tableHeader} data={data.studnets}>
+      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
         {data.studnets.map(item => {
           return (
             <div key={item.istudent}>

@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 
 const Layout = styled.div`
   width: 100%;
-  height: calc(100% - 70px);
+  padding-top: 70px;
+  height: 100%;
   display: flex;
   flex-direction: column;
+  justify-content: center;
 `;
 
 const CustomInput = styled.div`

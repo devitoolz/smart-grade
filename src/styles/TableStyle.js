@@ -20,8 +20,9 @@ const TableHead = styled.div`
   > div {
     padding: 0 5px;
     text-align: center;
-    height: 35px;
-    line-height: 35px;
+    height: 45px;
+    font-weight: bold;
+    line-height: 45px;
     border-right: 1px solid var(--table-border-color);
     &:last-of-type {
       border-right: none;
@@ -54,7 +55,34 @@ const Pagination = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 30px;
+  padding: 30px;
 `;
 
-export { TableContainer, TableHead, TableBody, Pagination };
+const PageButton = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  font-size: 16px;
+  background: ${({ isCurrent }) => (isCurrent ? 'var(--main-bg-color)' : null)};
+  cursor: ${({ isCurrent }) => (!isCurrent ? 'pointer' : null)};
+  border-radius: 5px;
+  transition: all 0.3s ease-in-out;
+`;
+
+const PrevNextButton = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  width: 30px;
+  height: 30px;
+  opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 0.3)};
+  transition: all 0.3s ease-in-out;
+  &:hover {
+    opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 1)};
+  }
+`;
+
+export { TableContainer, TableHead, TableBody, Pagination, PageButton, PrevNextButton };
