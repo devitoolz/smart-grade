@@ -5,14 +5,14 @@ const flexCenter = `
   align-items: center;
 `;
 
-const SearchLayout = styled.div`
+const SearchBarLayout = styled.div`
   width: 100%;
   height: 80px;
   min-height: 80px;
   display: flex;
   ${flexCenter};
   background: var(--search-bg-color);
-  margin-top: 70px;
+  margin-top: 60px;
   gap: 15px;
 `;
 
@@ -27,4 +27,4 @@ const SearchButton = styled.span`
   border: 1px solid var(--primary-border-color);
 `;
 
-export { SearchLayout, SearchButton };
+export { SearchBarLayout, SearchButton };
