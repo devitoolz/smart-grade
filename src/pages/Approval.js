@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
-import { TableArea, TempStyle } from '../styles/MyStyleCSS';
+import { TableArea } from '../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import CommonModal from '../components/CommonModal';
-import Input from '../components/Input';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
   // 승인
   const [isAccept, setIsAccept] = useState(true);
-  const handleRejectLecture = () => {
+  const handleRejectLecture = _item => {
     console.log('Reject');
+    setContents(_item);
+    console.log(_item);
     setDisplay(true);
     setIsAccept(false);
   };
   const handleAcceptLecture = _item => {
     console.log('Accept');
     setContents(_item);
+    console.log(_item);
     setDisplay(true);
     setIsAccept(true);
   };
@@ -47,7 +49,6 @@ const Approval = () => {
   const handlePageBtnClick = () => {
     navigate(-1);
   };
-  const [value, setValue] = useState('');
 
   // JSX
   return (
@@ -105,7 +106,7 @@ const Approval = () => {
                       btnType="table"
                       value="거절"
                       color="red"
-                      onClick={handleRejectLecture}
+                      onClick={() => handleRejectLecture(item)}
                     />
                   </div>
                 </td>
