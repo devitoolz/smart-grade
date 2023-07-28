@@ -1,8 +1,64 @@
-import React from 'react';
-import { TableBody, TableHead, TableContainer, Pagination } from '../styles/TableStyle';
+import React, { useEffect, useState } from 'react';
+import {
+  TableBody,
+  TableHead,
+  TableContainer,
+  Pagination,
+  PageButton,
+  PrevNextButton,
+} from '../styles/TableStyle';
+import { useSearchParams } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
-const Table = ({ header, data, children }) => {
+const Table = ({ header, data, children, hasPage, maxPage }) => {
   const width = header.map(item => item.width + 'fr').join(' ');
+
+  const [query, setQuery] = useSearchParams();
+  const currentPage = query.get('page') ? parseInt(query.get('page')) : 1;
+  const [listIndex, setListIndex] = useState(0);
+  const maxListIndex = Math.ceil(maxPage / 5) - 1;
+
+  const [pageList, setPageList] = useState([]);
+
+  const makePageList = () => {
+    const startIndex = (listIndex + 1) * 5 - 4;
+    let length;
+    if (maxListIndex === listIndex) {
+      length = maxPage % 5 === 0 ? 5 : maxPage % 5;
+    } else if (listIndex < maxListIndex) {
+      length = 5;
+    }
+    const list = Array(length)
+      .fill()
+      .map((_, index) => startIndex + index);
+    setPageList(list);
+  };
+
+  useEffect(() => {
+    makePageList();
+  }, [listIndex]);
+
+  useEffect(() => {
+    setListIndex(parseInt((currentPage - 1) / 5));
+  }, [query]);
+
+  const movePage = num => {
+    query.set('page', num);
+    setQuery(query);
+  };
+
+  const prevPage = () => {
+    if (currentPage == 1) return;
+    query.set('page', currentPage - 1);
+    setQuery(query);
+  };
+
+  const nextPage = () => {
+    if (currentPage == maxPage) return;
+    query.set('page', currentPage + 1);
+    setQuery(query);
+  };
 
   return (
     <>
@@ -27,7 +83,28 @@ const Table = ({ header, data, children }) => {
             ))}
         </TableBody>
       </TableContainer>
-      <Pagination>gdgd</Pagination>
+      {hasPage && (
+        <Pagination>
+          <PrevNextButton onClick={prevPage} isFirst={currentPage === 1 ? true : false}>
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </PrevNextButton>
+          {pageList.map(page => {
+            const isCurrent = parseInt(currentPage) === page;
+            return (
+              <PageButton
+                onClick={() => movePage(page)}
+                key={page}
+                isCurrent={!currentPage && page === 1 ? true : isCurrent}
+              >
+                {page}
+              </PageButton>
+            );
+          })}
+          <PrevNextButton onClick={nextPage} isLast={currentPage === maxPage ? true : false}>
+            <FontAwesomeIcon icon={faChevronRight} />
+          </PrevNextButton>
+        </Pagination>
+      )}
     </>
   );
 };

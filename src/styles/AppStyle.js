@@ -88,6 +88,7 @@ const SubMenu = styled.ul`
 `;
 
 const Content = styled.div`
+  overflow: auto;
   width: 100%;
   height: 100%;
 `;
@@ -95,12 +96,16 @@ const Content = styled.div`
 const Title = styled.div`
   display: flex;
   height: 70px;
+  width: 100%;
+  position: fixed;
   align-items: center;
+  background: var(--white);
   border-bottom: 1px solid var(--main-border-color);
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
   padding-left: 30px;
+  z-index: 9;
 `;
 
 export { GlobalLayout, MainLayout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };

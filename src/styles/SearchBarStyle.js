@@ -7,12 +7,10 @@ const flexCenter = `
 
 const SearchBarLayout = styled.div`
   width: 100%;
-  height: 80px;
-  min-height: 80px;
+  padding: 30px 0;
   display: flex;
   ${flexCenter};
   background: var(--search-bg-color);
-  margin-top: 60px;
   gap: 15px;
 `;
 

@@ -2,8 +2,7 @@ import styled from '@emotion/styled';
 
 const ButtonBarLayout = styled.div`
   width: 100%;
-  height: 80px;
-  min-height: 80px;
+  padding: 30px 0;
   display: flex;
   align-items: center;
   justify-content: flex-end;
