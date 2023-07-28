@@ -1,5 +1,12 @@
 import styled from '@emotion/styled';
 
+const Layout = styled.div`
+  width: 100%;
+  height: calc(100% - 70px);
+  display: flex;
+  flex-direction: column;
+`;
+
 const CustomInput = styled.div`
   display: flex;
   border: 1px solid var(--primary-border-color);
@@ -162,11 +169,4 @@ const CustomDropdown = styled.div`
   }
 `;
 
-const Layout = styled.div`
-  width: 100%;
-  height: calc(100% - 70px);
-  display: flex;
-  flex-direction: column;
-`;
-
-export { CustomInput, CustomDropdown, Layout };
+export { Layout, CustomInput, CustomDropdown };

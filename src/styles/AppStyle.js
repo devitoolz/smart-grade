@@ -10,7 +10,6 @@ const light = css`
     --primary-color: #47b5ff;
     --primary-border-color: #cacaca;
     --negative-color: #ff6b6b;
-    --table-bg-color: #f8f8f8;
     --table-border-color: #dae8ff;
     --search-bg-color: #d9d9d9;
     --search-ph-color: #a6a6a6;

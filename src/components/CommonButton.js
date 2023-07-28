@@ -5,7 +5,7 @@ const CommonButton = ({ btnType, color, value, onClick }) => {
   return (
     <CommonBtnArea btnType={btnType}>
       <CommonBtn btnType={btnType} color={color} onClick={onClick}>
-        {value}
+        <span>{value}</span>
       </CommonBtn>
     </CommonBtnArea>
   );
