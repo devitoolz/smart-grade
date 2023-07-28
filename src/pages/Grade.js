@@ -3,6 +3,7 @@ import { TableArea, NoData } from '../styles/MyStyleCSS';
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
+import CommonButton from '../components/CommonButton';
 
 const Grade = () => {
   const arr = [
@@ -102,9 +103,9 @@ const Grade = () => {
           setValue={setGrade}
           reset={true}
         />
-        <Input length="short" placeholder="이름" />
         <Input length="middle" placeholder="학번" />
       </SearchBar>
+      <CommonButton btnType="page" value="학생상세정보" onClick={() => console.log('test')} />
       {arr.length === 0 ? (
         <NoData>
           <div>{randomValue}</div>
