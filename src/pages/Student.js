@@ -6,9 +6,11 @@ import { useSelector } from 'react-redux';
 import ButtonBar from '../components/ButtonBar';
 import Table from '../components/Table';
 import { useNavigate } from 'react-router-dom';
+import useQuerySearch from '../hooks/useSearchFetch';
 
 const Student = () => {
   const navigate = useNavigate();
+  const [click, setClick] = useState(false);
 
   const gradeList = Array(4)
     .fill()
@@ -17,9 +19,9 @@ const Student = () => {
     });
 
   const [grade, setGrade] = useState(null);
-  const [major, setMajor] = useState(null);
-  const [studentId, setStudentId] = useState('');
-  const [name, setName] = useState('');
+  const [imajor, setImajor] = useState(null);
+  const [studentNum, setStudentNum] = useState('');
+  const [nm, setNm] = useState('');
 
   const { majorList } = useSelector(state => state.major);
 
@@ -37,155 +39,14 @@ const Student = () => {
     { title: '상세보기', width: 2 },
   ];
 
-  const data = {
-    page: {
-      staIdx: 0,
-      page: 1,
-      maxPage: 3,
-      isMore: 1,
-      row: 10,
-    },
-    studnets: [
-      {
-        istudent: 1,
-        studentNum: '23100001',
-        grade: 3,
-        nm: '재경킴',
-        majoirName: '게임콘텐츠과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 3,
-      },
-      {
-        istudent: 3,
-        studentNum: '23100002',
-        grade: 1,
-        nm: '지녹제',
-        majoirName: '건축공학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 3,
-      },
-      {
-        istudent: 4,
-        studentNum: '2310003',
-        grade: 1,
-        nm: '지코바',
-        majoirName: '게임공학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 6,
-        studentNum: '2310004',
-        grade: 1,
-        nm: '지코바',
-        majoirName: '고분자공학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 7,
-        studentNum: '2310005',
-        grade: 1,
-        nm: '갓후라이드',
-        majoirName: '건축과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 8,
-        studentNum: '2310006',
-        grade: 1,
-        nm: '치킨',
-        majoirName: '공업화학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 9,
-        studentNum: '2310007',
-        grade: 1,
-        nm: '맛동산',
-        majoirName: '교통공학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 11,
-        studentNum: '2310008',
-        grade: 1,
-        nm: '겨란',
-        majoirName: '국방기술학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 12,
-        studentNum: '2310009',
-        grade: 1,
-        nm: '계란',
-        majoirName: '금형설계과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-      {
-        istudent: 13,
-        studentNum: '2310010',
-        grade: 1,
-        nm: '다리',
-        majoirName: '금속공학과',
-        gender: 'F',
-        birthdate: '2023-07-21',
-        phone: '010-2120-3636',
-        createdAt: '2023-07-21',
-        finishedYn: 1,
-        score: 0,
-      },
-    ],
-  };
+  const queries = { grade, imajor, studentNum, nm };
+  const url = '/api/admin/students';
 
-  const queries = { grade, major, studentId, name };
-  // const url = '/api/students';
-  const url = '';
+  const { data, pending } = useQuerySearch(url, click);
 
   return (
     <>
-      <SearchBar queries={queries} url={url} setPage={true}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           length="short"
           placeholder="학년"
@@ -198,8 +59,8 @@ const Student = () => {
           length="long"
           placeholder="전공"
           data={majorList}
-          value={major}
-          setValue={setMajor}
+          value={imajor}
+          setValue={setImajor}
           reset
           search
         />
@@ -207,20 +68,26 @@ const Student = () => {
           length="middle"
           type="number"
           placeholder="학번"
-          value={studentId}
-          setValue={setStudentId}
+          value={studentNum}
+          setValue={setStudentNum}
         />
-        <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
+        <Input length="short" type="text" placeholder="이름" value={nm} setValue={setNm} />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => navigate('/user/create', {})} />
-      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
-        {data.studnets.map(item => {
+      <Table
+        header={tableHeader}
+        data={data?.students}
+        hasPage={true}
+        maxPage={data?.page?.maxPage}
+        pending={pending}
+      >
+        {data?.students.map(item => {
           return (
             <div key={item.istudent}>
               <div>{item.studentNum}</div>
               <div>{item.grade}</div>
               <div>{item.nm}</div>
-              <div>{item.majoirName}</div>
+              <div>{item.majorName}</div>
               <div>{item.gender === 'M' ? '남' : '여'}</div>
               <div>{item.birthdate}</div>
               <div>{item.phone}</div>
