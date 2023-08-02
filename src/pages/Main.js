@@ -10,6 +10,7 @@ import {
   SubMenu,
   Title,
 } from '../styles/AppStyle';
+import { Layout } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBuildingColumns,
@@ -102,7 +103,9 @@ const Main = () => {
       </Sidebar>
       <Content>
         <Title>{title}</Title>
-        <Outlet />
+        <Layout>
+          <Outlet />
+        </Layout>
       </Content>
     </MainLayout>
   );

@@ -6,13 +6,18 @@ import {
   Pagination,
   PageButton,
   PrevNextButton,
+  TableNoData,
 } from '../styles/TableStyle';
 import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronLeft,
+  faChevronRight,
+  faTriangleExclamation,
+} from '@fortawesome/free-solid-svg-icons';
 
 const Table = ({ header, data, children, hasPage, maxPage }) => {
-  const width = header.map(item => item.width + 'fr').join(' ');
+  const width = header?.map(item => item.width + 'fr').join(' ');
 
   const [query, setQuery] = useSearchParams();
   const currentPage = query.get('page') ? parseInt(query.get('page')) : 1;
@@ -63,25 +68,34 @@ const Table = ({ header, data, children, hasPage, maxPage }) => {
   return (
     <>
       <TableContainer>
-        <TableHead template={width}>
-          {header.map((item, index) => (
-            <div key={index}>{item.title}</div>
-          ))}
-        </TableHead>
-        <TableBody template={width}>
-          {children}
-          {Array(10 - data.length)
-            .fill()
-            .map((_, index) => (
-              <div key={index}>
-                {Array(header.length)
-                  .fill()
-                  .map((_, index) => (
-                    <div key={index}></div>
-                  ))}
-              </div>
-            ))}
-        </TableBody>
+        {data && header ? (
+          <>
+            <TableHead template={width}>
+              {header?.map((item, index) => (
+                <div key={index}>{item.title}</div>
+              ))}
+            </TableHead>
+            <TableBody template={width}>
+              {children}
+              {Array(10 - data.length)
+                .fill()
+                .map((_, index) => (
+                  <div key={index}>
+                    {Array(header.length)
+                      .fill()
+                      .map((_, index) => (
+                        <div key={index}></div>
+                      ))}
+                  </div>
+                ))}
+            </TableBody>
+          </>
+        ) : (
+          <TableNoData>
+            <FontAwesomeIcon icon={faTriangleExclamation} />
+            <span>데이터를 불러오지 못했습니다.</span>
+          </TableNoData>
+        )}
       </TableContainer>
       {hasPage && (
         <Pagination>
