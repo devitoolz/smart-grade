@@ -3,7 +3,15 @@ import CommonButton from './CommonButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
 
-const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) => {
+const CommonModal = ({
+  setDisplay,
+  contents,
+  modalSize,
+  modalTitle,
+  children,
+  handleModalOk,
+  handleModalCancel,
+}) => {
   console.log(contents);
   console.log(modalSize);
 
@@ -31,10 +39,20 @@ const CommonModal = ({ setDisplay, contents, modalSize, modalTitle, children }) 
         <div className="modal-footer">
           <CommonButton
             value={modalSize === 'middle' ? '등록' : '확인'}
-            onClick={() => setDisplay(false)}
+            onClick={() => {
+              handleModalOk();
+              setDisplay(false);
+            }}
             btnType="modal"
           />
-          <CommonButton value="취소" onClick={() => setDisplay(false)} btnType="modal" />
+          <CommonButton
+            value="취소"
+            onClick={() => {
+              handleModalCancel();
+              setDisplay(false);
+            }}
+            btnType="modal"
+          />
         </div>
       </div>
     </ModalStyle>

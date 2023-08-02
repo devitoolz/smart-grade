@@ -83,6 +83,15 @@ const Approval = () => {
       peopleNum: 30,
     },
   ];
+  // 모달 버튼 클릭이벤트
+  const handleModalOk = () => {
+    console.log(contents);
+    console.log('modal click - ok');
+  };
+  const handleModalCancel = () => {
+    console.log(contents);
+    console.log('modal click - no');
+  };
 
   // JSX
   return (
@@ -131,31 +140,13 @@ const Approval = () => {
         })}
       </Table>
       {display ? (
-        // <CommonModal
-        //   setDisplay={setDisplay}
-        //   contents={contents}
-        //   modalSize="small"
-        //   modalTitle="개설 승인"
-        // >
-        //   {/* <p>모달 작은 창 버전</p>
-        //   <p>{contents.lecture}</p>
-        //   <p>내용추가</p> */}
-        //   <div>
-        //     <label>전공명</label>
-        //     <Input length="long" placeholder="전공명" value={value} setValue={setValue} />
-        //   </div>
-        //   <div>
-        //     <label>졸업학점</label>
-        //     <Input
-        //       type="number"
-        //       length="long"
-        //       placeholder="졸업학점"
-        //       value={value}
-        //       setValue={setValue}
-        //     />
-        //   </div>
-        // </CommonModal>
-        <CommonModal modalSize="small" modalTitle="요청 승인" setDisplay={setDisplay}>
+        <CommonModal
+          modalSize="small"
+          modalTitle="요청 승인"
+          setDisplay={setDisplay}
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
           {isAccept ? (
             <>
               <p>다음 요청을 승인하시겠습니까?</p>
@@ -171,3 +162,29 @@ const Approval = () => {
 };
 
 export default Approval;
+/*
+// <CommonModal
+//   setDisplay={setDisplay}
+//   contents={contents}
+//   modalSize="small"
+//   modalTitle="개설 승인"
+// >
+//   <p>모달 작은 창 버전</p>
+//   <p>{contents.lecture}</p>
+//   <p>내용추가</p>
+//   <div>
+//     <label>전공명</label>
+//     <Input length="long" placeholder="전공명" value={value} setValue={setValue} />
+//   </div>
+//   <div>
+//     <label>졸업학점</label>
+//     <Input
+//       type="number"
+//       length="long"
+//       placeholder="졸업학점"
+//       value={value}
+//       setValue={setValue}
+//     />
+//   </div>
+// </CommonModal>
+*/
