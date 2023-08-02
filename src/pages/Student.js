@@ -28,8 +28,8 @@ const Student = () => {
   const tableHeader = [
     { title: '학번', width: 2 },
     { title: '학년', width: 1 },
-    { title: '이름', width: 2 },
     { title: '전공', width: 4 },
+    { title: '이름', width: 2 },
     { title: '성별', width: 1 },
     { title: '생년월일', width: 3 },
     { title: '전화번호', width: 3 },
@@ -86,13 +86,13 @@ const Student = () => {
             <div key={item.istudent}>
               <div>{item.studentNum}</div>
               <div>{item.grade}</div>
-              <div>{item.nm}</div>
               <div>{item.majorName}</div>
+              <div>{item.nm}</div>
               <div>{item.gender === 'M' ? '남' : '여'}</div>
               <div>{item.birthdate}</div>
               <div>{item.phone}</div>
               <div>{item.createdAt}</div>
-              <div>{item.finishedYn === 1 ? '재학 중' : '재학 중'}</div>
+              <div>{item.finishedYn === 1 ? '졸업' : '재학 중'}</div>
               <div>{item.score}</div>
               <div>
                 <button>hihihihi</button>
