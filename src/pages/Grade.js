@@ -73,7 +73,7 @@ const Grade = () => {
   let randomValue = array[Math.floor(Math.random() * array.length)];
 
   // 드롭다운
-  const data = [
+  const semesterData = [
     { id: 1, title: '1학기' },
     { id: 2, title: '2학기' },
   ];
@@ -145,13 +145,17 @@ const Grade = () => {
     },
   ];
 
+  // 쿼리
+  const queries = { semester, grade, studentId };
+  const url = '';
+
   return (
     <Layout>
-      <SearchBar>
+      <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
           placeholder="학기"
-          data={data}
+          data={semesterData}
           value={semester}
           setValue={setSemester}
           reset={true}

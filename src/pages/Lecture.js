@@ -109,12 +109,14 @@ const Lecture = () => {
       k: '상태',
     },
   ];
-  //
+  // 쿼리
+  const queries = { lectureStatus, lectureName, professorName };
+  const url = '';
 
   // JSX
   return (
     <Layout>
-      <SearchBar>
+      <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
           placeholder="강의상태"
