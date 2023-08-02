@@ -49,9 +49,7 @@ const Lecture = () => {
     console.log('btn click');
     navigate('/bachelor/lecture/approval');
   };
-  const handleBtnClick = () => {
-    console.log('btn click');
-  };
+
   // 드롭다운 테스트
   const [lectureName, setLectureName] = useState();
   const [lectureStatus, setLectureStatus] = useState();
@@ -144,11 +142,6 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
-      {/* <CommonButton btnType="modal" value="상세보기" color="red" onClick={handleBtnClick} />
-      <CommonButton value="테스트" color="blue" onClick={handleBtnClick} />
-      <CommonButton value="테스트" color="gray" onClick={handleBtnClick} />
-      <CommonButton value="onclick없음" /> */}
-
       {arr.length === 0 ? (
         <NoData>
           <p>검색해주세요</p>
@@ -175,7 +168,7 @@ const Lecture = () => {
                       btnType="table"
                       color="gray"
                       value="상세보기"
-                      onClick={() => console.log('table')}
+                      onClick={() => handleShowDetail(item)}
                     />
                   </div>
                 </div>
