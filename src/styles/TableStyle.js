@@ -51,6 +51,19 @@ const TableBody = styled.div`
   }
 `;
 
+const TableNoData = styled.div`
+  height: 406px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  > svg {
+    font-size: 60px;
+    color: red;
+    padding-bottom: 20px;
+  }
+`;
+
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
@@ -78,11 +91,20 @@ const PrevNextButton = styled.span`
   font-size: 12px;
   width: 30px;
   height: 30px;
+  cursor: pointer;
   opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 0.3)};
-  transition: all 0.3s ease-in-out;
+  transition: all 0.2s ease-in-out;
   &:hover {
     opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 1)};
   }
 `;
 
-export { TableContainer, TableHead, TableBody, Pagination, PageButton, PrevNextButton };
+export {
+  TableContainer,
+  TableHead,
+  TableBody,
+  TableNoData,
+  Pagination,
+  PageButton,
+  PrevNextButton,
+};

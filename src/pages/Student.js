@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Layout } from '../styles/CommonStyle';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
@@ -182,7 +181,7 @@ const Student = () => {
   const url = '';
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
@@ -211,7 +210,7 @@ const Student = () => {
         <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => console.log('학생 추가')} />
-      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
+      <Table data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
         {data.studnets.map(item => {
           return (
             <div key={item.istudent}>
@@ -232,7 +231,7 @@ const Student = () => {
           );
         })}
       </Table>
-    </Layout>
+    </>
   );
 };
 
