@@ -121,11 +121,3 @@ export const PlusModal = styled.div`
     margin-top: 18px;
   }
 `;
-
-export const Pagenation = styled.div`
-  display: flex;
-  justify-content: center;
-  p {
-    padding: 10px;
-  }
-`;

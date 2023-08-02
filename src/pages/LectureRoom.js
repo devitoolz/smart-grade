@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { Lwrap, Ltable, PlusModal, Pagenation } from '../styles/LectureRoomCss';
+import { Lwrap, PlusModal } from '../styles/LectureRoomCss';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
@@ -12,10 +12,36 @@ import CommonModal from '../components/CommonModal';
 import { ModalStyle } from '../styles/MyStyleCSS';
 
 const LectureRoom = () => {
+  const [value, setValue] = useState('');
+  const [_data, set_Data] = useState('');
+  //검색 시 사용할 쿼리스트링(건물명)
+  const building = ['a관', 'b관', 'c관', 'd관', 'e관', 'f관'];
+  const queries = building;
+
+  //검색 버튼 클릭시 요청할 APU URL
+  const url = ``;
+
+  const tableHeader = [
+    { title: '번호', width: 1 },
+    { title: '장소', width: 4 },
+    { title: '최종수용인원', width: 1 },
+    { title: '관리', width: 2 },
+    { title: '비고', width: 1 },
+  ];
+
+  const data = [
+    {
+      place: 'a관 201호',
+      capacityNumber: 100,
+    },
+    { place: 'a관 202호', capacityNumber: 80 },
+    { place: 'a관 203호', capacityNumber: 50 },
+  ];
   //강의실 추가 모달창 안 호실 인풋창 state
   const [roomNumber, setRoomNumber] = useState('');
   //강의실 추가 모달창 안 최대수용인원 인풋창 state
   const [capacityNumber, setCapacityNumber] = useState('');
+
   const gogo = () => {
     console.log('gogo');
   };
@@ -101,24 +127,23 @@ const LectureRoom = () => {
           </div>
         </PlusModal>
       ) : null}
-
+      <SearchBar queries={queries} setPage={true} url={url}>
+        <Dropdown
+          placeholder="건물명"
+          data={data}
+          value={value}
+          setValue={setValue}
+          reset={true}
+          search={true}
+        />
+      </SearchBar>
       <Layout>
-        <SearchBar></SearchBar>
-
-        <Table></Table>
+        <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
+          {data.map(item => {
+            return <div key={item.building}></div>;
+          })}
+        </Table>
       </Layout>
-      <Pagenation>
-        <p>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-        <p>5</p>
-        <p>6</p>
-        <p>7</p>
-        <p>8</p>
-        <p>9</p>
-        <p>10</p>
-      </Pagenation>
     </Lwrap>
   );
 };
