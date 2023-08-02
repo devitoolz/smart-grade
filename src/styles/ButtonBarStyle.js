@@ -16,7 +16,7 @@ const Button = styled.span`
   cursor: pointer;
   font-size: 14px;
   border-radius: 5px;
-  padding: 0 15px;
+  padding: 0 25px;
   height: 35px;
   background: var(--main-bg-color);
 `;

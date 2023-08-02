@@ -5,8 +5,11 @@ import Input from '../components/Input';
 import { useSelector } from 'react-redux';
 import ButtonBar from '../components/ButtonBar';
 import Table from '../components/Table';
+import { useNavigate } from 'react-router-dom';
 
 const Student = () => {
+  const navigate = useNavigate();
+
   const gradeList = Array(4)
     .fill()
     .map((_, index) => {
@@ -209,8 +212,8 @@ const Student = () => {
         />
         <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
-      <ButtonBar value="계정 생성" onClick={() => console.log('학생 추가')} />
-      <Table data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
+      <ButtonBar value="계정 생성" onClick={() => navigate('/user/create', {})} />
+      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={12}>
         {data.studnets.map(item => {
           return (
             <div key={item.istudent}>
