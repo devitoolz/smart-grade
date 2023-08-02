@@ -76,6 +76,7 @@ export const ModalStyle = styled.div`
   align-items: center;
   padding: 20px;
   background-color: rgba(0, 23, 60, 0.7);
+  z-index: 999;
   .modal-box {
     width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
     min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
