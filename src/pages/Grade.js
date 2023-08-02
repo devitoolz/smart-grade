@@ -4,6 +4,7 @@ import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
 import Dropdown from '../components/Dropdown';
 import CommonButton from '../components/CommonButton';
+import { Layout } from '../styles/CommonStyle';
 
 const Grade = () => {
   const arr = [
@@ -86,25 +87,27 @@ const Grade = () => {
 
   return (
     <div>
-      <SearchBar>
-        <Dropdown
-          length="short"
-          placeholder="학기"
-          data={data}
-          value={semester}
-          setValue={setSemester}
-          reset={true}
-        />
-        <Dropdown
-          length="short"
-          placeholder="학년"
-          data={gradeData}
-          value={grade}
-          setValue={setGrade}
-          reset={true}
-        />
-        <Input length="middle" placeholder="학번" />
-      </SearchBar>
+      <Layout>
+        <SearchBar>
+          <Dropdown
+            length="short"
+            placeholder="학기"
+            data={data}
+            value={semester}
+            setValue={setSemester}
+            reset={true}
+          />
+          <Dropdown
+            length="short"
+            placeholder="학년"
+            data={gradeData}
+            value={grade}
+            setValue={setGrade}
+            reset={true}
+          />
+          <Input length="middle" placeholder="학번" />
+        </SearchBar>
+      </Layout>
       <CommonButton btnType="page" value="학생상세정보" onClick={() => console.log('test')} />
       {arr.length === 0 ? (
         <NoData>

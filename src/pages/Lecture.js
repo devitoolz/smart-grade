@@ -6,6 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import Dropdown from '../components/Dropdown';
 import CommonModal from '../components/CommonModal';
+import { Layout } from '../styles/CommonStyle';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -68,25 +69,27 @@ const Lecture = () => {
   // JSX
   return (
     <LectureContainer>
-      <SearchBar>
-        <Dropdown
-          length="short"
-          placeholder="강의상태"
-          data={data}
-          value={lectureStatus}
-          setValue={setLectureStatus}
-          reset={true}
-        />
-        <Dropdown
-          length="long"
-          placeholder="강의명"
-          data={data}
-          value={lectureName}
-          setValue={setLectureName}
-          reset={true}
-        />
-        <Input length="short" placeholder="교수명" />
-      </SearchBar>
+      <Layout>
+        <SearchBar>
+          <Dropdown
+            length="short"
+            placeholder="강의상태"
+            data={data}
+            value={lectureStatus}
+            setValue={setLectureStatus}
+            reset={true}
+          />
+          <Dropdown
+            length="long"
+            placeholder="강의명"
+            data={data}
+            value={lectureName}
+            setValue={setLectureName}
+            reset={true}
+          />
+          <Input length="short" placeholder="교수명" />
+        </SearchBar>
+      </Layout>
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
