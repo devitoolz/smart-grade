@@ -14,6 +14,7 @@ import Major from './pages/Major';
 import { GlobalLayout } from './styles/AppStyle';
 import Approval from './pages/Approval';
 import Write from './pages/Write';
+import CreateUser from './pages/CreateUser';
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
           <Route path="user" element={<Navigate to="professor" />} />
           <Route path="user/professor" element={<Professor />} />
           <Route path="user/student" element={<Student />} />
+          <Route path="user/create" element={<CreateUser />} />
           <Route path="bachelor" element={<Navigate to="lecture" />} />
           <Route path="bachelor/lecture" element={<Lecture />} />
           <Route path="bachelor/lecture/approval" element={<Approval />} />

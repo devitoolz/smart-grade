@@ -1,15 +1,21 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 
 const useQuerySearch = (url, click) => {
   const location = useLocation();
+  const [pending, setIsPending] = useState(false);
+  const [data, setData] = useState(null);
 
   const fetch = async () => {
+    setIsPending(true);
     try {
-      await axios.get(`${url}${location.search}`);
+      const { data } = await axios.get(`${url}${location.search}`);
+      setData(data);
+      setIsPending(false);
     } catch (error) {
-      console.log(error);
+      setIsPending(false);
+      return;
     }
   };
 
@@ -17,6 +23,8 @@ const useQuerySearch = (url, click) => {
     if (!url) return;
     fetch();
   }, [location.search, click]);
+
+  return { data, pending };
 };
 
 export default useQuerySearch;

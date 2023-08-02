@@ -13,36 +13,35 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
+  faSpinner,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Table = ({ header, data, children, hasPage, maxPage }) => {
+const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
   const width = header?.map(item => item.width + 'fr').join(' ');
 
   const [query, setQuery] = useSearchParams();
   const currentPage = query.get('page') ? parseInt(query.get('page')) : 1;
   const [listIndex, setListIndex] = useState(0);
-  const maxListIndex = Math.ceil(maxPage / 5) - 1;
 
-  const [pageList, setPageList] = useState([]);
-
-  const makePageList = () => {
-    const startIndex = (listIndex + 1) * 5 - 4;
-    let length;
-    if (maxListIndex === listIndex) {
-      length = maxPage % 5 === 0 ? 5 : maxPage % 5;
-    } else if (listIndex < maxListIndex) {
-      length = 5;
-    }
-    const list = Array(length)
-      .fill()
-      .map((_, index) => startIndex + index);
-    setPageList(list);
-  };
+  const [pageList, setPageList] = useState([1]);
 
   useEffect(() => {
-    makePageList();
-  }, [listIndex]);
+    if (maxPage) {
+      const maxListIndex = Math.ceil(maxPage / 5) - 1;
+      const startIndex = (listIndex + 1) * 5 - 4;
+      let length;
+      if (maxListIndex === listIndex) {
+        length = maxPage % 5 === 0 ? 5 : maxPage % 5;
+      } else if (listIndex < maxListIndex) {
+        length = 5;
+      }
+      const list = Array(length)
+        .fill()
+        .map((_, index) => startIndex + index);
+      setPageList(list);
+    }
+  }, [maxPage, listIndex]);
 
   useEffect(() => {
     setListIndex(parseInt((currentPage - 1) / 5));
@@ -68,7 +67,12 @@ const Table = ({ header, data, children, hasPage, maxPage }) => {
   return (
     <>
       <TableContainer>
-        {data && header ? (
+        {pending ? (
+          <TableNoData>
+            <FontAwesomeIcon icon={faSpinner} />
+            <span>로딩 중</span>
+          </TableNoData>
+        ) : data && header ? (
           <>
             <TableHead template={width}>
               {header?.map((item, index) => (
@@ -97,11 +101,13 @@ const Table = ({ header, data, children, hasPage, maxPage }) => {
           </TableNoData>
         )}
       </TableContainer>
-      {hasPage && (
+      {data && hasPage && (
         <Pagination>
-          <PrevNextButton onClick={prevPage} isFirst={currentPage === 1 ? true : false}>
-            <FontAwesomeIcon icon={faChevronLeft} />
-          </PrevNextButton>
+          {maxPage !== 0 ? (
+            <PrevNextButton onClick={prevPage} isFirst={currentPage === 1 ? true : false}>
+              <FontAwesomeIcon icon={faChevronLeft} />
+            </PrevNextButton>
+          ) : null}
           {pageList.map(page => {
             const isCurrent = parseInt(currentPage) === page;
             return (
@@ -114,9 +120,11 @@ const Table = ({ header, data, children, hasPage, maxPage }) => {
               </PageButton>
             );
           })}
-          <PrevNextButton onClick={nextPage} isLast={currentPage === maxPage ? true : false}>
-            <FontAwesomeIcon icon={faChevronRight} />
-          </PrevNextButton>
+          {maxPage !== 0 ? (
+            <PrevNextButton onClick={nextPage} isLast={currentPage === maxPage ? true : false}>
+              <FontAwesomeIcon icon={faChevronRight} />
+            </PrevNextButton>
+          ) : null}
         </Pagination>
       )}
     </>

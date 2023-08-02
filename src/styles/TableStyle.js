@@ -93,6 +93,7 @@ const PrevNextButton = styled.span`
   height: 30px;
   cursor: pointer;
   opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 0.3)};
+  visibility: ${({ isFirst, isLast }) => (isFirst || isLast ? 'hidden' : 'visible')};
   transition: all 0.2s ease-in-out;
   &:hover {
     opacity: ${({ isFirst, isLast }) => (isFirst || isLast ? 0 : 1)};
