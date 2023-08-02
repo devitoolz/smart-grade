@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import { Lwrap, PlusModal } from '../styles/LectureRoomCss';
+import { PlusModal } from '../styles/LectureRoomCss';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
 import Input from '../components/Input';
@@ -21,9 +21,12 @@ const LectureRoom = () => {
 
   ////Dropdown////
 
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(null);
+
+  //Dropdown 메뉴 Item 데이터??
   const [temp, setTemp] = useState([]);
 
+  //Dropdown 메뉴 Item 데이터
   const _temp = [
     { id: 1, title: 'a관' },
     { id: 2, title: 'b관' },
@@ -39,6 +42,7 @@ const LectureRoom = () => {
     { title: '관리', width: 2 },
     { title: '비고', width: 1 },
   ];
+
   //추후 API GET 요청 데이터
   const data = [
     {
@@ -98,9 +102,17 @@ const LectureRoom = () => {
   //modal활성화 시 배경 변경
 
   return (
-    <Lwrap>
-      {showModal === true ? <Lwrap /> : null}
-
+    <Layout>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
+        <Dropdown
+          placeholder="건물명"
+          data={_temp}
+          value={value}
+          setValue={setValue}
+          reset={true}
+          search={true}
+        />
+      </SearchBar>
       <CommonButton btnType="page" value="강의실 추가" onClick={modalOpen} />
 
       {/* modal이 활성화되면 modal을 띄워라 아니면 null  */}
@@ -156,35 +168,24 @@ const LectureRoom = () => {
           </div>
         </PlusModal>
       ) : null}
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown
-          placeholder="건물명"
-          data={_temp}
-          value={value}
-          setValue={setValue}
-          reset={true}
-          search={true}
-        />
-      </SearchBar>
-      <Layout>
-        <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
-          {data.map(item => {
-            return (
-              <div key={item.ilectureRoom}>
-                <div>{item.ilectureRoom}</div>
-                <div>
-                  {item.buildingname}
-                  {item.lectureRoomName}
-                </div>
-                <div>{item.maxCapacity}</div>
-                <div>{item.management}</div>
-                <div>{item.note}</div>
+
+      <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
+        {data.map(item => {
+          return (
+            <div key={item.ilectureRoom}>
+              <div>{item.ilectureRoom}</div>
+              <div>
+                {item.buildingname}
+                {item.lectureRoomName}
               </div>
-            );
-          })}
-        </Table>
-      </Layout>
-    </Lwrap>
+              <div>{item.maxCapacity}</div>
+              <div>{item.management}</div>
+              <div>{item.note}</div>
+            </div>
+          );
+        })}
+      </Table>
+    </Layout>
   );
 };
 

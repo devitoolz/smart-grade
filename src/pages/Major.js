@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
-import { Lwrap, PlusModal } from '../styles/LectureRoomCss';
+import { PlusModal } from '../styles/LectureRoomCss';
 import Input from '../components/Input';
 import CommonButton from '../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
@@ -98,7 +98,7 @@ const Major = () => {
   };
 
   return (
-    <Lwrap>
+    <Layout>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="상태"
@@ -138,7 +138,7 @@ const Major = () => {
           <div className="btns"></div>
         </PlusModal>
       ) : null}
-    </Lwrap>
+    </Layout>
   );
 };
 export default Major;
