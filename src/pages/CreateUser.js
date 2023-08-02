@@ -8,8 +8,11 @@ import {
   ButtonContainer,
   Button,
 } from '../styles/CreateUserStyle';
+import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {
+  const navigate = useNavigate();
+
   return (
     <CreateUserLayout>
       <NoticeSpan>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</NoticeSpan>
@@ -49,6 +52,7 @@ const CreateUser = () => {
       </FormTable>
       <ButtonContainer>
         <Button>생성</Button>
+        <Button onClick={() => navigate(-1)}>취소</Button>
       </ButtonContainer>
     </CreateUserLayout>
   );

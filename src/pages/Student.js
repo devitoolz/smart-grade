@@ -213,7 +213,7 @@ const Student = () => {
         <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => navigate('/user/create', {})} />
-      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={12}>
+      <Table header={tableHeader} data={data.studnets} hasPage={true} maxPage={data.page.maxPage}>
         {data.studnets.map(item => {
           return (
             <div key={item.istudent}>

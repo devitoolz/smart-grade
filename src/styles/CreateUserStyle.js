@@ -31,7 +31,7 @@ const FormTable = styled.div`
     text-overflow: ellipsis;
     word-break: break-all;
   }
-  /* border: 2px solid var(--title-txt-color); */
+  border: 2px solid var(--title-txt-color);
 `;
 
 const TwoColumns = styled.div`
@@ -42,17 +42,21 @@ const TwoColumns = styled.div`
     border-bottom: none;
   }
   > div {
-    color: var(--white);
+    color: var(--black);
     font-weight: bold;
     font-size: 16px;
     height: 45px;
     line-height: 45px;
     text-align: center;
+    border-right: 1px solid var(--table-border-color);
     &:nth-of-type(odd) {
-      background: var(--primary-color);
+      background: var(--main-bg-color);
     }
     &:nth-of-type(even) {
       background: #f8f8f8;
+    }
+    &:last-of-type {
+      border-right: none;
     }
     > input {
       height: 100%;
@@ -75,6 +79,7 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   padding-top: 50px;
+  gap: 20px;
 `;
 
 const Button = styled.span`
@@ -84,9 +89,13 @@ const Button = styled.span`
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
-  padding: 0 60px;
+  padding: 0 40px;
   height: 45px;
-  background: var(--main-bg-color);
+  background: var(--primary-color);
+  color: var(--white);
+  &:last-of-type {
+    background: var(--negative-color);
+  }
 `;
 
 export {
