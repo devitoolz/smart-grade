@@ -204,7 +204,7 @@ const btnContainer = `
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 30px;
+  padding: 3vh;
 `;
 const btnBox = `
   display: inline-block;

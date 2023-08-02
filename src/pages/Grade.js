@@ -146,34 +146,32 @@ const Grade = () => {
   ];
 
   return (
-    <div>
-      <Layout>
-        <SearchBar>
-          <Dropdown
-            length="short"
-            placeholder="학기"
-            data={data}
-            value={semester}
-            setValue={setSemester}
-            reset={true}
-          />
-          <Dropdown
-            length="short"
-            placeholder="학년"
-            data={gradeData}
-            value={grade}
-            setValue={setGrade}
-            reset={true}
-          />
-          <Input
-            length="middle"
-            type="number"
-            placeholder="학번"
-            value={studentId}
-            setValue={setStudentId}
-          />
-        </SearchBar>
-      </Layout>
+    <Layout>
+      <SearchBar>
+        <Dropdown
+          length="short"
+          placeholder="학기"
+          data={data}
+          value={semester}
+          setValue={setSemester}
+          reset={true}
+        />
+        <Dropdown
+          length="short"
+          placeholder="학년"
+          data={gradeData}
+          value={grade}
+          setValue={setGrade}
+          reset={true}
+        />
+        <Input
+          length="middle"
+          type="number"
+          placeholder="학번"
+          value={studentId}
+          setValue={setStudentId}
+        />
+      </SearchBar>
       <CommonButton btnType="page" value="학생상세정보" onClick={() => console.log('test')} />
       {arr.length === 0 ? (
         <NoData>
@@ -199,41 +197,8 @@ const Grade = () => {
           </Table>
         </>
       )}
-    </div>
+    </Layout>
   );
 };
 
 export default Grade;
-/*
-<TableArea>
-            <table style={{ textAlign: 'center' }}>
-              <thead> 
-             <tr>
-             <th style={{ background: 'pink' }}>학기</th>
-             <th style={{ background: 'pink' }}>학년</th>
-             <th>강의명zzzzzzzzzzzzzzzzzzzz</th>
-             <th style={{ background: 'yellow' }}>담당교수</th>
-             <th style={{ background: 'pink' }}>학점</th>
-             <th style={{ background: 'pink' }}>성적</th>
-             <th style={{ background: 'pink' }}>최종성적(등급)</th>
-           </tr>
-         </thead>
-         <tbody>
-           {arr.map((item, idx) => (
-             <tr key={idx}>
-               <td>{item.aa}</td>
-               <td>{item.bb}</td>
-               <td>{item.cc}</td>
-               <td>{item.dd}</td>
-               <td>{item.ee}</td>
-               <td>{item.ff}</td>
-               <td>{item.gg}</td>
-             </tr>
-           ))}
-         </tbody>
-       </table>
-     </TableArea>
-     <div className="pagination">
-       <span>1 2 3 4 5 6 7 8 9 </span>
-     </div>
-*/

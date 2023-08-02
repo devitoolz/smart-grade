@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import CommonModal from '../components/CommonModal';
 import Table from '../components/Table';
+import { Layout } from '../styles/CommonStyle';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -85,14 +86,12 @@ const Approval = () => {
 
   // JSX
   return (
-    <div>
+    <Layout>
       <div
         style={{
           width: '100%',
           height: '95px',
-          minHeight: '80px',
           background: 'var(--search-bg-color)',
-          marginTop: '70px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
@@ -167,7 +166,7 @@ const Approval = () => {
           )}
         </CommonModal>
       ) : null}
-    </div>
+    </Layout>
   );
 };
 
