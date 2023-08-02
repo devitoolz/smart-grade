@@ -1,12 +1,137 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faX } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
-import { Ltable, Lwrap, Pagenation } from '../styles/LectureRoomCss';
+import { PlusModal } from '../styles/LectureRoomCss';
+import Input from '../components/Input';
 import CommonButton from '../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
+import Table from '../components/Table';
+import { Layout } from '../styles/CommonStyle';
+
 const Major = () => {
+  ////SearchBar////
+  //검색 시 사용할 쿼리스트링(상태)
+  const situation = useState([]);
+
+  //검색 시 사용할 쿼리스트링(전공명)
+  const majorN = useState([]);
+
+  //검색 시 사용할 쿼리스트링목록
+  const queries = { situation, majorN };
+
+  //검색버튼 클릭시 state 변경 함수
+  const [click, setClick] = useState(false);
+
+  ////DropDown////
+  //DropDown value state
+  const [value, setValue] = useState(null);
+  //DropDown 메뉴 Item 상태데이터 state
+  const [status, setStatus] = useState('');
+  // DropDown 메뉴 Item 전공명데이터 state
+  const [majsornm, setMajsornm] = useState('');
+
+  // 상태 임시 데이터
+  const _status = [
+    {
+      id: 1,
+      title: '운영',
+    },
+    {
+      id: 2,
+      title: '폐지',
+    },
+  ];
+  //전공명 임시 데이터
+  const _majsornm = [
+    {
+      id: 1,
+      title: 'ㄱ전공',
+    },
+    {
+      id: 2,
+      title: 'aa전공',
+    },
+    {
+      id: 3,
+      title: 'g전공',
+    },
+    {
+      id: 4,
+      title: 'e전공',
+    },
+    {
+      id: 5,
+      title: 'd전공',
+    },
+    {
+      id: 6,
+      title: 'ㄱgf전공',
+    },
+  ];
+
+  //table header
+  const tableHeader = [
+    { title: '번호', width: 1 },
+    { title: '전공 명', width: 3 },
+    { title: '졸업학점', width: 1 },
+    { title: '폐지여부', width: 1 },
+    { title: '관리', width: 2 },
+    { title: '비고', width: 1 },
+  ];
+
+  //추후 API GET 요청 데이터
+  const _data = [
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
+    },
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
+    },
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
+    },
+  ];
+
+  //modalTitle state
+  const [modalTitle, setmodalTitle] = useState('강의실추가', '전공추가');
+  //전공명 state
+  const [majorName, setMajorName] = useState('');
+  //전공학점 state
+  const [majorScore, setMajorScore] = useState(null);
+  //모달창 활성화
+  const [showModal, setshowModal] = useState(false);
+
+  const navigate = useNavigate();
+
+  //버튼 onClick시 모달창 열기
+  const modalOpen = () => {
+    setshowModal(true);
+  };
+
+  //취소, x 누를시 모달창 닫기
+  const modalClose = () => {
+    setshowModal(false);
+  };
+
   const gogo = () => {
-    console.log('gogo');
+    alert('dkdk');
   };
 
   const hi = () => {
@@ -15,121 +140,63 @@ const Major = () => {
   const bye = () => {
     alert('삭제하시겠습니까?');
   };
-  const navigate = useNavigate();
+
   return (
-    <Lwrap>
-      <SearchBar>
-        <Dropdown placeholder="" />
-        <Dropdown length="long" placeholder="전공명" />
+    <Layout>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
+        <Dropdown
+          placeholder="상태"
+          data={_status}
+          value={value}
+          setValue={setValue}
+          reset={true}
+          search={true}
+        />
+        <Dropdown
+          length="long"
+          placeholder="전공명"
+          data={_majsornm}
+          value={value}
+          setValue={setValue}
+          reset={true}
+          search={true}
+        />
       </SearchBar>
-      <CommonButton btnType="page" value="전공추가" onClick={gogo} />
-
-      <Ltable>
-        <colgroup>
-          <col className="number" width={'7%'} />
-          <col className="major" width={'35%'} />
-          <col className="clost" width={'15%'} />
-          <col className="management" width={'20%'} />
-          <col className="note" width={'20%'} />
-        </colgroup>
-
-        <th>번호</th>
-        <th>전공 명</th>
-        <th>폐지여부</th>
-        <th>관리</th>
-        <th>비고</th>
-
-        {Array(10)
-          .fill()
-          .map((item, idx) => (
-            <tr key={idx}>
-              <td>1</td>
-              <td>2</td>
-              <td>O</td>
-              <td>
-                <CommonButton color="blue" btnType="table" value="수정" onClick={hi} />
-                <CommonButton color="red" btnType="table" value="삭제" onClick={bye} />
-              </td>
-              <td>4</td>
-            </tr>
-          ))}
-        {/* <tr>
-          <td>5</td>
-          <td>6</td>
-          <td></td>
-          <td>8</td>
-          <td>8</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>10</td>
-          <td></td>
-          <td>12</td>
-          <td>12</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>16</td>
-          <td>16</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>16</td>
-          <td>16</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>16</td>
-          <td>변경(구 목탁 디자인과)</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>16</td>
-          <td>16</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>15</td>
-          <td>16</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td>O</td>
-          <td>16</td>
-          <td>16</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>14</td>
-          <td></td>
-          <td>15</td>
-          <td>16</td>
-        </tr> */}
-      </Ltable>
-      <Pagenation>
-        <p onClick={() => navigate('/home/notice/write')}>1</p>
-        <p>2</p>
-        <p>3</p>
-        <p>4</p>
-        <p>5</p>
-        <p>6</p>
-        <p>7</p>
-        <p>8</p>
-        <p>9</p>
-        <p>10</p>
-      </Pagenation>
-    </Lwrap>
+      <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
+      <Table header={tableHeader} data={_data} hasPage={true} maxPage={5}>
+        {_data.map(item => {
+          return (
+            <div key={item.imajor}>
+              <div>{item.imajor}</div>
+              <div>{item.majorName}</div>
+              <div>{item.graduationScore}</div>
+              <div>{item.status}</div>
+              <div>{item.management}</div>
+              <div>{item.note}</div>
+            </div>
+          );
+        })}
+      </Table>
+      {showModal === true ? (
+        <PlusModal>
+          <div className="majorTitle">
+            <p>
+              <strong> 전공추가 </strong>
+            </p>
+            <p onClick={modalClose}>
+              <FontAwesomeIcon icon={faX} />
+            </p>
+          </div>
+          <div className="majorName">
+            <p>전공명</p>
+            <div>
+              <Input type="text" length="short" value={majorName} setValue={setMajorName}></Input>
+            </div>
+          </div>
+          <div className="btns"></div>
+        </PlusModal>
+      ) : null}
+    </Layout>
   );
 };
 export default Major;
