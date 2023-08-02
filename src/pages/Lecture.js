@@ -8,6 +8,7 @@ import Dropdown from '../components/Dropdown';
 import CommonModal from '../components/CommonModal';
 import { Layout } from '../styles/CommonStyle';
 import Table from '../components/Table';
+import axios from 'axios';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -113,6 +114,18 @@ const Lecture = () => {
   const queries = { lectureStatus, lectureName, professorName };
   const url = '';
 
+  // 서버연동
+  const handleTestClick = async () => {
+    // try...catch
+    try {
+      const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
+      const result = res.data;
+      console.log('통신 데이터 : ', result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // JSX
   return (
     <Layout>
@@ -170,7 +183,7 @@ const Lecture = () => {
                       btnType="table"
                       color="gray"
                       value="상세보기"
-                      onClick={() => handleShowDetail(item)}
+                      onClick={() => handleTestClick()}
                     />
                   </div>
                 </div>
