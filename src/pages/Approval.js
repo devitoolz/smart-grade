@@ -56,7 +56,7 @@ const Approval = () => {
       <div
         style={{
           width: '100%',
-          height: '80px',
+          height: '95px',
           minHeight: '80px',
           background: 'var(--search-bg-color)',
           marginTop: '70px',

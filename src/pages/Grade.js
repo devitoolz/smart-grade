@@ -84,6 +84,7 @@ const Grade = () => {
   ];
   const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
+  const [studentId, setStudentId] = useState('');
 
   return (
     <div>
@@ -105,7 +106,13 @@ const Grade = () => {
             setValue={setGrade}
             reset={true}
           />
-          <Input length="middle" placeholder="학번" />
+          <Input
+            length="middle"
+            type="number"
+            placeholder="학번"
+            value={studentId}
+            setValue={setStudentId}
+          />
         </SearchBar>
       </Layout>
       <CommonButton btnType="page" value="학생상세정보" onClick={() => console.log('test')} />

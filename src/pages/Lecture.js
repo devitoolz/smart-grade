@@ -65,6 +65,7 @@ const Lecture = () => {
     },
   ];
   const navigate = useNavigate();
+  const [professorName, setProfessorName] = useState('');
 
   // JSX
   return (
@@ -87,7 +88,13 @@ const Lecture = () => {
             setValue={setLectureName}
             reset={true}
           />
-          <Input length="short" placeholder="교수명" />
+          <Input
+            length="short"
+            type="string"
+            placeholder="교수명"
+            value={professorName}
+            setValue={setProfessorName}
+          />
         </SearchBar>
       </Layout>
 
