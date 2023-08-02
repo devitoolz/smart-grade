@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyleCSS';
 import SearchBar from '../components/SearchBar';
 import Input from '../components/Input';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CommonButton from '../components/CommonButton';
 import Dropdown from '../components/Dropdown';
 import CommonModal from '../components/CommonModal';
 import { Layout } from '../styles/CommonStyle';
+import Table from '../components/Table';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
@@ -67,6 +68,51 @@ const Lecture = () => {
   const navigate = useNavigate();
   const [professorName, setProfessorName] = useState('');
 
+  // table
+  const tableHeader = [
+    { title: '학기', width: 1 },
+    { title: '학년', width: 1 },
+    { title: '전공', width: 2 },
+    { title: '강의명', width: 3 },
+    { title: '담당교수', width: 1.2 },
+    { title: '학점', width: 1 },
+    { title: '강의실', width: 1.8 },
+    { title: '강의 기간', width: 3 },
+    { title: '강의 시간', width: 1.5 },
+    { title: '정원', width: 1 },
+    { title: '상태', width: 1 },
+    { title: '상세', width: 1.5 },
+  ];
+  const tableData = [
+    {
+      a: '1',
+      b: '2',
+      c: '컴퓨터공학과',
+      lecture: '데이터베이스',
+      e: '김그린',
+      f: '2',
+      g: '6호관 404호',
+      h: '2000-03-02~2000-06-28',
+      i: '09:00~11:00',
+      j: 30,
+      k: '상태',
+    },
+    {
+      a: '1',
+      b: '3',
+      c: '컴퓨터공학과',
+      lecture: '웹프로그래밍',
+      e: '김그린',
+      f: '3',
+      g: '6호관 404호',
+      h: '2000-03-02~2000-06-28',
+      i: '14:00~17:00',
+      j: 30,
+      k: '상태',
+    },
+  ];
+  //
+
   // JSX
   return (
     <LectureContainer>
@@ -111,14 +157,36 @@ const Lecture = () => {
         </NoData>
       ) : (
         <>
-          <TableArea>
+          <Table header={tableHeader} data={tableData} hasPage={true} maxPage={5}>
+            {tableData.map((item, idx) => {
+              return (
+                <div key={idx}>
+                  <div>{item.a}</div>
+                  <div>{item.b}</div>
+                  <div>{item.c}</div>
+                  <div>{item.lecture}</div>
+                  <div>{item.e}</div>
+                  <div>{item.f}</div>
+                  <div>{item.g}</div>
+                  <div>{item.h}</div>
+                  <div>{item.i}</div>
+                  <div>{item.j}</div>
+                  <div>{item.k}</div>
+                  <div>
+                    <CommonButton
+                      btnType="table"
+                      color="gray"
+                      value="상세보기"
+                      onClick={() => console.log('table')}
+                    />
+                  </div>
+                </div>
+              );
+            })}
+          </Table>
+          {/* <TableArea>
             <table>
-              <thead>
-                {/* 
-              pink = short
-              yellow = middle
-              lightgreen = 고정
-             */}
+              <thead> 
                 <tr>
                   <th style={{ background: 'pink' }}>학기</th>
                   <th style={{ background: 'pink' }}>학년</th>
@@ -163,7 +231,7 @@ const Lecture = () => {
           </TableArea>
           <div className="pagination" style={{ background: 'pink' }}>
             <span>1 2 3 4 5 6 7 8 9 </span>
-          </div>
+          </div> */}
         </>
       )}
       {display ? (

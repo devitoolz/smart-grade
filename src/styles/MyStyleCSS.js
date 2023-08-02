@@ -211,4 +211,8 @@ const btnBox = `
 `;
 export const CommonBtnArea = styled.div`
   ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
+  & > button {
+    display: table-cell;
+    vertical-align: middle;
+  }
 `;
