@@ -10,10 +10,11 @@ import Table from '../components/Table';
 import { Layout } from '../styles/CommonStyle';
 import CommonModal from '../components/CommonModal';
 import { ModalStyle } from '../styles/MyStyleCSS';
-
 const LectureRoom = () => {
+  const [_data, set_Data] = useState([]);
   const [value, setValue] = useState('');
-  const [_data, set_Data] = useState('');
+
+  // const [_data, set_Data] = useState('');
   //검색 시 사용할 쿼리스트링(건물명)
   const building = ['a관', 'b관', 'c관', 'd관', 'e관', 'f관'];
   const queries = building;
@@ -21,21 +22,19 @@ const LectureRoom = () => {
   //검색 버튼 클릭시 요청할 APU URL
   const url = ``;
 
+  //table header
   const tableHeader = [
     { title: '번호', width: 1 },
-    { title: '장소', width: 4 },
+    { title: '장소', width: 3 },
     { title: '최종수용인원', width: 1 },
     { title: '관리', width: 2 },
     { title: '비고', width: 1 },
   ];
 
   const data = [
-    {
-      place: 'a관 201호',
-      capacityNumber: 100,
-    },
-    { place: 'a관 202호', capacityNumber: 80 },
-    { place: 'a관 203호', capacityNumber: 50 },
+    { number: '1', place: 'a관 201호', capacity: 100, management: '', note: '히히' },
+    { number: '2', place: 'a관 202호', capacity: 80, management: '', note: '히히' },
+    { number: '3', place: 'a관 203호', capacity: 50, management: '', note: '히히' },
   ];
   //강의실 추가 모달창 안 호실 인풋창 state
   const [roomNumber, setRoomNumber] = useState('');
@@ -49,7 +48,11 @@ const LectureRoom = () => {
   const bye = () => {
     alert('삭제하시겠습니까?');
   };
-
+  const _data1 = [
+    { id: 1, title: 'a관' },
+    { id: 2, title: 'b관' },
+    { id: 3, title: 'c관' },
+  ];
   //modal 활성화 여부
   const [showModal, setshowModal] = useState(false);
 
@@ -130,7 +133,7 @@ const LectureRoom = () => {
       <SearchBar queries={queries} setPage={true} url={url}>
         <Dropdown
           placeholder="건물명"
-          data={data}
+          data={_data1}
           value={value}
           setValue={setValue}
           reset={true}
@@ -140,7 +143,15 @@ const LectureRoom = () => {
       <Layout>
         <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
           {data.map(item => {
-            return <div key={item.building}></div>;
+            return (
+              <>
+                <div>{item.number}</div>
+                <div>{item.place}</div>
+                <div>{item.capacity}</div>
+                <div>{item.management}</div>
+                <div>{item.note}</div>
+              </>
+            );
           })}
         </Table>
       </Layout>
