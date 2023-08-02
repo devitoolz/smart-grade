@@ -11,23 +11,29 @@ import Table from '../components/Table';
 import { Layout } from '../styles/CommonStyle';
 
 const Major = () => {
+  ////SearchBar////
   //검색 시 사용할 쿼리스트링(상태)
   const situation = useState([]);
 
   //검색 시 사용할 쿼리스트링(전공명)
   const majorN = useState([]);
+
   //검색 시 사용할 쿼리스트링목록
   const queries = { situation, majorN };
+
   //검색버튼 클릭시 state 변경 함수
   const [click, setClick] = useState(false);
 
+  ////DropDown////
   //DropDown value state
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState(null);
   //DropDown 메뉴 Item 상태데이터 state
-  // const [상태, set상태] = useState("");
-  //DropDown 메뉴 Item 전공명데이터 state
-  // const [전공명, set전공명] = useState("");
-  const 상태 = [
+  const [status, setStatus] = useState('');
+  // DropDown 메뉴 Item 전공명데이터 state
+  const [majsornm, setMajsornm] = useState('');
+
+  // 상태 임시 데이터
+  const _status = [
     {
       id: 1,
       title: '운영',
@@ -37,31 +43,69 @@ const Major = () => {
       title: '폐지',
     },
   ];
-
-  const 전공명 = [
+  //전공명 임시 데이터
+  const _majsornm = [
     {
       id: 1,
       title: 'ㄱ전공',
     },
     {
       id: 2,
-      title: 'ㄱ전공',
+      title: 'aa전공',
     },
     {
       id: 3,
-      title: 'ㄱ전공',
+      title: 'g전공',
     },
     {
       id: 4,
-      title: 'ㄱ전공',
+      title: 'e전공',
     },
     {
       id: 5,
-      title: 'ㄱ전공',
+      title: 'd전공',
     },
     {
       id: 6,
-      title: 'ㄱ전공',
+      title: 'ㄱgf전공',
+    },
+  ];
+
+  //table header
+  const tableHeader = [
+    { title: '번호', width: 1 },
+    { title: '전공 명', width: 3 },
+    { title: '졸업학점', width: 1 },
+    { title: '폐지여부', width: 1 },
+    { title: '관리', width: 2 },
+    { title: '비고', width: 1 },
+  ];
+
+  //추후 API GET 요청 데이터
+  const _data = [
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
+    },
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
+    },
+    {
+      imajor: '1',
+      majorName: 'a관',
+      graduationScore: 130,
+      status: '',
+      management: '',
+      note: '',
     },
   ];
 
@@ -102,7 +146,7 @@ const Major = () => {
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="상태"
-          data={상태}
+          data={_status}
           value={value}
           setValue={setValue}
           reset={true}
@@ -111,7 +155,7 @@ const Major = () => {
         <Dropdown
           length="long"
           placeholder="전공명"
-          data={전공명}
+          data={_majsornm}
           value={value}
           setValue={setValue}
           reset={true}
@@ -119,6 +163,20 @@ const Major = () => {
         />
       </SearchBar>
       <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
+      <Table header={tableHeader} data={_data} hasPage={true} maxPage={5}>
+        {_data.map(item => {
+          return (
+            <div key={item.imajor}>
+              <div>{item.imajor}</div>
+              <div>{item.majorName}</div>
+              <div>{item.graduationScore}</div>
+              <div>{item.status}</div>
+              <div>{item.management}</div>
+              <div>{item.note}</div>
+            </div>
+          );
+        })}
+      </Table>
       {showModal === true ? (
         <PlusModal>
           <div className="majorTitle">
