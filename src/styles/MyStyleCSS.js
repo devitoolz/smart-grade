@@ -76,6 +76,7 @@ export const ModalStyle = styled.div`
   align-items: center;
   padding: 20px;
   background-color: rgba(0, 23, 60, 0.7);
+  z-index: 999;
   .modal-box {
     width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
     min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
@@ -204,11 +205,15 @@ const btnContainer = `
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding: 30px;
+  padding: 3vh;
 `;
 const btnBox = `
   display: inline-block;
 `;
 export const CommonBtnArea = styled.div`
   ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
+  & > button {
+    display: table-cell;
+    vertical-align: middle;
+  }
 `;
