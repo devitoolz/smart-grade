@@ -8,6 +8,7 @@ const Write = () => {
   //공지사항 체크박스
   const [check, setCheck] = useState();
 
+  
   const handleCheck = e => {
     if (e.target.check) {
       setCheck(true);
@@ -30,7 +31,7 @@ const Write = () => {
           <strong>상태</strong>
         </td>
         <td className="importantCheck">
-          <input type="checkbox" value="1" />
+          <input type="checkbox" value="0" />
           <p>
             <strong>*중요</strong>
           </p>

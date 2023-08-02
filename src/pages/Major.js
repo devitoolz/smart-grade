@@ -1,12 +1,13 @@
 import React from 'react';
 import SearchBar from '../components/SearchBar';
 import Dropdown from '../components/Dropdown';
-import { Ltable, Lwrap, Pagenation } from '../styles/LectureRoomCss';
+import { Ltable, Lwrap, Pagenation, PlusModal } from '../styles/LectureRoomCss';
+
 import CommonButton from '../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
 const Major = () => {
   const gogo = () => {
-    console.log('gogo');
+    alert('dkdk');
   };
 
   const hi = () => {
@@ -22,7 +23,13 @@ const Major = () => {
         <Dropdown placeholder="" />
         <Dropdown length="long" placeholder="전공명" />
       </SearchBar>
-      <CommonButton btnType="page" value="전공추가" onClick={gogo} />
+      <CommonButton btnType="page" value="전공추가" />
+      <PlusModal>
+        <div ></div>
+        <div></div>
+        <div></div>
+        <div className="btns"></div>
+      </PlusModal>
 
       <Ltable>
         <colgroup>

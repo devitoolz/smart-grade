@@ -1,7 +1,14 @@
 import styled from '@emotion/styled';
 
 export const Lwrap = styled.div`
-  width: 100%;
+  /* width: 100%;
+  height: 100%;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 23, 60, 0.7); */
+  /* z-index: 9999; */
 `;
 export const CommonButton = styled.div`
   margin: 35px 0;
@@ -51,16 +58,17 @@ export const Ltable = styled.table`
 `;
 
 export const PlusModal = styled.div`
-  margin-left: 20px;
+  position: fixed;
+  left: 50%;
+  top: 20%;
   width: 400px;
   height: 238px;
-  background-color: skyblue;
-  border: #000;
+  background-color: greenyellow;
   border-radius: 20px;
 
   display: flex;
   flex-direction: column;
-  .majorTitle {
+  .LectureLoomTitle {
     display: flex;
     justify-content: space-between;
     border-bottom: 1px solid #dae8ff;
@@ -97,7 +105,7 @@ export const PlusModal = styled.div`
     justify-content: flex-start;
     border-bottom: 1px solid #dae8ff;
     align-items: center;
-
+    padding-left: 20px;
     .inputControl {
       display: flex;
       padding: 12px 20px;
@@ -110,6 +118,7 @@ export const PlusModal = styled.div`
   .btns {
     display: flex;
     justify-content: center;
+    margin-top: 18px;
   }
 `;
 
