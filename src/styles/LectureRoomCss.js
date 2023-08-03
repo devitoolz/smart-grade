@@ -89,6 +89,21 @@ export const Ltable = styled.table`
   }
   .statusTitle {
     background: #dff6ff;
+    text-align: center;
+  }
+  .importanceCheck {
+    display: flex;
+    width: 100%;
+    padding: 15px 32px;
+  }
+  .fileTitle {
+    background: #dff6ff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .contentTitle {
+    background: #dff6ff;
+    text-align: center;
   }
   .importantCheck {
     display: flex;
@@ -102,7 +117,10 @@ export const Ltable = styled.table`
       color: red;
     }
   }
-  textarea {
+  .controlTextarea {
+    padding: 20px 28px;
+    textarea {
+    }
   }
 `;
 export const BtnControl = styled.div`

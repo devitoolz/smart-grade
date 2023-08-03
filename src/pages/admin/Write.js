@@ -17,9 +17,7 @@ const Write = () => {
 
   //제목 인풋창?
   const handleTitle = e => {
-    if (e.target.title) {
-      setTitle('');
-    }
+    setTitle(e.target.title);
   };
 
   return (
@@ -31,15 +29,7 @@ const Write = () => {
 
       <th>제목</th>
       <th className="inputTitle">
-        <Input
-          type="text"
-          length="full"
-          maxLength={20}
-          value={title}
-          setValue={e => {
-            e.target.title;
-          }}
-        />
+        <Input type="text" length="full" maxLength={20} value={title} setValue={handleTitle} />
       </th>
       <tr>
         <td className="statusTitle">
@@ -54,14 +44,14 @@ const Write = () => {
         </td>
       </tr>
       <tr>
-        <td>첨부파일</td>
+        <td className="fileTitle">첨부파일</td>
         <td></td>
       </tr>
       <tr>
         <td className="contentTitle">
           <strong>내용</strong>
         </td>
-        <td>
+        <td className='controlTextarea'>
           <textarea name="content" id="content" cols="80" rows="20"></textarea>
         </td>
       </tr>
