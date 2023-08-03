@@ -12,7 +12,6 @@ const CommonModal = ({
   handleModalOk,
   handleModalCancel,
 }) => {
-  console.log(modalTitle);
   // JSX
   return (
     <ModalStyle modalSize={modalSize}>

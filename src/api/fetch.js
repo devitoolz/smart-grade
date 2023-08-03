@@ -1,5 +1,6 @@
 import axios from 'axios';
 
+// 통합 강의 관리 - 강의리스트 불러오기
 export const handleTestClick = async (_setFunc, _setMaxPage) => {
   // try...catch
   try {
@@ -34,6 +35,7 @@ export const handleTestClick = async (_setFunc, _setMaxPage) => {
   }
 };
 
+// 해당 강의 수강 학생 리스트 출력
 export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
     const res = await axios.get(
@@ -48,6 +50,7 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
   }
 };
 
+// 강의 개설+개강 요청 승인페이지
 export const handleGetApprovalLecture = async _setFunc => {
   // try...catch
   try {
