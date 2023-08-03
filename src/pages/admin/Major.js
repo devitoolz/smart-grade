@@ -142,7 +142,7 @@ const Major = () => {
   };
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="상태"
@@ -196,7 +196,7 @@ const Major = () => {
           <div className="btns"></div>
         </PlusModal>
       ) : null}
-    </Layout>
+    </>
   );
 };
 export default Major;

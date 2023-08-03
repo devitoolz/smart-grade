@@ -102,7 +102,7 @@ const LectureRoom = () => {
   //modal활성화 시 배경 변경
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="건물명"
@@ -185,7 +185,7 @@ const LectureRoom = () => {
           );
         })}
       </Table>
-    </Layout>
+    </>
   );
 };
 
