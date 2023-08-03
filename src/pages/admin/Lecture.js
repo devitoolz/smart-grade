@@ -8,44 +8,16 @@ import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
-import { handleTestClick } from '../../api/fetch';
+import { handleTestClick, handleGetStudentList } from '../../api/fetch';
 
 const Lecture = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
+  // console.log(pathname);
+  // console.log(search);
+  const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
+  console.log(pageIdx);
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
-  const handleShowDetail = _item => {
-    setDisplay(true);
-    setContents(_item);
-  };
-  const arr = [
-    {
-      a: '1',
-      b: '2',
-      c: '컴퓨터공학과',
-      lecture: '데이터베이스',
-      e: '김그린',
-      f: '2',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '09:00~11:00',
-      j: 30,
-      k: '상태',
-    },
-    {
-      a: '1',
-      b: '3',
-      c: '컴퓨터공학과',
-      lecture: '웹프로그래밍',
-      e: '김그린',
-      f: '3',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '14:00~17:00',
-      j: 30,
-      k: '상태',
-    },
-  ];
 
   const handlePageBtnClick = () => {
     console.log('btn click');
@@ -115,10 +87,17 @@ const Lecture = () => {
   const queries = { lectureStatus, lectureName, professorName };
   const url = '';
 
-  // 서버연동 테스트
+  // 서버연동 테스트 - 테이블에 정보 불러오기
   const [tableDatas, setTableDatas] = useState([]);
   const getTestData = async () => {
     await handleTestClick(setTableDatas);
+  };
+  // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
+  const getStudentList = async (_ilecture, _pageIdx) => {
+    console.log('해당 과목 수강 학생 리스트 및 성적 출력');
+    // ilecture = 해당 강의 과목 번호
+    await handleGetStudentList(_ilecture, _pageIdx);
+    setDisplay(true);
   };
   useEffect(() => {
     getTestData();
@@ -155,45 +134,43 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
-      <>
-        <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
-          {tableDatas.length === 0 ? (
-            <p>loading...</p>
-          ) : (
-            tableDatas.map((item, idx) => {
-              return (
-                <div key={idx}>
-                  <div>{item.isemester}</div>
-                  <div>{item.lectureNm}</div>
-                  <div>{item.lectureNm}</div>
-                  <div>{item.lectureNm}</div>
-                  <div>{item.nm}</div>
-                  <div>{item.lectureNm}</div>
-                  <div>
-                    {item.buildingNm} {item.lectureRoomNm}
-                  </div>
-                  <div>
-                    {item.strDate}~{item.endDate}
-                  </div>
-                  <div>
-                    {item.strTime}~{item.endTime}
-                  </div>
-                  <div>{item.maxPeople}</div>
-                  <div>{item.procedures}</div>
-                  <div>
-                    <CommonButton
-                      btnType="table"
-                      color="gray"
-                      value="상세보기"
-                      onClick={() => console.log('해당 과목 수강 학생 리스트 및 성적 출력')}
-                    />
-                  </div>
+      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
+        {tableDatas.length === 0 ? (
+          <p>loading...</p>
+        ) : (
+          tableDatas.map((item, idx) => {
+            return (
+              <div key={idx}>
+                <div>{item.isemester}</div>
+                <div>{item.lectureNm}</div>
+                <div>{item.lectureNm}</div>
+                <div>{item.lectureNm}</div>
+                <div>{item.nm}</div>
+                <div>{item.lectureNm}</div>
+                <div>
+                  {item.buildingNm} {item.lectureRoomNm}
                 </div>
-              );
-            })
-          )}
-        </Table>
-      </>
+                <div>
+                  {item.strDate}~{item.endDate}
+                </div>
+                <div>
+                  {item.strTime}~{item.endTime}
+                </div>
+                <div>{item.maxPeople}</div>
+                <div>{item.procedures}</div>
+                <div>
+                  <CommonButton
+                    btnType="table"
+                    color="gray"
+                    value="상세보기"
+                    onClick={() => getStudentList(item.ilecture, pageIdx)}
+                  />
+                </div>
+              </div>
+            );
+          })
+        )}
+      </Table>
 
       {display ? (
         <CommonModal

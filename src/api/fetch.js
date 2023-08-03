@@ -5,7 +5,8 @@ export const handleTestClick = async _setFunc => {
   try {
     const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
     const result = await res.data;
-    console.log('통신 데이터 : ', result.lectures);
+    console.log('통신 데이터 : ', result);
+    console.log('max page : ', result.page.maxPage);
     _setFunc(result.lectures);
     return result.lectures;
   } catch (error) {
@@ -29,5 +30,19 @@ export const handleTestClick = async _setFunc => {
         strTime: '09:00:00',
       },
     ];
+  }
+};
+
+export const handleGetStudentList = async (_ilecture, _pageIdx) => {
+  try {
+    const res = await axios.get(
+      `http://192.168.0.144:5002/api/admin/lecture/${_ilecture}?page=${_pageIdx}`
+    );
+    const result = res.data;
+    console.log('해당 과목을 듣는 학생리스트+성적');
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
   }
 };
