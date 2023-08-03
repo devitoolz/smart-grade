@@ -52,9 +52,6 @@ const TwoColumns = styled.div`
     &:nth-of-type(odd) {
       background: var(--main-bg-color);
     }
-    &:nth-of-type(even) {
-      background: #f8f8f8;
-    }
     &:last-of-type {
       border-right: none;
     }
@@ -89,7 +86,7 @@ const Button = styled.span`
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
-  padding: 0 40px;
+  padding: 0 50px;
   height: 45px;
   background: var(--primary-color);
   color: var(--white);

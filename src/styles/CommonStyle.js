@@ -2,6 +2,8 @@ import styled from '@emotion/styled';
 
 const Layout = styled.div`
   width: 100%;
+  min-width: 1280px;
+  padding-left: 320px;
   padding-top: 70px;
   height: 100%;
   display: flex;

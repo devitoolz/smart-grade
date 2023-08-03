@@ -34,6 +34,9 @@ const MainLayout = styled.div`
 
 const Sidebar = styled.div`
   display: flex;
+  position: fixed;
+  z-index: 99;
+  height: 100%;
 `;
 
 const MainMenu = styled.ul`
