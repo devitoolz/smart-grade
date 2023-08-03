@@ -97,21 +97,21 @@ const Lecture = () => {
   // 서버연동 테스트 - 테이블에 정보 불러오기
   const [tableDatas, setTableDatas] = useState([]);
   const getTestData = async () => {
-    await handleTestClick(setTableDatas, setMaxPage);
+    await handleTestClick(pageIdx, setTableDatas, setMaxPage);
   };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
   const [lectureNm, setLectureNm] = useState();
-  const handlegetStudentList = async (_lectureNm, _ilecture, _pageIdx) => {
+  const handlegetStudentList = async (_lectureNm, _ilecture) => {
     setLectureNm(_lectureNm);
     // console.log('해당 과목 수강 학생 리스트 및 성적 출력');
     // ilecture = 해당 강의 과목 번호
-    const result = await getStudentList(_ilecture, _pageIdx);
+    const result = await getStudentList(_ilecture, pageIdx);
     setContents(result.list);
     setDisplay(true);
   };
   useEffect(() => {
     getTestData();
-  }, []);
+  }, [pageIdx]);
 
   // 모달 - 해당강의 학생리스트+성적 확인
   const modalHeader = [
@@ -191,7 +191,7 @@ const Lecture = () => {
                   btnType="table"
                   color="gray"
                   value="상세보기"
-                  onClick={() => handlegetStudentList(item.lectureNm, item.ilecture, pageIdx)}
+                  onClick={() => handlegetStudentList(item.lectureNm, item.ilecture)}
                 />
               </div>
             </div>

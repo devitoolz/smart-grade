@@ -1,10 +1,10 @@
 import axios from 'axios';
 
 // 통합 강의 관리 - 강의리스트 불러오기
-export const handleTestClick = async (_setFunc, _setMaxPage) => {
+export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
   // try...catch
   try {
-    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
+    const res = await axios.get(`http://192.168.0.144:5002/api/admin/lecture?page=${_pageIdx}`);
     const result = await res.data;
     console.log('통신 데이터 : ', result);
     console.log('max page : ', result.page.maxPage);
@@ -54,7 +54,7 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
 export const handleGetApprovalLecture = async _setFunc => {
   // try...catch
   try {
-    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
+    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture');
     const result = await res.data;
     console.log('통신 데이터 : ', result);
     console.log('강의리스트 : ', result.lectures);
