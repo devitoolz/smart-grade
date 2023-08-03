@@ -64,6 +64,24 @@ export const NoData = styled.div`
   }
 `;
 
+// textarea
+export const TextArea = styled.textarea`
+  resize: none;
+
+  display: flex;
+  border: 1px solid var(--primary-border-color);
+  background: var(--white);
+  align-items: center;
+  position: relative;
+  width: 70%;
+  height: 35%;
+  padding: 0 10px;
+
+  line-height: 1.5;
+  font-size: 18px;
+  font-family: 'Pretendard', sans-serif;
+`;
+
 // 공통 모달
 export const ModalStyle = styled.div`
   position: fixed;

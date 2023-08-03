@@ -54,16 +54,16 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
 export const handleGetApprovalLecture = async _setFunc => {
   // try...catch
   try {
-    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture');
+    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?procedures=-2');
     const result = await res.data;
     console.log('통신 데이터 : ', result);
     console.log('강의리스트 : ', result.lectures);
     // console.log('max page : ', result.page.maxPage);
-    const approvalList = [];
-    await result.lectures.forEach(item => {
-      if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
-    });
-    _setFunc(approvalList);
+    // const approvalList = [];
+    // await result.lectures.forEach(item => {
+    //   if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
+    // });
+    _setFunc(result.lectures);
     return result.lectures;
   } catch (error) {
     console.log(error);
@@ -87,6 +87,10 @@ export const handleGetApprovalLecture = async _setFunc => {
       },
     ];
   }
+};
+// 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
+export const patchRejectLecture = async () => {
+  console.log('개설 거절 사유 입력할 예정');
 };
 
 // 통합 성적관리 - 특정 학생의 성적 검색

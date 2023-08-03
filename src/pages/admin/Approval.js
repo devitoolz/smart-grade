@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { TableArea } from '../../styles/MyStyleCSS';
+import { TextArea } from '../../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { Layout } from '../../styles/CommonStyle';
-import { handleGetApprovalLecture } from '../../api/fetch';
+import { handleGetApprovalLecture, patchRejectLecture } from '../../api/fetch';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -63,10 +62,20 @@ const Approval = () => {
       peopleNum: 30,
     },
   ];
+  // 강의 개강개설 거절 patch
+  const patchRejectLectureWait = async () => {
+    await patchRejectLecture();
+  };
   // 모달 버튼 클릭이벤트
   const handleModalOk = () => {
     console.log(contents);
     console.log('modal click - ok');
+    patchRejectLectureWait();
+    // {
+    //   "ilecture": 0,
+    //   "ctnt": "string",
+    //   "procedures": 0
+    // }
   };
   const handleModalCancel = () => {
     console.log(contents);
@@ -117,8 +126,14 @@ const Approval = () => {
               <div>
                 <CommonButton
                   btnType="table"
-                  color="blue"
-                  value={item.procedures === 1 ? '개설 승인' : '개강 승인'}
+                  color={item.procedures === 0 ? 'gray' : 'blue'}
+                  value={
+                    item.procedures === 1
+                      ? '개설 승인'
+                      : item.procedures === 2
+                      ? '개강 승인'
+                      : '신청 반려'
+                  }
                   onClick={() => handleAcceptLecture(item)}
                 />
                 <CommonButton
@@ -146,7 +161,10 @@ const Approval = () => {
               <p>다음 요청을 승인하시겠습니까?</p>
             </>
           ) : (
-            <>요청 거절</>
+            <>
+              <span>요청 거절</span>
+              <TextArea />
+            </>
           )}
         </CommonModal>
       ) : null}
