@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import { TableArea } from '../../styles/MyStyleCSS';
+import { BtnControl } from '../../styles/LectureRoomCss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import { Layout } from '../../styles/CommonStyle';
@@ -21,7 +21,7 @@ const Notice = () => {
     { iboard: 1, title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
   ];
   const navigate = useNavigate();
-  // const navigate = useNavigate();
+
   return (
     <Layout>
       <Table header={tableHeader} data={data} hasPage={true} maxPage={5} pending={pending}>
@@ -36,15 +36,15 @@ const Notice = () => {
           );
         })}
       </Table>
-      <CommonButton
-        btnType="page"
-        value="글쓰기"
-        onClick={() => {
-          navigate('/admin/home/notice/write');
-        }}
-      >
-        <faPen />
-      </CommonButton>
+      <BtnControl>
+        <CommonButton
+          btnType="page"
+          value="글쓰기"
+          onClick={() => {
+            navigate('/admin/home/notice/write');
+          }}
+        />
+      </BtnControl>
     </Layout>
   );
 };

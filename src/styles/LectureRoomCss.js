@@ -1,6 +1,5 @@
 import styled from '@emotion/styled';
 
-
 export const CommonButton = styled.div`
   margin: 35px 0;
 `;
@@ -67,4 +66,10 @@ export const PlusModal = styled.div`
     justify-content: center;
     margin-top: 18px;
   }
+`;
+
+//notice page
+export const BtnControl = styled.div`
+  display: flex;
+  justify-content: start;
 `;
