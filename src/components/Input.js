@@ -3,9 +3,9 @@ import { CustomInput } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Input = ({ length, type, placeholder, value, setValue }) => {
+const Input = ({ isForm, length, type, placeholder, value, setValue }) => {
   return (
-    <CustomInput length={length} value={value}>
+    <CustomInput isForm={isForm} length={length} value={value}>
       <input
         type={type}
         placeholder={placeholder}

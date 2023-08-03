@@ -1,59 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   CreateUserLayout,
   ImageUpload,
   FormTable,
-  NoticeSpan,
-  TwoColumns,
+  Row,
   ButtonContainer,
   Button,
+  TopLayout,
+  NoticeContainer,
+  OneColumn,
 } from '../../styles/CreateUserStyle';
 import { useNavigate } from 'react-router-dom';
+import Input from '../../components/Input';
 
 const CreateUser = () => {
   const navigate = useNavigate();
 
   return (
     <CreateUserLayout>
-      <NoticeSpan>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</NoticeSpan>
-      <NoticeSpan>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</NoticeSpan>
-      <ImageUpload />
+      <TopLayout>
+        <div className="top-left">
+          <ImageUpload />
+          <NoticeContainer>
+            <span>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</span>
+            <span>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</span>
+          </NoticeContainer>
+        </div>
+        <ButtonContainer>
+          <Button>생성</Button>
+          <Button onClick={() => navigate(-1)}>취소</Button>
+        </ButtonContainer>
+      </TopLayout>
       <FormTable>
-        <TwoColumns>
+        <Row col={2}>
           <div>이름</div>
           <div>
-            <input type="text" />
-          </div>
-          <div>성별</div>
-          <div>
-            <input type="text" />
-          </div>
-        </TwoColumns>
-        <TwoColumns>
-          <div>생년월일</div>
-          <div>
-            <input type="text" />
+            <Input type="text" isForm={true} value />
           </div>
           <div>전공</div>
-          <div>
-            <input type="text" />
-          </div>
-        </TwoColumns>
-        <TwoColumns>
-          <div>전화번호</div>
-          <div>
-            <input type="text" />
-          </div>
-          <div>임시 비밀번호</div>
-          <div>
-            <input type="text" />
-          </div>
-        </TwoColumns>
+          <div></div>
+        </Row>
+        <Row col={2}>
+          <div>성별</div>
+          <div></div>
+          <div>E-mail</div>
+          <div></div>
+        </Row>
+        <Row col={2}>
+          <div>생년월일</div>
+          <div></div>
+          <div>휴대전화</div>
+          <div></div>
+        </Row>
+        <Row>
+          <div>주소</div>
+          <div></div>
+        </Row>
+        <Row>
+          <div>상세주소</div>
+          <div></div>
+        </Row>
       </FormTable>
-      <ButtonContainer>
-        <Button>생성</Button>
-        <Button onClick={() => navigate(-1)}>취소</Button>
-      </ButtonContainer>
     </CreateUserLayout>
   );
 };

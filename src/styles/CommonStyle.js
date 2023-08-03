@@ -13,10 +13,15 @@ const Layout = styled.div`
 
 const CustomInput = styled.div`
   display: flex;
-  border: 1px solid var(--primary-border-color);
-  background: var(--white);
-  align-items: center;
-  position: relative;
+  ${({ isForm }) =>
+    isForm
+      ? `
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+  `
+      : `
   width: ${({ length }) =>
     length === 'long'
       ? '200px'
@@ -28,6 +33,11 @@ const CustomInput = styled.div`
       ? '100%'
       : '120px'};
   height: 35px;
+  border: 1px solid var(--primary-border-color);
+  background: var(--white);
+  `}
+  align-items: center;
+  position: relative;
   padding: 0 10px;
   &:hover {
     > svg {
@@ -36,10 +46,12 @@ const CustomInput = styled.div`
     }
   }
   > input {
+    ${({ isForm }) => (isForm ? `text-align: center;` : null)};
     border: none;
     height: 100%;
     width: 100%;
-    font-size: 14px;
+    background: transparent;
+    font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
     &::placeholder {
       color: var(--search-ph-color);
     }
