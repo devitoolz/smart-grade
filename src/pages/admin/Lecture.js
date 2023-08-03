@@ -107,7 +107,7 @@ const Lecture = () => {
 
   // JSX
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
@@ -189,7 +189,7 @@ const Lecture = () => {
       ) : (
         <></>
       )}
-    </Layout>
+    </>
   );
 };
 

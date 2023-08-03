@@ -150,7 +150,7 @@ const Grade = () => {
   const url = '';
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
@@ -201,7 +201,7 @@ const Grade = () => {
           </Table>
         </>
       )}
-    </Layout>
+    </>
   );
 };
 

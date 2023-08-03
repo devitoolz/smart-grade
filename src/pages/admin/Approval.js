@@ -83,7 +83,7 @@ const Approval = () => {
 
   // JSX
   return (
-    <Layout>
+    <>
       <div
         style={{
           width: '100%',
@@ -150,7 +150,7 @@ const Approval = () => {
           )}
         </CommonModal>
       ) : null}
-    </Layout>
+    </>
   );
 };
 
