@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TableArea } from '../../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
 import { Layout } from '../../styles/CommonStyle';
+import { handleGetApprovalLecture } from '../../api/fetch';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -25,26 +26,6 @@ const Approval = () => {
     setDisplay(true);
     setIsAccept(true);
   };
-  const arr = [
-    {
-      lecture: '강의명이 들어갈 장소',
-      temp: '전공',
-      grade: '2',
-      professor: '교수님',
-      time: '14:00~16:00',
-      classroom: '5호관 202호',
-      peopleNum: 30,
-    },
-    {
-      lecture: '데이터베이스',
-      temp: '컴퓨터공학',
-      grade: '3',
-      professor: '박그린',
-      time: '13:00~16:00',
-      classroom: '5호관 202호',
-      peopleNum: 30,
-    },
-  ];
 
   //
   const navigate = useNavigate();
@@ -53,7 +34,6 @@ const Approval = () => {
   };
   // table
   const tableHeader = [
-    { title: 'No', width: 1 },
     { title: '강의명', width: 3 },
     { title: '전공', width: 2.5 },
     { title: '학점', width: 1 },
@@ -61,7 +41,7 @@ const Approval = () => {
     { title: '강의실', width: 1.5 },
     { title: '강의 시간', width: 1.5 },
     { title: '정원', width: 1 },
-    { title: '관리', width: 1.5 },
+    { title: '관리', width: 2 },
   ];
   const tableData = [
     {
@@ -92,6 +72,14 @@ const Approval = () => {
     console.log(contents);
     console.log('modal click - no');
   };
+  /* 서버 데이터 연동 테스트 - 테이블에 정보 불러오기 */
+  const [tableDatas, setTableDatas] = useState([]);
+  const getApprovalData = async () => {
+    await handleGetApprovalLecture(setTableDatas);
+  };
+  useEffect(() => {
+    getApprovalData();
+  }, []);
 
   // JSX
   return (
@@ -109,23 +97,28 @@ const Approval = () => {
         강의 개설 요청 승인
       </div>
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
-      <Table header={tableHeader} data={tableData} hasPage={true} maxPage={5}>
-        {tableData.map((item, idx) => {
+      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
+        {tableDatas.map((item, idx) => {
           return (
             <div key={idx}>
-              <div>{idx}</div>
-              <div>{item.lecture}</div>
-              <div>{item.temp}</div>
-              <div>{item.grade}</div>
-              <div>{item.professor}</div>
-              <div>{item.classroom}</div>
-              <div>{item.time}</div>
-              <div>{item.peopleNum}</div>
+              <div>{item.lectureNm}</div>
+              <div>{item.majorName}</div>
+              <div>{item.score}</div>
+              <div>{item.nm}</div>
+              <div>
+                {item.buildingNm} {item.lectureRoomNm}
+              </div>
+              <div>
+                {item.strTime}~{item.endTime}
+              </div>
+              <div>
+                {item.currentPeople}/{item.maxPeople}
+              </div>
               <div>
                 <CommonButton
                   btnType="table"
                   color="blue"
-                  value="승인"
+                  value={item.procedures === 1 ? '개설 승인' : '개강 승인'}
                   onClick={() => handleAcceptLecture(item)}
                 />
                 <CommonButton

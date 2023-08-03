@@ -47,3 +47,41 @@ export const handleGetStudentList = async (_ilecture, _pageIdx) => {
     console.log(err);
   }
 };
+
+export const handleGetApprovalLecture = async _setFunc => {
+  // try...catch
+  try {
+    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
+    const result = await res.data;
+    console.log('통신 데이터 : ', result);
+    console.log('강의리스트 : ', result.lectures);
+    // console.log('max page : ', result.page.maxPage);
+    const approvalList = [];
+    await result.lectures.forEach(item => {
+      if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
+    });
+    _setFunc(approvalList);
+    return result.lectures;
+  } catch (error) {
+    console.log(error);
+    // 임시 더미 데이터
+    return [
+      {
+        buildingNm: '백매관',
+        currentPeople: 5,
+        delYn: 0,
+        endDate: '2023-06-30',
+        endTime: '10:00:00',
+        ilecture: 4,
+        isemester: 21,
+        lectureNm: '물리학1',
+        lectureRoomNm: '503호',
+        maxPeople: 27,
+        nm: '김재경',
+        procedures: 0,
+        strDate: '2023-03-04',
+        strTime: '09:00:00',
+      },
+    ];
+  }
+};
