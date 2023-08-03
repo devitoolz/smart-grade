@@ -45,7 +45,7 @@ const Lecture = () => {
   // table
   const tableHeader = [
     { title: '학기', width: 1 },
-    { title: '학년', width: 1 },
+    { title: '학년제한', width: 1 },
     { title: '전공', width: 2 },
     { title: '강의명', width: 3 },
     { title: '담당교수', width: 1.2 },
@@ -96,7 +96,7 @@ const Lecture = () => {
   };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
   const getStudentList = async (_ilecture, _pageIdx) => {
-    console.log('해당 과목 수강 학생 리스트 및 성적 출력');
+    // console.log('해당 과목 수강 학생 리스트 및 성적 출력');
     // ilecture = 해당 강의 과목 번호
     await handleGetStudentList(_ilecture, _pageIdx);
     setDisplay(true);
@@ -143,12 +143,12 @@ const Lecture = () => {
           tableDatas.map((item, idx) => {
             return (
               <div key={idx}>
-                <div>{item.isemester}</div>
-                <div>{item.lectureNm}</div>
-                <div>{item.lectureNm}</div>
+                <div>{item.semester}</div>
+                <div>{item.gradeLimit}</div>
+                <div>{item.majorName}</div>
                 <div>{item.lectureNm}</div>
                 <div>{item.nm}</div>
-                <div>{item.lectureNm}</div>
+                <div>{item.score}</div>
                 <div>
                   {item.buildingNm} {item.lectureRoomNm}
                 </div>
@@ -158,7 +158,9 @@ const Lecture = () => {
                 <div>
                   {item.strTime}~{item.endTime}
                 </div>
-                <div>{item.maxPeople}</div>
+                <div>
+                  {item.currentPeople}/{item.maxPeople}
+                </div>
                 <div>{item.procedures}</div>
                 <div>
                   <CommonButton
