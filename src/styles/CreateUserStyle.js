@@ -61,12 +61,6 @@ const Button = styled.span`
 const FormTable = styled.div`
   width: 100%;
   padding-top: 40px;
-  div {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
-  }
 `;
 
 const Row = styled.div`
@@ -88,12 +82,12 @@ const Row = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--white);
-    font-weight: bold;
     font-size: 16px;
     text-align: center;
+    height: 50px;
     &:nth-of-type(odd) {
-      padding: 15px 0;
+      font-weight: bold;
+      color: var(--white);
       background: var(--primary-color);
       border-bottom: 2px solid var(--form-table-odd-border-color);
     }

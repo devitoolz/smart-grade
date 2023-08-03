@@ -13,17 +13,10 @@ const Layout = styled.div`
 
 const CustomInput = styled.div`
   display: flex;
-  ${({ isForm }) =>
+  width: ${({ isForm, length }) =>
     isForm
-      ? `
-    width: 100%;
-    height: 100%;
-    border: none;
-    background: transparent;
-  `
-      : `
-  width: ${({ length }) =>
-    length === 'long'
+      ? '100%'
+      : length === 'long'
       ? '200px'
       : length === 'middle'
       ? '160px'
@@ -32,10 +25,18 @@ const CustomInput = styled.div`
       : length === 'full'
       ? '100%'
       : '120px'};
-  height: 35px;
-  border: 1px solid var(--primary-border-color);
-  background: var(--white);
-  `}
+  ${({ isForm }) =>
+    isForm
+      ? `
+    height: 100%;
+    border: none;
+    background: transparent;
+  `
+      : `
+    height: 35px;
+    border: 1px solid var(--primary-border-color);
+    background: var(--white);
+  `};
   align-items: center;
   position: relative;
   padding: 0 10px;
@@ -63,7 +64,7 @@ const CustomInput = styled.div`
     padding-left: 5px;
     ${({ isForm }) => (isForm ? 'padding: 5px' : null)};
     right: 8px;
-    font-size: 16px;
+    font-size: ${({ isForm }) => (isForm ? '18px' : '16px')};
     color: var(--search-ph-color);
     transition: 0.2s all ease-in-out;
     visibility: hidden;
@@ -73,18 +74,28 @@ const CustomInput = styled.div`
 
 const CustomDropdown = styled.div`
   position: relative;
-  border: 1px solid var(--primary-border-color);
-  width: ${({ length }) =>
-    length === 'long'
+  width: ${({ isForm, length }) =>
+    isForm
+      ? '100%'
+      : length === 'long'
       ? '200px'
       : length === 'middle'
       ? '160px'
       : length === 'short'
       ? '120px'
       : '120px'};
+  ${({ isForm }) =>
+    isForm
+      ? `
+    height: 100%;
+    border: none;
+    background: transparent;
+  `
+      : `
   height: 35px;
-  font-size: 14px;
+  border: 1px solid var(--primary-border-color);
   background: var(--white);
+  `};
   display: flex;
   align-items: center;
   > div {
@@ -92,20 +103,23 @@ const CustomDropdown = styled.div`
     height: 100%;
     display: flex;
     padding: 0 10px;
-    justify-content: space-between;
+    justify-content: ${({ isForm }) => (isForm ? 'center' : null)};
     align-items: center;
     > input {
-      width: ${({ length }) =>
-        length === 'long'
-          ? 'calc(200px - 12px - 27px)'
+      width: ${({ isForm, length }) =>
+        isForm
+          ? '100%'
+          : length === 'long'
+          ? 'calc(200px - 12px)'
           : length === 'middle'
-          ? 'calc(160px - 12px - 27px)'
+          ? 'calc(160px - 12px)'
           : length === 'short'
-          ? 'calc(120px - 12px - 27px)'
-          : 'calc(120px - 12px - 27px)'};
+          ? 'calc(120px - 12px)'
+          : 'calc(120px - 12px)'};
       height: 100%;
-      font-size: 14px;
-      background: var(--white);
+      ${({ isForm }) => (isForm ? `text-align: center;` : null)};
+      font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
+      background: transparent;
       border: none;
       &::placeholder {
         color: var(--search-ph-color);
@@ -123,16 +137,19 @@ const CustomDropdown = styled.div`
       }
     }
     > svg {
-      font-size: 12px;
+      position: absolute;
+      right: ${({ isForm }) => (isForm ? '10px' : '5px')};
+      background: ${({ isForm }) => (isForm ? 'var(--form-table-bg-color)' : 'var(--white)')};
+      font-size: ${({ isForm }) => (isForm ? '14px' : '12px')};
+      padding: 5px;
       color: var(--search-ph-color);
       transition: 0.2s all ease-in-out;
       &.reset {
         cursor: pointer;
-        font-size: 16px;
-        padding-left: 5px;
-        background: var(--white);
+        font-size: ${({ isForm }) => (isForm ? '18px' : '16px')};
+        background: ${({ isForm }) => (isForm ? 'var(--form-table-bg-color)' : 'var(--white)')};
         position: absolute;
-        right: 8px;
+        right: ${({ isForm }) => (isForm ? '8px' : '3px')};
         visibility: hidden;
         opacity: 0;
       }
@@ -140,27 +157,24 @@ const CustomDropdown = styled.div`
   }
   > ul {
     position: absolute;
-    max-height: ${props => (props.open ? '330px' : 0)};
-    top: 34px;
-    left: -1px;
+    z-index: 999;
+    width: ${({ isForm }) => (isForm ? '100%' : 'calc(100% + 2px)')};
+    max-height: ${props => (props.open ? '200px' : 0)};
+    top: ${({ isForm }) => (isForm ? '50px' : '34px')};
+    left: ${({ isForm }) => (isForm ? 0 : '-1px')};
     transition: 0.2s all ease-in-out;
     overflow: auto;
-    border-bottom: ${props => (props.open ? '1px solid var(--primary-border-color)' : null)};
+    border-bottom: ${({ isForm, open }) =>
+      isForm ? 'none' : open ? '1px solid var(--primary-border-color)' : null};
     > li {
       background: var(--white);
-      width: ${({ length }) =>
-        length === 'long'
-          ? '200px'
-          : length === 'middle'
-          ? '160px'
-          : length === 'short'
-          ? '120px'
-          : '120px'};
-      height: 35px;
-      border: 1px solid var(--primary-border-color);
+      height: ${({ isForm }) => (isForm ? '50px' : '35px')};
+      border: ${({ isForm }) => (isForm ? 'none' : '1px solid var(--primary-border-color)')};
       border-top: none;
+      border-bottom: ${({ isForm }) =>
+        isForm ? '2px solid var(--form-table-even-border-color)' : null};
+      justify-content: ${({ isForm }) => (isForm ? 'center' : null)};
       padding: 10px;
-      font-size: 14px;
       display: flex;
       align-items: center;
       &.active {

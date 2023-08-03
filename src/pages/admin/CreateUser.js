@@ -12,13 +12,17 @@ import {
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
+import { useSelector } from 'react-redux';
 
 const CreateUser = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [imajor, setImajor] = useState('');
+  const [gender, setGender] = useState('');
   const [birth, setBirth] = useState('');
   const [phone, setPhone] = useState('');
+
+  const { majorList } = useSelector(state => state.major);
 
   const checkValidDate = value => {
     const dateRegex =
@@ -32,6 +36,7 @@ const CreateUser = () => {
   };
 
   const handleCreate = () => {
+    console.log(name, imajor, gender, birth, phone);
     if (!checkValidDate(birth)) {
       alert('존재하지 않는 날짜입니다.');
       return;
@@ -85,6 +90,7 @@ const CreateUser = () => {
             <Input
               type="text"
               isForm={true}
+              placeholder="이름을 입력하세요."
               reset={setName}
               value={name}
               setValue={handleNameChange}
@@ -92,21 +98,45 @@ const CreateUser = () => {
           </div>
           <div>전공</div>
           <div>
-            <Dropdown />
+            <Dropdown
+              isForm={true}
+              placeholder="전공을 선택하세요."
+              data={majorList}
+              propertyName={{ key: 'id', value: 'title' }}
+              value={imajor}
+              setValue={setImajor}
+              reset
+              search
+            />
           </div>
         </Row>
         <Row col={2}>
           <div>성별</div>
-          <div></div>
-          <div>E-mail</div>
+          <div>
+            <Dropdown
+              isForm={true}
+              placeholder="성별을 선택하세요."
+              data={[
+                { id: 'M', title: '남' },
+                { id: 'F', title: '여' },
+              ]}
+              propertyName={{ key: 'id', value: 'title' }}
+              value={gender}
+              setValue={setGender}
+              reset
+              search
+            />
+          </div>
+          <div>휴대전화</div>
           <div>
             <Input
               type="text"
               isForm={true}
-              disabled={true}
-              reset={setEmail}
-              value={email}
-              setValue={e => setEmail(e.target.value)}
+              reset={setPhone}
+              maxLength={13}
+              placeholder="010-0000-0000"
+              value={phone}
+              setValue={handlePhoneChange}
             />
           </div>
         </Row>
@@ -123,17 +153,9 @@ const CreateUser = () => {
               setValue={handleBirthChange}
             />
           </div>
-          <div>휴대전화</div>
+          <div>E-mail</div>
           <div>
-            <Input
-              type="text"
-              isForm={true}
-              reset={setPhone}
-              maxLength={13}
-              placeholder="010-0000-0000"
-              value={phone}
-              setValue={handlePhoneChange}
-            />
+            <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
           </div>
         </Row>
         <Row>
@@ -145,7 +167,6 @@ const CreateUser = () => {
         <Row>
           <div>상세주소</div>
           <div>
-            {' '}
             <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
           </div>
         </Row>

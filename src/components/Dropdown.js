@@ -7,7 +7,17 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Dropdown = ({ length, placeholder, data, value, setValue, reset, search }) => {
+const Dropdown = ({
+  isForm,
+  length,
+  placeholder,
+  data,
+  value,
+  setValue,
+  propertyName,
+  reset,
+  search,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
   const [result, setResult] = useState([]);
@@ -40,15 +50,19 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
   useEffect(() => {
     if (!isOpen) {
       setTimeout(() => setResult(data || []), 200);
-      if (data?.length !== 0 && data?.filter(item => item.title === searchValue).length === 0) {
+      if (
+        data?.length !== 0 &&
+        data?.filter(item => item[propertyName ? propertyName.value : 'title'] === searchValue)
+          .length === 0
+      ) {
         setSearchValue('');
       }
     }
   }, [isOpen]);
 
   const handleItemClick = item => {
-    setValue && setValue(item.id);
-    setSearchValue(item.title);
+    setValue && setValue(item[propertyName ? propertyName.key : 'id']);
+    setSearchValue(item[propertyName ? propertyName.value : 'title']);
     handleMenuOpen();
   };
 
@@ -62,26 +76,38 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
 
   const handleSearchValueChange = e => {
     setSearchValue(e.target.value);
-    const find = data?.find(item => item.title === e.target.value);
-    find ? setValue && setValue(find.id) : setValue && setValue(null);
-    setResult(data?.filter(item => item.title.includes(e.target.value)) || []);
+    const find = data?.find(
+      item => item[propertyName ? propertyName.value : 'title'] === e.target.value
+    );
+    find
+      ? setValue && setValue(find[propertyName ? propertyName.key : 'id'])
+      : setValue && setValue(null);
+    setResult(
+      data?.filter(item =>
+        item[propertyName ? propertyName.value : 'title'].includes(e.target.value)
+      ) || []
+    );
     itemRef.current?.scrollIntoView({ block: 'start' });
   };
 
   return (
-    <CustomDropdown ref={menuRef} open={isOpen} length={length} value={searchValue}>
+    <CustomDropdown ref={menuRef} open={isOpen} isForm={isForm} length={length} value={searchValue}>
       <div onClick={handleMenuOpen}>
         {search ? (
           <input
             ref={inputRef}
             type="text"
-            placeholder={'전체 ' + placeholder}
+            placeholder={placeholder}
             value={searchValue}
             onChange={handleSearchValueChange}
           />
         ) : (
           <span className={value ? null : 'placeholder'}>
-            {value ? data?.find(item => item.id === value).title : '전체 ' + placeholder}
+            {value
+              ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)[
+                  propertyName ? propertyName.value : 'title'
+                ]
+              : placeholder}
           </span>
         )}
         <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
@@ -93,12 +119,16 @@ const Dropdown = ({ length, placeholder, data, value, setValue, reset, search })
         {result.length !== 0 ? (
           result.map(item => (
             <li
-              ref={item.title === searchValue ? itemRef : null}
-              className={item.title === searchValue ? 'active' : null}
-              key={item.id}
+              ref={
+                item[propertyName ? propertyName.value : 'title'] === searchValue ? itemRef : null
+              }
+              className={
+                item[propertyName ? propertyName.value : 'title'] === searchValue ? 'active' : null
+              }
+              key={item[propertyName ? propertyName.key : 'id']}
               onClick={() => handleItemClick(item)}
             >
-              <span>{item.title}</span>
+              <span>{item[propertyName ? propertyName.value : 'title']}</span>
             </li>
           ))
         ) : (
