@@ -9,6 +9,7 @@ import CommonModal from '../../components/CommonModal';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import { handleTestClick, handleGetStudentList } from '../../api/fetch';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
@@ -29,7 +30,7 @@ const Lecture = () => {
   // 드롭다운 테스트
   const [lectureName, setLectureName] = useState();
   const [lectureStatus, setLectureStatus] = useState();
-  const data = [
+  const datas = [
     {
       id: 1,
       title: '1번',
@@ -86,8 +87,12 @@ const Lecture = () => {
     },
   ];
   // 쿼리
+  const [click, setClick] = useState(false);
   const queries = { lectureStatus, lectureName, professorName };
   const url = '';
+  // const url = '/api/admin/bachelor/lecture';
+
+  const { data, pending } = useQuerySearch(url, click);
 
   // 서버연동 테스트 - 테이블에 정보 불러오기
   const [tableDatas, setTableDatas] = useState([]);
@@ -108,11 +113,11 @@ const Lecture = () => {
   // JSX
   return (
     <>
-      <SearchBar queries={queries} url={url} setPage={true}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           length="short"
           placeholder="강의상태"
-          data={data}
+          data={datas}
           value={lectureStatus}
           setValue={setLectureStatus}
           reset={true}
@@ -120,7 +125,7 @@ const Lecture = () => {
         <Dropdown
           length="long"
           placeholder="강의명"
-          data={data}
+          data={datas}
           value={lectureName}
           setValue={setLectureName}
           reset={true}
@@ -136,44 +141,46 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
-      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={maxPage}>
-        {tableDatas.length === 0 ? (
-          <p>loading...</p>
-        ) : (
-          tableDatas.map((item, idx) => {
-            return (
-              <div key={idx}>
-                <div>{item.semester}</div>
-                <div>{item.gradeLimit}</div>
-                <div>{item.majorName}</div>
-                <div>{item.lectureNm}</div>
-                <div>{item.nm}</div>
-                <div>{item.score}</div>
-                <div>
-                  {item.buildingNm} {item.lectureRoomNm}
-                </div>
-                <div>
-                  {item.strDate}~{item.endDate}
-                </div>
-                <div>
-                  {item.strTime}~{item.endTime}
-                </div>
-                <div>
-                  {item.currentPeople}/{item.maxPeople}
-                </div>
-                <div>{item.procedures}</div>
-                <div>
-                  <CommonButton
-                    btnType="table"
-                    color="gray"
-                    value="상세보기"
-                    onClick={() => getStudentList(item.ilecture, pageIdx)}
-                  />
-                </div>
+      <Table
+        header={tableHeader}
+        data={tableDatas}
+        hasPage={true}
+        maxPage={maxPage}
+        pending={pending}
+      >
+        {tableDatas?.map((item, idx) => {
+          return (
+            <div key={idx}>
+              <div>{item.semester}</div>
+              <div>{item.gradeLimit}</div>
+              <div>{item.majorName}</div>
+              <div>{item.lectureNm}</div>
+              <div>{item.nm}</div>
+              <div>{item.score}</div>
+              <div>
+                {item.buildingNm} {item.lectureRoomNm}
               </div>
-            );
-          })
-        )}
+              <div>
+                {item.strDate}~{item.endDate}
+              </div>
+              <div>
+                {item.strTime}~{item.endTime}
+              </div>
+              <div>
+                {item.currentPeople}/{item.maxPeople}
+              </div>
+              <div>{item.procedures}</div>
+              <div>
+                <CommonButton
+                  btnType="table"
+                  color="gray"
+                  value="상세보기"
+                  onClick={() => getStudentList(item.ilecture, pageIdx)}
+                />
+              </div>
+            </div>
+          );
+        })}
       </Table>
 
       {display ? (
