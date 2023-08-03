@@ -88,3 +88,16 @@ export const handleGetApprovalLecture = async _setFunc => {
     ];
   }
 };
+
+// 통합 성적관리 - 특정 학생의 성적 검색
+export const getStudentGrade = async _setFunc => {
+  try {
+    const res = await axios.get(`http://192.168.0.144:5002/api/admin/grade?studentNum=23100001`);
+    const result = res.data;
+    console.log(result.voList);
+    await _setFunc(result.voList);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
