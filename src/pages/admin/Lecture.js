@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { LectureContainer, TableArea, TempStyle, NoData } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
@@ -11,6 +11,7 @@ import Table from '../../components/Table';
 import { handleTestClick } from '../../api/fetch';
 
 const Lecture = () => {
+  const { pathname } = useLocation();
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
   const handleShowDetail = _item => {
@@ -48,7 +49,7 @@ const Lecture = () => {
 
   const handlePageBtnClick = () => {
     console.log('btn click');
-    navigate('/bachelor/lecture/approval');
+    navigate(`${pathname}/approval`);
   };
 
   // 드롭다운 테스트
@@ -121,24 +122,6 @@ const Lecture = () => {
   };
   useEffect(() => {
     getTestData();
-    /*
-{
-        buildingNm: '백매관',
-        currentPeople: 5,
-        delYn: 0,
-        endDate: '2023-06-30',
-        endTime: '10:00:00',
-        ilecture: 4,
-        isemester: 21,
-        lectureNm: '물리학1',
-        lectureRoomNm: '503호',
-        maxPeople: 27,
-        nm: '김재경',
-        procedures: 0,
-        strDate: '2023-03-04',
-        strTime: '09:00:00',
-      },
-    */
   }, []);
 
   // JSX
@@ -172,51 +155,46 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
-      {arr.length === 0 ? (
-        <NoData>
-          <p>검색해주세요</p>
-        </NoData>
-      ) : (
-        <>
-          <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
-            {tableDatas.length === 0 ? (
-              <p>loading...</p>
-            ) : (
-              tableDatas.map((item, idx) => {
-                return (
-                  <div key={idx}>
-                    <div>{item.isemester}</div>
-                    <div>{item.lectureNm}</div>
-                    <div>{item.lectureNm}</div>
-                    <div>{item.lectureNm}</div>
-                    <div>{item.nm}</div>
-                    <div>{item.lectureNm}</div>
-                    <div>
-                      {item.buildingNm} {item.lectureRoomNm}
-                    </div>
-                    <div>
-                      {item.strDate}~{item.endDate}
-                    </div>
-                    <div>
-                      {item.strTime}~{item.endTime}
-                    </div>
-                    <div>{item.maxPeople}</div>
-                    <div>{item.procedures}</div>
-                    <div>
-                      <CommonButton
-                        btnType="table"
-                        color="gray"
-                        value="상세보기"
-                        onClick={() => console.log('해당 과목 수강 학생 리스트 및 성적 출력')}
-                      />
-                    </div>
+      <>
+        <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
+          {tableDatas.length === 0 ? (
+            <p>loading...</p>
+          ) : (
+            tableDatas.map((item, idx) => {
+              return (
+                <div key={idx}>
+                  <div>{item.isemester}</div>
+                  <div>{item.lectureNm}</div>
+                  <div>{item.lectureNm}</div>
+                  <div>{item.lectureNm}</div>
+                  <div>{item.nm}</div>
+                  <div>{item.lectureNm}</div>
+                  <div>
+                    {item.buildingNm} {item.lectureRoomNm}
                   </div>
-                );
-              })
-            )}
-          </Table>
-        </>
-      )}
+                  <div>
+                    {item.strDate}~{item.endDate}
+                  </div>
+                  <div>
+                    {item.strTime}~{item.endTime}
+                  </div>
+                  <div>{item.maxPeople}</div>
+                  <div>{item.procedures}</div>
+                  <div>
+                    <CommonButton
+                      btnType="table"
+                      color="gray"
+                      value="상세보기"
+                      onClick={() => console.log('해당 과목 수강 학생 리스트 및 성적 출력')}
+                    />
+                  </div>
+                </div>
+              );
+            })
+          )}
+        </Table>
+      </>
+
       {display ? (
         <CommonModal
           setDisplay={setDisplay}
