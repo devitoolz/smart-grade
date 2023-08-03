@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { TableArea } from '../styles/MyStyleCSS';
+import { TableArea } from '../../styles/MyStyleCSS';
 import { useNavigate } from 'react-router-dom';
-import CommonButton from '../components/CommonButton';
-import CommonModal from '../components/CommonModal';
-import Table from '../components/Table';
-import { Layout } from '../styles/CommonStyle';
+import CommonButton from '../../components/CommonButton';
+import CommonModal from '../../components/CommonModal';
+import Table from '../../components/Table';
+import { Layout } from '../../styles/CommonStyle';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);

@@ -1,7 +1,34 @@
 import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const NotFound = () => {
-  return <div>NotFound</div>;
+  const navigate = useNavigate();
+  const { state } = useLocation();
+
+  const goHome = () => {
+    let path;
+    switch (state?.user) {
+      case 'admin':
+        path = '/admin/home';
+        break;
+      case 'professor':
+        path = '/professor/home';
+        break;
+      case 'student':
+        path = '/student/home';
+        break;
+      default:
+        path = '/';
+    }
+    navigate(path);
+  };
+
+  return (
+    <>
+      <div>NotFound</div>
+      <button onClick={goHome}>홈으로</button>
+    </>
+  );
 };
 
 export default NotFound;

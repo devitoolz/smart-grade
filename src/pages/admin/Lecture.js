@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { LectureContainer, TableArea, TempStyle, NoData } from '../styles/MyStyleCSS';
-import SearchBar from '../components/SearchBar';
-import Input from '../components/Input';
+import { LectureContainer, TableArea, TempStyle, NoData } from '../../styles/MyStyleCSS';
+import SearchBar from '../../components/SearchBar';
+import Input from '../../components/Input';
 import { useNavigate } from 'react-router-dom';
-import CommonButton from '../components/CommonButton';
-import Dropdown from '../components/Dropdown';
-import CommonModal from '../components/CommonModal';
-import { Layout } from '../styles/CommonStyle';
-import Table from '../components/Table';
-import { handleTestClick } from '../api/fetch';
+import CommonButton from '../../components/CommonButton';
+import Dropdown from '../../components/Dropdown';
+import CommonModal from '../../components/CommonModal';
+import { Layout } from '../../styles/CommonStyle';
+import Table from '../../components/Table';
+import { handleTestClick } from '../../api/fetch';
 
 const Lecture = () => {
   const [display, setDisplay] = useState(false);
