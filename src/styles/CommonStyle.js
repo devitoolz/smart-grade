@@ -59,8 +59,9 @@ const CustomInput = styled.div`
   > svg {
     cursor: pointer;
     position: absolute;
-    background: var(--white);
+    background: ${({ isForm }) => (isForm ? 'var(--form-table-bg-color)' : 'var(--white)')};
     padding-left: 5px;
+    ${({ isForm }) => (isForm ? 'padding: 5px' : null)};
     right: 8px;
     font-size: 16px;
     color: var(--search-ph-color);
