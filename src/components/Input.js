@@ -3,16 +3,28 @@ import { CustomInput } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
 
-const Input = ({ length, type, placeholder, value, setValue }) => {
+const Input = ({
+  isForm,
+  disabled,
+  length,
+  maxLength,
+  type,
+  placeholder,
+  reset,
+  value,
+  setValue,
+}) => {
   return (
-    <CustomInput length={length} value={value}>
+    <CustomInput isForm={isForm} length={length} value={value}>
       <input
         type={type}
+        disabled={disabled}
         placeholder={placeholder}
+        maxLength={maxLength}
         value={value}
-        onChange={e => setValue(e.target.value)}
+        onChange={setValue}
       />
-      <FontAwesomeIcon onClick={() => setValue('')} icon={faCircleXmark} />
+      {reset && <FontAwesomeIcon onClick={() => reset('')} icon={faCircleXmark} />}
     </CustomInput>
   );
 };

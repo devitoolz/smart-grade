@@ -7,6 +7,7 @@ import {
   PageButton,
   PrevNextButton,
   TableNoData,
+  TableLayout,
 } from '../styles/TableStyle';
 import { useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -65,7 +66,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
   };
 
   return (
-    <>
+    <TableLayout>
       <TableContainer>
         {pending ? (
           <TableNoData>
@@ -127,7 +128,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
           ) : null}
         </Pagination>
       )}
-    </>
+    </TableLayout>
   );
 };
 

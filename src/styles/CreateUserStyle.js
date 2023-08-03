@@ -7,56 +7,93 @@ const CreateUserLayout = styled.div`
   padding: 50px;
 `;
 
-const NoticeSpan = styled.span`
-  color: var(--negative-color);
-  &:last-of-type {
-    padding-top: 5px;
-    padding-bottom: 20px;
+const TopLayout = styled.div`
+  display: flex;
+  justify-content: space-between;
+  > div.top-left {
+    display: flex;
+    gap: 40px;
   }
 `;
 
 const ImageUpload = styled.div`
-  width: 250px;
+  width: 300px;
   aspect-ratio: 3 / 4;
   border: 1px dashed var(--black);
   border-radius: 15px;
-  margin-bottom: 40px;
+`;
+
+const NoticeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 10px;
+  > span {
+    color: var(--negative-color);
+    &:last-of-type {
+      padding-top: 5px;
+    }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+`;
+
+const Button = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 0 40px;
+  height: 40px;
+  background: var(--primary-color);
+  color: var(--white);
+  &:last-of-type {
+    background: var(--negative-color);
+  }
 `;
 
 const FormTable = styled.div`
   width: 100%;
-  div {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    word-break: break-all;
-  }
-  border: 2px solid var(--title-txt-color);
+  padding-top: 40px;
 `;
 
-const TwoColumns = styled.div`
+const Row = styled.div`
   display: grid;
-  grid-template-columns: 1fr 2fr 1fr 2fr;
-  border-bottom: 1px solid var(--table-border-color);
+  grid-template-columns: ${({ col }) => (col === 2 ? '1fr 2fr 1fr 2fr' : '1fr 5fr')};
   &:last-of-type {
-    border-bottom: none;
+    > div {
+      &:nth-of-type(odd) {
+        background: var(--primary-color);
+        border-bottom: none;
+      }
+      &:nth-of-type(even) {
+        background: var(--form-table-bg-color);
+        border-bottom: none;
+      }
+    }
   }
   > div {
-    color: var(--black);
-    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 16px;
-    height: 45px;
-    line-height: 45px;
     text-align: center;
-    border-right: 1px solid var(--table-border-color);
+    height: 50px;
     &:nth-of-type(odd) {
-      background: var(--main-bg-color);
+      font-weight: bold;
+      color: var(--white);
+      background: var(--primary-color);
+      border-bottom: 2px solid var(--form-table-odd-border-color);
     }
     &:nth-of-type(even) {
-      background: #f8f8f8;
-    }
-    &:last-of-type {
-      border-right: none;
+      background: var(--form-table-bg-color);
+      border-bottom: 2px solid var(--form-table-even-border-color);
     }
     > input {
       height: 100%;
@@ -70,41 +107,13 @@ const TwoColumns = styled.div`
   }
 `;
 
-const OneColumn = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 4fr;
-`;
-
-const ButtonContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  padding-top: 50px;
-  gap: 20px;
-`;
-
-const Button = styled.span`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
-  font-size: 16px;
-  border-radius: 5px;
-  padding: 0 40px;
-  height: 45px;
-  background: var(--primary-color);
-  color: var(--white);
-  &:last-of-type {
-    background: var(--negative-color);
-  }
-`;
-
 export {
   CreateUserLayout,
-  NoticeSpan,
+  TopLayout,
   ImageUpload,
-  FormTable,
-  TwoColumns,
-  OneColumn,
+  NoticeContainer,
   ButtonContainer,
   Button,
+  FormTable,
+  Row,
 };

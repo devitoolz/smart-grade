@@ -11,6 +11,9 @@ const light = css`
     --primary-border-color: #cacaca;
     --negative-color: #ff6b6b;
     --table-border-color: #dae8ff;
+    --form-table-bg-color: #f8f8f8;
+    --form-table-odd-border-color: #61bfff;
+    --form-table-even-border-color: #f2f2f2;
     --search-bg-color: #d9d9d9;
     --search-ph-color: #a6a6a6;
     --white: #fff;
@@ -34,6 +37,9 @@ const MainLayout = styled.div`
 
 const Sidebar = styled.div`
   display: flex;
+  position: fixed;
+  z-index: 99;
+  height: 100%;
 `;
 
 const MainMenu = styled.ul`
@@ -105,7 +111,7 @@ const Title = styled.div`
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
-  padding-left: 30px;
+  padding-left: calc(30px + 320px);
   z-index: 9;
 `;
 

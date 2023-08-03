@@ -1,5 +1,11 @@
 import styled from '@emotion/styled';
 
+const TableLayout = styled.div`
+  width: 100%;
+  height: 500px;
+  overflow: auto;
+`;
+
 const TableContainer = styled.div`
   width: 100%;
   border-top: 2px solid var(--title-txt-color);
@@ -101,6 +107,7 @@ const PrevNextButton = styled.span`
 `;
 
 export {
+  TableLayout,
   TableContainer,
   TableHead,
   TableBody,

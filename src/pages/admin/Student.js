@@ -31,9 +31,9 @@ const Student = () => {
     { title: '전공', width: 4 },
     { title: '이름', width: 2 },
     { title: '성별', width: 1 },
-    { title: '생년월일', width: 3 },
+    { title: '생년월일', width: 2.5 },
     { title: '전화번호', width: 3 },
-    { title: '입학년도', width: 3 },
+    { title: '입학년도', width: 2.5 },
     { title: '졸업여부', width: 2 },
     { title: '이수학점', width: 2 },
     { title: '상세보기', width: 2 },
@@ -68,10 +68,18 @@ const Student = () => {
           length="middle"
           type="number"
           placeholder="학번"
+          reset={setStudentNum}
           value={studentNum}
-          setValue={setStudentNum}
+          setValue={e => setStudentNum(e.target.value)}
         />
-        <Input length="short" type="text" placeholder="이름" value={nm} setValue={setNm} />
+        <Input
+          length="short"
+          type="text"
+          placeholder="이름"
+          reset={setNm}
+          value={nm}
+          setValue={e => setNm(e.target.value)}
+        />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
       <Table

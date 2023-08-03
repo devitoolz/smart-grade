@@ -45,7 +45,14 @@ const Professor = () => {
           reset
           search
         />
-        <Input length="short" type="text" placeholder="이름" value={name} setValue={setName} />
+        <Input
+          length="short"
+          type="text"
+          placeholder="이름"
+          reset={setName}
+          value={name}
+          setValue={e => setName(e.target.value)}
+        />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
       <Table
