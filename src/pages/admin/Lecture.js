@@ -18,6 +18,8 @@ const Lecture = () => {
   console.log(pageIdx);
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
+  // table maxPage
+  const [maxPage, setMaxPage] = useState(0);
 
   const handlePageBtnClick = () => {
     console.log('btn click');
@@ -90,7 +92,7 @@ const Lecture = () => {
   // 서버연동 테스트 - 테이블에 정보 불러오기
   const [tableDatas, setTableDatas] = useState([]);
   const getTestData = async () => {
-    await handleTestClick(setTableDatas);
+    await handleTestClick(setTableDatas, setMaxPage);
   };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
   const getStudentList = async (_ilecture, _pageIdx) => {
@@ -134,7 +136,7 @@ const Lecture = () => {
 
       <CommonButton btnType="page" value="강의 개설 관리" onClick={handlePageBtnClick} />
 
-      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
+      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={maxPage}>
         {tableDatas.length === 0 ? (
           <p>loading...</p>
         ) : (

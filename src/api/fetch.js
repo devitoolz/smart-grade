@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const handleTestClick = async _setFunc => {
+export const handleTestClick = async (_setFunc, _setMaxPage) => {
   // try...catch
   try {
     const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?page=1');
@@ -8,6 +8,7 @@ export const handleTestClick = async _setFunc => {
     console.log('통신 데이터 : ', result);
     console.log('max page : ', result.page.maxPage);
     _setFunc(result.lectures);
+    _setMaxPage(result.page.maxPage);
     return result.lectures;
   } catch (error) {
     console.log(error);
