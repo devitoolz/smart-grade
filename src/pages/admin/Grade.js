@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TableArea, NoData } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
@@ -6,6 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonButton from '../../components/CommonButton';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
+import { getStudentGrade } from '../../api/fetch';
 
 const Grade = () => {
   const arr = [
@@ -13,42 +14,6 @@ const Grade = () => {
       aa: '1',
       bb: '1',
       cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '기술과학윤리',
-      dd: '이그린',
-      ee: 2,
-      ff: 94,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '3',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 97,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '4',
-      cc: '생활속의물리',
-      dd: '이그린',
-      ee: 3,
-      ff: 100,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '데이터베이스',
       dd: '이그린',
       ee: 3,
       ff: 96,
@@ -144,13 +109,21 @@ const Grade = () => {
       gg: 'A+',
     },
   ];
+  // 데이터통신 - 학생성적 불러오기
+  const [studentData, setStudentData] = useState([]);
+  const handleGetStudentGrade = async _setFunc => {
+    await getStudentGrade(_setFunc);
+  };
+  // useEffect(() => {
+  //   handleGetStudentGrade();
+  // }, []);
 
   // 쿼리
   const queries = { semester, grade, studentId };
   const url = '';
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} url={url} setPage={true}>
         <Dropdown
           length="short"
@@ -176,21 +149,26 @@ const Grade = () => {
           setValue={setStudentId}
         />
       </SearchBar>
-      <CommonButton btnType="page" value="학생상세정보" onClick={() => console.log('test')} />
-      {arr.length === 0 ? (
+      <CommonButton
+        btnType="page"
+        value="학생상세정보"
+        onClick={() => handleGetStudentGrade(setStudentData)}
+      />
+
+      {!studentData.length ? (
         <NoData>
           <div>{randomValue}</div>
           <p>검색해주세요</p>
         </NoData>
       ) : (
         <>
-          <Table header={tableHeader} data={tableData} hasPage={true} maxPage={5}>
-            {tableData.map((item, idx) => {
+          <Table header={tableHeader} data={studentData} hasPage={true} maxPage={5}>
+            {studentData.map((item, idx) => {
               return (
                 <div key={idx}>
                   <div>{item.aa}</div>
                   <div>{item.bb}</div>
-                  <div>{item.cc}</div>
+                  <div>{item.ilecture}</div>
                   <div>{item.dd}</div>
                   <div>{item.ee}</div>
                   <div>{item.ff}</div>
@@ -201,7 +179,7 @@ const Grade = () => {
           </Table>
         </>
       )}
-    </Layout>
+    </>
   );
 };
 
