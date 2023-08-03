@@ -68,10 +68,18 @@ const Student = () => {
           length="middle"
           type="number"
           placeholder="학번"
+          reset={setStudentNum}
           value={studentNum}
-          setValue={setStudentNum}
+          setValue={e => setStudentNum(e.target.value)}
         />
-        <Input length="short" type="text" placeholder="이름" value={nm} setValue={setNm} />
+        <Input
+          length="short"
+          type="text"
+          placeholder="이름"
+          reset={setNm}
+          value={nm}
+          setValue={e => setNm(e.target.value)}
+        />
       </SearchBar>
       <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
       <Table
