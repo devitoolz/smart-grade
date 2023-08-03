@@ -8,7 +8,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
-import { handleTestClick, handleGetStudentList } from '../../api/fetch';
+import { handleTestClick, getStudentList } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
@@ -100,15 +100,31 @@ const Lecture = () => {
     await handleTestClick(setTableDatas, setMaxPage);
   };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
-  const getStudentList = async (_ilecture, _pageIdx) => {
+  const [lectureNm, setLectureNm] = useState();
+  const handlegetStudentList = async (_lectureNm, _ilecture, _pageIdx) => {
+    setLectureNm(_lectureNm);
     // console.log('해당 과목 수강 학생 리스트 및 성적 출력');
     // ilecture = 해당 강의 과목 번호
-    await handleGetStudentList(_ilecture, _pageIdx);
+    const result = await getStudentList(_ilecture, _pageIdx);
+    setContents(result.list);
     setDisplay(true);
   };
   useEffect(() => {
     getTestData();
   }, []);
+
+  // 모달 - 해당강의 학생리스트+성적 확인
+  const modalHeader = [
+    { title: 'No', width: 1 },
+    { title: '이름', width: 2 },
+    { title: '학과', width: 3 },
+    { title: '출석', width: 1 },
+    { title: '중간', width: 1 },
+    { title: '기말', width: 1 },
+    { title: '총점', width: 1 },
+    { title: '평균', width: 1 },
+    { title: '등급', width: 1 },
+  ];
 
   // JSX
   return (
@@ -175,7 +191,7 @@ const Lecture = () => {
                   btnType="table"
                   color="gray"
                   value="상세보기"
-                  onClick={() => getStudentList(item.ilecture, pageIdx)}
+                  onClick={() => handlegetStudentList(item.lectureNm, item.ilecture, pageIdx)}
                 />
               </div>
             </div>
@@ -187,11 +203,26 @@ const Lecture = () => {
         <CommonModal
           setDisplay={setDisplay}
           contents={contents}
-          modalTitle="강의실 추가"
+          modalTitle={lectureNm}
           modalSize="big"
         >
-          <p>모달창 큰 버전</p>
-          <p>내용추가</p>
+          <Table header={modalHeader} data={contents} hasPage={true} maxPage={5} pending={pending}>
+            {contents.map((item, idx) => {
+              return (
+                <div key={item.istudent}>
+                  <div>{idx + 1}</div>
+                  <div>{item.nm}</div>
+                  <div>{item.majorNm}</div>
+                  <div>{item.attendance}</div>
+                  <div>{item.minEx}</div>
+                  <div>{item.finEx}</div>
+                  <div>{item.totalScore}</div>
+                  <div>{item.avg}</div>
+                  <div>{item.gread}</div>
+                </div>
+              );
+            })}
+          </Table>
         </CommonModal>
       ) : (
         <></>

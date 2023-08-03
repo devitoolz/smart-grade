@@ -12,9 +12,7 @@ const CommonModal = ({
   handleModalOk,
   handleModalCancel,
 }) => {
-  console.log(contents);
-  console.log(modalSize);
-
+  console.log(modalTitle);
   // JSX
   return (
     <ModalStyle modalSize={modalSize}>
@@ -28,7 +26,7 @@ const CommonModal = ({
           </div>
         ) : (
           <div className="modal-title">
-            <div>{contents?.lecture}</div>
+            <div>{modalSize === 'big' ? modalTitle : null}</div>
             <button onClick={() => setDisplay(false)}>
               <FontAwesomeIcon icon={faX} size="lg" />
             </button>

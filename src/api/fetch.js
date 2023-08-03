@@ -34,7 +34,7 @@ export const handleTestClick = async (_setFunc, _setMaxPage) => {
   }
 };
 
-export const handleGetStudentList = async (_ilecture, _pageIdx) => {
+export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
     const res = await axios.get(
       `http://192.168.0.144:5002/api/admin/lecture/${_ilecture}?page=${_pageIdx}`
