@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
-import SearchBar from '../components/SearchBar';
-import Dropdown from '../components/Dropdown';
-import { PlusModal } from '../styles/LectureRoomCss';
-import Input from '../components/Input';
-import CommonButton from '../components/CommonButton';
+import SearchBar from '../../components/SearchBar';
+import Dropdown from '../../components/Dropdown';
+import { PlusModal } from '../../styles/LectureRoomCss';
+import Input from '../../components/Input';
+import CommonButton from '../../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
-import Table from '../components/Table';
-import { Layout } from '../styles/CommonStyle';
+import Table from '../../components/Table';
+import { Layout } from '../../styles/CommonStyle';
 
 const Major = () => {
   ////SearchBar////

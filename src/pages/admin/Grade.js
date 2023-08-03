@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { TableArea, NoData } from '../styles/MyStyleCSS';
-import SearchBar from '../components/SearchBar';
-import Input from '../components/Input';
-import Dropdown from '../components/Dropdown';
-import CommonButton from '../components/CommonButton';
-import { Layout } from '../styles/CommonStyle';
-import Table from '../components/Table';
+import { TableArea, NoData } from '../../styles/MyStyleCSS';
+import SearchBar from '../../components/SearchBar';
+import Input from '../../components/Input';
+import Dropdown from '../../components/Dropdown';
+import CommonButton from '../../components/CommonButton';
+import { Layout } from '../../styles/CommonStyle';
+import Table from '../../components/Table';
 
 const Grade = () => {
   const arr = [

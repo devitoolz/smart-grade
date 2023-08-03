@@ -7,7 +7,7 @@ import {
   TwoColumns,
   ButtonContainer,
   Button,
-} from '../styles/CreateUserStyle';
+} from '../../styles/CreateUserStyle';
 import { useNavigate } from 'react-router-dom';
 
 const CreateUser = () => {

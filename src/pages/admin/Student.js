@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import SearchBar from '../components/SearchBar';
-import Dropdown from '../components/Dropdown';
-import Input from '../components/Input';
+import SearchBar from '../../components/SearchBar';
+import Dropdown from '../../components/Dropdown';
+import Input from '../../components/Input';
 import { useSelector } from 'react-redux';
-import ButtonBar from '../components/ButtonBar';
-import Table from '../components/Table';
+import ButtonBar from '../../components/ButtonBar';
+import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
-import useQuerySearch from '../hooks/useSearchFetch';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Student = () => {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ const Student = () => {
         />
         <Input length="short" type="text" placeholder="이름" value={nm} setValue={setNm} />
       </SearchBar>
-      <ButtonBar value="계정 생성" onClick={() => navigate('/user/create', {})} />
+      <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
       <Table
         header={tableHeader}
         data={data?.students}

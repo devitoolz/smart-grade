@@ -9,8 +9,8 @@ import {
   Sidebar,
   SubMenu,
   Title,
-} from '../styles/AppStyle';
-import { Layout } from '../styles/CommonStyle';
+} from '../../styles/AppStyle';
+import { Layout } from '../../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBuildingColumns,
@@ -19,7 +19,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
-import majorSlice from '../slices/majorSlice';
+import majorSlice from '../../slices/majorSlice';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -55,8 +55,8 @@ const Main = () => {
   };
 
   const pathSegments = pathname.split('/').filter(Boolean);
-  const mainPath = pathSegments[0];
-  const subPath = pathSegments[1];
+  const mainPath = pathSegments[1];
+  const subPath = pathSegments[2];
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
