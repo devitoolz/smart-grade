@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CreateUserLayout,
   ImageUpload,
@@ -9,36 +9,65 @@ import {
   TopLayout,
   NoticeContainer,
 } from '../../styles/CreateUserStyle';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkValidDate, checkValidPhone } from '../../modules/regex';
+import api from '../../api/api';
+import mainSlice from '../../slices/mainSlice';
 
 const CreateUser = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [imajor, setImajor] = useState('');
+  const [major, setMajor] = useState('');
   const [gender, setGender] = useState('');
   const [birth, setBirth] = useState('');
   const [phone, setPhone] = useState('');
 
   const { majorList } = useSelector(state => state.major);
+  const { state } = useLocation();
+  const dispatch = useDispatch();
 
-  const checkValidDate = value => {
-    const dateRegex =
-      /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
-    const date = value.split('-');
-    const year = parseInt(date[0]);
-    const month = parseInt(date[1]);
-    const day = parseInt(date[2]);
-    const result = dateRegex.test(`${day}-${month}-${year}`);
-    return result;
-  };
+  const main = mainSlice.actions;
 
-  const handleCreate = () => {
-    console.log(name, imajor, gender, birth, phone);
+  useEffect(() => {
+    if (!state) {
+      alert('잘못된 접근입니다.');
+      navigate(-1);
+    }
+  }, []);
+
+  const handleCreate = async () => {
+    if (!(name && major && gender && birth && phone)) {
+      alert('입력되지 않은 정보가 있습니다.');
+      return;
+    }
+
     if (!checkValidDate(birth)) {
-      alert('존재하지 않는 날짜입니다.');
+      alert('올바르지 않은 날짜입니다.');
+      return;
+    }
+
+    if (!checkValidPhone(phone)) {
+      alert('올바르지 않은 전화번호입니다.');
+      return;
+    }
+
+    const payload = {
+      imajor: major,
+      nm: name,
+      gender,
+      birthdate: birth,
+      phone,
+    };
+
+    try {
+      await api.post(`/api/admin/${state}`, payload);
+      dispatch(main.setIsPosting(false));
+      navigate(-1);
+    } catch (error) {
+      alert('오류가 발생하였습니다.');
       return;
     }
   };
@@ -103,8 +132,8 @@ const CreateUser = () => {
               placeholder="전공을 선택하세요."
               data={majorList}
               propertyName={{ key: 'id', value: 'title' }}
-              value={imajor}
-              setValue={setImajor}
+              value={major}
+              setValue={setMajor}
               reset
               search
             />

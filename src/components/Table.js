@@ -68,6 +68,13 @@ const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
   return (
     <TableLayout>
       <TableContainer>
+        {header ? (
+          <TableHead template={width}>
+            {header?.map((item, index) => (
+              <div key={index}>{item.title}</div>
+            ))}
+          </TableHead>
+        ) : null}
         {pending ? (
           <TableNoData>
             <FontAwesomeIcon icon={faSpinner} />
@@ -75,11 +82,6 @@ const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
           </TableNoData>
         ) : data && header ? (
           <>
-            <TableHead template={width}>
-              {header?.map((item, index) => (
-                <div key={index}>{item.title}</div>
-              ))}
-            </TableHead>
             <TableBody template={width}>
               {children}
               {Array(10 - data.length)

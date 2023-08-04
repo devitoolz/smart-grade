@@ -22,7 +22,7 @@ import { useDispatch } from 'react-redux';
 import majorSlice from '../../slices/majorSlice';
 
 const Main = () => {
-  const { pathname } = useLocation();
+  const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(1);
   const [title, setTitle] = useState('');
@@ -57,10 +57,30 @@ const Main = () => {
   const pathSegments = pathname.split('/').filter(Boolean);
   const mainPath = pathSegments[1];
   const subPath = pathSegments[2];
+  const role = search.replace('?role=', '');
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    setTitle(menuData[mainPath].submenu[subPath] || '');
+    if (subPath === 'create') {
+      let subtitle;
+      switch (role) {
+        case 'professor':
+          subtitle = '교수 ';
+          break;
+        case 'students':
+          subtitle = '학생 ';
+          break;
+        default:
+          subtitle = '';
+      }
+      setTitle(
+        <>
+          <span>{subtitle}계정 생성</span>
+        </>
+      );
+    } else {
+      setTitle(menuData[mainPath].submenu[subPath] || '');
+    }
   }, [pathname]);
 
   const dispatch = useDispatch();
@@ -76,7 +96,7 @@ const Main = () => {
       { id: 5, title: '내용 5' },
     ];
 
-    dispatch(major.loadMajorList(result));
+    dispatch(major.setMajorList(result));
   }, []);
 
   return (
