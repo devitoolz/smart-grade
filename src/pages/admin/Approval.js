@@ -177,29 +177,3 @@ const Approval = () => {
 };
 
 export default Approval;
-/*
-// <CommonModal
-//   setDisplay={setDisplay}
-//   contents={contents}
-//   modalSize="small"
-//   modalTitle="개설 승인"
-// >
-//   <p>모달 작은 창 버전</p>
-//   <p>{contents.lecture}</p>
-//   <p>내용추가</p>
-//   <div>
-//     <label>전공명</label>
-//     <Input length="long" placeholder="전공명" value={value} setValue={setValue} />
-//   </div>
-//   <div>
-//     <label>졸업학점</label>
-//     <Input
-//       type="number"
-//       length="long"
-//       placeholder="졸업학점"
-//       value={value}
-//       setValue={setValue}
-//     />
-//   </div>
-// </CommonModal>
-*/
