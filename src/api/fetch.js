@@ -6,8 +6,8 @@ export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
   try {
     const res = await axios.get(`/api/admin/lecture?page=${_pageIdx}`);
     const result = await res.data;
-    console.log('통신 데이터 : ', result);
-    console.log('max page : ', result.page.maxPage);
+    // console.log('통신 데이터 : ', result);
+    // console.log('max page : ', result.page.maxPage);
     _setFunc(result.lectures);
     _setMaxPage(result.page.maxPage);
     return result.lectures;
@@ -62,7 +62,7 @@ export const handleGetApprovalLecture = async _setFunc => {
     //   if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
     // });
     _setFunc(result.lectures);
-    return result.lectures;
+    return result;
   } catch (error) {
     console.log(error);
     // 임시 더미 데이터

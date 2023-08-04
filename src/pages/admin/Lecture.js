@@ -16,7 +16,6 @@ const Lecture = () => {
   // console.log(pathname);
   // console.log(search);
   const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
-  console.log(pageIdx);
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
   // table maxPage
@@ -89,16 +88,16 @@ const Lecture = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { lectureStatus, lectureName, professorName };
-  const url = '';
-  // const url = '/api/admin/bachelor/lecture';
+  // const url = '';
+  const url = '/api/admin/lecture';
 
   const { data, pending } = useQuerySearch(url, click);
 
   // 서버연동 테스트 - 테이블에 정보 불러오기
-  const [tableDatas, setTableDatas] = useState([]);
-  const getTestData = async () => {
-    await handleTestClick(pageIdx, setTableDatas, setMaxPage);
-  };
+  // const [tableDatas, setTableDatas] = useState([]);
+  // const getTestData = async () => {
+  //   await handleTestClick(pageIdx, setTableDatas, setMaxPage);
+  // };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
   const [lectureNm, setLectureNm] = useState();
   const handlegetStudentList = async (_lectureNm, _ilecture) => {
@@ -109,9 +108,9 @@ const Lecture = () => {
     setContents(result.list);
     setDisplay(true);
   };
-  useEffect(() => {
-    getTestData();
-  }, [pageIdx]);
+  // useEffect(() => {
+  //   getTestData();
+  // }, [pageIdx]);
 
   // 모달 - 해당강의 학생리스트+성적 확인
   const modalHeader = [
@@ -159,12 +158,12 @@ const Lecture = () => {
 
       <Table
         header={tableHeader}
-        data={tableDatas}
+        data={data?.lectures}
         hasPage={true}
-        maxPage={maxPage}
+        maxPage={data?.page?.maxPage}
         pending={pending}
       >
-        {tableDatas?.map((item, idx) => {
+        {data?.lectures.map((item, idx) => {
           return (
             <div key={idx}>
               <div>{item.semester}</div>
@@ -224,9 +223,7 @@ const Lecture = () => {
             })}
           </Table>
         </CommonModal>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   );
 };

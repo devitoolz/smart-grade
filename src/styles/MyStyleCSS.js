@@ -100,7 +100,7 @@ export const ModalStyle = styled.div`
     min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
     height: ${({ modalSize }) => (modalSize === 'small' ? '420px' : '72%')};
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -198,7 +198,7 @@ const tableBtn = `
 const modalBtn = `
   margin: 2px 8px;
   padding: 6px 24px;
-  border-radius: 10px; 
+  border-radius: 5px; 
   color: #7e7e7e;
   font-size: 18px;
 `;

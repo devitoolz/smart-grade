@@ -5,6 +5,7 @@ import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
 import { handleGetApprovalLecture, patchRejectLecture } from '../../api/fetch';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -91,6 +92,13 @@ const Approval = () => {
   useEffect(() => {
     getApprovalData();
   }, []);
+  const [pending, setPending] = useState(false);
+  // 쿼리
+  // const [click, setClick] = useState(false);
+  // // const queries = { lectureStatus, lectureName, professorName };
+  // const url = '/api/admin/lecture';
+  // const { tableDatas, pending } = useQuerySearch(url, click);
+
   // textarea
   const [reason, setReason] = useState('');
   const inputRejectReason = e => {
@@ -114,7 +122,14 @@ const Approval = () => {
         강의 개설 요청 승인
       </div>
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
-      <Table header={tableHeader} data={tableDatas} hasPage={true} maxPage={5}>
+      <Table
+        header={tableHeader}
+        data={tableDatas}
+        // data={tableDatas?.lectures}
+        hasPage={true}
+        // maxPage={tableDatas?.page?.maxPage}
+        pending={pending}
+      >
         {tableDatas.map((item, idx) => {
           return (
             <div key={idx}>
