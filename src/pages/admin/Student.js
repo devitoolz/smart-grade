@@ -81,7 +81,10 @@ const Student = () => {
           setValue={e => setNm(e.target.value)}
         />
       </SearchBar>
-      <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
+      <ButtonBar
+        value="계정 생성"
+        onClick={() => navigate('/admin/user/create', { role: 'student' })}
+      />
       <Table
         header={tableHeader}
         data={data?.students}

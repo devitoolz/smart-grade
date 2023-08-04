@@ -54,7 +54,10 @@ const Professor = () => {
           setValue={e => setName(e.target.value)}
         />
       </SearchBar>
-      <ButtonBar value="계정 생성" onClick={() => navigate('/admin/user/create', {})} />
+      <ButtonBar
+        value="계정 생성"
+        onClick={() => navigate('/admin/user/create', { role: 'professor' })}
+      />
       <Table
         header={tableHeader}
         data={data?.professors}

@@ -9,10 +9,11 @@ import {
   TopLayout,
   NoticeContainer,
 } from '../../styles/CreateUserStyle';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -23,23 +24,46 @@ const CreateUser = () => {
   const [phone, setPhone] = useState('');
 
   const { majorList } = useSelector(state => state.major);
+  const { role } = useLocation();
 
   const checkValidDate = value => {
-    const dateRegex =
+    const validDateRegex =
       /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/g;
     const date = value.split('-');
     const year = parseInt(date[0]);
     const month = parseInt(date[1]);
     const day = parseInt(date[2]);
-    const result = dateRegex.test(`${day}-${month}-${year}`);
+    const result = validDateRegex.test(`${day}-${month}-${year}`) && dateRegex.test(value);
     return result;
   };
 
-  const handleCreate = () => {
-    console.log(name, imajor, gender, birth, phone);
-    if (!checkValidDate(birth)) {
-      alert('존재하지 않는 날짜입니다.');
+  const checkValidPhone = value => {
+    const validPhoneRegex = /^(\d{3})-(\d{4})-(\d{4})$/g;
+    const result = validPhoneRegex.test(value);
+    return result;
+  };
+
+  const handleCreate = async () => {
+    if (!(name && imajor && gender && birth && phone)) {
+      alert('입력되지 않은 정보가 있습니다.');
       return;
+    }
+
+    if (!checkValidDate(birth)) {
+      alert('올바르지 않은 날짜입니다.');
+      return;
+    }
+
+    if (!checkValidPhone(phone)) {
+      alert('올바르지 않은 전화번호입니다.');
+      return;
+    }
+
+    try {
+      console.log('ok');
+    } catch (error) {
+      console.log(error);
     }
   };
 
