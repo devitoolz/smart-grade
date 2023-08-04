@@ -111,7 +111,7 @@ const LectureRoom = () => {
   //api test
   const getBuildingTest = async () => {
     try {
-      const res = await axios.get('/api/lectureroom?page=1&buildingName=1&lectureRoomName=1');
+      const res = await axios.get('/api/lectureroom');
       const result = res.data;
       console.log('나다', result);
       return result;
@@ -236,11 +236,14 @@ const LectureRoom = () => {
           modalTitle="강의실 삭제"
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
-        ></CommonModal>
+        >
+          <p>삭제 하시겠습니까?</p>
+        </CommonModal>
       ) : null}
 
       <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
         {data.map(item => {
+          console.log(item);
           return (
             <div key={item.ilectureRoom}>
               <div>{item.ilectureRoom}</div>
