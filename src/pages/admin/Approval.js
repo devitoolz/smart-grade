@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { TextArea } from '../../styles/MyStyleCSS';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
@@ -43,26 +43,6 @@ const Approval = () => {
     { title: '정원', width: 1 },
     { title: '관리', width: 2 },
   ];
-  const tableData = [
-    {
-      lecture: '강의명이 들어갈 장소',
-      temp: '전공',
-      grade: '2',
-      professor: '교수님',
-      time: '14:00~16:00',
-      classroom: '5호관 202호',
-      peopleNum: 30,
-    },
-    {
-      lecture: '데이터베이스',
-      temp: '컴퓨터공학',
-      grade: '3',
-      professor: '박그린',
-      time: '13:00~16:00',
-      classroom: '5호관 202호',
-      peopleNum: 30,
-    },
-  ];
   // 강의 개강개설 거절 patch
   const patchRejectLectureWait = async () => {
     await patchRejectLecture();
@@ -85,19 +65,19 @@ const Approval = () => {
     console.log('modal click - no');
   };
   /* 서버 데이터 연동 테스트 - 테이블에 정보 불러오기 */
-  const [tableDatas, setTableDatas] = useState([]);
-  const getApprovalData = async () => {
-    await handleGetApprovalLecture(setTableDatas);
-  };
-  useEffect(() => {
-    getApprovalData();
-  }, []);
-  const [pending, setPending] = useState(false);
+  // const [tableDatas, setTableDatas] = useState([]);
+  // const getApprovalData = async () => {
+  //   await handleGetApprovalLecture(setTableDatas);
+  // };
+  // useEffect(() => {
+  //   getApprovalData();
+  // }, []);
+  // const [pending, setPending] = useState(false);
   // 쿼리
-  // const [click, setClick] = useState(false);
-  // // const queries = { lectureStatus, lectureName, professorName };
-  // const url = '/api/admin/lecture';
-  // const { tableDatas, pending } = useQuerySearch(url, click);
+  const [click, setClick] = useState(false);
+  // const queries = { lectureStatus, lectureName, professorName };
+  const url = '/api/admin/lecture';
+  const { data, pending } = useQuerySearch(url, click, '&procedures=-2');
 
   // textarea
   const [reason, setReason] = useState('');
@@ -124,13 +104,12 @@ const Approval = () => {
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
       <Table
         header={tableHeader}
-        data={tableDatas}
-        // data={tableDatas?.lectures}
+        data={data?.lectures}
         hasPage={true}
-        // maxPage={tableDatas?.page?.maxPage}
+        maxPage={data?.page?.maxPage}
         pending={pending}
       >
-        {tableDatas.map((item, idx) => {
+        {data?.lectures?.map((item, idx) => {
           return (
             <div key={idx}>
               <div>{item.lectureNm}</div>
