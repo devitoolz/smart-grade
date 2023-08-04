@@ -12,9 +12,10 @@ import {
 import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkValidDate, checkValidPhone } from '../../modules/regex';
 import api from '../../api/api';
+import mainSlice from '../../slices/mainSlice';
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -26,6 +27,9 @@ const CreateUser = () => {
 
   const { majorList } = useSelector(state => state.major);
   const { state } = useLocation();
+  const dispatch = useDispatch();
+
+  const main = mainSlice.actions;
 
   useEffect(() => {
     if (!state) {
@@ -60,6 +64,7 @@ const CreateUser = () => {
 
     try {
       await api.post(`/api/admin/${state}`, payload);
+      dispatch(main.setIsPosting(false));
       navigate(-1);
     } catch (error) {
       alert('오류가 발생하였습니다.');
