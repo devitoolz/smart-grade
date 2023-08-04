@@ -12,9 +12,12 @@ const Approval = () => {
   const [contents, setContents] = useState({});
   // 승인
   const [isAccept, setIsAccept] = useState(true);
+  // 승인 및 거절 선택 여부
+  const [proceduresStat, setproceduresStat] = useState(false);
   const handleRejectLecture = _item => {
     console.log('Reject');
     setContents(_item);
+    setproceduresStat(false);
     console.log(_item);
     setDisplay(true);
     setIsAccept(false);
@@ -22,6 +25,7 @@ const Approval = () => {
   const handleAcceptLecture = _item => {
     console.log('Accept');
     setContents(_item);
+    setproceduresStat(true);
     console.log(_item);
     setDisplay(true);
     setIsAccept(true);
@@ -30,7 +34,7 @@ const Approval = () => {
   //
   const navigate = useNavigate();
   const handlePageBtnClick = () => {
-    navigate(-1);
+    navigate('/admin/bachelor/lecture');
   };
   // table
   const tableHeader = [
@@ -48,21 +52,17 @@ const Approval = () => {
     await patchRejectLecture();
   };
   // 모달 버튼 클릭이벤트
-  const handleModalOk = () => {
+  const handleModalOk = async () => {
     console.log(contents);
     console.log('modal click - ok');
-    patchRejectLectureWait();
-    // console.log(rejectReason.current);
+    proceduresStat ? console.log('승인') : await patchRejectLectureWait();
     console.log(reason);
-    // {
-    //   "ilecture": 0,
-    //   "ctnt": "string",
-    //   "procedures": 0
-    // }
+    setReason('');
   };
   const handleModalCancel = () => {
     console.log(contents);
     console.log('modal click - no');
+    setReason('');
   };
   /* 서버 데이터 연동 테스트 - 테이블에 정보 불러오기 */
   // const [tableDatas, setTableDatas] = useState([]);
