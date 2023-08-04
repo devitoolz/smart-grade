@@ -96,6 +96,7 @@ const Approval = () => {
   const inputRejectReason = e => {
     setReason(e.target.value);
   };
+  const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
 
   // JSX
   return (
@@ -134,21 +135,20 @@ const Approval = () => {
                 <CommonButton
                   btnType="table"
                   color={item.procedures === 0 ? 'gray' : 'blue'}
-                  value={
-                    item.procedures === 1
-                      ? '개설 승인'
-                      : item.procedures === 2
-                      ? '개강 승인'
-                      : '신청 반려'
-                  }
+                  value={status[item.procedures]}
                   onClick={() => handleAcceptLecture(item)}
+                  disabled={!item.procedures}
                 />
-                <CommonButton
-                  btnType="table"
-                  color="red"
-                  value="거절"
-                  onClick={() => handleRejectLecture(item)}
-                />
+                {item.procedures ? (
+                  <CommonButton
+                    btnType="table"
+                    color="red"
+                    value="거절"
+                    onClick={() => handleRejectLecture(item)}
+                  />
+                ) : (
+                  <></>
+                )}
               </div>
             </div>
           );
@@ -157,7 +157,10 @@ const Approval = () => {
       {display ? (
         <CommonModal
           modalSize="small"
-          modalTitle={isAccept ? '요청 승인' : '요청 거절'}
+          modalTitle={
+            // procedures
+            isAccept ? '요청 승인' : '요청 거절'
+          }
           setDisplay={setDisplay}
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
