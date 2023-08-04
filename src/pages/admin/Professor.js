@@ -56,7 +56,7 @@ const Professor = () => {
       </SearchBar>
       <ButtonBar
         value="계정 생성"
-        onClick={() => navigate('/admin/user/create', { role: 'professor' })}
+        onClick={() => navigate('/admin/user/create', { state: 'professor' })}
       />
       <Table
         header={tableHeader}

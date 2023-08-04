@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   CreateUserLayout,
   ImageUpload,
@@ -13,39 +13,29 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import { useSelector } from 'react-redux';
+import { checkValidDate, checkValidPhone } from '../../modules/regex';
 import axios from 'axios';
 
 const CreateUser = () => {
   const navigate = useNavigate();
   const [name, setName] = useState('');
-  const [imajor, setImajor] = useState('');
+  const [major, setMajor] = useState('');
   const [gender, setGender] = useState('');
   const [birth, setBirth] = useState('');
   const [phone, setPhone] = useState('');
 
   const { majorList } = useSelector(state => state.major);
-  const { role } = useLocation();
+  const { state } = useLocation();
 
-  const checkValidDate = value => {
-    const validDateRegex =
-      /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-./])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
-    const dateRegex = /^(\d{4})-(\d{2})-(\d{2})$/g;
-    const date = value.split('-');
-    const year = parseInt(date[0]);
-    const month = parseInt(date[1]);
-    const day = parseInt(date[2]);
-    const result = validDateRegex.test(`${day}-${month}-${year}`) && dateRegex.test(value);
-    return result;
-  };
-
-  const checkValidPhone = value => {
-    const validPhoneRegex = /^(\d{3})-(\d{4})-(\d{4})$/g;
-    const result = validPhoneRegex.test(value);
-    return result;
-  };
+  useEffect(() => {
+    if (!state) {
+      navigate(-1);
+      alert('잘못된 접근입니다.');
+    }
+  }, []);
 
   const handleCreate = async () => {
-    if (!(name && imajor && gender && birth && phone)) {
+    if (!(name && major && gender && birth && phone)) {
       alert('입력되지 않은 정보가 있습니다.');
       return;
     }
@@ -60,10 +50,20 @@ const CreateUser = () => {
       return;
     }
 
+    const payload = {
+      imajor: major,
+      gender,
+      birthdate: birth,
+      phone,
+      // email: 'string',
+      // address: 'string',
+    };
+
     try {
-      console.log('ok');
+      await axios.post(`/api/admin/${state}`, payload);
     } catch (error) {
-      console.log(error);
+      alert('오류가 발생하였습니다.');
+      return;
     }
   };
 
@@ -127,8 +127,8 @@ const CreateUser = () => {
               placeholder="전공을 선택하세요."
               data={majorList}
               propertyName={{ key: 'id', value: 'title' }}
-              value={imajor}
-              setValue={setImajor}
+              value={major}
+              setValue={setMajor}
               reset
               search
             />

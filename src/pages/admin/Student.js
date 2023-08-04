@@ -83,7 +83,7 @@ const Student = () => {
       </SearchBar>
       <ButtonBar
         value="계정 생성"
-        onClick={() => navigate('/admin/user/create', { role: 'student' })}
+        onClick={() => navigate('/admin/user/create', { state: 'students' })}
       />
       <Table
         header={tableHeader}
