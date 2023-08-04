@@ -56,7 +56,7 @@ const Professor = () => {
       </SearchBar>
       <ButtonBar
         value="계정 생성"
-        onClick={() => navigate('/admin/user/create', { state: 'professor' })}
+        onClick={() => navigate('/admin/user/create?role=professor', { state: 'professor' })}
       />
       <Table
         header={tableHeader}
@@ -65,14 +65,6 @@ const Professor = () => {
         maxPage={data?.page?.maxPage}
         pending={pending}
       >
-        {/* { title: '전공', width: 1 },
-    { title: '이름', width: 1 },
-    { title: '성별', width: 1 },
-    { title: '생년월일', width: 1 },
-    { title: '전화번호', width: 1 },
-    { title: '등록일', width: 1 },
-    { title: '퇴직여부', width: 1 },
-    { title: '상세보기', width: 1 }, */}
         {data?.professors.map(item => {
           return (
             <div key={item.iprofessor}>

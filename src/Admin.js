@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import Main from './pages/admin/Main';
 import Dashboard from './pages/admin/Dashboard';
 import Notice from './pages/admin/Notice';
@@ -14,6 +14,12 @@ import LectureRoom from './pages/admin/LectureRoom';
 import Major from './pages/admin/Major';
 
 const Admin = () => {
+  const { pathname } = useLocation();
+
+  if (pathname === '/admin') {
+    return <Navigate to="/admin/home" />;
+  }
+
   return (
     <Routes>
       <Route element={<Main />}>

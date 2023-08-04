@@ -1,5 +1,5 @@
 import React from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { GlobalLayout } from './styles/AppStyle';
 import Login from './pages/Login';
 import Admin from './Admin';
@@ -9,17 +9,6 @@ import { useSelector } from 'react-redux';
 import Loading from './components/Loading';
 
 const App = () => {
-  const { pathname } = useLocation();
-
-  switch (pathname) {
-    case '/admin':
-      return <Navigate to="/admin/home" />;
-    case '/professor':
-      return <Navigate to="/professor/home" />;
-    case '/student':
-      return <Navigate to="/student/home" />;
-  }
-
   const { isPosting } = useSelector(state => state.main);
 
   return (
