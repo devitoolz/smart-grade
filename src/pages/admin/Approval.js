@@ -71,6 +71,8 @@ const Approval = () => {
     console.log(contents);
     console.log('modal click - ok');
     patchRejectLectureWait();
+    // console.log(rejectReason.current);
+    console.log(reason);
     // {
     //   "ilecture": 0,
     //   "ctnt": "string",
@@ -89,6 +91,11 @@ const Approval = () => {
   useEffect(() => {
     getApprovalData();
   }, []);
+  // textarea
+  const [reason, setReason] = useState('');
+  const inputRejectReason = e => {
+    setReason(e.target.value);
+  };
 
   // JSX
   return (
@@ -150,7 +157,7 @@ const Approval = () => {
       {display ? (
         <CommonModal
           modalSize="small"
-          modalTitle="요청 승인"
+          modalTitle={isAccept ? '요청 승인' : '요청 거절'}
           setDisplay={setDisplay}
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
@@ -162,8 +169,9 @@ const Approval = () => {
             </>
           ) : (
             <>
-              <span>요청 거절</span>
-              <TextArea />
+              <span>요청 거절 사유</span>
+              <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
+              <TextArea maxLength={100} onChange={inputRejectReason} />
             </>
           )}
         </CommonModal>
