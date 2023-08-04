@@ -48,15 +48,14 @@ const Approval = () => {
     { title: '관리', width: 2 },
   ];
   // 강의 개강개설 거절 patch
-  const patchRejectLectureWait = async () => {
-    await patchRejectLecture();
+  const patchRejectLectureWait = async (_ilecture, reason) => {
+    await patchRejectLecture(_ilecture, reason);
   };
   // 모달 버튼 클릭이벤트
   const handleModalOk = async () => {
     console.log(contents);
     console.log('modal click - ok');
-    proceduresStat ? console.log('승인') : await patchRejectLectureWait();
-    console.log(reason);
+    proceduresStat ? console.log('승인') : await patchRejectLectureWait(contents.ilecture, reason);
     setReason('');
   };
   const handleModalCancel = () => {

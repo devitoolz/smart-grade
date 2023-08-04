@@ -87,8 +87,24 @@ export const handleGetApprovalLecture = async _setFunc => {
   }
 };
 // 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
-export const patchRejectLecture = async () => {
-  console.log('개설 거절 사유 입력할 예정');
+export const patchRejectLecture = async (_ilecture, reason) => {
+  console.log('개설 거절 사유 입력');
+  console.log(_ilecture);
+  console.log(reason);
+  const headers = { 'Content-Type': 'application/json' };
+  const patchData = {
+    ilecture: _ilecture,
+    ctnt: reason,
+    procedures: 0,
+  };
+  try {
+    const res = await axios.patch(`/api/admin/lecture`, patchData, { headers });
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // 통합 성적관리 - 특정 학생의 성적 검색
