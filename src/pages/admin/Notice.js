@@ -40,7 +40,7 @@ const Notice = () => {
   const navigate = useNavigate();
 
   return (
-    <Layout>
+    <>
       <SearchBar queries={data._title} setPage={true} setClick={setClick}>
         <Input
           length="long"
@@ -73,7 +73,7 @@ const Notice = () => {
           }}
         />
       </BtnControl>
-    </Layout>
+    </>
   );
 };
 

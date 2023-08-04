@@ -6,9 +6,9 @@ import Dropdown from '../../components/Dropdown';
 import { PlusModal } from '../../styles/LectureRoomCss';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
-import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import { Layout } from '../../styles/CommonStyle';
+import axios from 'axios';
 
 const Major = () => {
   ////SearchBar////
@@ -118,8 +118,6 @@ const Major = () => {
   //모달창 활성화
   const [showModal, setshowModal] = useState(false);
 
-  const navigate = useNavigate();
-
   //버튼 onClick시 모달창 열기
   const modalOpen = () => {
     setshowModal(true);
@@ -141,8 +139,19 @@ const Major = () => {
     alert('삭제하시겠습니까?');
   };
 
+  //api test
+  const getMajorTest = async () => {
+    try {
+      const res = await axios.get('/api/major');
+      const result = res.data;
+      console.log('히히', result);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
-    <Layout>
+    <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="상태"
@@ -196,7 +205,7 @@ const Major = () => {
           <div className="btns"></div>
         </PlusModal>
       ) : null}
-    </Layout>
+    </>
   );
 };
 export default Major;

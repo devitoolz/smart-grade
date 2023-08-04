@@ -77,11 +77,12 @@ export const Ltable = styled.table`
     background-color: #dff6ff;
     border-top: 1px solid #1363df;
     border-right: 1px solid #dae8ff;
+    border-bottom: 1px solid #dae8ff;
     padding: 10px 0;
   }
 
   td {
-    border: 1px solid #dae8ff;
+    border-bottom: 1px solid #dae8ff;
   }
   .inputTitle {
     padding: 11px 30px;
@@ -89,6 +90,25 @@ export const Ltable = styled.table`
   }
   .statusTitle {
     background: #dff6ff;
+    text-align: center;
+  }
+  .importanceCheck {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+    padding: 15px 32px;
+    .colorRed {
+      color: red;
+    }
+  }
+  .fileTitle {
+    background: #dff6ff;
+    padding: 20px 0;
+    text-align: center;
+  }
+  .contentTitle {
+    background: #dff6ff;
+    text-align: center;
   }
   .importantCheck {
     display: flex;
@@ -102,10 +122,18 @@ export const Ltable = styled.table`
       color: red;
     }
   }
-  textarea {
+  .controlTextarea {
+    padding: 20px 28px;
+    textarea {
+    }
   }
 `;
 export const BtnControl = styled.div`
   display: flex;
   justify-content: start;
+`;
+
+export const Wbtns = styled.div`
+  display: flex;
+  justify-content: center;
 `;
