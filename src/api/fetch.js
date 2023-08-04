@@ -4,10 +4,10 @@ import axios from 'axios';
 export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
   // try...catch
   try {
-    const res = await axios.get(`http://192.168.0.144:5002/api/admin/lecture?page=${_pageIdx}`);
+    const res = await axios.get(`/api/admin/lecture?page=${_pageIdx}`);
     const result = await res.data;
-    console.log('통신 데이터 : ', result);
-    console.log('max page : ', result.page.maxPage);
+    // console.log('통신 데이터 : ', result);
+    // console.log('max page : ', result.page.maxPage);
     _setFunc(result.lectures);
     _setMaxPage(result.page.maxPage);
     return result.lectures;
@@ -38,9 +38,7 @@ export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
 // 해당 강의 수강 학생 리스트 출력
 export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
-    const res = await axios.get(
-      `http://192.168.0.144:5002/api/admin/lecture/${_ilecture}?page=${_pageIdx}`
-    );
+    const res = await axios.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
     const result = res.data;
     console.log('해당 과목을 듣는 학생리스트+성적');
     console.log(result);
@@ -54,7 +52,7 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
 export const handleGetApprovalLecture = async _setFunc => {
   // try...catch
   try {
-    const res = await axios.get('http://192.168.0.144:5002/api/admin/lecture?procedures=-2');
+    const res = await axios.get('/api/admin/lecture?procedures=-2');
     const result = await res.data;
     console.log('통신 데이터 : ', result);
     console.log('강의리스트 : ', result.lectures);
@@ -64,7 +62,7 @@ export const handleGetApprovalLecture = async _setFunc => {
     //   if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
     // });
     _setFunc(result.lectures);
-    return result.lectures;
+    return result;
   } catch (error) {
     console.log(error);
     // 임시 더미 데이터
@@ -89,14 +87,30 @@ export const handleGetApprovalLecture = async _setFunc => {
   }
 };
 // 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
-export const patchRejectLecture = async () => {
-  console.log('개설 거절 사유 입력할 예정');
+export const patchRejectLecture = async (_ilecture, reason) => {
+  console.log('개설 거절 사유 입력');
+  console.log(_ilecture);
+  console.log(reason);
+  const headers = { 'Content-Type': 'application/json' };
+  const patchData = {
+    ilecture: _ilecture,
+    ctnt: reason,
+    procedures: 0,
+  };
+  try {
+    const res = await axios.patch(`/api/admin/lecture`, patchData, { headers });
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // 통합 성적관리 - 특정 학생의 성적 검색
 export const getStudentGrade = async _setFunc => {
   try {
-    const res = await axios.get(`http://192.168.0.144:5002/api/admin/grade?studentNum=23100001`);
+    const res = await axios.get(`/api/admin/grade?studentNum=23100001`);
     const result = res.data;
     console.log(result.voList);
     await _setFunc(result.voList);

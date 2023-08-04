@@ -16,7 +16,6 @@ const Lecture = () => {
   // console.log(pathname);
   // console.log(search);
   const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
-  console.log(pageIdx);
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
   // table maxPage
@@ -58,47 +57,20 @@ const Lecture = () => {
     { title: '상태', width: 1 },
     { title: '상세', width: 1.5 },
   ];
-  const tableData = [
-    {
-      a: '1',
-      b: '2',
-      c: '컴퓨터공학과',
-      lecture: '데이터베이스',
-      e: '김그린',
-      f: '2',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '09:00~11:00',
-      j: 30,
-      k: '상태',
-    },
-    {
-      a: '1',
-      b: '3',
-      c: '컴퓨터공학과',
-      lecture: '웹프로그래밍',
-      e: '김그린',
-      f: '3',
-      g: '6호관 404호',
-      h: '2000-03-02~2000-06-28',
-      i: '14:00~17:00',
-      j: 30,
-      k: '상태',
-    },
-  ];
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { lectureStatus, lectureName, professorName };
-  const url = '';
-  // const url = '/api/admin/bachelor/lecture';
+  // const url = '';
+  const url = '/api/admin/lecture';
 
   const { data, pending } = useQuerySearch(url, click);
+  console.log(data?.lectures);
 
   // 서버연동 테스트 - 테이블에 정보 불러오기
-  const [tableDatas, setTableDatas] = useState([]);
-  const getTestData = async () => {
-    await handleTestClick(pageIdx, setTableDatas, setMaxPage);
-  };
+  // const [tableDatas, setTableDatas] = useState([]);
+  // const getTestData = async () => {
+  //   await handleTestClick(pageIdx, setTableDatas, setMaxPage);
+  // };
   // 서버연동 테스트 - 해당 과목 학생리스트 불러오기
   const [lectureNm, setLectureNm] = useState();
   const handlegetStudentList = async (_lectureNm, _ilecture) => {
@@ -109,9 +81,9 @@ const Lecture = () => {
     setContents(result.list);
     setDisplay(true);
   };
-  useEffect(() => {
-    getTestData();
-  }, [pageIdx]);
+  // useEffect(() => {
+  //   getTestData();
+  // }, [pageIdx]);
 
   // 모달 - 해당강의 학생리스트+성적 확인
   const modalHeader = [
@@ -125,6 +97,8 @@ const Lecture = () => {
     { title: '평균', width: 1 },
     { title: '등급', width: 1 },
   ];
+  // 강의상태
+  const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
 
   // JSX
   return (
@@ -159,12 +133,12 @@ const Lecture = () => {
 
       <Table
         header={tableHeader}
-        data={tableDatas}
+        data={data?.lectures}
         hasPage={true}
-        maxPage={maxPage}
+        maxPage={data?.page?.maxPage}
         pending={pending}
       >
-        {tableDatas?.map((item, idx) => {
+        {data?.lectures.map((item, idx) => {
           return (
             <div key={idx}>
               <div>{item.semester}</div>
@@ -185,7 +159,7 @@ const Lecture = () => {
               <div>
                 {item.currentPeople}/{item.maxPeople}
               </div>
-              <div>{item.procedures}</div>
+              <div>{status[item.procedures]}</div>
               <div>
                 <CommonButton
                   btnType="table"
@@ -224,9 +198,7 @@ const Lecture = () => {
             })}
           </Table>
         </CommonModal>
-      ) : (
-        <></>
-      )}
+      ) : null}
     </>
   );
 };
