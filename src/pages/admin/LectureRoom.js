@@ -146,9 +146,20 @@ const LectureRoom = () => {
   useEffect(() => {
     getBuildingTestLoad();
   }, []);
-  //
-  //const [place,setPlace]= useState('');
-  //const [capacity,setCapacity] =useState(null);
+
+  //commonModal display state
+  const [display, setDisplay] = useState(false);
+
+  //commonModal open state
+  const handleModalOk = () => {
+    //setDisplay(false); //setter쓰면 이중으로 됨.
+    //하지만 function은 써줘야 함.
+  };
+
+  //commonModal close state
+  const handleModalCancel = () => {
+    //setDisplay(false);
+  };
 
   return (
     <>
@@ -218,6 +229,16 @@ const LectureRoom = () => {
         </PlusModal>
       ) : null}
 
+      {display ? (
+        <CommonModal
+          setDisplay={setDisplay}
+          modalSize="small"
+          modalTitle="강의실 삭제"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        ></CommonModal>
+      ) : null}
+
       <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
         {data.map(item => {
           return (
@@ -240,6 +261,8 @@ const LectureRoom = () => {
           );
         })}
       </Table>
+
+      <button onClick={() => setDisplay(true)}>zzz</button>
     </>
   );
 };
