@@ -8,7 +8,7 @@ const majorSlice = createSlice({
   name: 'majorSlice',
   initialState,
   reducers: {
-    loadMajorList: (state, action) => {
+    setMajorList: (state, action) => {
       state.majorList = action.payload;
     },
   },

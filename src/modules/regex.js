@@ -11,7 +11,7 @@ const checkValidDate = value => {
 };
 
 const checkValidPhone = value => {
-  const validPhoneRegex = /^(\d{3})-(\d{4})-(\d{4})$/g;
+  const validPhoneRegex = /^010-(\d{4})-(\d{4})$/g;
   const result = validPhoneRegex.test(value);
   return result;
 };

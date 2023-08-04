@@ -76,7 +76,7 @@ const Main = () => {
       { id: 5, title: '내용 5' },
     ];
 
-    dispatch(major.loadMajorList(result));
+    dispatch(major.setMajorList(result));
   }, []);
 
   return (

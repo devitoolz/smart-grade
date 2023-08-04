@@ -14,7 +14,7 @@ import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import { useSelector } from 'react-redux';
 import { checkValidDate, checkValidPhone } from '../../modules/regex';
-import axios from 'axios';
+import api from '../../api/api';
 
 const CreateUser = () => {
   const navigate = useNavigate();
@@ -52,15 +52,15 @@ const CreateUser = () => {
 
     const payload = {
       imajor: major,
+      nm: name,
       gender,
       birthdate: birth,
       phone,
-      // email: 'string',
-      // address: 'string',
     };
 
     try {
-      await axios.post(`/api/admin/${state}`, payload);
+      await api.post(`/api/admin/${state}`, payload);
+      navigate(-1);
     } catch (error) {
       alert('오류가 발생하였습니다.');
       return;
