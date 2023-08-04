@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faX } from '@fortawesome/free-solid-svg-icons';
@@ -44,7 +45,7 @@ const LectureRoom = () => {
   ];
 
   //추후 API GET 요청 데이터
-  const data = [
+  const datas = [
     {
       ilectureRoom: '1',
       buildingname: 'a관',
@@ -100,6 +101,54 @@ const LectureRoom = () => {
   };
 
   //modal활성화 시 배경 변경
+  //building state
+  const [building, setBuilding] = useState('');
+  //room state
+  const [place, setPlace] = useState('');
+  //최대수용인원 state
+  const [capacity, setCapacity] = useState(null);
+
+  //api test
+  const getBuildingTest = async () => {
+    try {
+      const res = await axios.get('/api/lectureroom?page=1&buildingName=1&lectureRoomName=1');
+      const result = res.data;
+      console.log('나다', result);
+      return result;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  ///getLoad
+  //lectureLoom data 담는 list
+  const [data, setData] = useState([]);
+
+  const getBuildingTestLoad = async () => {
+    try {
+      const _result = await getBuildingTest();
+      // console.log(_result);
+      // console.log(_result.lectureRoom);
+      // const buildingTable = _result.lectureRoom.map(item => {
+      //   let data = {
+      //     building: item.buildingName,
+      //     place: item.lectureRoomName,
+      //     capacity: item.maxCapacity,
+      //   };
+      //   return data;
+      // });
+      setData(_result.lectureRoom);
+      return _result.lectureRoom;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getBuildingTestLoad();
+  }, []);
+  //
+  //const [place,setPlace]= useState('');
+  //const [capacity,setCapacity] =useState(null);
 
   return (
     <>
@@ -175,12 +224,18 @@ const LectureRoom = () => {
             <div key={item.ilectureRoom}>
               <div>{item.ilectureRoom}</div>
               <div>
-                {item.buildingname}
-                {item.lectureRoomName}
+                {item.buildingName} {item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
-              <div>{item.management}</div>
-              <div>{item.note}</div>
+              <div>
+                <CommonButton
+                  btnType="table"
+                  value="삭제"
+                  color="red"
+                  onClick={gogo}
+                ></CommonButton>
+              </div>
+              <div></div>
             </div>
           );
         })}
