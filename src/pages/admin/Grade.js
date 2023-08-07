@@ -7,6 +7,7 @@ import CommonButton from '../../components/CommonButton';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import { getStudentGrade } from '../../api/fetch';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Grade = () => {
   const arr = [
@@ -50,7 +51,7 @@ const Grade = () => {
   ];
   const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
-  const [studentId, setStudentId] = useState('');
+  const [studentNum, setStudentNum] = useState('');
 
   // table
   const tableHeader = [
@@ -119,12 +120,17 @@ const Grade = () => {
   // }, []);
 
   // 쿼리
-  const queries = { semester, grade, studentId };
-  const url = '';
+  const [click, setClick] = useState(false);
+  const queries = { semester, grade, studentNum };
+  const url = '/api/admin/grade';
+  const { data, pending } = useQuerySearch(url, click);
+  console.log(data);
+  console.log(data?.avgVo);
+  console.log(data?.voList);
 
   return (
     <>
-      <SearchBar queries={queries} url={url} setPage={true}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           length="short"
           placeholder="학기"
@@ -145,12 +151,12 @@ const Grade = () => {
           length="middle"
           type="number"
           placeholder="학번"
-          value={studentId}
-          setValue={setStudentId}
+          value={studentNum}
+          setValue={setStudentNum}
         />
       </SearchBar>
 
-      {!studentData.length ? (
+      {!data?.voList?.length ? (
         <NoData>
           <p>{randomValue}</p>
           <p>검색해주세요</p>
@@ -162,17 +168,23 @@ const Grade = () => {
             value="학생상세정보"
             onClick={() => handleGetStudentGrade(setStudentData)}
           />
-          <Table header={tableHeader} data={studentData} hasPage={true} maxPage={5}>
-            {studentData.map((item, idx) => {
+          <Table
+            header={tableHeader}
+            data={data?.voList}
+            hasPage={true}
+            maxPage={data?.page.maxPage}
+            pending={pending}
+          >
+            {data?.voList.map((item, idx) => {
               return (
                 <div key={idx}>
-                  <div>{item.aa}</div>
-                  <div>{item.bb}</div>
+                  <div>{item.istudent}</div>
+                  <div>{item.name}</div>
                   <div>{item.ilecture}</div>
-                  <div>{item.dd}</div>
-                  <div>{item.ee}</div>
-                  <div>{item.ff}</div>
-                  <div>{item.gg}</div>
+                  <div>{item.imajor}</div>
+                  <div>{item.studentNum}</div>
+                  <div>{item.score}</div>
+                  <div>{item.rating}</div>
                 </div>
               );
             })}
