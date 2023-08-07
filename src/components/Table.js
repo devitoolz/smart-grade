@@ -18,7 +18,7 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 
-const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
+const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => {
   const width = header?.map(item => item.width + 'fr').join(' ');
 
   const [query, setQuery] = useSearchParams();
@@ -97,12 +97,12 @@ const Table = ({ header, data, children, hasPage, maxPage, pending }) => {
                 ))}
             </TableBody>
           </>
-        ) : (
+        ) : error ? (
           <TableNoData>
             <FontAwesomeIcon icon={faTriangleExclamation} />
             <span>데이터를 불러오지 못했습니다.</span>
           </TableNoData>
-        )}
+        ) : null}
       </TableContainer>
       {data && hasPage && (
         <Pagination>

@@ -58,7 +58,7 @@ const TableBody = styled.div`
 `;
 
 const TableNoData = styled.div`
-  height: 406px;
+  height: 359px;
   display: flex;
   flex-direction: column;
   align-items: center;

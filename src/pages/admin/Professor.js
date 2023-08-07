@@ -31,7 +31,7 @@ const Professor = () => {
   const queries = { imajor, name };
   const url = '/api/admin/professor';
 
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   return (
     <>
@@ -64,6 +64,7 @@ const Professor = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.professors.map(item => {
           return (

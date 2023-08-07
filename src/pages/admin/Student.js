@@ -42,7 +42,7 @@ const Student = () => {
   const queries = { grade, imajor, studentNum, nm };
   const url = '/api/admin/students';
 
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   return (
     <>
@@ -91,6 +91,7 @@ const Student = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.students.map(item => {
           return (
