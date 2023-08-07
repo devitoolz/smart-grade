@@ -84,32 +84,32 @@ const Major = () => {
   ];
 
   //추후 API GET 요청 데이터
-  const _data = [
-    {
-      imajor: '1',
-      majorName: 'a관',
-      graduationScore: 130,
-      status: '',
-      management: '',
-      note: '',
-    },
-    {
-      imajor: '1',
-      majorName: 'a관',
-      graduationScore: 130,
-      status: '',
-      management: '',
-      note: '',
-    },
-    {
-      imajor: '1',
-      majorName: 'a관',
-      graduationScore: 130,
-      status: '',
-      management: '',
-      note: '',
-    },
-  ];
+  // const _data = [
+  //   {
+  //     imajor: '1',
+  //     majorName: 'a관',
+  //     graduationScore: 130,
+  //     status: '',
+  //     management: '',
+  //     note: '',
+  //   },
+  //   {
+  //     imajor: '1',
+  //     majorName: 'a관',
+  //     graduationScore: 130,
+  //     status: '',
+  //     management: '',
+  //     note: '',
+  //   },
+  //   {
+  //     imajor: '1',
+  //     majorName: 'a관',
+  //     graduationScore: 130,
+  //     status: '',
+  //     management: '',
+  //     note: '',
+  //   },
+  // ];
 
   //modalTitle state
   const [modalTitle, setmodalTitle] = useState('강의실추가', '전공추가');
@@ -120,15 +120,15 @@ const Major = () => {
   //모달창 활성화
   const [showModal, setshowModal] = useState(false);
 
-  //버튼 onClick시 모달창 열기
-  const modalOpen = () => {
-    setshowModal(true);
-  };
+  // //버튼 onClick시 모달창 열기
+  // const modalOpen = () => {
+  //   setshowModal(true);
+  // };
 
-  //취소, x 누를시 모달창 닫기
-  const modalClose = () => {
-    setshowModal(false);
-  };
+  // //취소, x 누를시 모달창 닫기
+  // const modalClose = () => {
+  //   setshowModal(false);
+  // };
 
   //변경버튼 클릭시 모달창 오픈
   const [changeModalOpen, setChangeModalOpen] = useState(false);
@@ -161,22 +161,24 @@ const Major = () => {
     <>
       {changeModalOpen === true ? (
         <CommonModal
-          setDisplay={changeModalOpen}
+          setDisplay={setChangeModalOpen}
           modalSize="small"
           modalTitle="전공명 변경"
-          handleModalOk={setshowModal(false)}
-          handleModalCancel={setshowModal(false)}
-        />
+          handleModalOk={() => setshowModal(false)}
+          handleModalCancel={() => setshowModal(false)}
+        >
+          <p>해당 전공명을 변경하시겠습니까?</p>
+        </CommonModal>
       ) : null}
       {disUseOpen === true ? (
         <CommonModal
-          setDisplay={changeModalOpen}
+          setDisplay={setDisUseOpen}
           modalSize="small"
           modalTitle="전공 폐지"
-          handleModalOk={setshowModal(false)}
-          handleModalCancel={setshowModal(false)}
+          handleModalOk={() => setshowModal(false)}
+          handleModalCancel={() => setshowModal(false)}
         >
-          <p>이 전공을 폐지 하겠습니까?</p>
+          <p>해당 전공을 폐지 하겠습니까?</p>
         </CommonModal>
       ) : null}
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -198,7 +200,7 @@ const Major = () => {
           search={true}
         />
       </SearchBar>
-      <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
+      <CommonButton btnType="page" value="전공추가" onClick={() => alert('hi')} />
       <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
         {data?.major?.map(item => {
           return (
@@ -226,7 +228,7 @@ const Major = () => {
           );
         })}
       </Table>
-      {showModal === true ? (
+      {/* {showModal === true ? (
         <PlusModal>
           <div className="majorTitle">
             <p>
@@ -244,7 +246,7 @@ const Major = () => {
           </div>
           <div className="btns"></div>
         </PlusModal>
-      ) : null}
+      ) : null} */}
     </>
   );
 };
