@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from 'react';
 import { BtnControl } from '../../styles/LectureRoomCss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
-import { Layout } from '../../styles/CommonStyle';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
+import axios from 'axios';
 
 const Notice = () => {
   ////SearchBar////
@@ -17,11 +15,34 @@ const Notice = () => {
   const [click, setClick] = useState(false);
   ////Input창////
   //input value값
-  const [value, setValue] = useState('');
+  const [noticeTitle, setNoticeTitle] = useState('');
   //input value change 함수
   const handleChangeValue = e => {
-    setValue(e.target.value);
+    setNoticeTitle(e.target.value);
   };
+  //notice Data 담는 list
+  const [noticeData, setNoticeData] = useState([]);
+
+  //api test
+  const getNoticeList = async () => {
+    try {
+      const res = await axios.get('/api/board');
+      const result = res.data;
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  //notice test list
+  const getNoticeListLoad = async () => {
+    try {
+      const res = await getNoticeList();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {}, []);
 
   ////Table////
   //table header
@@ -41,14 +62,14 @@ const Notice = () => {
 
   return (
     <>
-      <SearchBar queries={data._title} setPage={true} setClick={setClick}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Input
           length="long"
           type="text"
           placeholder="제목"
-          value={''}
+          value={noticeTitle}
           setValue={handleChangeValue}
-          reset={setValue}
+          reset={setNoticeTitle}
           maxLength={20}
         />
       </SearchBar>

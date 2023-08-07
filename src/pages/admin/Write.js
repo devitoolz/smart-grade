@@ -4,6 +4,8 @@ import Input from '../../components/Input';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
+import CommonModal from '../../components/CommonModal';
+import { useNavigate } from 'react-router-dom';
 const Write = () => {
   //공지사항  제목
   const [title, setTitle] = useState('');
@@ -11,7 +13,7 @@ const Write = () => {
   //공지사항 체크박스 value
   const [check, setCheck] = useState(false);
 
-  //checkbox value chang 함수
+  //checkbox value change 함수
   const handleChangvalue = () => {
     setCheck(false);
   };
@@ -24,8 +26,29 @@ const Write = () => {
   const gogo = () => {
     console.log(gogo);
   };
+
+  //commonModal display state
+  const [display, setDisplay] = useState(false);
+
+  //commonModal open state
+  const handleModalOk = () => {};
+  // commonModal close state
+  const handleModalCancel = () => {};
+  //취소버튼 클릭시 공지사항 목록으로 이동
+  const navigate = useNavigate();
   return (
     <>
+      {display === true ? (
+        <CommonModal
+          setDisplay={setDisplay}
+          modalSize="small"
+          modalTitle="공지사항 작성"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
+          <p>저장 하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
       <Ltable>
         <colgroup>
           <col className="title" width={'30%'} />
@@ -69,8 +92,8 @@ const Write = () => {
         </tbody>
       </Ltable>
       <Wbtns>
-        <CommonButton btnType="page" value="수정" onClick={gogo}></CommonButton>
-        <CommonButton btnType="page" value="삭제" onClick={gogo}></CommonButton>
+        <CommonButton btnType="page" value="저장" onClick={() => setDisplay(true)} />
+        <CommonButton btnType="page" value="취소" onClick={gogo} />
       </Wbtns>
     </>
   );
