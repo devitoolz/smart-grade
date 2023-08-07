@@ -10,7 +10,8 @@ const Login = () => {
   const [pw, setPw] = useState('');
   const role = 'ROLE_ADMIN';
 
-  const JWT_EXPIRY_TIME = 3600 * 1000;
+  const ONE_MINUTE = 60 * 1000;
+  const JWT_EXPIRY_TIME = ONE_MINUTE * 60;
 
   const onLoginSuccess = data => {
     const { accessToken } = data;
@@ -19,7 +20,7 @@ const Login = () => {
     localStorage.setItem('access', data.accessToken);
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     // accessToken 만료하기 1분 전에 로그인 연장
-    setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - 60 * 1000);
+    setTimeout(onSilentRefresh, JWT_EXPIRY_TIME - ONE_MINUTE);
   };
 
   const onSilentRefresh = async () => {
