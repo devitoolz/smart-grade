@@ -112,7 +112,7 @@ const Student = () => {
                   btnType="table"
                   value="상세보기"
                   color="gray"
-                  onClick={() => console.log('hi')}
+                  onClick={() => navigate(`${item.istudent}`)}
                 ></CommonButton>
               </div>
             </div>

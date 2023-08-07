@@ -197,12 +197,6 @@ const CreateUser = () => {
             <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
           </div>
         </Row>
-        <Row>
-          <div>상세주소</div>
-          <div>
-            <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
-          </div>
-        </Row>
       </FormTable>
     </CreateUserLayout>
   );

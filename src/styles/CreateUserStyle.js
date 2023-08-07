@@ -61,15 +61,23 @@ const FormTable = styled.div`
 const Row = styled.div`
   display: grid;
   grid-template-columns: ${({ col }) => (col === 2 ? '1fr 2fr 1fr 2fr' : '1fr 5fr')};
+  &:first-of-type {
+    > div {
+      &:nth-of-type(odd) {
+        border-top: 2px solid var(--form-table-odd-border-color);
+      }
+      &:nth-of-type(even) {
+        border-top: 2px solid var(--form-table-even-border-color);
+      }
+    }
+  }
   &:last-of-type {
     > div {
       &:nth-of-type(odd) {
         background: var(--primary-color);
-        border-bottom: none;
       }
       &:nth-of-type(even) {
         background: var(--form-table-bg-color);
-        border-bottom: none;
       }
     }
   }

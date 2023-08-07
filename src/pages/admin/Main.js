@@ -44,7 +44,7 @@ const Main = () => {
       index: 2,
       icon: faUser,
       title: '계정관리',
-      submenu: { professor: '교수 계정 관리', student: '학생 계정 관리' },
+      submenu: { professor: '교수 계정 관리', students: '학생 계정 관리' },
     },
     bachelor: {
       index: 3,
@@ -63,11 +63,12 @@ const Main = () => {
   const pathSegments = pathname.split('/').filter(Boolean);
   const mainPath = pathSegments[1];
   const subPath = pathSegments[2];
+  const paramPath = pathSegments[3];
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
     const title = menuData[mainPath].submenu[subPath];
-    if (title) dispatch(main.setTitle(title));
+    if (title && !paramPath) dispatch(main.setTitle(title));
   }, [pathname]);
 
   // TODO: 추후 axios GET 으로 변경 예정
