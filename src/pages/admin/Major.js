@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
+import { faMinus, faO, faX } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import { PlusModal } from '../../styles/LectureRoomCss';
@@ -9,6 +9,8 @@ import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
 import { Layout } from '../../styles/CommonStyle';
 import axios from 'axios';
+import useQuerySearch from '../../hooks/useSearchFetch';
+import CommonModal from '../../components/CommonModal';
 
 const Major = () => {
   ////SearchBar////
@@ -128,30 +130,55 @@ const Major = () => {
     setshowModal(false);
   };
 
-  const gogo = () => {
-    alert('dkdk');
-  };
+  //변경버튼 클릭시 모달창 오픈
+  const [changeModalOpen, setChangeModalOpen] = useState(false);
 
-  const hi = () => {
-    alert('수정하시겠습니까?');
-  };
-  const bye = () => {
-    alert('삭제하시겠습니까?');
-  };
+  //폐지버튼 클릭시 모달창 오픈
+  const [disUseOpen, setDisUseOpen] = useState(false);
 
   //api test
-  const getMajorTest = async () => {
-    try {
-      const res = await axios.get('/api/major');
-      const result = res.data;
-      console.log('히히', result);
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const getMajorTest = async () => {
+  //   try {
+  //     const res = await axios.get('/api/major');
+  //     const result = res.data;
+  //     console.log('히히', result);
+  //     return result;
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // useEffect(() => {
+  //   getMajorTest();
+  // }, []);
+
+  //api hook test
+
+  const url = '/api/major';
+  const { data, pending } = useQuerySearch(url, click);
+  console.log(data);
+
   return (
     <>
+      {changeModalOpen === true ? (
+        <CommonModal
+          setDisplay={changeModalOpen}
+          modalSize="small"
+          modalTitle="전공명 변경"
+          handleModalOk={setshowModal(false)}
+          handleModalCancel={setshowModal(false)}
+        />
+      ) : null}
+      {disUseOpen === true ? (
+        <CommonModal
+          setDisplay={changeModalOpen}
+          modalSize="small"
+          modalTitle="전공 폐지"
+          handleModalOk={setshowModal(false)}
+          handleModalCancel={setshowModal(false)}
+        >
+          <p>이 전공을 폐지 하겠습니까?</p>
+        </CommonModal>
+      ) : null}
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="상태"
@@ -172,15 +199,28 @@ const Major = () => {
         />
       </SearchBar>
       <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
-      <Table header={tableHeader} data={_data} hasPage={true} maxPage={5}>
-        {_data.map(item => {
+      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
+        {data?.major?.map(item => {
           return (
             <div key={item.imajor}>
               <div>{item.imajor}</div>
               <div>{item.majorName}</div>
               <div>{item.graduationScore}</div>
-              <div>{item.status}</div>
-              <div>{item.management}</div>
+              <div>{item.delYn === 0 ? null : '폐지'}</div>
+              <div>
+                <CommonButton
+                  btnType="table"
+                  color="blue"
+                  value="변경"
+                  onClick={() => setChangeModalOpen(true)}
+                />
+                <CommonButton
+                  btnType="table"
+                  color="red"
+                  value="폐지"
+                  onClick={() => setDisUseOpen(true)}
+                />
+              </div>
               <div>{item.note}</div>
             </div>
           );

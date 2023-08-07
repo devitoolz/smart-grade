@@ -27,26 +27,53 @@ const Write = () => {
     console.log(gogo);
   };
 
-  //commonModal display state
-  const [display, setDisplay] = useState(false);
+  //저장 버튼 클릭시 모달오픈
+  const [saveDisplay, setSaveDisplay] = useState(false);
 
-  //commonModal open state
-  const handleModalOk = () => {};
-  // commonModal close state
-  const handleModalCancel = () => {};
+  //취소버튼 클릭시 모달 오픈
+  const [cancelDisplay, setCancelDisplay] = useState(false);
+
+  //save modal 확인 버튼 클릭시
+  const saveModalOk = () => {
+    setSaveDisplay(false);
+  };
+  //save modal 취소 버튼 클릭시
+  const saveModalCancel = () => {
+    setSaveDisplay(false);
+  };
+
+  //cancel modal 확인 버튼 클릭시
+  const cancelModalOk = () => {
+    navigate('/admin/home/notice/');
+  };
+  //cancel modal 취소 버튼 클릭시
+  const cancelModalCancel = () => {
+    setCancelDisplay(false);
+  };
   //취소버튼 클릭시 공지사항 목록으로 이동
   const navigate = useNavigate();
   return (
     <>
-      {display === true ? (
+      {saveDisplay === true ? (
         <CommonModal
-          setDisplay={setDisplay}
+          setDisplay={setSaveDisplay}
           modalSize="small"
           modalTitle="공지사항 작성"
-          handleModalOk={handleModalOk}
-          handleModalCancel={handleModalCancel}
+          handleModalOk={saveModalOk}
+          handleModalCancel={saveModalCancel}
         >
           <p>저장 하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
+      {cancelDisplay === true ? (
+        <CommonModal
+          setDisplay={cancelDisplay}
+          modalSize="small"
+          modalTitle="공지사항 작성"
+          handleModalOk={() => navigate('/admin/home/notice/')}
+          handleModalCancel={cancelModalCancel}
+        >
+          <p>취소 하시겠습니까?</p>
         </CommonModal>
       ) : null}
       <Ltable>
@@ -92,8 +119,8 @@ const Write = () => {
         </tbody>
       </Ltable>
       <Wbtns>
-        <CommonButton btnType="page" value="저장" onClick={() => setDisplay(true)} />
-        <CommonButton btnType="page" value="취소" onClick={gogo} />
+        <CommonButton btnType="page" value="저장" onClick={() => setSaveDisplay(true)} />
+        <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
       </Wbtns>
     </>
   );
