@@ -71,15 +71,19 @@ export const LectureContainer = styled.div`
 `;
 
 export const NoData = styled.div`
+  width: 100%;
+  height: 500px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 180px;
+  gap: 60px;
+  font-size: 80px;
+  line-height: 80px;
   color: gray;
-  p {
-    margin-top: 20px;
-    font-size: 80px;
+  p:first-of-type {
+    font-size: 180px;
+    line-height: 180px;
   }
 `;
 

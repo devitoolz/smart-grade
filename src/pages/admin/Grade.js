@@ -157,7 +157,7 @@ const Grade = () => {
 
       {!studentData.length ? (
         <NoData>
-          <div>{randomValue}</div>
+          <p>{randomValue}</p>
           <p>검색해주세요</p>
         </NoData>
       ) : (
