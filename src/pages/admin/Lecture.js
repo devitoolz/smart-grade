@@ -13,6 +13,7 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
+  const navigate = useNavigate();
   // console.log(pathname);
   // console.log(search);
   const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
@@ -26,20 +27,33 @@ const Lecture = () => {
     navigate(`${pathname}/approval`);
   };
 
-  // 드롭다운 테스트
+  // 강의상태
+  const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
+  // 드롭다운
   const [lectureName, setLectureName] = useState();
-  const [lectureStatus, setLectureStatus] = useState();
-  const datas = [
+  const [procedures, setLectureStatus] = useState(-1);
+  const statusList = [
+    {
+      id: -1,
+      title: '전체보기',
+    },
+    {
+      id: 0,
+      title: '신청 반려',
+    },
     {
       id: 1,
-      title: '1번',
+      title: '개설 승인',
     },
     {
       id: 2,
-      title: '2번',
+      title: '개강 승인',
+    },
+    {
+      id: 3,
+      title: '개강',
     },
   ];
-  const navigate = useNavigate();
   const [professorName, setProfessorName] = useState('');
 
   // table
@@ -59,8 +73,10 @@ const Lecture = () => {
   ];
   // 쿼리
   const [click, setClick] = useState(false);
-  const queries = { lectureStatus, lectureName, professorName };
-  // const url = '';
+  const queries = { procedures, lectureName, professorName };
+  // {
+  //   procedures, nm;
+  // }
   const url = '/api/admin/lecture';
 
   const { data, pending } = useQuerySearch(url, click);
@@ -97,8 +113,6 @@ const Lecture = () => {
     { title: '평균', width: 1 },
     { title: '등급', width: 1 },
   ];
-  // 강의상태
-  const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
 
   // JSX
   return (
@@ -107,15 +121,15 @@ const Lecture = () => {
         <Dropdown
           length="short"
           placeholder="강의상태"
-          data={datas}
-          value={lectureStatus}
+          data={statusList}
+          value={procedures}
           setValue={setLectureStatus}
           reset={true}
         />
         <Dropdown
           length="long"
           placeholder="강의명"
-          data={datas}
+          data={statusList}
           value={lectureName}
           setValue={setLectureName}
           reset={true}
