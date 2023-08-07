@@ -128,10 +128,6 @@ export const Ltable = styled.table`
     }
   }
 `;
-export const BtnControl = styled.div`
-  display: flex;
-  justify-content: start;
-`;
 
 export const Wbtns = styled.div`
   display: flex;

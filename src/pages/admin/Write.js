@@ -20,22 +20,23 @@ const Write = () => {
 
   //제목 인풋창?
   const handleTitle = e => {
-    setTitle(e.target.title);
+    setTitle(e.target.value);
   };
   //임시
   const gogo = () => {
     console.log(gogo);
   };
 
-  //저장 버튼 클릭시 모달오픈
+  //저장 버튼 클릭시 모달오픈 여부
   const [saveDisplay, setSaveDisplay] = useState(false);
 
-  //취소버튼 클릭시 모달 오픈
+  //취소버튼 클릭시 모달오픈 여부
   const [cancelDisplay, setCancelDisplay] = useState(false);
 
   //save modal 확인 버튼 클릭시
   const saveModalOk = () => {
     setSaveDisplay(false);
+    navigate('/admin/home/notice/');
   };
   //save modal 취소 버튼 클릭시
   const saveModalCancel = () => {
@@ -70,7 +71,7 @@ const Write = () => {
           setDisplay={cancelDisplay}
           modalSize="small"
           modalTitle="공지사항 작성"
-          handleModalOk={() => navigate('/admin/home/notice/')}
+          handleModalOk={cancelModalOk}
           handleModalCancel={cancelModalCancel}
         >
           <p>취소 하시겠습니까?</p>
