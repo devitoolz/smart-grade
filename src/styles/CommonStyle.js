@@ -52,6 +52,7 @@ const CustomInput = styled.div`
     height: 100%;
     width: 100%;
     background: transparent;
+    color: var(--black);
     font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
     &::placeholder {
       color: var(--search-ph-color);

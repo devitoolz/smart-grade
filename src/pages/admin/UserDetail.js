@@ -15,6 +15,8 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const UserDetail = () => {
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
 
-  const { majorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector(state => state.major);
   const { pathname } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -34,11 +36,15 @@ const UserDetail = () => {
   const role = pathSegments[2];
 
   const getUserDetail = async () => {
-    const { data } = await api.get(`/api/admin/${role}/${id}`);
-    console.log(data);
-    setUserDetail(data);
-    setName(data.nm);
-    setMajor(data.imajor);
+    try {
+      const { data } = await api.get(`/api/admin/${role}/${id}`);
+      console.log(data);
+      setUserDetail(data);
+      setName(data.name);
+      setMajor(data.imajor);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
@@ -71,33 +77,41 @@ const UserDetail = () => {
       <ImageUpload />
       <FormTable>
         <Row col={2}>
-          <div>이름</div>
+          <div>
+            {!disabled && <FontAwesomeIcon icon={faPencil} />}
+            이름
+          </div>
           <div>
             <Input
               type="text"
               isForm={true}
               placeholder="이름을 입력하세요."
               reset={setName}
-              value={name}
+              value={name || '-'}
               setValue={handleNameChange}
               disabled={disabled}
             />
           </div>
           <div>성별</div>
           <div>
-            <span>{userDetail?.gender === 'M' ? '남' : '여'}</span>
+            <span>
+              {userDetail?.gender === 'M' ? '남' : userDetail?.gender === 'F' ? '여' : '-'}
+            </span>
           </div>
         </Row>
         <Row col={2}>
           <div>생년월일</div>
           <div>{userDetail?.birthdate}</div>
-          <div>전공</div>
+          <div>
+            {!disabled && <FontAwesomeIcon icon={faPencil} />}
+            전공
+          </div>
           <div>
             <Dropdown
               isForm={true}
               placeholder="전공을 선택하세요."
-              data={majorList}
-              propertyName={{ key: 'id', value: 'title' }}
+              data={allMajorList}
+              propertyName={{ key: 'imajor', value: 'majorName' }}
               value={major}
               setValue={setMajor}
               reset

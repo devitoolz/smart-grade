@@ -24,7 +24,7 @@ const Student = () => {
   const [studentNum, setStudentNum] = useState('');
   const [nm, setNm] = useState('');
 
-  const { majorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector(state => state.major);
 
   const tableHeader = [
     { title: '학번', width: 2 },
@@ -59,7 +59,8 @@ const Student = () => {
         <Dropdown
           length="long"
           placeholder="전공"
-          data={majorList}
+          data={allMajorList}
+          propertyName={{ key: 'imajor', value: 'majorName' }}
           value={imajor}
           setValue={setImajor}
           reset

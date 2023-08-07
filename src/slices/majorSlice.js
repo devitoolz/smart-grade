@@ -1,15 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  majorList: [],
+  allMajorList: [],
 };
 
 const majorSlice = createSlice({
   name: 'majorSlice',
   initialState,
   reducers: {
-    setMajorList: (state, action) => {
-      state.majorList = action.payload;
+    setAllMajorList: (state, action) => {
+      state.allMajorList = action.payload;
     },
   },
 });

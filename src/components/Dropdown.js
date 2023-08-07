@@ -21,6 +21,7 @@ const Dropdown = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
   const [result, setResult] = useState([]);
   const menuRef = useRef(null);
   const inputRef = useRef(null);
@@ -47,6 +48,15 @@ const Dropdown = ({
       document.removeEventListener('click', handleOutsideClick, true);
     };
   }, []);
+
+  useEffect(() => {
+    value &&
+      setSearchValue(
+        data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
+          propertyName ? propertyName.value : 'title'
+        ]
+      );
+  }, [value]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -105,7 +115,7 @@ const Dropdown = ({
         ) : (
           <span className={value ? null : 'placeholder'}>
             {value
-              ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)[
+              ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
                   propertyName ? propertyName.value : 'title'
                 ]
               : placeholder}

@@ -43,3 +43,7 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   appearance: textfield;
 }
+
+input {
+  font-family: 'Pretendard', sans-serif;
+}

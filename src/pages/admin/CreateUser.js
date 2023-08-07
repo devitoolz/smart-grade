@@ -25,7 +25,7 @@ const CreateUser = () => {
   const [birth, setBirth] = useState('');
   const [phone, setPhone] = useState('');
 
-  const { majorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector(state => state.major);
   const { state } = useLocation();
   const dispatch = useDispatch();
 
@@ -164,8 +164,8 @@ const CreateUser = () => {
             <Dropdown
               isForm={true}
               placeholder="전공을 선택하세요."
-              data={majorList}
-              propertyName={{ key: 'id', value: 'title' }}
+              data={allMajorList}
+              propertyName={{ key: 'imajor', value: 'majorName' }}
               value={major}
               setValue={setMajor}
               reset

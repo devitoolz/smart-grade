@@ -82,6 +82,7 @@ const Row = styled.div`
     }
   }
   > div {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -106,6 +107,10 @@ const Row = styled.div`
       padding: 10px;
       text-align: center;
       background: transparent;
+    }
+    > svg {
+      position: absolute;
+      left: 15px;
     }
   }
 `;

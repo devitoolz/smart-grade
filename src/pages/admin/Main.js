@@ -21,6 +21,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux';
 import majorSlice from '../../slices/majorSlice';
 import mainSlice from '../../slices/mainSlice';
+import api from '../../api/api';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -74,14 +75,13 @@ const Main = () => {
   // TODO: 추후 axios GET 으로 변경 예정
   useEffect(() => {
     const result = [
-      { id: 1, title: '내용 1' },
-      { id: 2, title: '내용 2' },
-      { id: 3, title: '내용 3' },
-      { id: 4, title: '내용 4' },
-      { id: 5, title: '내용 5' },
+      { imajor: 1, majorName: '전공 1' },
+      { imajor: 2, majorName: '전공 2' },
+      { imajor: 3, majorName: '전공 3' },
+      { imajor: 4, majorName: '전공 4' },
+      { imajor: 5, majorName: '전공 5' },
     ];
-
-    dispatch(major.setMajorList(result));
+    dispatch(major.setAllMajorList(result));
   }, []);
 
   return (
