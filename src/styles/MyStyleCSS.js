@@ -72,7 +72,7 @@ export const LectureContainer = styled.div`
 
 export const NoData = styled.div`
   width: 100%;
-  height: 500px;
+  height: calc(37px + 6vh + 500px);
   display: flex;
   justify-content: center;
   align-items: center;

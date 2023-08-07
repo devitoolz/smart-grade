@@ -149,11 +149,6 @@ const Grade = () => {
           setValue={setStudentId}
         />
       </SearchBar>
-      <CommonButton
-        btnType="page"
-        value="학생상세정보"
-        onClick={() => handleGetStudentGrade(setStudentData)}
-      />
 
       {!studentData.length ? (
         <NoData>
@@ -162,6 +157,11 @@ const Grade = () => {
         </NoData>
       ) : (
         <>
+          <CommonButton
+            btnType="page"
+            value="학생상세정보"
+            onClick={() => handleGetStudentGrade(setStudentData)}
+          />
           <Table header={tableHeader} data={studentData} hasPage={true} maxPage={5}>
             {studentData.map((item, idx) => {
               return (
