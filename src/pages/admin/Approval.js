@@ -6,6 +6,8 @@ import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
 import { patchRejectLecture, patchApproveLecture } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import SearchBar from '../../components/SearchBar';
+import Dropdown from '../../components/Dropdown';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -109,11 +111,41 @@ const Approval = () => {
     setReason(e.target.value);
   };
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
-
+  // 검색기능
+  const [procedures, setLectureStatus] = useState();
+  const statusList = [
+    {
+      id: -2,
+      title: '전체보기',
+    },
+    {
+      id: 0,
+      title: '신청 반려',
+    },
+    {
+      id: 1,
+      title: '개설 승인',
+    },
+    {
+      id: 2,
+      title: '개강 승인',
+    },
+  ];
+  const queries = { procedures };
   // JSX
   return (
     <>
-      <div
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
+        <Dropdown
+          length="short"
+          placeholder="강의상태"
+          data={statusList}
+          value={procedures}
+          setValue={setLectureStatus}
+          reset={true}
+        />
+      </SearchBar>
+      {/* <div
         style={{
           width: '100%',
           height: '95px',
@@ -124,7 +156,7 @@ const Approval = () => {
         }}
       >
         강의 개설 요청 승인
-      </div>
+      </div> */}
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
       <Table
         header={tableHeader}

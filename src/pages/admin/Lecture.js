@@ -91,7 +91,7 @@ const Lecture = () => {
   ];
   // 쿼리
   const [click, setClick] = useState(false);
-  const queries = { procedures, lectureName, professorName: nm };
+  const queries = { procedures, lectureName, nm };
   // {
   //   procedures, nm;
   // }
