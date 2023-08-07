@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TextArea } from '../../styles/MyStyleCSS';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { handleGetApprovalLecture, patchRejectLecture } from '../../api/fetch';
+import { patchRejectLecture, patchApproveLecture } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Approval = () => {
@@ -13,11 +13,11 @@ const Approval = () => {
   // 승인
   const [isAccept, setIsAccept] = useState(true);
   // 승인 및 거절 선택 여부
-  const [proceduresStat, setproceduresStat] = useState(false);
+  const [procedureState, setProcedureState] = useState(0);
   const handleRejectLecture = _item => {
     console.log('Reject');
     setContents(_item);
-    setproceduresStat(false);
+    setProcedureState(0);
     console.log(_item);
     setDisplay(true);
     setIsAccept(false);
@@ -25,7 +25,7 @@ const Approval = () => {
   const handleAcceptLecture = _item => {
     console.log('Accept');
     setContents(_item);
-    setproceduresStat(true);
+    setProcedureState(_item.procedures);
     console.log(_item);
     setDisplay(true);
     setIsAccept(true);
@@ -47,6 +47,10 @@ const Approval = () => {
     { title: '정원', width: 1 },
     { title: '관리', width: 2 },
   ];
+  // 강의 요청 승인 patch
+  const patchApproveLectureWait = async (_ilecture, _procedure) => {
+    await patchApproveLecture(_ilecture, _procedure);
+  };
   // 강의 개강개설 거절 patch
   const patchRejectLectureWait = async (_ilecture, reason) => {
     await patchRejectLecture(_ilecture, reason);
@@ -55,7 +59,23 @@ const Approval = () => {
   const handleModalOk = async () => {
     console.log(contents);
     console.log('modal click - ok');
-    proceduresStat ? console.log('승인') : await patchRejectLectureWait(contents.ilecture, reason);
+    // procedure = 0 이면 요청 거절
+    // procedureState ? console.log('승인') : await patchRejectLectureWait(contents.ilecture, reason);
+    switch (procedureState) {
+      case 0:
+        await patchRejectLectureWait(contents.ilecture, reason);
+        break;
+      case 1:
+        console.log('개설 승인');
+        await patchApproveLectureWait(contents.ilecture, procedureState);
+        break;
+      case 2:
+        console.log('개강 승인');
+        await patchApproveLectureWait(contents.ilecture, procedureState);
+        break;
+      default:
+        break;
+    }
     setReason('');
   };
   const handleModalCancel = () => {
@@ -160,11 +180,12 @@ const Approval = () => {
         >
           {isAccept ? (
             <>
-              <p>다음 요청을 승인하시겠습니까?</p>
+              <p>{status[procedureState]}</p>
               <p>다음 요청을 승인하시겠습니까?</p>
             </>
           ) : (
             <>
+              <p>{status[procedureState]}</p>
               <span>요청 거절 사유</span>
               <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
               <TextArea maxLength={100} onChange={inputRejectReason} />

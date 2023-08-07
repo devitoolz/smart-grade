@@ -106,6 +106,24 @@ export const patchRejectLecture = async (_ilecture, reason) => {
     console.log(err);
   }
 };
+// 강의 개설+개강 요청 승인페이지 >> 승인
+export const patchApproveLecture = async (_ilecture, _procedure) => {
+  console.log('요청 승인');
+  console.log(_ilecture);
+  const headers = { 'Content-Type': 'application/json' };
+  const patchData = {
+    ilecture: _ilecture,
+    procedures: _procedure + 1,
+  };
+  try {
+    const res = await axios.patch(`/api/admin/lecture`, patchData, { headers });
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+  }
+};
 
 // 통합 성적관리 - 특정 학생의 성적 검색
 export const getStudentGrade = async _setFunc => {
