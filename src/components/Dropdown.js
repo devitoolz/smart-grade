@@ -17,6 +17,7 @@ const Dropdown = ({
   propertyName,
   reset,
   search,
+  disabled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
@@ -92,8 +93,8 @@ const Dropdown = ({
 
   return (
     <CustomDropdown ref={menuRef} open={isOpen} isForm={isForm} length={length} value={searchValue}>
-      <div onClick={handleMenuOpen}>
-        {search ? (
+      <div onClick={disabled ? null : handleMenuOpen}>
+        {!disabled && search ? (
           <input
             ref={inputRef}
             type="text"
@@ -110,8 +111,8 @@ const Dropdown = ({
               : placeholder}
           </span>
         )}
-        <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
-        {reset && (
+        {!disabled && <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />}
+        {!disabled && reset && (
           <FontAwesomeIcon className="reset" icon={faCircleXmark} onClick={handleResetClick} />
         )}
       </div>

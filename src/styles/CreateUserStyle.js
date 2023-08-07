@@ -4,30 +4,18 @@ const CreateUserLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 50px;
+  padding: 0 50px;
 `;
 
 const TopLayout = styled.div`
   display: flex;
   justify-content: space-between;
-  > div.top-left {
-    display: flex;
-    gap: 40px;
-  }
-`;
-
-const ImageUpload = styled.div`
-  width: 300px;
-  aspect-ratio: 3 / 4;
-  border: 1px dashed var(--black);
-  border-radius: 15px;
+  padding-bottom: 20px;
 `;
 
 const NoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  padding-bottom: 10px;
   > span {
     color: var(--negative-color);
     &:last-of-type {
@@ -36,10 +24,17 @@ const NoticeContainer = styled.div`
   }
 `;
 
+const ImageUpload = styled.div`
+  width: 250px;
+  aspect-ratio: 3 / 4;
+  border: 1px dashed var(--black);
+  border-radius: 15px;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
-  gap: 20px;
+  gap: 15px;
 `;
 
 const Button = styled.span`
@@ -49,8 +44,8 @@ const Button = styled.span`
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
-  padding: 0 40px;
-  height: 40px;
+  padding: 0 25px;
+  height: 35px;
   background: var(--primary-color);
   color: var(--white);
   &:last-of-type {

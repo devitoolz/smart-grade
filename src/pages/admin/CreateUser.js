@@ -106,18 +106,16 @@ const CreateUser = () => {
   return (
     <CreateUserLayout>
       <TopLayout>
-        <div className="top-left">
-          <ImageUpload />
-          <NoticeContainer>
-            <span>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</span>
-            <span>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</span>
-          </NoticeContainer>
-        </div>
+        <NoticeContainer>
+          <span>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</span>
+          <span>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</span>
+        </NoticeContainer>
         <ButtonContainer>
           <Button onClick={handleCreate}>생성</Button>
           <Button onClick={() => navigate(-1)}>취소</Button>
         </ButtonContainer>
       </TopLayout>
+      <ImageUpload />
       <FormTable>
         <Row col={2}>
           <div>이름</div>
@@ -129,6 +127,36 @@ const CreateUser = () => {
               reset={setName}
               value={name}
               setValue={handleNameChange}
+            />
+          </div>
+          <div>성별</div>
+          <div>
+            <Dropdown
+              isForm={true}
+              placeholder="성별을 선택하세요."
+              data={[
+                { id: 'M', title: '남' },
+                { id: 'F', title: '여' },
+              ]}
+              propertyName={{ key: 'id', value: 'title' }}
+              value={gender}
+              setValue={setGender}
+              reset
+              search
+            />
+          </div>
+        </Row>
+        <Row col={2}>
+          <div>생년월일</div>
+          <div>
+            <Input
+              type="text"
+              isForm={true}
+              reset={setBirth}
+              maxLength={10}
+              placeholder="YYYY-MM-DD"
+              value={birth}
+              setValue={handleBirthChange}
             />
           </div>
           <div>전공</div>
@@ -146,22 +174,6 @@ const CreateUser = () => {
           </div>
         </Row>
         <Row col={2}>
-          <div>성별</div>
-          <div>
-            <Dropdown
-              isForm={true}
-              placeholder="성별을 선택하세요."
-              data={[
-                { id: 'M', title: '남' },
-                { id: 'F', title: '여' },
-              ]}
-              propertyName={{ key: 'id', value: 'title' }}
-              value={gender}
-              setValue={setGender}
-              reset
-              search
-            />
-          </div>
           <div>휴대전화</div>
           <div>
             <Input
@@ -172,20 +184,6 @@ const CreateUser = () => {
               placeholder="010-0000-0000"
               value={phone}
               setValue={handlePhoneChange}
-            />
-          </div>
-        </Row>
-        <Row col={2}>
-          <div>생년월일</div>
-          <div>
-            <Input
-              type="text"
-              isForm={true}
-              reset={setBirth}
-              maxLength={10}
-              placeholder="YYYY-MM-DD"
-              value={birth}
-              setValue={handleBirthChange}
             />
           </div>
           <div>E-mail</div>
