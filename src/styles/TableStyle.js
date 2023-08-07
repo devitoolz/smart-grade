@@ -25,10 +25,12 @@ const TableHead = styled.div`
   background: var(--main-bg-color);
   > div {
     padding: 0 5px;
-    text-align: center;
     height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
     font-weight: bold;
-    line-height: 45px;
     border-right: 1px solid var(--table-border-color);
     &:last-of-type {
       border-right: none;
@@ -46,9 +48,10 @@ const TableBody = styled.div`
     }
     > div {
       padding: 0 5px;
-      text-align: center;
       height: 35px;
-      line-height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       border-right: 1px solid var(--table-border-color);
       &:last-of-type {
         border-right: none;

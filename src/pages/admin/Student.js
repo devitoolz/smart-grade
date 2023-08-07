@@ -7,6 +7,7 @@ import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import CommonButton from '../../components/CommonButton';
 
 const Student = () => {
   const navigate = useNavigate();
@@ -83,7 +84,7 @@ const Student = () => {
       </SearchBar>
       <ButtonBar
         value="계정 생성"
-        onClick={() => navigate('/admin/user/create?role=students', { state: 'students' })}
+        onClick={() => navigate('/admin/user/create', { state: 'students' })}
       />
       <Table
         header={tableHeader}
@@ -107,7 +108,12 @@ const Student = () => {
               <div>{item.finishedYn === 1 ? '졸업' : '재학 중'}</div>
               <div>{item.score}</div>
               <div>
-                <button>hihihihi</button>
+                <CommonButton
+                  btnType="table"
+                  value="상세보기"
+                  color="gray"
+                  onClick={() => console.log('hi')}
+                ></CommonButton>
               </div>
             </div>
           );

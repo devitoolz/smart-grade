@@ -18,14 +18,20 @@ import {
   faHouse,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import majorSlice from '../../slices/majorSlice';
+import mainSlice from '../../slices/mainSlice';
 
 const Main = () => {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(1);
-  const [title, setTitle] = useState('');
+
+  const dispatch = useDispatch();
+  const main = mainSlice.actions;
+  const major = majorSlice.actions;
+
+  const { title } = useSelector(state => state.main);
 
   const menuData = {
     home: {
@@ -57,34 +63,12 @@ const Main = () => {
   const pathSegments = pathname.split('/').filter(Boolean);
   const mainPath = pathSegments[1];
   const subPath = pathSegments[2];
-  const role = search.replace('?role=', '');
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    if (subPath === 'create') {
-      let subtitle;
-      switch (role) {
-        case 'professor':
-          subtitle = '교수 ';
-          break;
-        case 'students':
-          subtitle = '학생 ';
-          break;
-        default:
-          subtitle = '';
-      }
-      setTitle(
-        <>
-          <span>{subtitle}계정 생성</span>
-        </>
-      );
-    } else {
-      setTitle(menuData[mainPath].submenu[subPath] || '');
-    }
+    const title = menuData[mainPath].submenu[subPath];
+    if (title) dispatch(main.setTitle(title));
   }, [pathname]);
-
-  const dispatch = useDispatch();
-  const major = majorSlice.actions;
 
   // TODO: 추후 axios GET 으로 변경 예정
   useEffect(() => {

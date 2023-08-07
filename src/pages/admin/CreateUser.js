@@ -36,6 +36,13 @@ const CreateUser = () => {
       alert('잘못된 접근입니다.');
       navigate(-1);
     }
+
+    const role = {
+      professor: '교수',
+      students: '학생',
+    };
+
+    dispatch(main.setTitle(`${role[state]} 계정 생성`));
   }, []);
 
   const handleCreate = async () => {

@@ -18,6 +18,7 @@ const light = css`
     --search-ph-color: #a6a6a6;
     --white: #fff;
     --black: #000;
+    --button-bar-txt-color: #7e7e7e;
   }
 `;
 
