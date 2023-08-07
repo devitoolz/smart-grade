@@ -34,23 +34,23 @@ const Lecture = () => {
   const [procedures, setLectureStatus] = useState();
   const statusList = [
     {
-      id: -1,
+      id: '-1',
       title: '전체보기',
     },
     {
-      id: 0,
+      id: '0',
       title: '신청 반려',
     },
     {
-      id: 1,
+      id: '1',
       title: '개설 승인',
     },
     {
-      id: 2,
+      id: '2',
       title: '개강 승인',
     },
     {
-      id: 3,
+      id: '3',
       title: '개강',
     },
   ];
