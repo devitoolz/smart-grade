@@ -31,7 +31,7 @@ const Lecture = () => {
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
   // 드롭다운
   const [lectureName, setLectureName] = useState();
-  const [procedures, setLectureStatus] = useState(-1);
+  const [procedures, setLectureStatus] = useState();
   const statusList = [
     {
       id: -1,
@@ -54,7 +54,25 @@ const Lecture = () => {
       title: '개강',
     },
   ];
-  const [professorName, setProfessorName] = useState('');
+  const tempLecture = [
+    {
+      id: 1,
+      title: '강의 1',
+    },
+    {
+      id: 2,
+      title: '강의 2',
+    },
+    {
+      id: 3,
+      title: '강의 3',
+    },
+    {
+      id: 4,
+      title: '강의 4',
+    },
+  ];
+  const [nm, setProfessorName] = useState('');
 
   // table
   const tableHeader = [
@@ -73,7 +91,7 @@ const Lecture = () => {
   ];
   // 쿼리
   const [click, setClick] = useState(false);
-  const queries = { procedures, lectureName, professorName };
+  const queries = { procedures, lectureName, professorName: nm };
   // {
   //   procedures, nm;
   // }
@@ -129,7 +147,7 @@ const Lecture = () => {
         <Dropdown
           length="long"
           placeholder="강의명"
-          data={statusList}
+          data={tempLecture}
           value={lectureName}
           setValue={setLectureName}
           reset={true}
@@ -138,7 +156,7 @@ const Lecture = () => {
           length="short"
           type="string"
           placeholder="교수명"
-          value={professorName}
+          value={nm}
           setValue={setProfessorName}
         />
       </SearchBar>
