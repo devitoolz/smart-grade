@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextArea } from '../../styles/MyStyleCSS';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
@@ -95,6 +95,11 @@ const Approval = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   // const queries = { lectureStatus, lectureName, professorName };
+  const [query, setQuery] = useSearchParams();
+  useEffect(() => {
+    query.set('procedures', -2);
+    setQuery(query);
+  }, []);
   const url = '/api/admin/lecture';
   const { data, pending } = useQuerySearch(url, click, '&procedures=-2');
 
