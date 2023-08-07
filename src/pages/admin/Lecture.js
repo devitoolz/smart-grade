@@ -180,7 +180,7 @@ const Lecture = () => {
           modalTitle={lectureNm}
           modalSize="big"
         >
-          <Table header={modalHeader} data={contents} hasPage={true} maxPage={5} pending={pending}>
+          {/* <Table header={modalHeader} data={contents} hasPage={true} maxPage={5} pending={pending}>
             {contents.map((item, idx) => {
               return (
                 <div key={item.istudent}>
@@ -196,7 +196,33 @@ const Lecture = () => {
                 </div>
               );
             })}
-          </Table>
+          </Table> */}
+          <TableArea>
+            <div className="table">
+              <div className="table_head">
+                {modalHeader.map((item, idx) => {
+                  return <div key={idx}>{item.title}</div>;
+                })}
+              </div>
+              <div className="table_body">
+                {contents.map((item, idx) => {
+                  return (
+                    <div className="table_body_item" key={item.istudent}>
+                      <div>{idx + 1}</div>
+                      <div>{item.nm}</div>
+                      <div>{item.majorNm}</div>
+                      <div>{item.attendance}</div>
+                      <div>{item.minEx}</div>
+                      <div>{item.finEx}</div>
+                      <div>{item.totalScore}</div>
+                      <div>{item.avg}</div>
+                      <div>{item.gread}</div>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </TableArea>
         </CommonModal>
       ) : null}
     </>
