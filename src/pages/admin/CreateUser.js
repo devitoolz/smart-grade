@@ -64,7 +64,6 @@ const CreateUser = () => {
 
     try {
       await api.post(`/api/admin/${state}`, payload);
-      dispatch(main.setIsPosting(false));
       navigate(-1);
     } catch (error) {
       alert('오류가 발생하였습니다.');
