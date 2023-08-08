@@ -71,7 +71,7 @@ const LectureTableLayout = styled.div`
   div.lecture-table-header {
     border-bottom: 1px solid var(--table-border-color);
     display: grid;
-    grid-template-columns: 3fr 2fr 2fr;
+    grid-template-columns: 2fr 2fr 1fr;
     background: var(--main-bg-color);
     > div {
       display: flex;
@@ -87,11 +87,27 @@ const LectureTableLayout = styled.div`
     }
   }
   div.lecture-table-body {
+    position: relative;
+    height: 100%;
     font-size: 16px;
     overflow: auto;
+    > div.lecture-table-no-content {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: var(--main-border-color);
+      gap: 20px;
+      > svg {
+        font-size: 30px;
+      }
+    }
     > div.lecture-table-content {
       display: grid;
-      grid-template-columns: 3fr 2fr 2fr;
+      grid-template-columns: 2fr 2fr 1fr;
       border-bottom: 1px solid var(--table-border-color);
       &:last-of-type {
         border-bottom: none;
