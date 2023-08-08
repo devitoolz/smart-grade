@@ -23,6 +23,9 @@ const Grade = () => {
   const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
   const [studentNum, setStudentNum] = useState('');
+  const studentNumChange = e => {
+    setStudentNum(e.target.value);
+  };
 
   // table
   const tableHeader = [
@@ -69,7 +72,8 @@ const Grade = () => {
           type="number"
           placeholder="학번"
           value={studentNum}
-          setValue={setStudentNum}
+          setValue={studentNumChange}
+          reset={setStudentNum}
         />
       </SearchBar>
 

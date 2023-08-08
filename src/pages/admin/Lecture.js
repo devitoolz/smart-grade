@@ -72,6 +72,9 @@ const Lecture = () => {
     },
   ];
   const [nm, setProfessorName] = useState('');
+  const professorNameChange = e => {
+    setProfessorName(e.target.value);
+  };
 
   // table
   const tableHeader = [
@@ -156,7 +159,8 @@ const Lecture = () => {
           type="string"
           placeholder="교수명"
           value={nm}
-          setValue={setProfessorName}
+          setValue={professorNameChange}
+          reset={setProfessorName}
         />
       </SearchBar>
 
