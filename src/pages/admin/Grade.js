@@ -1,43 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { TableArea, NoDatas } from '../../styles/MyStyleCSS';
+import React, { useState } from 'react';
+import { NoDatas } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import CommonButton from '../../components/CommonButton';
-import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import { getStudentGrade } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Grade = () => {
-  const arr = [
-    {
-      aa: '1',
-      bb: '1',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-  ];
-  const array = [
-    `(o^^)o`,
-    `(^-^*)`,
-    `(·_·)`,
-    `(^_^)b`,
-    `(≥o≤)`,
-    `(;-;)`,
-    `(>_<)`,
-    `(='X'=)`,
-    `(·.·)`,
-    `(^Д^)/`,
-    `(o_o)/`,
-    `(o^^)o`,
-    `(˚Δ˚)b'`,
-  ];
-  let randomValue = array[Math.floor(Math.random() * array.length)];
-
   // 드롭다운
   const semesterData = [
     { id: 1, title: '1학기' },
@@ -63,71 +34,16 @@ const Grade = () => {
     { title: '성적', width: 1 },
     { title: '등급', width: 1 },
   ];
-  const tableData = [
-    {
-      aa: '1',
-      bb: '1',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '기술과학윤리',
-      dd: '이그린',
-      ee: 2,
-      ff: 94,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '3',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 97,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '4',
-      cc: '생활속의물리',
-      dd: '이그린',
-      ee: 3,
-      ff: 100,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '데이터베이스',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-  ];
-  // 데이터통신 - 학생성적 불러오기
-  const [studentData, setStudentData] = useState([]);
-  const handleGetStudentGrade = async _setFunc => {
-    // await getStudentGrade(_setFunc);
+  // 데이터통신 - 학생 상세정보 불러오기
+  const handleGetStudentInfo = async () => {
     alert('학생 상세정보 불러올 예정');
   };
-  // useEffect(() => {
-  //   handleGetStudentGrade();
-  // }, []);
 
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { semester, grade, studentNum };
   const url = '/api/admin/grade';
   const { data, pending } = useQuerySearch(url, click);
-  console.log(data);
-  console.log(data?.avgVo);
-  console.log(data?.voList);
 
   return (
     <>
@@ -161,11 +77,7 @@ const Grade = () => {
         <NoDatas />
       ) : (
         <>
-          <CommonButton
-            btnType="page"
-            value="학생상세정보"
-            onClick={() => handleGetStudentGrade(setStudentData)}
-          >
+          <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo()}>
             {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
             {data?.voList[0].name}({data?.voList[0].studentNum})
           </CommonButton>
