@@ -43,18 +43,19 @@ const Interceptor = ({ children }) => {
           response: { status },
         } = error;
 
-        if (status === 401) {
+        const refreshToken = getCookie('refreshToken');
+
+        if (status === 401 && refreshToken) {
           console.log('토큰 만료! 갱신 시도');
           try {
-            const { data } = await api.get(
-              `/api/refresh-token?refreshToken=${getCookie('refreshToken')}`
-            );
+            const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
             const accessToken = data.accessToken;
             setCookie('accessToken', accessToken);
             setCookie('refreshToken', data.refreshToken);
             config.headers.Authorization = `Bearer ${accessToken}`;
             return axios(config);
           } catch (error) {
+            console.log('인증 실패 로그아웃');
             console.log(error);
             removeCookie('accessToken');
             removeCookie('refreshToken');
