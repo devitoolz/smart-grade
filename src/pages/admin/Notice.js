@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPen } from '@fortawesome/free-solid-svg-icons';
+import React, { useEffect, useState } from 'react';
 import { BtnControl } from '../../styles/LectureRoomCss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
-import { Layout } from '../../styles/CommonStyle';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
+import axios from 'axios';
+import useQuerySearch from '../../hooks/useSearchFetch';
+import CommonModal from '../../components/CommonModal';
 
 const Notice = () => {
   ////SearchBar////
@@ -17,11 +17,53 @@ const Notice = () => {
   const [click, setClick] = useState(false);
   ////Input창////
   //input value값
-  const [value, setValue] = useState('');
+  const [noticeTitle, setNoticeTitle] = useState('');
   //input value change 함수
   const handleChangeValue = e => {
-    setValue(e.target.value);
+    setNoticeTitle(e.target.value);
   };
+
+  //삭제모달 창 활성화 여부
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+  //모달 창 오픈 여부
+  const deleteModalOpen = () => {
+    setDeleteModalShow(true);
+  };
+
+  //notice Data 담는 list
+  const [noticeData, setNoticeData] = useState([]);
+
+  //api test
+  // const getNoticeList = async () => {
+  //   try {
+  //     const res = await axios.get('/api/board');
+  //     const result = res.data;
+  //     console.log('결과를 보여줘라.', result);
+  //     return result;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  //api hook test
+  // const url = '/api/board';
+  // const { data, pending } = useQuerySearch(url, click);
+  // console.log(data);
+
+  //notice test list
+  // const getNoticeListLoad = async () => {
+  //   try {
+  //     const res = await getNoticeList();
+  //     return res;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   getNoticeList();
+  // }, []);
 
   ////Table////
   //table header
@@ -30,49 +72,62 @@ const Notice = () => {
     { title: '제목', width: '4' },
     { title: 'DATE', width: '2' },
     { title: '관리', width: '3' },
+    { title: '조회수', width: '1' },
   ];
 
-  const [pending, setPending] = useState(false);
-
   const data = [
+    { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
     { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
   ];
   const navigate = useNavigate();
 
   return (
     <>
-      <SearchBar queries={data._title} setPage={true} setClick={setClick}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Input
           length="long"
           type="text"
           placeholder="제목"
-          value={''}
+          value={noticeTitle}
           setValue={handleChangeValue}
-          reset={setValue}
+          reset={setNoticeTitle}
           maxLength={20}
         />
       </SearchBar>
-      <Table header={tableHeader} data={data} hasPage={true} maxPage={5} pending={pending}>
+
+      <CommonButton
+        btnType="page"
+        value="글쓰기"
+        onClick={() => {
+          navigate('/admin/home/notice/write');
+        }}
+      />
+      {deleteModalShow === true ? (
+        <CommonModal
+          setDisplay={setDeleteModalShow}
+          modalSize="small"
+          modalTitle="게시글 삭제"
+          handleModalOk={() => setDeleteModalShow(false)}
+          handleModalCancel={() => setDeleteModalShow(false)}
+        >
+          <p>게시글을 삭제하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
+      <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
         {data.map(item => {
           return (
             <div key={item.iboard}>
               <div>{item.iboard}</div>
-              <div>{item._title}</div>
+              <div>{item.title}</div>
               <div>{item.createdAt}</div>
-              <div>{item.gg}</div>
+              <div>
+                <CommonButton btnType="Table" vlaue="삭제" onClick={deleteModalOpen} />
+              </div>
+              <div>{item.boardView}</div>
             </div>
           );
         })}
       </Table>
-      <BtnControl>
-        <CommonButton
-          btnType="page"
-          value="글쓰기"
-          onClick={() => {
-            navigate('/admin/home/notice/write');
-          }}
-        />
-      </BtnControl>
     </>
   );
 };

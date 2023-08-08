@@ -256,7 +256,7 @@ const LectureRoom = () => {
                   btnType="table"
                   value="삭제"
                   color="red"
-                  onClick={gogo}
+                  onClick={() => setDisplay(true)}
                 ></CommonButton>
               </div>
               <div></div>
@@ -264,8 +264,6 @@ const LectureRoom = () => {
           );
         })}
       </Table>
-
-      <button onClick={() => setDisplay(true)}>zzz</button>
     </>
   );
 };

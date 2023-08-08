@@ -11,7 +11,7 @@ export const PlusModal = styled.div`
   width: 400px;
   height: 238px;
   background-color: greenyellow;
-  border-radius: 20px;
+  border-radius: 10px;
   display: flex;
   flex-direction: column;
   .LectureLoomTitle {
@@ -127,10 +127,6 @@ export const Ltable = styled.table`
     textarea {
     }
   }
-`;
-export const BtnControl = styled.div`
-  display: flex;
-  justify-content: start;
 `;
 
 export const Wbtns = styled.div`

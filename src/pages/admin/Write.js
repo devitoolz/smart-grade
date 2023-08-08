@@ -4,6 +4,8 @@ import Input from '../../components/Input';
 import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
+import CommonModal from '../../components/CommonModal';
+import { useNavigate } from 'react-router-dom';
 const Write = () => {
   //공지사항  제목
   const [title, setTitle] = useState('');
@@ -11,21 +13,70 @@ const Write = () => {
   //공지사항 체크박스 value
   const [check, setCheck] = useState(false);
 
-  //checkbox value chang 함수
+  //checkbox value change 함수
   const handleChangvalue = () => {
     setCheck(false);
   };
 
   //제목 인풋창?
   const handleTitle = e => {
-    setTitle(e.target.title);
+    setTitle(e.target.value);
   };
   //임시
   const gogo = () => {
     console.log(gogo);
   };
+
+  //저장 버튼 클릭시 모달오픈 여부
+  const [saveDisplay, setSaveDisplay] = useState(false);
+
+  //취소버튼 클릭시 모달오픈 여부
+  const [cancelDisplay, setCancelDisplay] = useState(false);
+
+  //save modal 확인 버튼 클릭시
+  const saveModalOk = () => {
+    setSaveDisplay(false);
+    navigate('/admin/home/notice/');
+  };
+  //save modal 취소 버튼 클릭시
+  const saveModalCancel = () => {
+    setSaveDisplay(false);
+  };
+
+  //cancel modal 확인 버튼 클릭시
+  const cancelModalOk = () => {
+    navigate('/admin/home/notice/');
+  };
+  //cancel modal 취소 버튼 클릭시
+  const cancelModalCancel = () => {
+    setCancelDisplay(false);
+  };
+  //취소버튼 클릭시 공지사항 목록으로 이동
+  const navigate = useNavigate();
   return (
     <>
+      {saveDisplay === true ? (
+        <CommonModal
+          setDisplay={setSaveDisplay}
+          modalSize="small"
+          modalTitle="공지사항 작성"
+          handleModalOk={saveModalOk}
+          handleModalCancel={saveModalCancel}
+        >
+          <p>저장 하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
+      {cancelDisplay === true ? (
+        <CommonModal
+          setDisplay={cancelDisplay}
+          modalSize="small"
+          modalTitle="공지사항 작성"
+          handleModalOk={cancelModalOk}
+          handleModalCancel={cancelModalCancel}
+        >
+          <p>취소 하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
       <Ltable>
         <colgroup>
           <col className="title" width={'30%'} />
@@ -69,8 +120,8 @@ const Write = () => {
         </tbody>
       </Ltable>
       <Wbtns>
-        <CommonButton btnType="page" value="수정" onClick={gogo}></CommonButton>
-        <CommonButton btnType="page" value="삭제" onClick={gogo}></CommonButton>
+        <CommonButton btnType="page" value="저장" onClick={() => setSaveDisplay(true)} />
+        <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
       </Wbtns>
     </>
   );
