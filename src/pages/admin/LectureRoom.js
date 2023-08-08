@@ -178,57 +178,7 @@ const LectureRoom = () => {
             <p>최대수용인원</p> <Input type="number" length="short" />
           </div>
         </CommonModal>
-      ) : // <PlusModal>
-      //   <div className="lectureLoomTitle">
-      //     <p>
-      //       <strong>강의실 추가</strong>
-      //     </p>
-      //     <p onClick={modalClose}>
-      //       <FontAwesomeIcon icon={faX} />
-      //     </p>
-      //   </div>
-      //   <div className="placeTitle">
-      //     <p>장소 :</p>
-      //     <div className="controls">
-      //       <div className="dropDownControl">
-      //         <Dropdown placeholder="건물명" />
-      //       </div>
-      //       <div className="inputControl">
-      //         <Input type="number" length="short" value={roomNumber} setValue={setRoomNumber} />
-      //         <p>호</p>
-      //       </div>
-      //     </div>
-      //   </div>
-      //   <div className="capacityTitle">
-      //     <p>최대수용인원 : </p>
-      //     <div className="inputControl">
-      //       <Input
-      //         type="number"
-      //         length="short"
-      //         value={capacityNumber}
-      //         setValue={setCapacityNumber}
-      //       />
-      //       <p>명</p>
-      //     </div>
-      //   </div>
-      //   <div className="btns">
-      //     <CommonButton
-      //       btnType="modal"
-      //       color="blue"
-      //       value="등록"
-      //       onClick={gogo}
-      //       className="registeration"
-      //     ></CommonButton>
-      //     <CommonButton
-      //       btnType="modal"
-      //       color="gray"
-      //       value="취소"
-      //       onClick={modalClose}
-      //       className="cancellation"
-      //     ></CommonButton>
-      //   </div>
-      // </PlusModal>
-      null}
+      ) : null}
 
       {display ? (
         <CommonModal

@@ -121,15 +121,15 @@ const Major = () => {
   //전공학점 state
   const [majorScore, setMajorScore] = useState(null);
   //모달창 활성화
-  const [showModal, setshowModal] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   const { allMajorList } = useSelector(state => state.major);
   console.log(allMajorList);
 
   // //버튼 onClick시 모달창 열기
-  // const modalOpen = () => {
-  //   setshowModal(true);
-  // };
+  const modalOpen = () => {
+    setShowModal(true);
+  };
 
   // //취소, x 누를시 모달창 닫기
   // const modalClose = () => {
@@ -188,6 +188,17 @@ const Major = () => {
     await getMajorDeleteTest(_id);
     console.log(_id);
   };
+
+  const handleModalOk = () => {
+    //setDisplay(false); //setter쓰면 이중으로 됨.
+    //하지만 function은 써줘야 함.
+  };
+
+  //commonModal close state
+  const handleModalCancel = () => {
+    //setDisplay(false);
+  };
+
   return (
     <>
       {changeModalShow === true ? (
@@ -196,7 +207,7 @@ const Major = () => {
           modalSize="small"
           modalTitle="전공명 변경"
           handleModalOk={changeClickShowOpen}
-          handleModalCancel={() => setshowModal(false)}
+          handleModalCancel={() => setShowModal(false)}
         >
           <p>해당 전공명을 변경하시겠습니까?</p>
         </CommonModal>
@@ -207,7 +218,7 @@ const Major = () => {
           modalSize="small"
           modalTitle="전공 폐지"
           handleModalOk={() => disabledClick(majorId)}
-          handleModalCancel={() => setshowModal(false)}
+          handleModalCancel={() => setShowModal(false)}
         >
           <p>해당 전공을 폐지 하겠습니까?</p>
         </CommonModal>
@@ -233,7 +244,38 @@ const Major = () => {
           search
         />
       </SearchBar>
-      <CommonButton btnType="page" value="전공추가" onClick={() => alert('hi')} />
+      <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
+      {showModal === true ? (
+        <CommonModal
+          setDisplay={setShowModal}
+          modalSize="small"
+          modalTitle="전공 추가"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: '15px',
+              alignItems: 'center',
+              borderBottom: '1px solid #dae8ff',
+            }}
+          >
+            <p>전공명</p> <Input type="text" length="long" />
+          </div>
+          <div
+            style={{
+              display: 'flex',
+              gap: '15px',
+              alignItems: 'center',
+
+              borderBottom: '1px solid #dae8ff',
+            }}
+          >
+            <p>졸업학점</p> <Input type="number" length="short" />
+          </div>
+        </CommonModal>
+      ) : null}
       <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
         {data?.major?.map(item => {
           return (
