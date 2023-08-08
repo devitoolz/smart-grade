@@ -7,6 +7,7 @@ import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import CommonButton from '../../components/CommonButton';
 
 const Student = () => {
   const navigate = useNavigate();
@@ -23,7 +24,7 @@ const Student = () => {
   const [studentNum, setStudentNum] = useState('');
   const [nm, setNm] = useState('');
 
-  const { majorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector(state => state.major);
 
   const tableHeader = [
     { title: '학번', width: 2 },
@@ -42,7 +43,7 @@ const Student = () => {
   const queries = { grade, imajor, studentNum, nm };
   const url = '/api/admin/students';
 
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   return (
     <>
@@ -58,7 +59,8 @@ const Student = () => {
         <Dropdown
           length="long"
           placeholder="전공"
-          data={majorList}
+          data={allMajorList}
+          propertyName={{ key: 'imajor', value: 'majorName' }}
           value={imajor}
           setValue={setImajor}
           reset
@@ -83,7 +85,7 @@ const Student = () => {
       </SearchBar>
       <ButtonBar
         value="계정 생성"
-        onClick={() => navigate('/admin/user/create?role=students', { state: 'students' })}
+        onClick={() => navigate('/admin/user/create', { state: 'students' })}
       />
       <Table
         header={tableHeader}
@@ -91,6 +93,7 @@ const Student = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.students.map(item => {
           return (
@@ -106,7 +109,12 @@ const Student = () => {
               <div>{item.finishedYn === 1 ? '졸업' : '재학 중'}</div>
               <div>{item.score}</div>
               <div>
-                <button>hihihihi</button>
+                <CommonButton
+                  btnType="table"
+                  value="상세보기"
+                  color="gray"
+                  onClick={() => navigate(`${item.istudent}`)}
+                ></CommonButton>
               </div>
             </div>
           );

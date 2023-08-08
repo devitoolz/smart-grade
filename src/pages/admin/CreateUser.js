@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  CreateUserLayout,
+  UserLayout,
   ImageUpload,
   FormTable,
   Row,
@@ -8,7 +8,8 @@ import {
   Button,
   TopLayout,
   NoticeContainer,
-} from '../../styles/CreateUserStyle';
+  MiddleLayout,
+} from '../../styles/UserStyle';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -25,7 +26,7 @@ const CreateUser = () => {
   const [birth, setBirth] = useState('');
   const [phone, setPhone] = useState('');
 
-  const { majorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector(state => state.major);
   const { state } = useLocation();
   const dispatch = useDispatch();
 
@@ -36,6 +37,13 @@ const CreateUser = () => {
       alert('잘못된 접근입니다.');
       navigate(-1);
     }
+
+    const role = {
+      professor: '교수',
+      students: '학생',
+    };
+
+    dispatch(main.setTitle(`${role[state]} 계정 생성`));
   }, []);
 
   const handleCreate = async () => {
@@ -64,7 +72,6 @@ const CreateUser = () => {
 
     try {
       await api.post(`/api/admin/${state}`, payload);
-      dispatch(main.setIsPosting(false));
       navigate(-1);
     } catch (error) {
       alert('오류가 발생하였습니다.');
@@ -98,20 +105,20 @@ const CreateUser = () => {
   };
 
   return (
-    <CreateUserLayout>
+    <UserLayout>
       <TopLayout>
-        <div className="top-left">
-          <ImageUpload />
-          <NoticeContainer>
-            <span>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</span>
-            <span>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</span>
-          </NoticeContainer>
-        </div>
+        <NoticeContainer>
+          <span>* 본인만 이미지 등록 및 수정이 가능합니다.</span>
+          <span>* 본인 확인이 불가능한 이미지는 사용이 불가능합니다.</span>
+        </NoticeContainer>
         <ButtonContainer>
           <Button onClick={handleCreate}>생성</Button>
           <Button onClick={() => navigate(-1)}>취소</Button>
         </ButtonContainer>
       </TopLayout>
+      <MiddleLayout>
+        <ImageUpload />
+      </MiddleLayout>
       <FormTable>
         <Row col={2}>
           <div>이름</div>
@@ -125,21 +132,6 @@ const CreateUser = () => {
               setValue={handleNameChange}
             />
           </div>
-          <div>전공</div>
-          <div>
-            <Dropdown
-              isForm={true}
-              placeholder="전공을 선택하세요."
-              data={majorList}
-              propertyName={{ key: 'id', value: 'title' }}
-              value={major}
-              setValue={setMajor}
-              reset
-              search
-            />
-          </div>
-        </Row>
-        <Row col={2}>
           <div>성별</div>
           <div>
             <Dropdown
@@ -156,18 +148,6 @@ const CreateUser = () => {
               search
             />
           </div>
-          <div>휴대전화</div>
-          <div>
-            <Input
-              type="text"
-              isForm={true}
-              reset={setPhone}
-              maxLength={13}
-              placeholder="010-0000-0000"
-              value={phone}
-              setValue={handlePhoneChange}
-            />
-          </div>
         </Row>
         <Row col={2}>
           <div>생년월일</div>
@@ -182,6 +162,33 @@ const CreateUser = () => {
               setValue={handleBirthChange}
             />
           </div>
+          <div>전공</div>
+          <div>
+            <Dropdown
+              isForm={true}
+              placeholder="전공을 선택하세요."
+              data={allMajorList}
+              propertyName={{ key: 'imajor', value: 'majorName' }}
+              value={major}
+              setValue={setMajor}
+              reset
+              search
+            />
+          </div>
+        </Row>
+        <Row col={2}>
+          <div>휴대전화</div>
+          <div>
+            <Input
+              type="text"
+              isForm={true}
+              reset={setPhone}
+              maxLength={13}
+              placeholder="010-0000-0000"
+              value={phone}
+              setValue={handlePhoneChange}
+            />
+          </div>
           <div>E-mail</div>
           <div>
             <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
@@ -193,14 +200,8 @@ const CreateUser = () => {
             <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
           </div>
         </Row>
-        <Row>
-          <div>상세주소</div>
-          <div>
-            <Input type="text" isForm={true} disabled={true} placeholder="(본인이 입력)" />
-          </div>
-        </Row>
       </FormTable>
-    </CreateUserLayout>
+    </UserLayout>
   );
 };
 

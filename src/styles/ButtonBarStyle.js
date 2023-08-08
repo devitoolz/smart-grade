@@ -14,10 +14,11 @@ const Button = styled.span`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 16px;
   border-radius: 5px;
   padding: 0 25px;
   height: 35px;
+  color: var(--button-bar-txt-color);
   background: var(--main-bg-color);
 `;
 

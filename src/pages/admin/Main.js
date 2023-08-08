@@ -18,14 +18,21 @@ import {
   faHouse,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import majorSlice from '../../slices/majorSlice';
+import mainSlice from '../../slices/mainSlice';
+import api from '../../api/api';
 
 const Main = () => {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
   const navigate = useNavigate();
   const [activeIndex, setActiveIndex] = useState(1);
-  const [title, setTitle] = useState('');
+
+  const dispatch = useDispatch();
+  const main = mainSlice.actions;
+  const major = majorSlice.actions;
+
+  const { title } = useSelector(state => state.main);
 
   const menuData = {
     home: {
@@ -38,7 +45,7 @@ const Main = () => {
       index: 2,
       icon: faUser,
       title: '계정관리',
-      submenu: { professor: '교수 계정 관리', student: '학생 계정 관리' },
+      submenu: { professor: '교수 계정 관리', students: '학생 계정 관리' },
     },
     bachelor: {
       index: 3,
@@ -57,46 +64,24 @@ const Main = () => {
   const pathSegments = pathname.split('/').filter(Boolean);
   const mainPath = pathSegments[1];
   const subPath = pathSegments[2];
-  const role = search.replace('?role=', '');
+  const paramPath = pathSegments[3];
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    if (subPath === 'create') {
-      let subtitle;
-      switch (role) {
-        case 'professor':
-          subtitle = '교수 ';
-          break;
-        case 'students':
-          subtitle = '학생 ';
-          break;
-        default:
-          subtitle = '';
-      }
-      setTitle(
-        <>
-          <span>{subtitle}계정 생성</span>
-        </>
-      );
-    } else {
-      setTitle(menuData[mainPath].submenu[subPath] || '');
-    }
+    const title = menuData[mainPath].submenu[subPath];
+    if (title && !paramPath) dispatch(main.setTitle(title));
   }, [pathname]);
-
-  const dispatch = useDispatch();
-  const major = majorSlice.actions;
 
   // TODO: 추후 axios GET 으로 변경 예정
   useEffect(() => {
     const result = [
-      { id: 1, title: '내용 1' },
-      { id: 2, title: '내용 2' },
-      { id: 3, title: '내용 3' },
-      { id: 4, title: '내용 4' },
-      { id: 5, title: '내용 5' },
+      { imajor: 1, majorName: '전공 1' },
+      { imajor: 2, majorName: '전공 2' },
+      { imajor: 3, majorName: '전공 3' },
+      { imajor: 4, majorName: '전공 4' },
+      { imajor: 5, majorName: '전공 5' },
     ];
-
-    dispatch(major.setMajorList(result));
+    dispatch(major.setAllMajorList(result));
   }, []);
 
   return (

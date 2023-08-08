@@ -17,9 +17,11 @@ const Dropdown = ({
   propertyName,
   reset,
   search,
+  disabled,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchValue, setSearchValue] = useState('');
+
   const [result, setResult] = useState([]);
   const menuRef = useRef(null);
   const inputRef = useRef(null);
@@ -46,6 +48,15 @@ const Dropdown = ({
       document.removeEventListener('click', handleOutsideClick, true);
     };
   }, []);
+
+  useEffect(() => {
+    value &&
+      setSearchValue(
+        data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
+          propertyName ? propertyName.value : 'title'
+        ]
+      );
+  }, [value]);
 
   useEffect(() => {
     if (!isOpen) {
@@ -92,8 +103,8 @@ const Dropdown = ({
 
   return (
     <CustomDropdown ref={menuRef} open={isOpen} isForm={isForm} length={length} value={searchValue}>
-      <div onClick={handleMenuOpen}>
-        {search ? (
+      <div onClick={disabled ? null : handleMenuOpen}>
+        {!disabled && search ? (
           <input
             ref={inputRef}
             type="text"
@@ -104,14 +115,14 @@ const Dropdown = ({
         ) : (
           <span className={value ? null : 'placeholder'}>
             {value
-              ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)[
+              ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
                   propertyName ? propertyName.value : 'title'
                 ]
               : placeholder}
           </span>
         )}
-        <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />
-        {reset && (
+        {!disabled && <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />}
+        {!disabled && reset && (
           <FontAwesomeIcon className="reset" icon={faCircleXmark} onClick={handleResetClick} />
         )}
       </div>

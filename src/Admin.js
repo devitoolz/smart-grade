@@ -12,6 +12,7 @@ import Approval from './pages/admin/Approval';
 import Grade from './pages/admin/Grade';
 import LectureRoom from './pages/admin/LectureRoom';
 import Major from './pages/admin/Major';
+import UserDetail from './pages/admin/UserDetail';
 
 const Admin = () => {
   const { pathname } = useLocation();
@@ -29,7 +30,9 @@ const Admin = () => {
         <Route path="home/notice/write" element={<Write />} />
         <Route path="user" element={<Navigate to="professor" />} />
         <Route path="user/professor" element={<Professor />} />
-        <Route path="user/student" element={<Student />} />
+        <Route path="user/professor/:id" element={<UserDetail />} />
+        <Route path="user/students" element={<Student />} />
+        <Route path="user/students/:id" element={<UserDetail />} />
         <Route path="user/create" element={<CreateUser />} />
         <Route path="bachelor" element={<Navigate to="lecture" />} />
         <Route path="bachelor/lecture" element={<Lecture />} />

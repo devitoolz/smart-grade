@@ -52,6 +52,7 @@ const CustomInput = styled.div`
     height: 100%;
     width: 100%;
     background: transparent;
+    color: var(--black);
     font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
     &::placeholder {
       color: var(--search-ph-color);
@@ -160,7 +161,7 @@ const CustomDropdown = styled.div`
     z-index: 999;
     width: ${({ isForm }) => (isForm ? '100%' : 'calc(100% + 2px)')};
     max-height: ${props => (props.open ? '200px' : 0)};
-    top: ${({ isForm }) => (isForm ? '50px' : '34px')};
+    top: ${({ isForm }) => (isForm ? '48px' : '34px')};
     left: ${({ isForm }) => (isForm ? 0 : '-1px')};
     transition: 0.2s all ease-in-out;
     overflow: auto;

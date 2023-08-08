@@ -24,7 +24,7 @@ const Input = ({
         value={value}
         onChange={setValue}
       />
-      {reset && <FontAwesomeIcon onClick={() => reset('')} icon={faCircleXmark} />}
+      {!disabled && reset && <FontAwesomeIcon onClick={() => reset('')} icon={faCircleXmark} />}
     </CustomInput>
   );
 };
