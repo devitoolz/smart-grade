@@ -29,8 +29,8 @@ const Grade = () => {
 
   // table
   const tableHeader = [
-    { title: '학기', width: 1 },
     { title: '학년', width: 1 },
+    { title: '학기', width: 1 },
     { title: '강의명', width: 3 },
     { title: '담당교수', width: 2 },
     { title: '학점', width: 1 },
@@ -97,11 +97,11 @@ const Grade = () => {
         {data?.voList.map((item, idx) => {
           return (
             <div key={idx}>
-              <div>{item.istudent}</div>
-              <div>{item.name}</div>
-              <div>{item.ilecture}</div>
-              <div>{item.imajor}</div>
-              <div>{item.studentNum}</div>
+              <div>{item.grade}</div>
+              <div>{item.semester}</div>
+              <div>{item.lectureName}</div>
+              <div>{item.professorName}</div>
+              <div>{item.lectureScore}</div>
               <div>{item.score}</div>
               <div>{item.rating}</div>
             </div>
