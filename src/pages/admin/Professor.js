@@ -83,7 +83,7 @@ const Professor = () => {
                   btnType="table"
                   value="상세보기"
                   color="gray"
-                  onClick={() => console.log('hi')}
+                  onClick={() => navigate(`${item.iprofessor}`)}
                 ></CommonButton>
               </div>
             </div>

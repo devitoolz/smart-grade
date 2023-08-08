@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  CreateUserLayout,
+  UserLayout,
   ImageUpload,
   FormTable,
   Row,
@@ -8,7 +8,8 @@ import {
   Button,
   TopLayout,
   NoticeContainer,
-} from '../../styles/CreateUserStyle';
+  MiddleLayout,
+} from '../../styles/UserStyle';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -104,18 +105,20 @@ const CreateUser = () => {
   };
 
   return (
-    <CreateUserLayout>
+    <UserLayout>
       <TopLayout>
         <NoticeContainer>
-          <span>* 최대 5MB의 이미지 확장자 파일(.jpeg, .png)만 업로드 가능합니다.</span>
-          <span>* 본인 확인이 불가능한 이미지는 사용이 불가능 합니다.</span>
+          <span>* 본인만 이미지 등록 및 수정이 가능합니다.</span>
+          <span>* 본인 확인이 불가능한 이미지는 사용이 불가능합니다.</span>
         </NoticeContainer>
         <ButtonContainer>
           <Button onClick={handleCreate}>생성</Button>
           <Button onClick={() => navigate(-1)}>취소</Button>
         </ButtonContainer>
       </TopLayout>
-      <ImageUpload />
+      <MiddleLayout>
+        <ImageUpload />
+      </MiddleLayout>
       <FormTable>
         <Row col={2}>
           <div>이름</div>
@@ -198,7 +201,7 @@ const CreateUser = () => {
           </div>
         </Row>
       </FormTable>
-    </CreateUserLayout>
+    </UserLayout>
   );
 };
 

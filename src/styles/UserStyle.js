@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 
-const CreateUserLayout = styled.div`
+const UserLayout = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -10,12 +10,18 @@ const CreateUserLayout = styled.div`
 const TopLayout = styled.div`
   display: flex;
   justify-content: space-between;
+`;
+
+const MiddleLayout = styled.div`
+  display: flex;
+  padding-top: 20px;
   padding-bottom: 20px;
 `;
 
 const NoticeContainer = styled.div`
   display: flex;
   flex-direction: column;
+  ${({ right }) => right && 'align-items: flex-end; padding-top: 10px;'};
   > span {
     color: var(--negative-color);
     &:last-of-type {
@@ -55,7 +61,7 @@ const Button = styled.span`
 
 const FormTable = styled.div`
   width: 100%;
-  padding-top: 40px;
+  padding-top: 20px;
 `;
 
 const Row = styled.div`
@@ -112,14 +118,18 @@ const Row = styled.div`
       position: absolute;
       left: 15px;
     }
+    > span {
+      color: var(--search-ph-color);
+    }
   }
 `;
 
 export {
-  CreateUserLayout,
+  UserLayout,
   TopLayout,
-  ImageUpload,
+  MiddleLayout,
   NoticeContainer,
+  ImageUpload,
   ButtonContainer,
   Button,
   FormTable,
