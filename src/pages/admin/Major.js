@@ -11,6 +11,7 @@ import { Layout } from '../../styles/CommonStyle';
 import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
+import { useSelector } from 'react-redux';
 
 const Major = () => {
   ////SearchBar////
@@ -113,12 +114,16 @@ const Major = () => {
 
   //modalTitle state
   const [modalTitle, setmodalTitle] = useState('강의실추가', '전공추가');
+  //전공명 imajor
+  const [imajor, setImajor] = useState(null);
   //전공명 state
-  const [majorName, setMajorName] = useState('');
+  // const [majorName, setMajorName] = useState('');
   //전공학점 state
   const [majorScore, setMajorScore] = useState(null);
   //모달창 활성화
   const [showModal, setshowModal] = useState(false);
+
+  const { allMajorList } = useSelector(state => state.major);
 
   // //버튼 onClick시 모달창 열기
   // const modalOpen = () => {
@@ -166,12 +171,8 @@ const Major = () => {
   const { data, pending } = useQuerySearch(url, click);
   console.log(data);
 
-
-
   return (
     <>
-  
-
       {changeModalShow === true ? (
         <CommonModal
           setDisplay={setChangeModalShow}
@@ -198,6 +199,7 @@ const Major = () => {
         <Dropdown
           placeholder="상태"
           data={_status}
+          propertyName={{ key: '', value: '' }}
           value={value}
           setValue={setValue}
           reset={true}
@@ -206,11 +208,12 @@ const Major = () => {
         <Dropdown
           length="long"
           placeholder="전공명"
-          data={_majsornm}
-          value={value}
-          setValue={setValue}
-          reset={true}
-          search={true}
+          data={allMajorList}
+          propertyName={{ key: 'imajor', value: 'majorName' }}
+          value={imajor}
+          setValue={setImajor}
+          reset
+          search
         />
       </SearchBar>
       <CommonButton btnType="page" value="전공추가" onClick={() => alert('hi')} />
