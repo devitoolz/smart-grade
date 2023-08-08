@@ -25,7 +25,7 @@ export const TableArea = styled.div`
     .table_body {
       border-top: 2px solid #1363df;
       border-bottom: 2px solid #1363df;
-      max-height: 570px;
+      /* max-height: 570px; */
       .table_body_item {
         border-bottom: 1px solid var(--table-border-color);
         div {
@@ -157,6 +157,7 @@ export const ModalStyle = styled.div`
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
+      overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
       height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '62%')};
