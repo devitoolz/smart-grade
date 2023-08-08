@@ -38,8 +38,9 @@ const Grade = () => {
     { title: '등급', width: 1 },
   ];
   // 데이터통신 - 학생 상세정보 불러오기
-  const handleGetStudentInfo = async () => {
+  const handleGetStudentInfo = async _info => {
     alert('학생 상세정보 불러올 예정');
+    console.log(_info);
   };
 
   // 쿼리
@@ -77,16 +78,15 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {!data?.voList?.length ? (
-        <NoDatas />
-      ) : (
-        <>
-          <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo()}>
-            {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
-            {data?.voList[0].name}({data?.voList[0].studentNum})
-          </CommonButton>
-        </>
-      )}
+      {/* {!data?.voList?.length ? <NoDatas /> : <></>} */}
+      <CommonButton
+        btnType="page"
+        value="학생상세정보"
+        onClick={() => handleGetStudentInfo(data?.voList[0]?.professorName)}
+      >
+        {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
+        {data?.voList[0]?.name} {data?.voList[0]?.studentNum}
+      </CommonButton>
       <Table
         header={tableHeader}
         data={data?.voList}
