@@ -86,6 +86,11 @@ export const NoData = styled.div`
     line-height: 180px;
   }
 `;
+export const NoDatas = styled.div`
+  width: 100%;
+  height: calc(37px + 6vh);
+  background-color: transparent;
+`;
 
 // textarea
 export const TextArea = styled.textarea`

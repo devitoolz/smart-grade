@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { TableArea, NoData } from '../../styles/MyStyleCSS';
+import { TableArea, NoDatas } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -113,7 +113,8 @@ const Grade = () => {
   // 데이터통신 - 학생성적 불러오기
   const [studentData, setStudentData] = useState([]);
   const handleGetStudentGrade = async _setFunc => {
-    await getStudentGrade(_setFunc);
+    // await getStudentGrade(_setFunc);
+    alert('학생 상세정보 불러올 예정');
   };
   // useEffect(() => {
   //   handleGetStudentGrade();
@@ -157,10 +158,7 @@ const Grade = () => {
       </SearchBar>
 
       {!data?.voList?.length ? (
-        <NoData>
-          <p>{randomValue}</p>
-          <p>검색해주세요</p>
-        </NoData>
+        <NoDatas />
       ) : (
         <>
           <CommonButton
@@ -171,29 +169,29 @@ const Grade = () => {
             {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
             {data?.voList[0].name}({data?.voList[0].studentNum})
           </CommonButton>
-          <Table
-            header={tableHeader}
-            data={data?.voList}
-            hasPage={true}
-            maxPage={data?.page.maxPage}
-            pending={pending}
-          >
-            {data?.voList.map((item, idx) => {
-              return (
-                <div key={idx}>
-                  <div>{item.istudent}</div>
-                  <div>{item.name}</div>
-                  <div>{item.ilecture}</div>
-                  <div>{item.imajor}</div>
-                  <div>{item.studentNum}</div>
-                  <div>{item.score}</div>
-                  <div>{item.rating}</div>
-                </div>
-              );
-            })}
-          </Table>
         </>
       )}
+      <Table
+        header={tableHeader}
+        data={data?.voList}
+        hasPage={true}
+        maxPage={data?.page.maxPage}
+        pending={pending}
+      >
+        {data?.voList.map((item, idx) => {
+          return (
+            <div key={idx}>
+              <div>{item.istudent}</div>
+              <div>{item.name}</div>
+              <div>{item.ilecture}</div>
+              <div>{item.imajor}</div>
+              <div>{item.studentNum}</div>
+              <div>{item.score}</div>
+              <div>{item.rating}</div>
+            </div>
+          );
+        })}
+      </Table>
     </>
   );
 };
