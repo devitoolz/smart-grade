@@ -251,6 +251,36 @@ const Lecture = () => {
                     </div>
                   );
                 })}
+                {contents.map((item, idx) => {
+                  return (
+                    <div className="table_body_item" key={item.istudent}>
+                      <div>{idx + 1}</div>
+                      <div>{item.nm}</div>
+                      <div>{item.majorNm}</div>
+                      <div>{item.attendance}</div>
+                      <div>{item.minEx}</div>
+                      <div>{item.finEx}</div>
+                      <div>{item.totalScore}</div>
+                      <div>{item.avg}</div>
+                      <div>{item.gread}</div>
+                    </div>
+                  );
+                })}
+                {contents.map((item, idx) => {
+                  return (
+                    <div className="table_body_item" key={item.istudent}>
+                      <div>{idx + 1}</div>
+                      <div>{item.nm}</div>
+                      <div>{item.majorNm}</div>
+                      <div>{item.attendance}</div>
+                      <div>{item.minEx}</div>
+                      <div>{item.finEx}</div>
+                      <div>{item.totalScore}</div>
+                      <div>{item.avg}</div>
+                      <div>{item.gread}</div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </TableArea>
