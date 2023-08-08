@@ -79,6 +79,7 @@ const Approval = () => {
         break;
     }
     setReason('');
+    window.location.reload();
   };
   const handleModalCancel = () => {
     console.log(contents);
