@@ -41,6 +41,7 @@ const CommonModal = ({
               setDisplay(false);
             }}
             btnType="modal"
+            disabled={modalSize === 'big' ? true : false}
           />
           <CommonButton
             value="취소"
@@ -49,6 +50,7 @@ const CommonModal = ({
               setDisplay(false);
             }}
             btnType="modal"
+            disabled={modalSize === 'big' ? true : false}
           />
         </div>
       </div>

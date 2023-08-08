@@ -1,42 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { TableArea, NoData } from '../../styles/MyStyleCSS';
+import React, { useState } from 'react';
+import { NoDatas } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import CommonButton from '../../components/CommonButton';
-import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
 import { getStudentGrade } from '../../api/fetch';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Grade = () => {
-  const arr = [
-    {
-      aa: '1',
-      bb: '1',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-  ];
-  const array = [
-    `(o^^)o`,
-    `(^-^*)`,
-    `(·_·)`,
-    `(^_^)b`,
-    `(≥o≤)`,
-    `(;-;)`,
-    `(>_<)`,
-    `(='X'=)`,
-    `(·.·)`,
-    `(^Д^)/`,
-    `(o_o)/`,
-    `(o^^)o`,
-    `(˚Δ˚)b'`,
-  ];
-  let randomValue = array[Math.floor(Math.random() * array.length)];
-
   // 드롭다운
   const semesterData = [
     { id: 1, title: '1학기' },
@@ -50,7 +22,7 @@ const Grade = () => {
   ];
   const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
-  const [studentId, setStudentId] = useState('');
+  const [studentNum, setStudentNum] = useState('');
 
   // table
   const tableHeader = [
@@ -62,69 +34,20 @@ const Grade = () => {
     { title: '성적', width: 1 },
     { title: '등급', width: 1 },
   ];
-  const tableData = [
-    {
-      aa: '1',
-      bb: '1',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '기술과학윤리',
-      dd: '이그린',
-      ee: 2,
-      ff: 94,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '3',
-      cc: '생명윤리',
-      dd: '이그린',
-      ee: 3,
-      ff: 97,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '4',
-      cc: '생활속의물리',
-      dd: '이그린',
-      ee: 3,
-      ff: 100,
-      gg: 'A+',
-    },
-    {
-      aa: '1',
-      bb: '2',
-      cc: '데이터베이스',
-      dd: '이그린',
-      ee: 3,
-      ff: 96,
-      gg: 'A+',
-    },
-  ];
-  // 데이터통신 - 학생성적 불러오기
-  const [studentData, setStudentData] = useState([]);
-  const handleGetStudentGrade = async _setFunc => {
-    await getStudentGrade(_setFunc);
+  // 데이터통신 - 학생 상세정보 불러오기
+  const handleGetStudentInfo = async () => {
+    alert('학생 상세정보 불러올 예정');
   };
-  // useEffect(() => {
-  //   handleGetStudentGrade();
-  // }, []);
 
   // 쿼리
-  const queries = { semester, grade, studentId };
-  const url = '';
+  const [click, setClick] = useState(false);
+  const queries = { semester, grade, studentNum };
+  const url = '/api/admin/grade';
+  const { data, pending } = useQuerySearch(url, click);
 
   return (
     <>
-      <SearchBar queries={queries} url={url} setPage={true}>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           length="short"
           placeholder="학기"
@@ -145,40 +68,42 @@ const Grade = () => {
           length="middle"
           type="number"
           placeholder="학번"
-          value={studentId}
-          setValue={setStudentId}
+          value={studentNum}
+          setValue={setStudentNum}
         />
       </SearchBar>
-      <CommonButton
-        btnType="page"
-        value="학생상세정보"
-        onClick={() => handleGetStudentGrade(setStudentData)}
-      />
 
-      {!studentData.length ? (
-        <NoData>
-          <div>{randomValue}</div>
-          <p>검색해주세요</p>
-        </NoData>
+      {!data?.voList?.length ? (
+        <NoDatas />
       ) : (
         <>
-          <Table header={tableHeader} data={studentData} hasPage={true} maxPage={5}>
-            {studentData.map((item, idx) => {
-              return (
-                <div key={idx}>
-                  <div>{item.aa}</div>
-                  <div>{item.bb}</div>
-                  <div>{item.ilecture}</div>
-                  <div>{item.dd}</div>
-                  <div>{item.ee}</div>
-                  <div>{item.ff}</div>
-                  <div>{item.gg}</div>
-                </div>
-              );
-            })}
-          </Table>
+          <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo()}>
+            {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
+            {data?.voList[0].name}({data?.voList[0].studentNum})
+          </CommonButton>
         </>
       )}
+      <Table
+        header={tableHeader}
+        data={data?.voList}
+        hasPage={true}
+        maxPage={data?.page.maxPage}
+        pending={pending}
+      >
+        {data?.voList.map((item, idx) => {
+          return (
+            <div key={idx}>
+              <div>{item.istudent}</div>
+              <div>{item.name}</div>
+              <div>{item.ilecture}</div>
+              <div>{item.imajor}</div>
+              <div>{item.studentNum}</div>
+              <div>{item.score}</div>
+              <div>{item.rating}</div>
+            </div>
+          );
+        })}
+      </Table>
     </>
   );
 };

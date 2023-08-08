@@ -2,29 +2,48 @@ import styled from '@emotion/styled';
 
 export const TableArea = styled.div`
   width: 100%;
-  table {
+  .table {
     width: 100%;
     border-top: 2px solid #1363df;
     text-align: center;
     border-collapse: collapse;
-    thead {
+    .table_head,
+    .table_body > div {
+      display: grid;
+      grid-template-columns: 0.8fr 1.5fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr;
+    }
+    .table_head {
       height: 54px;
       background-color: #dff6ff;
-    }
-    tbody {
-      tr {
-        height: 50px;
+      div {
+        height: 54px;
+        line-height: 54px;
+        font-weight: 700;
+        border-right: 1px solid #dae8ff;
       }
     }
-    th,
-    td {
-      border: 1px solid #dae8ff;
-    }
-    &.notice {
-      th,
-      td {
-        border: 1px solid var(--main-border-color);
+    .table_body {
+      border-top: 2px solid #1363df;
+      border-bottom: 2px solid #1363df;
+      max-height: 570px;
+      .table_body_item {
+        border-bottom: 1px solid var(--table-border-color);
+        div {
+          padding: 0 5px;
+          text-align: center;
+          height: 42px;
+          line-height: 42px;
+          border-right: 1px solid var(--table-border-color);
+        }
       }
+      /* 스크롤바 */
+      overflow-y: auto;
+      /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* 인터넷 익스플로러 */
+      scrollbar-width: none; /* 파이어폭스 */
     }
   }
 `;
@@ -52,16 +71,25 @@ export const LectureContainer = styled.div`
 `;
 
 export const NoData = styled.div`
+  width: 100%;
+  height: calc(37px + 6vh + 500px);
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 180px;
+  gap: 60px;
+  font-size: 80px;
+  line-height: 80px;
   color: gray;
-  p {
-    margin-top: 20px;
-    font-size: 80px;
+  p:first-of-type {
+    font-size: 180px;
+    line-height: 180px;
   }
+`;
+export const NoDatas = styled.div`
+  width: 100%;
+  height: calc(37px + 6vh);
+  background-color: transparent;
 `;
 
 // textarea
@@ -95,10 +123,11 @@ export const ModalStyle = styled.div`
   padding: 20px;
   background-color: rgba(0, 23, 60, 0.7);
   z-index: 999;
+  overflow: hidden;
   .modal-box {
-    width: ${({ modalSize }) => (modalSize === 'small' ? '720px' : '1136px')};
-    min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')};
-    height: ${({ modalSize }) => (modalSize === 'small' ? '420px' : '72%')};
+    width: ${({ modalSize }) => (modalSize === 'small' ? '520px' : '1136px')};
+    /* min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')}; */
+    height: ${({ modalSize }) => (modalSize === 'small' ? '320px' : '72%')};
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -107,7 +136,7 @@ export const ModalStyle = styled.div`
     .modal-title-small,
     .modal-title {
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '12%' : '18%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '18%')};
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -128,37 +157,21 @@ export const ModalStyle = styled.div`
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
+      padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '60%')};
-      display: flex;
-      justify-content: ${({ modalSize }) => (modalSize === 'middle' ? 'space-around' : 'center')};
-      align-items: center;
-      flex-direction: column;
-      font-size: 24px;
+      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '62%')};
+      ${({ modalSize }) =>
+        modalSize === 'small'
+          ? `display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;`
+          : null};
+      font-size: ${({ modalSize }) => (modalSize === 'big' ? null : '24px')};
 
       & > * {
         line-height: 2;
       }
-      /* ${({ modalSize }) => (modalSize === 'middle' ? 'row' : 'column')}; */
-      /* & > div {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        padding: 0 5%;
-        &:first-of-type {
-          border-bottom: 1px solid #dae8ff;
-        }
-        label {
-          flex-basis: 32%;
-          font-size: 20px;
-        }
-        label + div {
-          flex-basis: 100%;
-          margin: 0 10px;
-        }
-      } */
     }
     .modal-footer {
       display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'flex')};
@@ -174,8 +187,8 @@ export const ModalStyle = styled.div`
         `
           : ''}; */
       button {
-        margin: 12px 18px;
-        padding: 8px 32px;
+        margin: 6px 20px;
+        padding: 7px 24px;
       }
     }
   }
@@ -221,7 +234,7 @@ export const CommonBtn = styled.button`
 `;
 const btnContainer = `
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 3vh;
 `;
@@ -230,6 +243,9 @@ const btnBox = `
 `;
 export const CommonBtnArea = styled.div`
   ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
+  .student-info {
+    font-size: 15px;
+  }
   & > button {
     display: table-cell;
     vertical-align: middle;
