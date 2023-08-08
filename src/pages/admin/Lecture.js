@@ -23,8 +23,7 @@ const Lecture = () => {
   const [maxPage, setMaxPage] = useState(0);
 
   const handlePageBtnClick = () => {
-    console.log('btn click');
-    navigate(`${pathname}/approval`);
+    navigate(`${pathname}/approval?procedures=-2`);
   };
 
   // 강의상태
