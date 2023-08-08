@@ -9,6 +9,7 @@ import {
   Row,
   TopLayout,
   MiddleLayout,
+  LectureTableLayout,
 } from '../../styles/UserStyle';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -22,6 +23,7 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons';
 const UserDetail = () => {
   const navigate = useNavigate();
   const [userDetail, setUserDetail] = useState(null);
+  const [lectureList, setLectureList] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
@@ -45,11 +47,11 @@ const UserDetail = () => {
     try {
       const { data } = await api.get(`/api/admin/${role}/${id}`);
       console.log(data);
-      setUserDetail(data);
-      setName(data.name);
-      setMajor(data.imajor);
+      setUserDetail(data.profile);
+      setName(data.profile.name);
+      setMajor(data.profile.imajor);
 
-      dispatch(main.setTitle(`${data.name} ${roleKor[role]} 정보`));
+      dispatch(main.setTitle(`${data.profile.name} ${roleKor[role]} 정보`));
     } catch (error) {
       console.log(error);
     }
@@ -91,6 +93,55 @@ const UserDetail = () => {
       </TopLayout>
       <MiddleLayout>
         <ImageUpload />
+        <LectureTableLayout>
+          <div className="lecture-table-header">
+            <div>강의명</div>
+            <div>강의 기간</div>
+            <div>강의 시간</div>
+          </div>
+          <div className="lecture-table-body">
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+            <div className="lecture-table-content">
+              <div>강의명</div>
+              <div>강의 기간</div>
+              <div>강의 시간</div>
+            </div>
+          </div>
+        </LectureTableLayout>
       </MiddleLayout>
       <NoticeContainer right>
         <span>* 이름과 전공은 임의로 수정이 불가능합니다.</span>
@@ -156,7 +207,7 @@ const UserDetail = () => {
             <div>학년</div>
             <div>{userDetail?.grade}</div>
             <div>이수학점</div>
-            <div></div>
+            <div>{userDetail?.score}</div>
           </Row>
         )}
         <Row col={2}>

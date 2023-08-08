@@ -16,6 +16,7 @@ const MiddleLayout = styled.div`
   display: flex;
   padding-top: 20px;
   padding-bottom: 20px;
+  gap: 40px;
 `;
 
 const NoticeContainer = styled.div`
@@ -32,7 +33,8 @@ const NoticeContainer = styled.div`
 
 const ImageUpload = styled.div`
   width: 250px;
-  aspect-ratio: 3 / 4;
+  min-width: 250px;
+  height: 339px;
   border: 1px dashed var(--black);
   border-radius: 15px;
 `;
@@ -56,6 +58,55 @@ const Button = styled.span`
   color: var(--white);
   &:last-of-type {
     background: var(--negative-color);
+  }
+`;
+
+const LectureTableLayout = styled.div`
+  width: 100%;
+  height: 339px;
+  overflow: hidden;
+  border: 1px solid var(--table-border-color);
+  display: flex;
+  flex-direction: column;
+  div.lecture-table-header {
+    border-bottom: 1px solid var(--table-border-color);
+    display: grid;
+    grid-template-columns: 3fr 2fr 2fr;
+    background: var(--main-bg-color);
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      font-size: 16px;
+      font-weight: bold;
+      border-right: 1px solid var(--table-border-color);
+      &:last-of-type {
+        border-right: none;
+      }
+    }
+  }
+  div.lecture-table-body {
+    font-size: 16px;
+    overflow: auto;
+    > div.lecture-table-content {
+      display: grid;
+      grid-template-columns: 3fr 2fr 2fr;
+      border-bottom: 1px solid var(--table-border-color);
+      &:last-of-type {
+        border-bottom: none;
+      }
+      > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 40px;
+        border-right: 1px solid var(--table-border-color);
+        &:last-of-type {
+          border-right: none;
+        }
+      }
+    }
   }
 `;
 
@@ -132,6 +183,7 @@ export {
   ImageUpload,
   ButtonContainer,
   Button,
+  LectureTableLayout,
   FormTable,
   Row,
 };
