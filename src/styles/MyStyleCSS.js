@@ -229,7 +229,7 @@ export const CommonBtn = styled.button`
 `;
 const btnContainer = `
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   padding: 3vh;
 `;
@@ -238,6 +238,9 @@ const btnBox = `
 `;
 export const CommonBtnArea = styled.div`
   ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
+  .student-info {
+    font-size: 15px;
+  }
   & > button {
     display: table-cell;
     vertical-align: middle;

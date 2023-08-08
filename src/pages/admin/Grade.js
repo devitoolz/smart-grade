@@ -167,7 +167,10 @@ const Grade = () => {
             btnType="page"
             value="학생상세정보"
             onClick={() => handleGetStudentGrade(setStudentData)}
-          />
+          >
+            {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
+            {data?.voList[0].name}({data?.voList[0].studentNum})
+          </CommonButton>
           <Table
             header={tableHeader}
             data={data?.voList}
