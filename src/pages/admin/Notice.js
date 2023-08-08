@@ -7,6 +7,7 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import CommonModal from '../../components/CommonModal';
 
 const Notice = () => {
   ////SearchBar////
@@ -22,25 +23,33 @@ const Notice = () => {
     setNoticeTitle(e.target.value);
   };
 
+  //삭제모달 창 활성화 여부
+  const [deleteModalShow, setDeleteModalShow] = useState(false);
+
+  //모달 창 오픈 여부
+  const deleteModalOpen = () => {
+    setDeleteModalShow(true);
+  };
+
   //notice Data 담는 list
   const [noticeData, setNoticeData] = useState([]);
 
   //api test
-  const getNoticeList = async () => {
-    try {
-      const res = await axios.get('/api/board');
-      const result = res.data;
-      console.log('결과를 보여줘라.', result);
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getNoticeList = async () => {
+  //   try {
+  //     const res = await axios.get('/api/board');
+  //     const result = res.data;
+  //     console.log('결과를 보여줘라.', result);
+  //     return result;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
   //api hook test
-  const url = `api/board`;
-  const { data, pending } = useQuerySearch(url, click);
-  console.log(data?.list);
+  // const url = '/api/board';
+  // const { data, pending } = useQuerySearch(url, click);
+  // console.log(data);
 
   //notice test list
   // const getNoticeListLoad = async () => {
@@ -52,9 +61,9 @@ const Notice = () => {
   //   }
   // };
 
-  useEffect(() => {
-    getNoticeList();
-  }, []);
+  // useEffect(() => {
+  //   getNoticeList();
+  // }, []);
 
   ////Table////
   //table header
@@ -62,14 +71,14 @@ const Notice = () => {
     { title: 'NO.', width: '1' },
     { title: '제목', width: '4' },
     { title: 'DATE', width: '2' },
-    { title: '조회수', width: '1' },
     { title: '관리', width: '3' },
+    { title: '조회수', width: '1' },
   ];
 
-  // const data = [
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  // ];
+  const data = [
+    { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
+    { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
+  ];
   const navigate = useNavigate();
 
   return (
@@ -93,18 +102,28 @@ const Notice = () => {
           navigate('/admin/home/notice/write');
         }}
       />
-      <Table header={tableHeader} data={data?.list} hasPage={true} maxPage={5} pending={pending}>
-        {data.list?.map(item => {
+      {deleteModalShow === true ? (
+        <CommonModal
+          setDisplay={setDeleteModalShow}
+          modalSize="small"
+          modalTitle="게시글 삭제"
+          handleModalOk={() => setDeleteModalShow(false)}
+          handleModalCancel={() => setDeleteModalShow(false)}
+        >
+          <p>게시글을 삭제하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
+      <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
+        {data.map(item => {
           return (
             <div key={item.iboard}>
               <div>{item.iboard}</div>
               <div>{item.title}</div>
               <div>{item.createdAt}</div>
-              <div>{item.boardView}</div>
               <div>
-                <CommonButton />
-                <CommonButton />
+                <CommonButton btnType="Table" vlaue="삭제" onClick={deleteModalOpen} />
               </div>
+              <div>{item.boardView}</div>
             </div>
           );
         })}
