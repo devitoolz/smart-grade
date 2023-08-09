@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { BtnControl } from '../../styles/LectureRoomCss';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
@@ -23,10 +22,17 @@ const Notice = () => {
     setNoticeTitle(e.target.value);
   };
 
+  //수정모달 창 활성화 여부
+  const [changeModalshow, setChangeModalShow] = useState(false);
   //삭제모달 창 활성화 여부
   const [deleteModalShow, setDeleteModalShow] = useState(false);
 
-  //모달 창 오픈 여부
+  //수정모달 창 오픈 여부
+  const changeModalOpen = () => {
+    setChangeModalShow(true);
+  };
+
+  //삭제모달 창 오픈 여부
   const deleteModalOpen = () => {
     setDeleteModalShow(true);
   };
@@ -102,6 +108,17 @@ const Notice = () => {
           navigate('/admin/home/notice/write');
         }}
       />
+      {changeModalshow === true ? (
+        <CommonModal
+          setDisplay={setChangeModalShow}
+          modalSize="small"
+          modalTitle="게시글 수정"
+          handleModalOk={() => setChangeModalShow(false)}
+          handleModalCancel={() => setChangeModalShow(false)}
+        >
+          <p>게시글을 수정하시겠습니까?</p>
+        </CommonModal>
+      ) : null}
       {deleteModalShow === true ? (
         <CommonModal
           setDisplay={setDeleteModalShow}
@@ -121,7 +138,9 @@ const Notice = () => {
               <div>{item.title}</div>
               <div>{item.createdAt}</div>
               <div>
-                <CommonButton btnType="Table" vlaue="삭제" onClick={deleteModalOpen} />
+                <CommonButton color="blue" btnType="table" value="수정" onClick={changeModalOpen} />
+                <CommonButton color="blue" btnType="table" value="보기" onClick={deleteModalOpen} />
+                <CommonButton color="red" btnType="table" value="삭제" onClick={deleteModalOpen} />
               </div>
               <div>{item.boardView}</div>
             </div>
