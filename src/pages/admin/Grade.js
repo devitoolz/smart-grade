@@ -78,7 +78,7 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {data?.avgVo1 === null ? (
+      {data?.avgVo1 === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
