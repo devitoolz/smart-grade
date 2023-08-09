@@ -85,16 +85,20 @@ const Grade = () => {
         onClick={() => handleGetStudentInfo(data?.voList[0]?.professorName)}
       >
         {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
-        {data?.voList[0]?.name} {data?.voList[0]?.studentNum}
+        {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
+        {data?.voList[0]?.professorName} {data?.voList[0]?.lectureName}
+        {Boolean(data?.voList.length) || (
+          <span style={{ color: 'red' }}>* 학번 입력은 필수입니다</span>
+        )}
       </CommonButton>
       <Table
         header={tableHeader}
-        data={data?.voList}
+        data={data?.voList || Array(10).fill('')}
         hasPage={true}
         maxPage={data?.page.maxPage}
         pending={pending}
       >
-        {data?.voList.map((item, idx) => {
+        {(data?.voList || Array(10).fill('')).map((item, idx) => {
           return (
             <div key={idx}>
               <div>{item.grade}</div>
