@@ -7,6 +7,7 @@ const store = configureStore({
     main: mainSlice.reducer,
     major: majorSlice.reducer,
   },
+  middleware: getDefaultMiddleware => getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export default store;

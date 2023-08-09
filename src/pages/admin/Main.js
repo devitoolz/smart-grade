@@ -69,7 +69,7 @@ const Main = () => {
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
     const title = menuData[mainPath].submenu[subPath];
-    if (title && !paramPath) dispatch(main.setTitle(title));
+    if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
   // TODO: 추후 axios GET 으로 변경 예정

@@ -43,7 +43,7 @@ const CreateUser = () => {
       students: '학생',
     };
 
-    dispatch(main.setTitle(`${role[state]} 계정 생성`));
+    dispatch(main.setTitle(<span>{role[state]} 계정 생성</span>));
   }, []);
 
   const handleCreate = async () => {

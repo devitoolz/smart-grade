@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleExclamation, faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faCircleExclamation, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -52,7 +52,19 @@ const UserDetail = () => {
       setName(data.profile.name);
       setMajor(data.profile.imajor);
 
-      dispatch(main.setTitle(`${data.profile.name} ${roleKor[role]} 정보`));
+      const title = (
+        <>
+          <span className="breadcrumb" onClick={() => navigate(`/admin/user/${role}`)}>
+            {roleKor[role]} 계정 관리
+          </span>
+          <FontAwesomeIcon icon={faChevronRight} />
+          <span>
+            {data.profile.name} {roleKor[role]} 정보
+          </span>
+        </>
+      );
+
+      dispatch(main.setTitle(title));
     } catch (error) {
       console.log(error);
     }
@@ -66,6 +78,19 @@ const UserDetail = () => {
     // TODO: API 만들어지면 정보 수정 put method 추가
     setUserDetail({ ...userDetail, name, major });
     setDisabled(true);
+  };
+
+  const handleRemove = async () => {
+    try {
+      alert(
+        `${userDetail?.name} ${roleKor[role]}${
+          (role === 'professor' && '가 퇴직') || (role === 'students' && '이 퇴학')
+        } 처리되었습니다.`
+      );
+      navigate(`/admin/user/${role}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleCancel = () => {
@@ -87,8 +112,8 @@ const UserDetail = () => {
           <Button onClick={disabled ? () => setDisabled(false) : handleEdit}>
             {disabled ? '수정' : '저장'}
           </Button>
-          <Button onClick={disabled ? () => navigate(-1) : handleCancel}>
-            {disabled ? '닫기' : '취소'}
+          <Button negative onClick={disabled ? handleRemove : handleCancel}>
+            {disabled ? '삭제' : '취소'}
           </Button>
         </ButtonContainer>
       </TopLayout>

@@ -54,11 +54,8 @@ const Button = styled.span`
   border-radius: 5px;
   padding: 0 25px;
   height: 35px;
-  background: var(--primary-color);
+  background: ${({ negative }) => (negative ? 'var(--negative-color)' : 'var(--primary-color)')};
   color: var(--white);
-  &:last-of-type {
-    background: var(--negative-color);
-  }
 `;
 
 const LectureTableLayout = styled.div`
