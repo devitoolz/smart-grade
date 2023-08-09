@@ -23,11 +23,14 @@ const Grade = () => {
   const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
   const [studentNum, setStudentNum] = useState('');
+  const studentNumChange = e => {
+    setStudentNum(e.target.value);
+  };
 
   // table
   const tableHeader = [
-    { title: '학기', width: 1 },
     { title: '학년', width: 1 },
+    { title: '학기', width: 1 },
     { title: '강의명', width: 3 },
     { title: '담당교수', width: 2 },
     { title: '학점', width: 1 },
@@ -35,8 +38,9 @@ const Grade = () => {
     { title: '등급', width: 1 },
   ];
   // 데이터통신 - 학생 상세정보 불러오기
-  const handleGetStudentInfo = async () => {
+  const handleGetStudentInfo = async _info => {
     alert('학생 상세정보 불러올 예정');
+    console.log(_info);
   };
 
   // 쿼리
@@ -69,35 +73,39 @@ const Grade = () => {
           type="number"
           placeholder="학번"
           value={studentNum}
-          setValue={setStudentNum}
+          setValue={studentNumChange}
+          reset={setStudentNum}
         />
       </SearchBar>
 
-      {!data?.voList?.length ? (
-        <NoDatas />
-      ) : (
-        <>
-          <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo()}>
-            {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
-            {data?.voList[0].name}({data?.voList[0].studentNum})
-          </CommonButton>
-        </>
-      )}
+      {/* {!data?.voList?.length ? <NoDatas /> : <></>} */}
+      <CommonButton
+        btnType="page"
+        value="학생상세정보"
+        onClick={() => handleGetStudentInfo(data?.voList[0]?.professorName)}
+      >
+        {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
+        {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
+        {data?.voList[0]?.professorName} {data?.voList[0]?.lectureName}
+        {Boolean(data?.voList.length) || (
+          <span style={{ color: 'red' }}>* 학번 입력은 필수입니다</span>
+        )}
+      </CommonButton>
       <Table
         header={tableHeader}
-        data={data?.voList}
+        data={data?.voList || Array(10).fill('')}
         hasPage={true}
         maxPage={data?.page.maxPage}
         pending={pending}
       >
-        {data?.voList.map((item, idx) => {
+        {(data?.voList || Array(10).fill('')).map((item, idx) => {
           return (
             <div key={idx}>
-              <div>{item.istudent}</div>
-              <div>{item.name}</div>
-              <div>{item.ilecture}</div>
-              <div>{item.imajor}</div>
-              <div>{item.studentNum}</div>
+              <div>{item.grade}</div>
+              <div>{item.semester}</div>
+              <div>{item.lectureName}</div>
+              <div>{item.professorName}</div>
+              <div>{item.lectureScore}</div>
               <div>{item.score}</div>
               <div>{item.rating}</div>
             </div>

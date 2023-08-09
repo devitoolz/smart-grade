@@ -157,6 +157,7 @@ export const ModalStyle = styled.div`
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
+      overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
       height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '62%')};

@@ -72,6 +72,9 @@ const Lecture = () => {
     },
   ];
   const [nm, setProfessorName] = useState('');
+  const professorNameChange = e => {
+    setProfessorName(e.target.value);
+  };
 
   // table
   const tableHeader = [
@@ -86,7 +89,7 @@ const Lecture = () => {
     { title: '강의 시간', width: 1.5 },
     { title: '정원', width: 1 },
     { title: '상태', width: 1 },
-    { title: '상세', width: 1.5 },
+    { title: '상세보기', width: 1.5 },
   ];
   // 쿼리
   const [click, setClick] = useState(false);
@@ -156,7 +159,8 @@ const Lecture = () => {
           type="string"
           placeholder="교수명"
           value={nm}
-          setValue={setProfessorName}
+          setValue={professorNameChange}
+          reset={setProfessorName}
         />
       </SearchBar>
 
@@ -195,7 +199,7 @@ const Lecture = () => {
                 <CommonButton
                   btnType="table"
                   color="gray"
-                  value="상세보기"
+                  value="확인"
                   onClick={() => handlegetStudentList(item.lectureNm, item.ilecture)}
                 />
               </div>
