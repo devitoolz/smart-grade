@@ -47,7 +47,8 @@ const Grade = () => {
   const [click, setClick] = useState(false);
   const queries = { semester, grade, studentNum };
   const url = '/api/admin/grade';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
+  console.log(error);
 
   return (
     <>
