@@ -10,6 +10,7 @@ import { getStudentInfo } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
 import { useNavigate } from 'react-router-dom';
+import CommonProgressBar from '../../components/CommonProgressBar';
 
 const Grade = () => {
   const navigate = useNavigate();
@@ -119,6 +120,22 @@ const Grade = () => {
           modalTitle={`${data.avgVo1.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
+          <div style={{ border: '1px solid red' }}>
+            학기 평점 {data.avgVo1.avgRating} <br />
+            학기 평균점수{data.avgVo1.avgScore} <br />
+            학년 : {data.avgVo1.grade} <br />
+            학기 : {data.avgVo1.semester} <br />
+          </div>
+          <div style={{ border: '1px solid red' }}>
+            학기 평점 {data.avgVo2.avgRating} <br />
+            학기 평균점수{data.avgVo2.avgScore} <br />
+            학년 : {data.avgVo2.grade} <br />
+            학기 : {data.avgVo2.semester} <br />
+          </div>
+          <CommonProgressBar
+            maxScore={studentDetail.graduationScore}
+            nowScore={studentDetail.scoreStudent}
+          />
           <FormTable>
             <Row col={2}>
               <div>이름</div>

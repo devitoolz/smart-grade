@@ -1,5 +1,13 @@
 import styled from '@emotion/styled';
 
+export const ScoreProgressBar = styled.div`
+  width: 80%;
+  height: 5px;
+  margin: 0 auto;
+  background-color: var(--primary-color);
+  background-color: var(--form-table-even-border-color);
+`;
+
 export const TableArea = styled.div`
   width: 100%;
   .table {
