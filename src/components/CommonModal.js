@@ -44,6 +44,7 @@ const CommonModal = ({
                 handleModalOk();
                 // setCheckModal(true);
                 alert('정상 처리되었습니다');
+                setDisplay(false);
               }}
               btnType="modal"
               disabled={modalSize === 'big' ? true : false}
