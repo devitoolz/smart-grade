@@ -140,12 +140,12 @@ const Grade = () => {
             </Row>
           </FormTable>
           <div>
-            학생이 들은 학점 = scoreStudent <br />
-            졸업에 필요 학점 = graduationScore
+            학생이 들은 학점 = {studentDetail.scoreStudent} <br />
+            졸업에 필요 학점 = {studentDetail.graduationScore}
           </div>
           <CommonButton
             btnType="page"
-            value="상세정보"
+            value="상세정보확인"
             onClick={() => {
               setDisplay(false);
               navigate(`/admin/user/students/${data.avgVo1.istudent}`);
