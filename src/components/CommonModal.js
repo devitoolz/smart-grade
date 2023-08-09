@@ -42,7 +42,8 @@ const CommonModal = ({
               value={modalSize === 'middle' ? '등록' : '확인'}
               onClick={() => {
                 handleModalOk();
-                setCheckModal(true);
+                // setCheckModal(true);
+                alert('정상 처리되었습니다');
               }}
               btnType="modal"
               disabled={modalSize === 'big' ? true : false}
@@ -59,7 +60,7 @@ const CommonModal = ({
           </div>
         </div>
       </ModalStyle>
-      {checkModal && <CommonModalEnd setDisplay={setDisplay} />}
+      {/* {checkModal && <CommonModalEnd setDisplay={setDisplay} />} */}
     </>
   );
 };
