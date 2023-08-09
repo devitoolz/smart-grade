@@ -81,11 +81,7 @@ const Grade = () => {
       {data?.avgVo1 === null || data === null ? (
         <NoDatas />
       ) : (
-        <CommonButton
-          btnType="page"
-          value="학생상세정보"
-          onClick={() => handleGetStudentInfo(data?.avgVo1?.istudent)}
-        >
+        <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo(1)}>
           {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
           {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
           {data?.avgVo1?.name} {data?.avgVo1?.studentNum}
@@ -117,7 +113,7 @@ const Grade = () => {
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`${data.avgVo1.name} 님의 상세정보`}
+          modalTitle={`data.avgVo1.name 님의 상세정보`}
           setDisplay={setDisplay}
         >
           <div
@@ -140,54 +136,18 @@ const Grade = () => {
                   <div>점수</div>
                 </div>
                 <div className="table-body-m">
-                  <div>
-                    <div>{data?.avgVo1?.grade}</div>
-                    <div>{data?.avgVo1?.semester}</div>
-                    <div>{data?.avgVo1?.avgRating}</div>
-                    <div>{data?.avgVo1?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo2?.grade}</div>
-                    <div>{data?.avgVo2?.semester}</div>
-                    <div>{data?.avgVo2?.avgRating}</div>
-                    <div>{data?.avgVo2?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo3?.grade}</div>
-                    <div>{data?.avgVo3?.semester}</div>
-                    <div>{data?.avgVo3?.avgRating}</div>
-                    <div>{data?.avgVo3?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo4?.grade}</div>
-                    <div>{data?.avgVo4?.semester}</div>
-                    <div>{data?.avgVo4?.avgRating}</div>
-                    <div>{data?.avgVo4?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo5?.grade}</div>
-                    <div>{data?.avgVo5?.semester}</div>
-                    <div>{data?.avgVo5?.avgRating}</div>
-                    <div>{data?.avgVo5?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo6?.grade}</div>
-                    <div>{data?.avgVo6?.semester}</div>
-                    <div>{data?.avgVo6?.avgRating}</div>
-                    <div>{data?.avgVo6?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo7?.grade}</div>
-                    <div>{data?.avgVo7?.semester}</div>
-                    <div>{data?.avgVo7?.avgRating}</div>
-                    <div>{data?.avgVo7?.avgScore}</div>
-                  </div>
-                  <div>
-                    <div>{data?.avgVo8?.grade}</div>
-                    <div>{data?.avgVo8?.semester}</div>
-                    <div>{data?.avgVo8?.avgRating}</div>
-                    <div>{data?.avgVo8?.avgScore}</div>
-                  </div>
+                  {Array(8)
+                    .fill()
+                    .map((_, idx) => {
+                      return (
+                        <div key={idx}>
+                          <div>{data?.avgVo[idx]?.grade}</div>
+                          <div>{data?.avgVo[idx]?.semester}</div>
+                          <div>{data?.avgVo[idx]?.avgRating}</div>
+                          <div>{data?.avgVo[idx]?.avgScore}</div>
+                        </div>
+                      );
+                    })}
                 </div>
               </TableMini>
               <CommonProgressBar
