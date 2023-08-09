@@ -55,6 +55,33 @@ export const TableArea = styled.div`
     }
   }
 `;
+export const TableMini = styled.div`
+  width: 50%;
+  text-align: center;
+  border-top: 1px solid var(--title-txt-color);
+  .table-head-m,
+  .table-body-m > div {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    height: 33px;
+    line-height: 33px;
+  }
+  .table-head-m {
+    height: 36px;
+    line-height: 36px;
+  }
+  .table-head-m > div,
+  .table-body-m > div > div {
+    border-right: 1px solid var(--table-border-color);
+    border-bottom: 1px solid var(--table-border-color);
+    &:last-of-type {
+      border-right: none;
+    }
+  }
+  .table-head-m {
+    background-color: var(--main-bg-color);
+  }
+`;
 export const SearchArea = styled.div`
   display: flex;
   justify-content: center;

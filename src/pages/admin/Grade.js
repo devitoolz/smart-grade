@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NoDatas } from '../../styles/MyStyleCSS';
+import { NoDatas, TableMini } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -120,56 +120,114 @@ const Grade = () => {
           modalTitle={`${data.avgVo1.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
-          <div style={{ display: 'flex' }}>
-            <div style={{ border: '1px solid red' }}>
-              학년 : {data.avgVo1.grade} <br />
-              학기 : {data.avgVo1.semester} <br />
-              학기 평점 {data.avgVo1.avgRating} <br />
-              학기 평균점수{data.avgVo1.avgScore} <br />
-            </div>
-            <div style={{ border: '1px solid red' }}>
-              학년 : {data.avgVo2.grade} <br />
-              학기 : {data.avgVo2.semester} <br />
-              학기 평점 {data.avgVo2.avgRating} <br />
-              학기 평균점수{data.avgVo2.avgScore} <br />
-            </div>
-          </div>
-          <CommonProgressBar
-            maxScore={studentDetail.graduationScore}
-            nowScore={studentDetail.scoreStudent}
-          />
-          <FormTable>
-            <Row col={2}>
-              <div>이름</div>
-              <div>{studentDetail.name}</div>
-              <div>학번</div>
-              <div>{studentDetail.studentNum}</div>
-            </Row>
-            <Row col={2}>
-              <div>성별</div>
-              <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
-              <div>학과</div>
-              <div>{studentDetail.majorName}</div>
-            </Row>
-            <Row col={2}>
-              <div>입학년도</div>
-              <div>{studentDetail.createdAt}</div>
-              <div>전화번호</div>
-              <div>{studentDetail.phone}</div>
-            </Row>
-          </FormTable>
-          <div>
-            학생이 들은 학점 = {studentDetail.scoreStudent} <br />
-            졸업에 필요 학점 = {studentDetail.graduationScore}
-          </div>
-          <CommonButton
-            btnType="page"
-            value="상세정보확인"
-            onClick={() => {
-              setDisplay(false);
-              navigate(`/admin/user/students/${data.avgVo1.istudent}`);
+          <div
+            style={{
+              padding: 20,
+              width: '100%',
+              height: '100%',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 20,
             }}
-          />
+          >
+            <div style={{ display: 'flex' }}>
+              <TableMini>
+                <div className="table-head-m">
+                  <div>학년</div>
+                  <div>학기</div>
+                  <div>평점</div>
+                  <div>점수</div>
+                </div>
+                <div className="table-body-m">
+                  <div>
+                    <div>{data?.avgVo1?.grade}</div>
+                    <div>{data?.avgVo1?.semester}</div>
+                    <div>{data?.avgVo1?.avgRating}</div>
+                    <div>{data?.avgVo1?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo2?.grade}</div>
+                    <div>{data?.avgVo2?.semester}</div>
+                    <div>{data?.avgVo2?.avgRating}</div>
+                    <div>{data?.avgVo2?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo3?.grade}</div>
+                    <div>{data?.avgVo3?.semester}</div>
+                    <div>{data?.avgVo3?.avgRating}</div>
+                    <div>{data?.avgVo3?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo4?.grade}</div>
+                    <div>{data?.avgVo4?.semester}</div>
+                    <div>{data?.avgVo4?.avgRating}</div>
+                    <div>{data?.avgVo4?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo5?.grade}</div>
+                    <div>{data?.avgVo5?.semester}</div>
+                    <div>{data?.avgVo5?.avgRating}</div>
+                    <div>{data?.avgVo5?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo6?.grade}</div>
+                    <div>{data?.avgVo6?.semester}</div>
+                    <div>{data?.avgVo6?.avgRating}</div>
+                    <div>{data?.avgVo6?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo7?.grade}</div>
+                    <div>{data?.avgVo7?.semester}</div>
+                    <div>{data?.avgVo7?.avgRating}</div>
+                    <div>{data?.avgVo7?.avgScore}</div>
+                  </div>
+                  <div>
+                    <div>{data?.avgVo8?.grade}</div>
+                    <div>{data?.avgVo8?.semester}</div>
+                    <div>{data?.avgVo8?.avgRating}</div>
+                    <div>{data?.avgVo8?.avgScore}</div>
+                  </div>
+                </div>
+              </TableMini>
+              <CommonProgressBar
+                maxScore={studentDetail.graduationScore}
+                nowScore={studentDetail.scoreStudent}
+              />
+            </div>
+            <FormTable>
+              <Row col={2}>
+                <div>이름</div>
+                <div>{studentDetail.name}</div>
+                <div>학번</div>
+                <div>{studentDetail.studentNum}</div>
+              </Row>
+              <Row col={2}>
+                <div>성별</div>
+                <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
+                <div>학과</div>
+                <div>{studentDetail.majorName}</div>
+              </Row>
+              <Row col={2}>
+                <div>입학년도</div>
+                <div>{studentDetail.createdAt}</div>
+                <div>전화번호</div>
+                <div>{studentDetail.phone}</div>
+              </Row>
+            </FormTable>
+            {/* <div>
+              학생이 들은 학점 = {studentDetail.scoreStudent} <br />
+              졸업에 필요 학점 = {studentDetail.graduationScore}
+            </div> */}
+            <CommonButton
+              btnType="modal"
+              value="상세정보"
+              onClick={() => {
+                setDisplay(false);
+                navigate(`/admin/user/students/${data.avgVo1.istudent}`);
+              }}
+            />
+          </div>
         </CommonModal>
       )}
     </>
