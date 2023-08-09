@@ -60,7 +60,7 @@ const RoleButton = styled.label`
   width: 250px;
   height: 250px;
   border: 1.5px solid
-    ${({ checked }) => (checked ? 'var(--title-txt-color)' : 'var(--login-border-color)')};
+    ${({ checked }) => (checked ? 'var(--title-txt-color)' : 'var(--primary-color)')};
   border-radius: 15px;
   box-shadow: ${({ checked }) => (checked ? '0px 0px 8px -2px var(--title-txt-color)' : null)};
   > div.role-input {
@@ -79,7 +79,7 @@ const RoleButton = styled.label`
       -moz-appearance: none;
       background: var(--form-table-bg-color);
       border: 1px solid
-        ${({ checked }) => (checked ? 'var(--title-txt-color)' : 'var(--login-border-color)')};
+        ${({ checked }) => (checked ? 'var(--title-txt-color)' : 'var(--primary-color)')};
       border-radius: 50%;
       &::after {
         content: '';
@@ -112,24 +112,66 @@ const RoleButton = styled.label`
 `;
 
 const LoginForm = styled.div`
-  height: 200px;
   display: flex;
-  border: 1.5px solid var(--login-border-color);
+  width: 100%;
+  max-width: 850px;
+  height: 200px;
+  border: 1.5px solid var(--primary-color);
   border-radius: 12px;
+  padding: 30px;
+`;
+
+const LoginInput = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 35px;
+  > div {
+    display: flex;
+    align-items: center;
+    > label {
+      width: 30%;
+      font-size: 20px;
+      padding-left: 10px;
+    }
+    > input {
+      width: 100%;
+      height: 40px;
+      font-size: 16px;
+      padding: 0 10px;
+      border: 1px solid var(--primary-color);
+      border-radius: 3px;
+    }
+  }
+`;
+
+const FindLogin = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-left: 50px;
+`;
+
+const FindAccountForm = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--button-bar-txt-color);
+  gap: 5px;
 `;
 
 const LoginBtn = styled.span`
+  border: none;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45px;
-  padding: 0 40px;
-  margin-top: 10px;
+  padding: 30px 40px;
   color: var(--white);
   font-size: 20px;
-  background: var(--login-border-color);
-  border-radius: 5px;
+  background: var(--primary-color);
+  border-radius: 8px;
 `;
 
 const LoginFooter = styled.div`
@@ -168,6 +210,9 @@ export {
   RoleButtonContainer,
   RoleButton,
   LoginForm,
+  LoginInput,
+  FindLogin,
+  FindAccountForm,
   LoginBtn,
   LoginFooter,
 };

@@ -19,7 +19,6 @@ const light = css`
     --white: #fff;
     --black: #000;
     --button-bar-txt-color: #7e7e7e;
-    --login-border-color: #5cb6ff;
   }
 `;
 
@@ -113,8 +112,32 @@ const Title = styled.div`
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
-  padding-left: calc(30px + 320px);
+  padding-left: calc(25px + 320px);
   z-index: 9;
+  > span:first-of-type {
+    padding: 5px;
+    transition: all 0.2s ease-in-out;
+    &.breadcrumb:hover {
+      cursor: pointer;
+      background: var(--main-bg-color);
+      border-radius: 5px;
+    }
+  }
+  > svg {
+    font-size: 20px;
+    padding: 0 10px 0 5px;
+  }
 `;
 
-export { GlobalLayout, MainLayout, Sidebar, MainMenu, MainMenuItem, SubMenu, Content, Title };
+export {
+  light,
+  dark,
+  GlobalLayout,
+  MainLayout,
+  Sidebar,
+  MainMenu,
+  MainMenuItem,
+  SubMenu,
+  Content,
+  Title,
+};
