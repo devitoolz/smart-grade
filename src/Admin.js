@@ -13,6 +13,7 @@ import Grade from './pages/admin/Grade';
 import LectureRoom from './pages/admin/LectureRoom';
 import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
+import TestPage from './pages/admin/TestPage';
 
 const Admin = () => {
   const { pathname } = useLocation();
@@ -38,6 +39,7 @@ const Admin = () => {
         <Route path="bachelor/lecture" element={<Lecture />} />
         <Route path="bachelor/lecture/approval" element={<Approval />} />
         <Route path="bachelor/grade" element={<Grade />} />
+        <Route path="bachelor/grade/test" element={<TestPage />} />
         <Route path="college" element={<Navigate to="lecture-room" />} />
         <Route path="college/lecture-room" element={<LectureRoom />} />
         <Route path="college/major" element={<Major />} />
