@@ -132,6 +132,20 @@ const LectureRoom = () => {
     //setDisplay(false);
   };
 
+  //api delete test
+  const LectureRoomDeleteTest = async _id => {
+    try {
+      const res = await axios.delete(`/api/lectureroom?ilectureRoom={_id}`);
+      const result = res.data;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //삭제모달창 확인 클릭시
+  const deleteModalOk = async _id => {
+    
+  };
+
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
