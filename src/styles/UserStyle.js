@@ -37,6 +37,26 @@ const ImageUpload = styled.div`
   height: 339px;
   border: 1px dashed var(--black);
   border-radius: 15px;
+  > img {
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+  }
+`;
+
+const ProfileImage = styled.div`
+  width: 250px;
+  min-width: 250px;
+  height: 339px;
+  border: 1px solid var(--black);
+  border-radius: 15px;
+  background: gray;
+  overflow: hidden;
+  > img {
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -194,6 +214,7 @@ export {
   MiddleLayout,
   NoticeContainer,
   ImageUpload,
+  ProfileImage,
   ButtonContainer,
   Button,
   LectureTableLayout,

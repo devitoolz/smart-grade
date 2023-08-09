@@ -4,12 +4,12 @@ import {
   ButtonContainer,
   UserLayout,
   FormTable,
-  ImageUpload,
   NoticeContainer,
   Row,
   TopLayout,
   MiddleLayout,
   LectureTableLayout,
+  ProfileImage,
 } from '../../styles/UserStyle';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -19,6 +19,8 @@ import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faCircleExclamation, faPencil } from '@fortawesome/free-solid-svg-icons';
+import professorImg from '../../images/professor.png';
+import studentImg from '../../images/student.png';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -27,7 +29,7 @@ const UserDetail = () => {
   const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
-  const [img, setImg] = useState('');
+  const [img, setImg] = useState(null);
 
   const { allMajorList } = useSelector(state => state.major);
   const { pathname } = useLocation();
@@ -52,9 +54,11 @@ const UserDetail = () => {
       setLectureList(data.lectureList);
       setName(data.profile.name);
       setMajor(data.profile.imajor);
-      setImg(
-        `http://192.168.0.144:5002/imgs/${role}/${data.profile.studentNum}/${data.profile.pic}`
-      );
+      data.profile.pic
+        ? setImg(
+            `http://192.168.0.144:5002/imgs/${role}/${data.profile['studentNum']}/${data.profile.pic}`
+          )
+        : null;
 
       const title = (
         <>
@@ -122,9 +126,14 @@ const UserDetail = () => {
         </ButtonContainer>
       </TopLayout>
       <MiddleLayout>
-        <ImageUpload>
-          <img src={img} alt="image" />
-        </ImageUpload>
+        <ProfileImage>
+          <img
+            src={
+              img ?? ((role === 'professor' && professorImg) || (role === 'students' && studentImg))
+            }
+            alt="image"
+          />
+        </ProfileImage>
         <LectureTableLayout>
           <div className="lecture-table-header">
             <div>강의명</div>
