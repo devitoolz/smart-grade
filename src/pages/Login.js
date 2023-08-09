@@ -2,9 +2,24 @@ import React, { useState } from 'react';
 import Input from '../components/Input';
 import api from '../api/api';
 import { removeCookie, setCookie } from '../modules/cookies';
-import { LoginContent, LoginFooter, LoginHeader, LoginLayout } from '../styles/LoginStyle';
+import {
+  LoginBtn,
+  LoginContent,
+  LoginFooter,
+  LoginForm,
+  LoginHeader,
+  LoginLayout,
+  RoleButtonContainer,
+} from '../styles/LoginStyle';
 import headerLogo from '../images/header_logo.png';
 import footerLogo from '../images/footer_logo.png';
+import professorImg from '../images/professor.png';
+import professorActiveImg from '../images/professor_active.png';
+import studentImg from '../images/student.png';
+import studentActiveImg from '../images/student_active.png';
+import adminImg from '../images/admin.png';
+import adminActiveImg from '../images/admin_active.png';
+import RoleRadioButton from '../components/RoleRadioButton';
 
 const Login = () => {
   // const [id, setId] = useState('');
@@ -48,6 +63,12 @@ const Login = () => {
   //   }
   // };
 
+  const [role, setRole] = useState('ROLE_PROFESSOR');
+
+  const handleRoleChange = e => {
+    setRole(e.target.value);
+  };
+
   return (
     <LoginLayout>
       <LoginHeader>
@@ -57,7 +78,34 @@ const Login = () => {
         </div>
       </LoginHeader>
       <LoginContent>
-        <div>dd</div>
+        <RoleButtonContainer>
+          <RoleRadioButton
+            img={role === 'ROLE_PROFESSOR' ? professorActiveImg : professorImg}
+            imgHeight={130}
+            text="교수님"
+            value="ROLE_PROFESSOR"
+            checked={role === 'ROLE_PROFESSOR'}
+            onChange={handleRoleChange}
+          />
+          <RoleRadioButton
+            img={role === 'ROLE_STUDENT' ? studentActiveImg : studentImg}
+            imgHeight={120}
+            text="재학생 / 졸업생"
+            value="ROLE_STUDENT"
+            checked={role === 'ROLE_STUDENT'}
+            onChange={handleRoleChange}
+          />
+          <RoleRadioButton
+            img={role === 'ROLE_ADMIN' ? adminActiveImg : adminImg}
+            imgHeight={110}
+            text="직원"
+            value="ROLE_ADMIN"
+            checked={role === 'ROLE_ADMIN'}
+            onChange={handleRoleChange}
+          />
+        </RoleButtonContainer>
+        <LoginForm></LoginForm>
+        <LoginBtn>로그인</LoginBtn>
       </LoginContent>
       <LoginFooter>
         <img src={footerLogo} alt="logo" />

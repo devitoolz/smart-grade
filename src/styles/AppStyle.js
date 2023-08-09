@@ -19,6 +19,7 @@ const light = css`
     --white: #fff;
     --black: #000;
     --button-bar-txt-color: #7e7e7e;
+    --login-border-color: #5cb6ff;
   }
 `;
 
