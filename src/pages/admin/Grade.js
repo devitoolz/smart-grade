@@ -49,18 +49,11 @@ const Grade = () => {
   const url = '/api/admin/grade';
   const { data, pending, error } = useQuerySearch(url, click);
   console.log(error);
+  console.log(data);
 
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown
-          length="short"
-          placeholder="학기"
-          data={semesterData}
-          value={semester}
-          setValue={setSemester}
-          reset={true}
-        />
         <Dropdown
           length="short"
           placeholder="학년"
@@ -83,12 +76,12 @@ const Grade = () => {
       <CommonButton
         btnType="page"
         value="학생상세정보"
-        onClick={() => handleGetStudentInfo(data?.voList[0]?.professorName)}
+        onClick={() => handleGetStudentInfo(data?.avgVo1?.istudent)}
       >
         {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
         {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
-        {data?.voList[0]?.professorName} {data?.voList[0]?.lectureName}
-        {Boolean(data?.voList.length) || (
+        {data?.avgVo1?.name} {data?.avgVo1?.studentNum}
+        {Boolean(data?.avgVo1.length) && (
           <span style={{ color: 'red' }}>* 학번 입력은 필수입니다</span>
         )}
       </CommonButton>
@@ -107,7 +100,7 @@ const Grade = () => {
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
               <div>{item.lectureScore}</div>
-              <div>{item.score}</div>
+              <div>{item.totalScore}</div>
               <div>{item.rating}</div>
             </div>
           );
