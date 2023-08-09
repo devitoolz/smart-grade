@@ -135,15 +135,15 @@ const LectureRoom = () => {
   //api delete test
   const LectureRoomDeleteTest = async _id => {
     try {
-      const res = await axios.delete(`/api/lectureroom?ilectureRoom={_id}`);
-      const result = res.data;
+      await axios.delete(`/api/lectureroom?ilectureRoom=${_id}`);
+      getBuildingTestLoad();
     } catch (err) {
       console.log(err);
     }
   };
   //삭제모달창 확인 클릭시
   const deleteModalOk = async _id => {
-    
+    LectureRoomDeleteTest();
   };
 
   return (
@@ -199,7 +199,7 @@ const LectureRoom = () => {
           setDisplay={setDisplay}
           modalSize="small"
           modalTitle="강의실 삭제"
-          handleModalOk={handleModalOk}
+          handleModalOk={deleteModalOk}
           handleModalCancel={handleModalCancel}
         >
           <p>삭제 하시겠습니까?</p>
