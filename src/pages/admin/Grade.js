@@ -9,8 +9,10 @@ import Table from '../../components/Table';
 import { getStudentInfo } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
+import { useNavigate } from 'react-router-dom';
 
 const Grade = () => {
+  const navigate = useNavigate();
   // 드롭다운
   const gradeData = [
     { id: 1, title: '1학년' },
@@ -145,8 +147,8 @@ const Grade = () => {
             btnType="page"
             value="상세정보"
             onClick={() => {
-              alert('학생정보 페이지로 넘어감');
               setDisplay(false);
+              navigate(`/admin/user/students/${data.avgVo1.istudent}`);
             }}
           />
         </CommonModal>
