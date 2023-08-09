@@ -37,11 +37,10 @@ const LectureRoom = () => {
   ////Table////
   //table header
   const tableHeader = [
-    { title: '번호', width: 1 },
     { title: '장소', width: 3 },
-    { title: '최대수용인원', width: 1 },
+    { title: '최대수용인원', width: 1.5 },
     { title: '관리', width: 2 },
-    { title: '비고', width: 1 },
+    { title: '비고', width: 1.5 },
   ];
 
   //추후 API GET 요청 데이터
@@ -71,42 +70,14 @@ const LectureRoom = () => {
       note: '',
     },
   ];
-  //강의실 추가 모달창 안 호실 인풋창 state
-  const [roomNumber, setRoomNumber] = useState('');
-  //강의실 추가 모달창 안 최대수용인원 인풋창 state
-  const [capacityNumber, setCapacityNumber] = useState('');
-
-  const gogo = () => {
-    console.log('gogo');
-  };
-
-  const bye = () => {
-    alert('삭제하시겠습니까?');
-  };
 
   //modal 활성화 여부
-  const [showModal, setshowModal] = useState(false);
-
-  //modal활성화 시 배경 변경
-  const [modalBlack, setModalBlack] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   //강의실추가 버튼 클릭시 함수실행
   const modalOpen = () => {
-    setshowModal(true);
+    setShowModal(true);
   };
-
-  //취소 , x 클릭시 함수 실행
-  const modalClose = () => {
-    setshowModal(false);
-  };
-
-  //modal활성화 시 배경 변경
-  //building state
-  const [building, setBuilding] = useState('');
-  //room state
-  const [place, setPlace] = useState('');
-  //최대수용인원 state
-  const [capacity, setCapacity] = useState(null);
 
   //api test
   const getBuildingTest = async () => {
@@ -177,56 +148,36 @@ const LectureRoom = () => {
 
       {/* modal이 활성화되면 modal을 띄워라 아니면 null  */}
       {showModal === true ? (
-        <PlusModal>
-          <div className="lectureLoomTitle">
-            <p>
-              <strong>강의실 추가</strong>
-            </p>
-            <p onClick={modalClose}>
-              <FontAwesomeIcon icon={faX} />
-            </p>
+        <CommonModal
+          setDisplay={setShowModal}
+          modalSize="small"
+          modalTitle="강의실 추가"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
+          <div
+            style={{
+              display: 'flex',
+              gap: '15px',
+              alignItems: 'center',
+              borderBottom: '1px solid #dae8ff',
+            }}
+          >
+            <p>장소</p> <Dropdown length="middle" placeholder="건물명" />
+            <Input type="number" length="short" />
           </div>
-          <div className="placeTitle">
-            <p>장소 :</p>
-            <div className="controls">
-              <div className="dropDownControl">
-                <Dropdown placeholder="건물명" />
-              </div>
-              <div className="inputControl">
-                <Input type="number" length="short" value={roomNumber} setValue={setRoomNumber} />
-                <p>호</p>
-              </div>
-            </div>
+          <div
+            style={{
+              display: 'flex',
+              gap: '15px',
+              alignItems: 'center',
+
+              borderBottom: '1px solid #dae8ff',
+            }}
+          >
+            <p>최대수용인원</p> <Input type="number" length="short" />
           </div>
-          <div className="capacityTitle">
-            <p>최대수용인원 : </p>
-            <div className="inputControl">
-              <Input
-                type="number"
-                length="short"
-                value={capacityNumber}
-                setValue={setCapacityNumber}
-              />
-              <p>명</p>
-            </div>
-          </div>
-          <div className="btns">
-            <CommonButton
-              btnType="modal"
-              color="blue"
-              value="등록"
-              onClick={gogo}
-              className="registeration"
-            ></CommonButton>
-            <CommonButton
-              btnType="modal"
-              color="gray"
-              value="취소"
-              onClick={modalClose}
-              className="cancellation"
-            ></CommonButton>
-          </div>
-        </PlusModal>
+        </CommonModal>
       ) : null}
 
       {display ? (
@@ -246,7 +197,6 @@ const LectureRoom = () => {
           console.log(item);
           return (
             <div key={item.ilectureRoom}>
-              <div>{item.ilectureRoom}</div>
               <div>
                 {item.buildingName} {item.lectureRoomName}
               </div>

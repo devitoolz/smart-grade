@@ -47,9 +47,9 @@ const Notice = () => {
   // };
 
   //api hook test
-  // const url = '/api/board';
-  // const { data, pending } = useQuerySearch(url, click);
-  // console.log(data);
+  const url = '/api/board';
+  const { data, pending } = useQuerySearch(url, click);
+  console.log(data?.list);
 
   //notice test list
   // const getNoticeListLoad = async () => {
@@ -75,10 +75,10 @@ const Notice = () => {
     { title: '조회수', width: '1' },
   ];
 
-  const data = [
-    { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-    { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  ];
+  // const data = [
+  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
+  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
+  // ];
   const navigate = useNavigate();
 
   return (
@@ -113,8 +113,8 @@ const Notice = () => {
           <p>게시글을 삭제하시겠습니까?</p>
         </CommonModal>
       ) : null}
-      <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
-        {data.map(item => {
+      <Table header={tableHeader} data={data?.list} hasPage={true} maxPage={5} pending={pending}>
+        {data?.list.map(item => {
           return (
             <div key={item.iboard}>
               <div>{item.iboard}</div>
