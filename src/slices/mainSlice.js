@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   title: '',
   isPosting: false,
+  user: null,
 };
 
 const mainSlice = createSlice({
@@ -14,6 +15,9 @@ const mainSlice = createSlice({
     },
     setIsPosting: (state, action) => {
       state.isPosting = action.payload;
+    },
+    setUser: (state, action) => {
+      state.user = action.payload;
     },
   },
 });
