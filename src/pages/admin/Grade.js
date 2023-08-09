@@ -6,7 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { getStudentGrade } from '../../api/fetch';
+import { getStudentInfo } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
 
@@ -40,10 +40,10 @@ const Grade = () => {
     { title: '등급', width: 1 },
   ];
   // 데이터통신 - 학생 상세정보 불러오기
-  const handleGetStudentInfo = async _info => {
-    alert('학생 상세정보 불러올 예정');
-    console.log(_info);
-    _info ? setDisplay(true) : null;
+  const handleGetStudentInfo = async _istudent => {
+    console.log('student pk 값 = ', _istudent);
+    _istudent ? setDisplay(true) : null;
+    await getStudentInfo(_istudent);
   };
 
   // 쿼리
@@ -90,9 +90,6 @@ const Grade = () => {
           {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
           {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
           {data?.avgVo1?.name} {data?.avgVo1?.studentNum}
-          {Boolean(data?.avgVo1.length) && (
-            <span style={{ color: 'red' }}>* 학번 입력은 필수입니다</span>
-          )}
         </CommonButton>
       )}
 
