@@ -112,7 +112,7 @@ const UserDetail = () => {
             )}
             {lectureList?.map((item, index) => (
               <div key={index} className="lecture-table-content">
-                <div>{item.lectureNm}</div>
+                <div>{item.lectureName}</div>
                 <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
                 <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
               </div>

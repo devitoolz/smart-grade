@@ -3,11 +3,14 @@ import Input from '../components/Input';
 import api from '../api/api';
 import { removeCookie, setCookie } from '../modules/cookies';
 import {
+  FindAccountForm,
+  FindLogin,
   LoginBtn,
   LoginContent,
   LoginFooter,
   LoginForm,
   LoginHeader,
+  LoginInput,
   LoginLayout,
   RoleButtonContainer,
 } from '../styles/LoginStyle';
@@ -64,6 +67,8 @@ const Login = () => {
   // };
 
   const [role, setRole] = useState('ROLE_PROFESSOR');
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
 
   const handleRoleChange = e => {
     setRole(e.target.value);
@@ -104,8 +109,37 @@ const Login = () => {
             onChange={handleRoleChange}
           />
         </RoleButtonContainer>
-        <LoginForm></LoginForm>
-        <LoginBtn>로그인</LoginBtn>
+        <LoginForm>
+          <LoginInput>
+            <div>
+              <label htmlFor="id">아이디</label>
+              <input
+                id="id"
+                type="text"
+                value={id}
+                onChange={e => setId(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+            <div>
+              <label htmlFor="password">비밀번호</label>
+              <input
+                id="password"
+                type="password"
+                value={pw}
+                onChange={e => setPw(e.target.value)}
+                autoComplete="off"
+              />
+            </div>
+          </LoginInput>
+          <FindLogin>
+            <LoginBtn>로그인</LoginBtn>
+            <FindAccountForm>
+              <span>아이디 찾기</span>
+              <span>비밀번호 찾기</span>
+            </FindAccountForm>
+          </FindLogin>
+        </LoginForm>
       </LoginContent>
       <LoginFooter>
         <img src={footerLogo} alt="logo" />
