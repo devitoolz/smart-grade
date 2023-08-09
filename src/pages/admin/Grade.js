@@ -12,17 +12,12 @@ import { FormTable, Row } from '../../styles/UserStyle';
 
 const Grade = () => {
   // 드롭다운
-  const semesterData = [
-    { id: 1, title: '1학기' },
-    { id: 2, title: '2학기' },
-  ];
   const gradeData = [
     { id: 1, title: '1학년' },
     { id: 2, title: '2학년' },
     { id: 3, title: '3학년' },
     { id: 4, title: '4학년' },
   ];
-  const [semester, setSemester] = useState();
   const [grade, setGrade] = useState();
   const [studentNum, setStudentNum] = useState('');
   const studentNumChange = e => {
@@ -49,7 +44,7 @@ const Grade = () => {
 
   // 쿼리
   const [click, setClick] = useState(false);
-  const queries = { semester, grade, studentNum };
+  const queries = { grade, studentNum };
   const url = '/api/admin/grade';
   const { data, pending, error } = useQuerySearch(url, click);
   console.log(error);
