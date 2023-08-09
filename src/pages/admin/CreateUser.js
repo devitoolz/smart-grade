@@ -113,7 +113,9 @@ const CreateUser = () => {
         </NoticeContainer>
         <ButtonContainer>
           <Button onClick={handleCreate}>생성</Button>
-          <Button onClick={() => navigate(-1)}>취소</Button>
+          <Button negative onClick={() => navigate(-1)}>
+            취소
+          </Button>
         </ButtonContainer>
       </TopLayout>
       <MiddleLayout>
