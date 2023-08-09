@@ -163,8 +163,8 @@ const LectureRoom = () => {
               borderBottom: '1px solid #dae8ff',
             }}
           >
-            <p>장소</p> <Dropdown length="middle" placeholder="건물명" />
-            <Input type="number" length="short" />
+            <p>장소</p> <Input length="middle" placeholder="건물명" />
+            <Input type="number" length="short" placeholder="호" />
           </div>
           <div
             style={{
