@@ -138,11 +138,11 @@ export const getStudentGrade = async _setFunc => {
   }
 };
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
-export const getStudentInfo = async _istudent => {
+export const getStudentInfo = async (_istudent, _setFunc) => {
   try {
     const res = await axios.get(`/api/admin/grade/${_istudent}`);
     const result = await res.data;
-    console.log(result);
+    _setFunc(result);
   } catch (err) {
     console.log(err);
   }

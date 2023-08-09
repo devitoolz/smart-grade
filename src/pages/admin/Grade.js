@@ -40,10 +40,11 @@ const Grade = () => {
     { title: '등급', width: 1 },
   ];
   // 데이터통신 - 학생 상세정보 불러오기
+  const [studentDetail, setStudentDetail] = useState({});
   const handleGetStudentInfo = async _istudent => {
     console.log('student pk 값 = ', _istudent);
     _istudent ? setDisplay(true) : null;
-    await getStudentInfo(_istudent);
+    await getStudentInfo(_istudent, setStudentDetail);
   };
 
   // 쿼리
@@ -118,27 +119,27 @@ const Grade = () => {
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`${data.avgVo1.name}님의 상세정보`}
+          modalTitle={`${data.avgVo1.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
           <FormTable>
             <Row col={2}>
-              <div>이름(name)</div>
-              <div>이름이 들어간다</div>
-              <div>학번(studentNum)</div>
-              <div>9999999</div>
+              <div>이름</div>
+              <div>{studentDetail.name}</div>
+              <div>학번</div>
+              <div>{studentDetail.studentNum}</div>
             </Row>
             <Row col={2}>
-              <div>성별(gender)</div>
-              <div>남녀</div>
-              <div>학과(majorName)</div>
-              <div>학과=전공</div>
+              <div>성별</div>
+              <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
+              <div>학과</div>
+              <div>{studentDetail.majorName}</div>
             </Row>
             <Row col={2}>
-              <div>입학년도(createdAt)</div>
-              <div>2023-08-09</div>
-              <div>전화번호(phone)</div>
-              <div>012-3456-7890</div>
+              <div>입학년도</div>
+              <div>{studentDetail.createdAt}</div>
+              <div>전화번호</div>
+              <div>{studentDetail.phone}</div>
             </Row>
           </FormTable>
           <div>
