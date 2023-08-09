@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil } from '@fortawesome/free-solid-svg-icons';
+import { faCircleExclamation, faPencil } from '@fortawesome/free-solid-svg-icons';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -48,6 +48,7 @@ const UserDetail = () => {
       const { data } = await api.get(`/api/admin/${role}/${id}`);
       console.log(data);
       setUserDetail(data.profile);
+      setLectureList(data.lectureList);
       setName(data.profile.name);
       setMajor(data.profile.imajor);
 
@@ -100,46 +101,32 @@ const UserDetail = () => {
             <div>강의 시간</div>
           </div>
           <div className="lecture-table-body">
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
-            <div className="lecture-table-content">
-              <div>강의명</div>
-              <div>강의 기간</div>
-              <div>강의 시간</div>
-            </div>
+            {lectureList?.length === 0 && (
+              <div className="lecture-table-no-content">
+                <FontAwesomeIcon icon={faCircleExclamation} />
+                <span>
+                  {(role === 'students' && '수강 중인 ') || (role === 'professor' && '강의 중인 ')}
+                  강의가 없습니다.
+                </span>
+              </div>
+            )}
+            {lectureList?.map((item, index) => (
+              <div key={index} className="lecture-table-content">
+                <div>{item.lectureNm}</div>
+                <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
+                <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
+              </div>
+            ))}
+            {lectureList?.length <= 7 &&
+              Array(7 - (lectureList?.length ?? 0))
+                .fill()
+                .map((_, index) => (
+                  <div key={index} className="lecture-table-content">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                ))}
           </div>
         </LectureTableLayout>
       </MiddleLayout>
@@ -191,7 +178,7 @@ const UserDetail = () => {
           <div>{(role === 'students' && '학번') || (role === 'professor' && '등록일')}</div>
           <div>
             {(role === 'students' && userDetail?.studentNum) ||
-              (role === 'professor' && userDetail?.createdAt)}
+              (role === 'professor' && userDetail?.createdAt.split('T')[0])}
           </div>
           <div>졸업여부</div>
           <div>
