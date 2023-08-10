@@ -124,7 +124,24 @@ const Notice = () => {
               <div>{item.title}</div>
               <div>{item.createdAt}</div>
               <div>
-                <CommonButton btnType="Table" vlaue="삭제" onClick={deleteModalOpen} />
+                <CommonButton
+                  btnType="table"
+                  color="blue"
+                  value="수정"
+                  onClick={() => deleteModalOpen(item.iboard)}
+                />
+                <CommonButton
+                  btnType="table"
+                  color="blue"
+                  value="보기"
+                  onClick={() => navigate(`${item.iboard}`)}
+                />
+                <CommonButton
+                  btnType="table"
+                  color="red"
+                  value="삭제"
+                  onClick={() => deleteModalOpen()}
+                />
               </div>
               <div>{item.boardView}</div>
             </div>
