@@ -175,3 +175,14 @@ export const postBoard = async (_title, _contents, _isChecked) => {
     return;
   }
 };
+// 게시판 - 중요 공지사항 불러오기
+export const getImportantBoard = async _setFunc => {
+  try {
+    const res = await axios.get('/api/board/importanceList');
+    const result = await res.data;
+    _setFunc(result);
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
