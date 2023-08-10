@@ -100,6 +100,25 @@ export const SearchArea = styled.div`
     cursor: pointer;
   }
 `;
+export const IsClosed = styled.div`
+  height: 100%;
+  padding: 32px;
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  flex-direction: column;
+  p {
+    font-size: 32px;
+  }
+  div {
+    mark {
+      display: inline-block;
+    }
+    text-align: center;
+    font-size: 24px;
+    padding: 10px 50px;
+  }
+`;
 
 export const LectureContainer = styled.div`
   width: 100%;
