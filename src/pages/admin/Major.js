@@ -47,33 +47,6 @@ const Major = () => {
       title: '폐지',
     },
   ];
-  //전공명 임시 데이터
-  const _majsornm = [
-    {
-      id: 1,
-      title: 'ㄱ전공',
-    },
-    {
-      id: 2,
-      title: 'aa전공',
-    },
-    {
-      id: 3,
-      title: 'g전공',
-    },
-    {
-      id: 4,
-      title: 'e전공',
-    },
-    {
-      id: 5,
-      title: 'd전공',
-    },
-    {
-      id: 6,
-      title: 'ㄱgf전공',
-    },
-  ];
 
   //table header
   const tableHeader = [
@@ -84,66 +57,44 @@ const Major = () => {
     { title: '비고', width: 1 },
   ];
 
-  //추후 API GET 요청 데이터
-  // const _data = [
-  //   {
-  //     imajor: '1',
-  //     majorName: 'a관',
-  //     graduationScore: 130,
-  //     status: '',
-  //     management: '',
-  //     note: '',
-  //   },
-  //   {
-  //     imajor: '1',
-  //     majorName: 'a관',
-  //     graduationScore: 130,
-  //     status: '',
-  //     management: '',
-  //     note: '',
-  //   },
-  //   {
-  //     imajor: '1',
-  //     majorName: 'a관',
-  //     graduationScore: 130,
-  //     status: '',
-  //     management: '',
-  //     note: '',
-  //   },
-  // ];
-
-  //modalTitle state
-  const [modalTitle, setmodalTitle] = useState('강의실추가', '전공추가');
   //전공명 imajor
   const [imajor, setImajor] = useState(null);
-  //전공명 state
-  // const [majorName, setMajorName] = useState('');
-  //전공학점 state
-  const [majorScore, setMajorScore] = useState(null);
+
   //모달창 활성화
   const [showModal, setShowModal] = useState(false);
-  // 변경할 항목 ID 를 저장해 주어야 함.
-  const [selectMajorID, setSelectMajorID] = useState(null);
-  const [selectMajorName, setSelectMajorName] = useState('');
-
-  const { allMajorList } = useSelector(state => state.major);
-  //console.log(allMajorList);
-
-  // //버튼 onClick시 모달창 열기
-  const modalOpen = () => {
-    setShowModal(true);
-  };
-
-  // //취소, x 누를시 모달창 닫기
-  // const modalClose = () => {
-  //   setshowModal(false);
-  // };
 
   //변경버튼 클릭시 모달창 활성화
   const [changeModalShow, setChangeModalShow] = useState(false);
 
   //폐지버튼 클릭시 모달창 활성화
   const [disUseModalShow, setDisUseModalShow] = useState(false);
+
+  // 변경할 항목 pk값 저장할 state.
+  const [selectMajorID, setSelectMajorID] = useState(null);
+  // 변경할 항목 전공명 저장할 state.
+  const [selectMajorName, setSelectMajorName] = useState('');
+
+  //전공리스트 state 전역관리?
+  const { allMajorList } = useSelector(state => state.major);
+  //console.log(allMajorList);
+
+  //전공명 state
+  const [majorId, setMajorId] = useState();
+ 
+  //변경버튼 state
+  const [changeClickShow, setChangeClickShow] = useState(false);
+
+  //disable 버튼 state
+  const [disabled, setDisabled] = useState(false);
+
+  //api get hook test
+  const url = '/api/major';
+  const { data, pending } = useQuerySearch(url, click);
+
+  //버튼 onClick시 모달창 열기
+  const modalOpen = () => {
+    setShowModal(true);
+  };
 
   //변경버튼 클릭시 모달창 오픈
   const changeModalOpen = (_imajor, _imajorName) => {
@@ -173,10 +124,6 @@ const Major = () => {
       setChangeModalShow(true);
     }
   };
-  const handleChangeName = e => {
-    console.log(e.target.value);
-    setSelectMajorName(e.target.value);
-  };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
@@ -190,7 +137,13 @@ const Major = () => {
       setMajorId(_majorId);
     }
   };
-  const [majorId, setMajorId] = useState();
+
+  //테이블 전공명 변경 input창
+  const handleChangeName = e => {
+    console.log(e.target.value);
+    setSelectMajorName(e.target.value);
+  };
+
   //api test
   const MajorDeleteTest = async _id => {
     try {
@@ -202,10 +155,6 @@ const Major = () => {
     }
   };
 
-  //api get hook test
-
-  const url = '/api/major';
-  const { data, pending } = useQuerySearch(url, click);
   const [isDataArr, setDataArr] = useState([]);
   useEffect(() => {
     if (data) {
@@ -221,7 +170,6 @@ const Major = () => {
   // console.log(data?.major);
 
   //button changedShow
-  const [changeClickShow, setChangeClickShow] = useState(false);
 
   //변경 버튼 클릭시
   const changeClickShowOpen = () => {
@@ -235,7 +183,6 @@ const Major = () => {
     setShowModal(false);
   };
   //button disabled
-  const [disabled, setDisabled] = useState(false);
 
   //폐지모달창 확인 클릭시
   const disuesModalOk = async _id => {
@@ -374,7 +321,7 @@ const Major = () => {
                 ></CommonButton>
               </div>
 
-              <div>{item.isChange === 0 ? null : <span>변경 구({item.originName})</span>}</div>
+              <div>{item.remarks}</div>
             </div>
           );
         })}

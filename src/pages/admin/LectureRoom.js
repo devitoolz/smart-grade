@@ -136,14 +136,16 @@ const LectureRoom = () => {
   const LectureRoomDeleteTest = async _id => {
     try {
       await axios.delete(`/api/lectureroom?ilectureRoom=${_id}`);
-      getBuildingTestLoad();
+      await getBuildingTestLoad();
     } catch (err) {
       console.log(err);
     }
   };
   //삭제모달창 확인 클릭시
-  const deleteModalOk = async _id => {
-    LectureRoomDeleteTest();
+  //Id를 담을 state
+  const [saveId, setSaveId] = useState('');
+  const deleteModalOk = async () => {
+    LectureRoomDeleteTest(saveId);
   };
 
   return (
@@ -219,11 +221,15 @@ const LectureRoom = () => {
                 <CommonButton
                   btnType="table"
                   value="삭제"
-                  color="red"
-                  onClick={() => setDisplay(true)}
+                  color={item.delYn === 1 ? 'gray' : 'red'}
+                  disabled={item.delYn}
+                  onClick={() => {
+                    setDisplay(true);
+                    setSaveId(item.ilectureRoom);
+                  }}
                 ></CommonButton>
               </div>
-              <div></div>
+              <div>{item.delYn === 1 ? '사용불가' : null}</div>
             </div>
           );
         })}
