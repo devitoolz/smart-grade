@@ -3,17 +3,22 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-
 import Main from './pages/professor/Main';
 import Dashboard from './pages/professor/Dashboard';
 import api from './api/api';
+import Mypage from './pages/professor/Mypage';
+import { useDispatch } from 'react-redux';
+import mainSlice from './slices/mainSlice';
 
 const Professor = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+  const main = mainSlice.actions;
+
   useEffect(() => {
-    console.log('교수 페이지 로딩');
     const getProfile = async () => {
       try {
         const { data } = await api.get(`/api/professor`);
-        console.log(data);
+        dispatch(main.setUser({ ...data.list[0] }));
       } catch (err) {
         console.log(err);
         navigate('/');
@@ -32,7 +37,7 @@ const Professor = () => {
     <Routes>
       <Route element={<Main />}>
         <Route path="home" element={<Dashboard />} />
-        <Route path="mypage" element={<Dashboard />} />
+        <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Dashboard />} />
         <Route path="open" element={<Dashboard />} />
         <Route path="students" element={<Dashboard />} />
