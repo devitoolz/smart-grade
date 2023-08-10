@@ -56,7 +56,6 @@ const Login = () => {
       } else {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
-        setCookie('role', payload.role);
       }
     } catch (err) {
       console.log(err);

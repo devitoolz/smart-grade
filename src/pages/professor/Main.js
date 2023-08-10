@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   Content,
   Footer,
@@ -20,13 +20,13 @@ import {
   faBookOpen,
   faGraduationCap,
   faHouse,
+  faUser,
   faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Main = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
@@ -36,6 +36,10 @@ const Main = () => {
   const menuData = {
     home: {
       icon: faHouse,
+      title: '홈',
+    },
+    mypage: {
+      icon: faUser,
       title: '마이페이지',
     },
     lecture: {

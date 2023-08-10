@@ -104,8 +104,10 @@ const Menu = styled.div`
 
 const MenuLogo = styled.div`
   display: flex;
-  width: 100%;
+  width: 320px;
   height: 70px;
+  position: fixed;
+  top: 0;
   align-items: center;
   justify-content: center;
   background: var(--white);
@@ -128,6 +130,7 @@ const MenuContent = styled.div`
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+  padding-top: 70px;
 `;
 
 const MenuContainer = styled.ul`
