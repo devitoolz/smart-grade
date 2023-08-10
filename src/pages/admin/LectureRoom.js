@@ -222,6 +222,7 @@ const LectureRoom = () => {
                   btnType="table"
                   value="삭제"
                   color={item.delYn === 1 ? 'gray' : 'red'}
+                  disabled={item.delYn}
                   onClick={() => {
                     setDisplay(true);
                     setSaveId(item.ilectureRoom);

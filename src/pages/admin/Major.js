@@ -374,7 +374,7 @@ const Major = () => {
                 ></CommonButton>
               </div>
 
-              <div>{item.isChange === 0 ? null : <span>변경 구({item.originName})</span>}</div>
+              <div>{item.remarks}</div>
             </div>
           );
         })}
