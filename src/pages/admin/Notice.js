@@ -140,7 +140,7 @@ const Notice = () => {
                   btnType="table"
                   color="blue"
                   value="수정"
-                  onClick={() => deleteModalOpen(item.iboard)}
+                  onClick={() => navigate(`${item.iboard}`)}
                 />
                 <CommonButton
                   btnType="table"
