@@ -4,12 +4,12 @@ import {
   ButtonContainer,
   UserLayout,
   FormTable,
-  ImageUpload,
   NoticeContainer,
   Row,
   TopLayout,
   MiddleLayout,
   LectureTableLayout,
+  ProfileImage,
 } from '../../styles/UserStyle';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -18,7 +18,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faCircleExclamation, faPencil } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronRight,
+  faCircleExclamation,
+  faPencil,
+  faUser,
+} from '@fortawesome/free-solid-svg-icons';
+import professorImg from '../../images/professor.png';
+import studentImg from '../../images/student.png';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -27,6 +34,7 @@ const UserDetail = () => {
   const [disabled, setDisabled] = useState(true);
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
+  const [img, setImg] = useState(null);
 
   const { allMajorList } = useSelector(state => state.major);
   const { pathname } = useLocation();
@@ -51,6 +59,15 @@ const UserDetail = () => {
       setLectureList(data.lectureList);
       setName(data.profile.name);
       setMajor(data.profile.imajor);
+      data.profile.pic
+        ? setImg(
+            `http://192.168.0.144:5002/imgs/${role}/${
+              data.profile[
+                (role === 'professor' && 'iprofessor') || (role === 'students' && 'istudent')
+              ]
+            }/${data.profile.pic}`
+          )
+        : null;
 
       const title = (
         <>
@@ -118,7 +135,13 @@ const UserDetail = () => {
         </ButtonContainer>
       </TopLayout>
       <MiddleLayout>
-        <ImageUpload />
+        <ProfileImage>
+          {userDetail?.pic ? (
+            <img src={img} alt="프로필 이미지" />
+          ) : (
+            <FontAwesomeIcon icon={faUser} />
+          )}
+        </ProfileImage>
         <LectureTableLayout>
           <div className="lecture-table-header">
             <div>강의명</div>
@@ -168,7 +191,7 @@ const UserDetail = () => {
             <Input
               type="text"
               isForm={true}
-              placeholder={!disabled ? '이름을 입력하세요.' : null}
+              placeholder="이름을 입력하세요."
               reset={setName}
               value={name || ''}
               setValue={handleNameChange}
@@ -188,7 +211,7 @@ const UserDetail = () => {
           <div>
             <Dropdown
               isForm={true}
-              placeholder={!disabled && '전공을 선택하세요.'}
+              placeholder="전공을 선택하세요."
               data={allMajorList}
               propertyName={{ key: 'imajor', value: 'majorName' }}
               value={major}
@@ -203,9 +226,9 @@ const UserDetail = () => {
           <div>{(role === 'students' && '학번') || (role === 'professor' && '등록일')}</div>
           <div>
             {(role === 'students' && userDetail?.studentNum) ||
-              (role === 'professor' && userDetail?.createdAt.split('T')[0])}
+              (role === 'professor' && userDetail?.createdAt?.split('T')[0])}
           </div>
-          <div>졸업여부</div>
+          <div>{(role === 'students' && '졸업 여부') || (role === 'professor' && '퇴직 여부')}</div>
           <div>
             {role === 'students' &&
               ((userDetail?.finishedYn === 1 && '재학 중') ||

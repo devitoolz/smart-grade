@@ -26,29 +26,39 @@ import RoleRadioButton from '../components/RoleRadioButton';
 import OTPAuth from '../components/OTPAuth';
 
 const Login = () => {
-  const [role, setRole] = useState('ROLE_PROFESSOR');
-  const [id, setId] = useState('');
-  const [pw, setPw] = useState('');
+  const initialState = {
+    id: '',
+    password: '',
+    role: 'ROLE_PROFESSOR',
+  };
+  const [payload, setPayload] = useState(initialState);
   const [openOTP, setOpenOTP] = useState(false);
 
   const handleRoleChange = e => {
-    setRole(e.target.value);
+    setPayload({ ...payload, role: e.target.value });
+  };
+
+  const handleIdChange = e => {
+    setPayload({ ...payload, id: e.target.value });
+  };
+
+  const handlePwChange = e => {
+    setPayload({ ...payload, password: e.target.value });
   };
 
   const handleLogin = async () => {
-    const payload = {
-      id: id,
-      password: pw,
-      role,
-    };
     try {
       const { data } = await api.post(`/api/sign-in`, payload);
       console.log(data);
-      setCookie('accessToken', data.accessToken);
-      setCookie('refreshToken', data.refreshToken);
-      setCookie('role', role);
-      if (data.secretKey) setOpenOTP(true);
+
+      if (data.secretKey) {
+        setOpenOTP(true);
+      } else {
+        setCookie('accessToken', data.accessToken);
+        setCookie('refreshToken', data.refreshToken);
+      }
     } catch (err) {
+      console.log(err);
       alert('존재하지 않는 계정입니다.');
     }
   };
@@ -65,27 +75,27 @@ const Login = () => {
         <LoginContent>
           <RoleButtonContainer>
             <RoleRadioButton
-              img={role === 'ROLE_PROFESSOR' ? professorActiveImg : professorImg}
+              img={payload.role === 'ROLE_PROFESSOR' ? professorActiveImg : professorImg}
               imgHeight={130}
-              text="교수님"
+              text="교수"
               value="ROLE_PROFESSOR"
-              checked={role === 'ROLE_PROFESSOR'}
+              checked={payload.role === 'ROLE_PROFESSOR'}
               onChange={handleRoleChange}
             />
             <RoleRadioButton
-              img={role === 'ROLE_STUDENT' ? studentActiveImg : studentImg}
+              img={payload.role === 'ROLE_STUDENT' ? studentActiveImg : studentImg}
               imgHeight={120}
               text="재학생 / 졸업생"
               value="ROLE_STUDENT"
-              checked={role === 'ROLE_STUDENT'}
+              checked={payload.role === 'ROLE_STUDENT'}
               onChange={handleRoleChange}
             />
             <RoleRadioButton
-              img={role === 'ROLE_ADMIN' ? adminActiveImg : adminImg}
+              img={payload.role === 'ROLE_ADMIN' ? adminActiveImg : adminImg}
               imgHeight={110}
               text="직원"
               value="ROLE_ADMIN"
-              checked={role === 'ROLE_ADMIN'}
+              checked={payload.role === 'ROLE_ADMIN'}
               onChange={handleRoleChange}
             />
           </RoleButtonContainer>
@@ -96,8 +106,8 @@ const Login = () => {
                 <input
                   id="id"
                   type="text"
-                  value={id}
-                  onChange={e => setId(e.target.value)}
+                  value={payload.id}
+                  onChange={handleIdChange}
                   autoComplete="off"
                 />
               </div>
@@ -106,8 +116,8 @@ const Login = () => {
                 <input
                   id="password"
                   type="password"
-                  value={pw}
-                  onChange={e => setPw(e.target.value)}
+                  value={payload.password}
+                  onChange={handlePwChange}
                   autoComplete="off"
                 />
               </div>
@@ -131,7 +141,7 @@ const Login = () => {
           </div>
         </LoginFooter>
       </LoginLayout>
-      {openOTP && <OTPAuth />}
+      {openOTP && <OTPAuth payload={payload} />}
     </>
   );
 };

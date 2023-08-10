@@ -7,6 +7,7 @@ import NotFound from './pages/NotFound';
 import { Interceptor } from './api/api';
 import { useSelector } from 'react-redux';
 import Loading from './components/Loading';
+import Professor from './Professor';
 
 const App = () => {
   const { isPosting } = useSelector(state => state.main);
@@ -18,6 +19,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/admin/*" element={<Admin />} />
+        <Route path="/professor/*" element={<Professor />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/notfound" />} />
       </Routes>

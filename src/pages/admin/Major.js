@@ -122,9 +122,12 @@ const Major = () => {
   const [majorScore, setMajorScore] = useState(null);
   //모달창 활성화
   const [showModal, setShowModal] = useState(false);
+  // 변경할 항목 ID 를 저장해 주어야 함.
+  const [selectMajorID, setSelectMajorID] = useState(null);
+  const [selectMajorName, setSelectMajorName] = useState('');
 
   const { allMajorList } = useSelector(state => state.major);
-  console.log(allMajorList);
+  //console.log(allMajorList);
 
   // //버튼 onClick시 모달창 열기
   const modalOpen = () => {
@@ -143,50 +146,109 @@ const Major = () => {
   const [disUseModalShow, setDisUseModalShow] = useState(false);
 
   //변경버튼 클릭시 모달창 오픈
-  const changeModalOpen = () => {
-    setChangeModalShow(true);
+  const changeModalOpen = (_imajor, _imajorName) => {
+    if (selectMajorID === _imajor) {
+      // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
+      // 과목명 앞뒤 공백 제거하기
+      const tempStr = selectMajorName.trim();
+      const temp = isDataArr.map(item => {
+        if (item.imajor === selectMajorID) {
+          if (item.majorName !== tempStr) {
+            item.isChange = 1;
+            item.originName = item.majorName;
+            item.majorName = tempStr;
+          }
+        }
+        return item;
+      });
+      console.log(temp);
+      setDataArr(temp);
+
+      setSelectMajorID(null);
+      setSelectMajorName('');
+    } else {
+      // 다르므로 모달 창 띄우기
+      setSelectMajorID(_imajor);
+      setSelectMajorName(_imajorName);
+      setChangeModalShow(true);
+    }
+  };
+  const handleChangeName = e => {
+    console.log(e.target.value);
+    setSelectMajorName(e.target.value);
   };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
     console.log(_majorId);
-    setDisUseModalShow(true);
-    setMajorId(_majorId);
+    if (selectMajorID === _majorId) {
+      // 초기화
+      setSelectMajorID(null);
+      setSelectMajorName('');
+    } else {
+      setDisUseModalShow(true);
+      setMajorId(_majorId);
+    }
   };
   const [majorId, setMajorId] = useState();
   //api test
-  const getMajorDeleteTest = async _id => {
+  const MajorDeleteTest = async _id => {
     try {
       const res = await axios.delete(`/api/major?imajor=${_id}`);
       const result = res.data;
-      console.log('히히', result);
       return result;
     } catch (error) {
       console.log(error);
     }
   };
 
-  //api hook test
+  //api get hook test
 
   const url = '/api/major';
   const { data, pending } = useQuerySearch(url, click);
-  console.log(data?.major);
+  const [isDataArr, setDataArr] = useState([]);
+  useEffect(() => {
+    if (data) {
+      const temp = data.major.map(item => {
+        // 강제로 변경상태 기록
+        item.isChange = 0;
+        return item;
+      });
+      setDataArr(temp);
+      console.log(data.major);
+    }
+  }, [data]);
+  // console.log(data?.major);
 
   //button changedShow
   const [changeClickShow, setChangeClickShow] = useState(false);
 
   //변경 버튼 클릭시
   const changeClickShowOpen = () => {
+    console.log('텍스트필드 활성화 ', selectMajorID);
     setChangeClickShow(true);
+  };
+  const chnageClickCloseWin = () => {
+    // 초기화
+    setSelectMajorID(null);
+    setSelectMajorName('');
+    setShowModal(false);
   };
   //button disabled
   const [disabled, setDisabled] = useState(false);
 
-  //const disabled 시
-  const disabledClick = async _id => {
+  //폐지모달창 확인 클릭시
+  const disuesModalOk = async _id => {
     setDisabled(true);
-    await getMajorDeleteTest(_id);
-    console.log(_id);
+    await MajorDeleteTest(_id);
+    const temp = data.major.map(item => {
+      // 강제로 변경상태 기록
+      if (_id === item.imajor) {
+        item.delYn = 1;
+      }
+      return item;
+    });
+    setDataArr(temp);
   };
 
   const handleModalOk = () => {
@@ -207,7 +269,7 @@ const Major = () => {
           modalSize="small"
           modalTitle="전공명 변경"
           handleModalOk={changeClickShowOpen}
-          handleModalCancel={() => setShowModal(false)}
+          handleModalCancel={chnageClickCloseWin}
         >
           <p>해당 전공명을 변경하시겠습니까?</p>
         </CommonModal>
@@ -217,7 +279,7 @@ const Major = () => {
           setDisplay={setDisUseModalShow}
           modalSize="small"
           modalTitle="전공 폐지"
-          handleModalOk={() => disabledClick(majorId)}
+          handleModalOk={() => disuesModalOk(majorId)}
           handleModalCancel={() => setShowModal(false)}
         >
           <p>해당 전공을 폐지 하겠습니까?</p>
@@ -277,11 +339,21 @@ const Major = () => {
         </CommonModal>
       ) : null}
       <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
-        {data?.major?.map(item => {
+        {isDataArr.map((item, index) => {
           return (
             <div key={item.imajor}>
               <div>
-                {changeClickShow === true ? <Input length="long" type="text"></Input> : null}
+                {/* {changeClickShow === true ? <Input length="long" type="text"></Input> : null} */}
+                {selectMajorID === item.imajor ? (
+                  <Input
+                    length="long"
+                    type="text"
+                    value={selectMajorName}
+                    setValue={handleChangeName}
+                  ></Input>
+                ) : (
+                  item.majorName
+                )}
               </div>
               <div>{item.graduationScore}</div>
               <div>{item.delYn === 0 ? null : '폐지'}</div>
@@ -289,44 +361,24 @@ const Major = () => {
                 <CommonButton
                   btnType="table"
                   color={item.delYn ? 'gray' : 'blue'}
-                  value="변경"
-                  onClick={changeModalOpen}
+                  value={selectMajorID === item.imajor ? '확인' : '변경'}
+                  onClick={() => changeModalOpen(item.imajor, item.majorName)}
                   disabled={item.delYn}
                 ></CommonButton>
-
                 <CommonButton
                   btnType="table"
                   color={item.delYn ? 'gray' : 'red'}
-                  value="폐지"
+                  value={selectMajorID === item.imajor ? '취소' : '폐지'}
                   onClick={() => disUseModalOpen(item.imajor)}
                   disabled={item.delYn}
                 ></CommonButton>
               </div>
 
-              <div>{item.note}</div>
+              <div>{item.isChange === 0 ? null : <span>변경 구({item.originName})</span>}</div>
             </div>
           );
         })}
       </Table>
-      {/* {showModal === true ? (
-        <PlusModal>
-          <div className="majorTitle">
-            <p>
-              <strong> 전공추가 </strong>
-            </p>
-            <p onClick={modalClose}>
-              <FontAwesomeIcon icon={faX} />
-            </p>
-          </div>
-          <div className="majorName">
-            <p>전공명</p>
-            <div>
-              <Input type="text" length="short" value={majorName} setValue={setMajorName}></Input>
-            </div>
-          </div>
-          <div className="btns"></div>
-        </PlusModal>
-      ) : null} */}
     </>
   );
 };

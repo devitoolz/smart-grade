@@ -37,6 +37,33 @@ const ImageUpload = styled.div`
   height: 339px;
   border: 1px dashed var(--black);
   border-radius: 15px;
+  > img {
+    width: 100%;
+    height: 100%;
+    background: var(--white);
+  }
+`;
+
+const ProfileImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 250px;
+  min-width: 250px;
+  height: 339px;
+  border-radius: 15px;
+  background: var(--search-bg-color);
+  overflow: hidden;
+  > svg {
+    align-self: flex-end;
+    font-size: 300px;
+    color: var(--search-ph-color);
+  }
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -194,6 +221,7 @@ export {
   MiddleLayout,
   NoticeContainer,
   ImageUpload,
+  ProfileImage,
   ButtonContainer,
   Button,
   LectureTableLayout,

@@ -7,6 +7,9 @@ import { getCookie, removeCookie, setCookie } from '../modules/cookies';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
+  headers: {
+    Authorization: `Bearer ${getCookie('accessToken')}`,
+  },
   // withCredentials: true,
 });
 

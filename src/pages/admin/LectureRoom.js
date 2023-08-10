@@ -132,6 +132,20 @@ const LectureRoom = () => {
     //setDisplay(false);
   };
 
+  //api delete test
+  const LectureRoomDeleteTest = async _id => {
+    try {
+      await axios.delete(`/api/lectureroom?ilectureRoom=${_id}`);
+      getBuildingTestLoad();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //삭제모달창 확인 클릭시
+  const deleteModalOk = async _id => {
+    LectureRoomDeleteTest();
+  };
+
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -163,8 +177,8 @@ const LectureRoom = () => {
               borderBottom: '1px solid #dae8ff',
             }}
           >
-            <p>장소</p> <Dropdown length="middle" placeholder="건물명" />
-            <Input type="number" length="short" />
+            <p>장소</p> <Input length="middle" placeholder="건물명" />
+            <Input type="number" length="short" placeholder="호" />
           </div>
           <div
             style={{
@@ -185,7 +199,7 @@ const LectureRoom = () => {
           setDisplay={setDisplay}
           modalSize="small"
           modalTitle="강의실 삭제"
-          handleModalOk={handleModalOk}
+          handleModalOk={deleteModalOk}
           handleModalCancel={handleModalCancel}
         >
           <p>삭제 하시겠습니까?</p>

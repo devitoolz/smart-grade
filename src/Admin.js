@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Main from './pages/admin/Main';
 import Dashboard from './pages/admin/Dashboard';
 import Notice from './pages/admin/Notice';
@@ -13,13 +13,29 @@ import Grade from './pages/admin/Grade';
 import LectureRoom from './pages/admin/LectureRoom';
 import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
+import { getCookie } from './modules/cookies';
 
 const Admin = () => {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
-  if (pathname === '/admin') {
-    return <Navigate to="/admin/home" />;
-  }
+  // useEffect(() => {
+  //   const accessToken = getCookie('accessToken');
+  //   const role = getCookie('role');
+
+  //   if (accessToken && role === 'ROLE_ADMIN') {
+  //     console.log('관리자 맞음');
+  //   } else {
+  //     alert('관리자 페이지는 관리자만 접근할 수 있습니다.');
+  //     navigate('/');
+  //   }
+  // }, []);
+
+  useEffect(() => {
+    if (pathname === '/admin') {
+      navigate('home');
+    }
+  }, [pathname]);
 
   return (
     <Routes>
