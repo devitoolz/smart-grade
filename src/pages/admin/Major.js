@@ -39,11 +39,11 @@ const Major = () => {
   // 상태 임시 데이터
   const _status = [
     {
-      id: 1,
+      id: '0',
       title: '운영',
     },
     {
-      id: 2,
+      id: '1',
       title: '폐지',
     },
   ];
@@ -80,7 +80,7 @@ const Major = () => {
 
   //전공명 state
   const [majorId, setMajorId] = useState();
- 
+
   //변경버튼 state
   const [changeClickShow, setChangeClickShow] = useState(false);
 
@@ -236,7 +236,6 @@ const Major = () => {
         <Dropdown
           placeholder="상태"
           data={_status}
-          propertyName={{ key: '', value: '' }}
           value={value}
           setValue={setValue}
           reset={true}
