@@ -181,7 +181,7 @@ const Footer = styled.div`
     gap: 3px;
     padding-top: 10px;
     font-size: 12px;
-    color: var(--button-bar-txt-color);
+    color: var(--search-ph-color);
   }
 `;
 

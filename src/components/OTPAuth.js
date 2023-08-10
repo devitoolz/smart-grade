@@ -21,7 +21,6 @@ const OTPAuth = ({ payload }) => {
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
-        setCookie('role', payload.role);
         navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
       }
     } catch (err) {

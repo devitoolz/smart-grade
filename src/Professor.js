@@ -18,10 +18,9 @@ const Professor = () => {
     const getProfile = async () => {
       try {
         const { data } = await api.get(`/api/professor`);
-        dispatch(main.setUser({ ...data.list[0] }));
+        dispatch(main.setUser({ ...data }));
       } catch (err) {
         console.log(err);
-        navigate('/');
       }
     };
     getProfile();
