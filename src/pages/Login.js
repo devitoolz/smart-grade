@@ -78,7 +78,7 @@ const Login = () => {
             <RoleRadioButton
               img={payload.role === 'ROLE_PROFESSOR' ? professorActiveImg : professorImg}
               imgHeight={130}
-              text="교수님"
+              text="교수"
               value="ROLE_PROFESSOR"
               checked={payload.role === 'ROLE_PROFESSOR'}
               onChange={handleRoleChange}

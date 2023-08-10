@@ -13,8 +13,10 @@ const Professor = () => {
   return (
     <Routes>
       <Route element={<Main />}>
-        <Route path="home" element={<Navigate to="dashboard" />} />
-        <Route path="home/dashboard" element={<Dashboard />} />
+        <Route path="home" element={<Dashboard />} />
+        <Route path="lecture" element={<Dashboard />} />
+        <Route path="open" element={<Dashboard />} />
+        <Route path="students" element={<Dashboard />} />
       </Route>
       <Route path="*" element={<Navigate to="/notfound" state={{ user: 'professor' }} />} />
     </Routes>

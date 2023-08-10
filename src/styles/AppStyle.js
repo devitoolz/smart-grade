@@ -95,6 +95,93 @@ const SubMenu = styled.ul`
   }
 `;
 
+const Menu = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: var(--side-bg-color);
+  width: 320px;
+`;
+
+const MenuLogo = styled.div`
+  display: flex;
+  width: 100%;
+  height: 70px;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  border-bottom: 1px solid var(--main-border-color);
+  border-right: 1px solid var(--main-border-color);
+  > img {
+    height: 32px;
+  }
+  > span {
+    color: var(--title-txt-color);
+    padding-left: 5px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: -2px;
+  }
+`;
+
+const MenuContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+`;
+
+const MenuContainer = styled.ul`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  gap: 20px;
+  > a {
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    padding: 15px;
+    font-size: 18px;
+    &.active {
+      font-weight: bold;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 5px;
+    }
+    > svg {
+      width: 25px;
+      font-size: 20px;
+    }
+    > span {
+      padding-left: 15px;
+    }
+  }
+`;
+
+const Footer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  padding: 20px;
+  > img {
+    height: 40px;
+  }
+  > span {
+    font-weight: bold;
+    font-size: 10px;
+    color: var(--title-txt-color);
+    padding-top: 5px;
+  }
+  > div.copyright {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding-top: 10px;
+    font-size: 12px;
+    color: var(--button-bar-txt-color);
+  }
+`;
+
 const Content = styled.div`
   overflow: auto;
   width: 100%;
@@ -138,6 +225,11 @@ export {
   MainMenu,
   MainMenuItem,
   SubMenu,
+  Menu,
+  MenuLogo,
+  MenuContent,
+  MenuContainer,
+  Footer,
   Content,
   Title,
 };

@@ -1,32 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
-
 import {
   Content,
+  Footer,
   MainLayout,
-  MainMenu,
-  MainMenuItem,
+  Menu,
+  MenuContainer,
+  MenuContent,
+  MenuLogo,
   Sidebar,
-  SubMenu,
   Title,
 } from '../../styles/AppStyle';
 import { Layout } from '../../styles/CommonStyle';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import footerLogo from '../../images/footer_logo.png';
+
+import { useDispatch, useSelector } from 'react-redux';
+import mainSlice from '../../slices/mainSlice';
 import {
-  faBuildingColumns,
+  faBookOpen,
   faGraduationCap,
   faHouse,
-  faUser,
+  faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
-import majorSlice from '../../slices/majorSlice';
-import mainSlice from '../../slices/mainSlice';
-import api from '../../api/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Main = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState(1);
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
@@ -35,45 +35,59 @@ const Main = () => {
 
   const menuData = {
     home: {
-      index: 1,
       icon: faHouse,
-      title: '홈',
-      submenu: { dashboard: '대시보드' },
+      title: '마이페이지',
+    },
+    lecture: {
+      icon: faBookOpen,
+      title: '담당 강의 조회',
+    },
+    open: {
+      icon: faGraduationCap,
+      title: '강의 개설 신청',
+    },
+    students: {
+      icon: faUserGraduate,
+      title: '수강생 조회',
     },
   };
 
   const pathSegments = pathname.split('/').filter(Boolean);
   const mainPath = pathSegments[1];
-  const subPath = pathSegments[2];
-  const paramPath = pathSegments[3];
 
   useEffect(() => {
-    setActiveIndex(menuData[mainPath].index || 1);
-    const title = menuData[mainPath].submenu[subPath];
-    if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
+    const title = menuData[mainPath].title;
+    dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
   return (
     <MainLayout>
       <Sidebar>
-        <MainMenu activeIndex={activeIndex}>
-          {Object.keys(menuData).map(key => {
-            return (
-              <MainMenuItem key={key} onClick={() => navigate(key)}>
-                <FontAwesomeIcon icon={menuData[key].icon} />
-                <span>{menuData[key].title}</span>
-              </MainMenuItem>
-            );
-          })}
-        </MainMenu>
-        <SubMenu>
-          <span>{menuData[mainPath].title}</span>
-          {Object.keys(menuData[mainPath].submenu).map(key => (
-            <NavLink key={key} to={`${mainPath}/${key}`}>
-              {menuData[mainPath].submenu[key]}
-            </NavLink>
-          ))}
-        </SubMenu>
+        <Menu>
+          <MenuLogo>
+            <img src={footerLogo} alt="logo" />
+            <span>SMARTGRADE</span>
+          </MenuLogo>
+          <MenuContent>
+            <MenuContainer>
+              {Object.keys(menuData).map(key => (
+                <NavLink key={key} to={key}>
+                  <FontAwesomeIcon icon={menuData[key].icon} />
+                  <span>{menuData[key].title}</span>
+                </NavLink>
+              ))}
+            </MenuContainer>
+            <Footer>
+              <img src={footerLogo} alt="logo" />
+              <span>SMARTGRADE</span>
+              <div className="copyright">
+                <span>ⓒ 2023 Project SMARTGRADE</span>
+                <span>Front-end | 박상렬 오영지 황지현</span>
+                <span>Back-end | 진혁재 김재경 배성현 이민용</span>
+              </div>
+            </Footer>
+          </MenuContent>
+        </Menu>
       </Sidebar>
       <Content>
         <Title>{title}</Title>
