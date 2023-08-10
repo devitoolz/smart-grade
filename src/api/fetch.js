@@ -151,12 +151,21 @@ export const getStudentInfo = async (_istudent, _setFunc) => {
 // 게시판 - 게시판 글 올리기
 export const postBoard = async (_title, _contents, _isChecked) => {
   const headers = { 'Content-Type': 'multipart/form-data' };
-  const postData = {
+  const postData = new FormData();
+  const param = {
     iadmin: 1,
     ctnt: _contents,
     title: _title,
     importance: _isChecked,
   };
+  // const pics = [];
+  // postData.append("pics", fileRef.current.files[0]);
+  postData.append(
+    'param',
+    new Blob([JSON.stringify(param)], {
+      type: 'application/json',
+    })
+  );
   try {
     const res = await axios.post(`/api/board`, postData, { headers });
     const result = res.data;
