@@ -147,3 +147,24 @@ export const getStudentInfo = async (_istudent, _setFunc) => {
     console.log(err);
   }
 };
+
+// 게시판 - 게시판 글 올리기
+export const postBoard = async (_title, _contents, _isChecked) => {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const postData = {
+    iadmin: 1,
+    ctnt: _contents,
+    title: _title,
+    importance: _isChecked,
+  };
+  try {
+    const res = await axios.post(`/api/board`, postData, { headers });
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+    alert('에러가 발생했습니다');
+    return;
+  }
+};

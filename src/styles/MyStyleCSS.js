@@ -136,9 +136,9 @@ export const TextArea = styled.textarea`
   background: var(--white);
   align-items: center;
   position: relative;
-  width: 70%;
-  height: 35%;
-  padding: 0 10px;
+  width: ${({ length }) => (length === 'full' ? '100%' : '70%')};
+  height: ${({ length }) => (length === 'full' ? '500px' : '35%')};
+  padding: 10px;
 
   line-height: 1.5;
   font-size: 18px;
