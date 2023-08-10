@@ -81,10 +81,12 @@ const Grade = () => {
       {data?.avgVo1 === null || data === null ? (
         <NoDatas />
       ) : (
-        <CommonButton btnType="page" value="학생상세정보" onClick={() => handleGetStudentInfo(1)}>
-          {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
-          {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
-          {data?.avgVo1?.name} {data?.avgVo1?.studentNum}
+        <CommonButton
+          btnType="page"
+          value="학생상세정보"
+          onClick={() => handleGetStudentInfo(data?.student?.istudent)}
+        >
+          {data?.student?.name} {data?.student?.studentNum}
         </CommonButton>
       )}
 
@@ -113,7 +115,7 @@ const Grade = () => {
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`data.avgVo1.name 님의 상세정보`}
+          modalTitle={`${data?.student?.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
           <div
