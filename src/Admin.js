@@ -17,7 +17,7 @@ import { getCookie } from './modules/cookies';
 
 const Admin = () => {
   const { pathname } = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // useEffect(() => {
   //   const accessToken = getCookie('accessToken');
@@ -31,9 +31,11 @@ const Admin = () => {
   //   }
   // }, []);
 
-  if (pathname === '/admin') {
-    return <Navigate to="/admin/home" />;
-  }
+  useEffect(() => {
+    if (pathname === '/admin') {
+      navigate('home');
+    }
+  }, [pathname]);
 
   return (
     <Routes>

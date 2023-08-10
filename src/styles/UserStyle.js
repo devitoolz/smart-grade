@@ -45,17 +45,24 @@ const ImageUpload = styled.div`
 `;
 
 const ProfileImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 250px;
   min-width: 250px;
   height: 339px;
-  border: 1px solid var(--black);
   border-radius: 15px;
-  background: gray;
+  background: var(--search-bg-color);
   overflow: hidden;
+  > svg {
+    align-self: flex-end;
+    font-size: 300px;
+    color: var(--search-ph-color);
+  }
   > img {
     width: 100%;
     height: 100%;
-    background: var(--white);
+    object-fit: cover;
   }
 `;
 
