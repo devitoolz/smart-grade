@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMinus, faO, faX } from '@fortawesome/free-solid-svg-icons';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
-import { PlusModal } from '../../styles/LectureRoomCss';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
-import { Layout } from '../../styles/CommonStyle';
 import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
-import { async } from 'q';
 
 const Major = () => {
   ////SearchBar////
@@ -31,10 +26,6 @@ const Major = () => {
   ////DropDown////
   //DropDown value state
   const [statusValue, setStatusValue] = useState(null);
-  //DropDown 메뉴 Item 상태데이터 state
-  const [status, setStatus] = useState('');
-  // DropDown 메뉴 Item 전공명데이터 state
-  const [majsornm, setMajsornm] = useState('');
 
   // 상태 임시 데이터
   const _status = [
