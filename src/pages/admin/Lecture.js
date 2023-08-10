@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { LectureContainer, TableArea, TempStyle, NoData } from '../../styles/MyStyleCSS';
+import React, { useState } from 'react';
+import { TableArea, IsClosed } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
-import { Layout } from '../../styles/CommonStyle';
 import Table from '../../components/Table';
-import { handleTestClick, getStudentList } from '../../api/fetch';
+import { getStudentList } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
-  // console.log(pathname);
-  // console.log(search);
   const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
   const [display, setDisplay] = useState(false);
   const [contents, setContents] = useState({});
@@ -94,13 +91,9 @@ const Lecture = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { procedures, lectureName, nm };
-  // {
-  //   procedures, nm;
-  // }
   const url = '/api/admin/lecture';
 
   const { data, pending } = useQuerySearch(url, click);
-  console.log(data?.lectures);
 
   // 서버연동 테스트 - 테이블에 정보 불러오기
   // const [tableDatas, setTableDatas] = useState([]);
@@ -111,10 +104,9 @@ const Lecture = () => {
   const [lectureNm, setLectureNm] = useState();
   const handlegetStudentList = async (_lectureNm, _ilecture) => {
     setLectureNm(_lectureNm);
-    // console.log('해당 과목 수강 학생 리스트 및 성적 출력');
     // ilecture = 해당 강의 과목 번호
     const result = await getStudentList(_ilecture, pageIdx);
-    setContents(result.list);
+    Array.isArray(result.list) ? setContents(result.list) : setContents(result);
     setDisplay(true);
   };
   // useEffect(() => {
@@ -215,49 +207,42 @@ const Lecture = () => {
           modalTitle={lectureNm}
           modalSize="big"
         >
-          {/* <Table header={modalHeader} data={contents} hasPage={true} maxPage={5} pending={pending}>
-            {contents.map((item, idx) => {
-              return (
-                <div key={item.istudent}>
-                  <div>{idx + 1}</div>
-                  <div>{item.nm}</div>
-                  <div>{item.majorNm}</div>
-                  <div>{item.attendance}</div>
-                  <div>{item.minEx}</div>
-                  <div>{item.finEx}</div>
-                  <div>{item.totalScore}</div>
-                  <div>{item.avg}</div>
-                  <div>{item.gread}</div>
+          {Array.isArray(contents) ? (
+            <TableArea>
+              <div className="table">
+                <div className="table_head">
+                  {modalHeader.map((item, idx) => {
+                    return <div key={idx}>{item.title}</div>;
+                  })}
                 </div>
-              );
-            })}
-          </Table> */}
-          <TableArea>
-            <div className="table">
-              <div className="table_head">
-                {modalHeader.map((item, idx) => {
-                  return <div key={idx}>{item.title}</div>;
-                })}
+                <div className="table_body">
+                  {contents.map((item, idx) => {
+                    return (
+                      <div className="table_body_item" key={item.istudent}>
+                        <div>{idx + 1}</div>
+                        <div>{item.nm}</div>
+                        <div>{item.majorNm}</div>
+                        <div>{item.attendance}</div>
+                        <div>{item.minEx}</div>
+                        <div>{item.finEx}</div>
+                        <div>{item.totalScore}</div>
+                        <div>{item.avg}</div>
+                        <div>{item.gread}</div>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-              <div className="table_body">
-                {contents.map((item, idx) => {
-                  return (
-                    <div className="table_body_item" key={item.istudent}>
-                      <div>{idx + 1}</div>
-                      <div>{item.nm}</div>
-                      <div>{item.majorNm}</div>
-                      <div>{item.attendance}</div>
-                      <div>{item.minEx}</div>
-                      <div>{item.finEx}</div>
-                      <div>{item.totalScore}</div>
-                      <div>{item.avg}</div>
-                      <div>{item.gread}</div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </TableArea>
+            </TableArea>
+          ) : (
+            <IsClosed>
+              <p style={{ background: 'grey', marginBottom: 30 }}>
+                폐강된 강의입니다 ({contents.returnDate} 폐강)
+              </p>
+              <p style={{ borderBottom: '2px solid red', display: 'inline-block' }}>폐강 사유</p>
+              <div>{contents.returnCtnt}</div>
+            </IsClosed>
+          )}
         </CommonModal>
       ) : null}
     </>

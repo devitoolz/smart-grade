@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
-import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 
@@ -37,25 +36,23 @@ const Notice = () => {
     setDeleteModalShow(true);
   };
 
-  //notice Data 담는 list
+  // 일반공지+중요공지 같이 불러오기
+  // 전체 notice Data 담는 list
   const [noticeData, setNoticeData] = useState([]);
-
-  //api test
-  // const getNoticeList = async () => {
-  //   try {
-  //     const res = await axios.get('/api/board');
-  //     const result = res.data;
-  //     console.log('결과를 보여줘라.', result);
-  //     return result;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  //api hook test
+  // custom hook
   const url = '/api/board';
   const { data, pending } = useQuerySearch(url, click);
-  console.log(data?.list);
+  // 중요공지
+  const urlImport = '/api/board/importanceList';
+  const important = useQuerySearch(urlImport, click);
+  // 데이터 가공
+  useEffect(() => {
+    data === null
+      ? null
+      : important.data === null
+      ? null
+      : setNoticeData([...important.data, ...data.list]);
+  }, [data, important.data]);
 
   //notice test list
   // const getNoticeListLoad = async () => {
@@ -130,11 +127,18 @@ const Notice = () => {
           <p>게시글을 삭제하시겠습니까?</p>
         </CommonModal>
       ) : null}
-      <Table header={tableHeader} data={data?.list} hasPage={true} maxPage={5} pending={pending}>
-        {data?.list.map(item => {
+
+      <Table
+        header={tableHeader}
+        data={noticeData}
+        hasPage={true}
+        maxPage={data?.page?.maxPage}
+        pending={pending}
+      >
+        {noticeData.map(item => {
           return (
             <div key={item.iboard}>
-              <div>{item.iboard}</div>
+              <div>{item.importance ? `[중요]` : item.iboard}</div>
               <div>{item.title}</div>
               <div>{item.createdAt}</div>
               <div>

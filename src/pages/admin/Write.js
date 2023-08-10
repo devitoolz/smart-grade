@@ -6,6 +6,8 @@ import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import { useNavigate } from 'react-router-dom';
+import { TextArea } from '../../styles/MyStyleCSS';
+import { postBoard } from '../../api/fetch';
 const Write = () => {
   //공지사항  제목
   const [title, setTitle] = useState('');
@@ -34,7 +36,8 @@ const Write = () => {
   const [cancelDisplay, setCancelDisplay] = useState(false);
 
   //save modal 확인 버튼 클릭시
-  const saveModalOk = () => {
+  const saveModalOk = async () => {
+    await postBoardWait();
     setSaveDisplay(false);
     navigate('/admin/home/notice/');
   };
@@ -51,8 +54,20 @@ const Write = () => {
   const cancelModalCancel = () => {
     setCancelDisplay(false);
   };
+
   //취소버튼 클릭시 공지사항 목록으로 이동
   const navigate = useNavigate();
+  // 공지사항 POST
+  const [boardContents, setBoardContents] = useState('');
+  const boardArea = e => {
+    setBoardContents(e.target.value);
+  };
+  const postBoardWait = async () => {
+    const isChecked = document.getElementById('check').checked ? 1 : 0;
+    await postBoard(title, boardContents, isChecked);
+  };
+
+  // JSX
   return (
     <>
       {saveDisplay === true ? (
@@ -68,7 +83,7 @@ const Write = () => {
       ) : null}
       {cancelDisplay === true ? (
         <CommonModal
-          setDisplay={cancelDisplay}
+          setDisplay={setCancelDisplay}
           modalSize="small"
           modalTitle="공지사항 작성"
           handleModalOk={cancelModalOk}
@@ -87,7 +102,14 @@ const Write = () => {
             <h3>제목</h3>
           </th>
           <th className="inputTitle">
-            <Input type="text" length="full" maxLength={20} value={title} setValue={handleTitle} />
+            <Input
+              type="text"
+              length="full"
+              placeholder="제목 (최대 30자)"
+              maxLength={30}
+              value={title}
+              setValue={handleTitle}
+            />
           </th>
         </thead>
         <tbody>
@@ -96,10 +118,10 @@ const Write = () => {
               <h3>상태</h3>
             </td>
             <td className="importanceCheck">
-              <input type="checkbox" value="1" />
-              <div>
-                <h3>중요</h3>
-              </div>
+              <input type="checkbox" id="check" style={{ cursor: 'pointer' }} />
+              <label htmlFor="check">
+                <h3 style={{ cursor: 'pointer' }}>중요</h3>
+              </label>
               <p className="colorRed">* 체크 시 제일 상단 공지로 표시됩니다.</p>
             </td>
           </tr>
@@ -114,13 +136,20 @@ const Write = () => {
               <h3>내용</h3>
             </td>
             <td className="controlTextarea">
-              <textarea name="content" id="content" cols="80" rows="20"></textarea>
+              {/* <textarea name="content" id="content" cols="80" rows="20"></textarea> */}
+              <TextArea length="full" onChange={boardArea} />
             </td>
           </tr>
         </tbody>
       </Ltable>
       <Wbtns>
-        <CommonButton btnType="page" value="저장" onClick={() => setSaveDisplay(true)} />
+        <CommonButton
+          btnType="page"
+          value="저장"
+          onClick={() => {
+            setSaveDisplay(true);
+          }}
+        />
         <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
       </Wbtns>
     </>

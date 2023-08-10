@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NoDatas } from '../../styles/MyStyleCSS';
+import { NoDatas, TableMini } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -40,7 +40,6 @@ const Grade = () => {
   // 데이터통신 - 학생 상세정보 불러오기
   const [studentDetail, setStudentDetail] = useState({});
   const handleGetStudentInfo = async _istudent => {
-    console.log('student pk 값 = ', _istudent);
     _istudent ? setDisplay(true) : null;
     await getStudentInfo(_istudent, setStudentDetail);
   };
@@ -49,9 +48,7 @@ const Grade = () => {
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
   const url = '/api/admin/grade';
-  const { data, pending, error } = useQuerySearch(url, click);
-  console.log(error);
-  console.log(data);
+  const { data, pending } = useQuerySearch(url, click);
 
   //
   // 학생 상세 정보 모달창
@@ -78,17 +75,15 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {data?.avgVo1 === null ? (
+      {data?.avgVo1 === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
           btnType="page"
           value="학생상세정보"
-          onClick={() => handleGetStudentInfo(data?.avgVo1?.istudent)}
+          onClick={() => handleGetStudentInfo(data?.student?.istudent)}
         >
-          {/* 학생의 이름+학번?+전공+현재학년 정도 표시(+현재 학점은?) */}
-          {/* {data?.voList[0]?.name} {data?.voList[0]?.studentNum} */}
-          {data?.avgVo1?.name} {data?.avgVo1?.studentNum}
+          {data?.student?.name} {data?.student?.studentNum}
         </CommonButton>
       )}
 
@@ -117,59 +112,81 @@ const Grade = () => {
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`${data.avgVo1.name} 님의 상세정보`}
+          modalTitle={`${data?.student?.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
-          <div style={{ display: 'flex' }}>
-            <div style={{ border: '1px solid red' }}>
-              학년 : {data.avgVo1.grade} <br />
-              학기 : {data.avgVo1.semester} <br />
-              학기 평점 {data.avgVo1.avgRating} <br />
-              학기 평균점수{data.avgVo1.avgScore} <br />
-            </div>
-            <div style={{ border: '1px solid red' }}>
-              학년 : {data.avgVo2.grade} <br />
-              학기 : {data.avgVo2.semester} <br />
-              학기 평점 {data.avgVo2.avgRating} <br />
-              학기 평균점수{data.avgVo2.avgScore} <br />
-            </div>
-          </div>
-          <CommonProgressBar
-            maxScore={studentDetail.graduationScore}
-            nowScore={studentDetail.scoreStudent}
-          />
-          <FormTable>
-            <Row col={2}>
-              <div>이름</div>
-              <div>{studentDetail.name}</div>
-              <div>학번</div>
-              <div>{studentDetail.studentNum}</div>
-            </Row>
-            <Row col={2}>
-              <div>성별</div>
-              <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
-              <div>학과</div>
-              <div>{studentDetail.majorName}</div>
-            </Row>
-            <Row col={2}>
-              <div>입학년도</div>
-              <div>{studentDetail.createdAt}</div>
-              <div>전화번호</div>
-              <div>{studentDetail.phone}</div>
-            </Row>
-          </FormTable>
-          <div>
-            학생이 들은 학점 = {studentDetail.scoreStudent} <br />
-            졸업에 필요 학점 = {studentDetail.graduationScore}
-          </div>
-          <CommonButton
-            btnType="page"
-            value="상세정보확인"
-            onClick={() => {
-              setDisplay(false);
-              navigate(`/admin/user/students/${data.avgVo1.istudent}`);
+          <div
+            style={{
+              padding: 20,
+              width: '100%',
+              height: '100%',
+              overflowY: 'auto',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 20,
             }}
-          />
+          >
+            <div style={{ display: 'flex' }}>
+              <TableMini>
+                <div className="table-head-m">
+                  <div>학년</div>
+                  <div>학기</div>
+                  <div>평점</div>
+                  <div>점수</div>
+                </div>
+                <div className="table-body-m">
+                  {Array(8)
+                    .fill()
+                    .map((_, idx) => {
+                      return (
+                        <div key={idx}>
+                          <div>{data?.avgVo[idx]?.grade}</div>
+                          <div>{data?.avgVo[idx]?.semester}</div>
+                          <div>{data?.avgVo[idx]?.avgRating}</div>
+                          <div>{data?.avgVo[idx]?.avgScore}</div>
+                        </div>
+                      );
+                    })}
+                </div>
+              </TableMini>
+              <CommonProgressBar
+                maxScore={studentDetail.graduationScore}
+                nowScore={studentDetail.scoreStudent}
+              />
+            </div>
+            <FormTable>
+              <Row col={2}>
+                <div>이름</div>
+                <div>{studentDetail.name}</div>
+                <div>학번</div>
+                <div>{studentDetail.studentNum}</div>
+              </Row>
+              <Row col={2}>
+                <div>성별</div>
+                <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
+                <div>학과</div>
+                <div>{studentDetail.majorName}</div>
+              </Row>
+              <Row col={2}>
+                <div>입학년도</div>
+                <div>{studentDetail.createdAt}</div>
+                <div>전화번호</div>
+                <div>{studentDetail.phone}</div>
+              </Row>
+            </FormTable>
+            {/* <div>
+              학생이 들은 학점 = {studentDetail.scoreStudent} <br />
+              졸업에 필요 학점 = {studentDetail.graduationScore}
+            </div> */}
+            <CommonButton
+              btnType="modal"
+              value="상세정보"
+              onClick={() => {
+                setDisplay(false);
+                navigate(`/admin/user/students/${data.avgVo1.istudent}`);
+              }}
+            />
+          </div>
         </CommonModal>
       )}
     </>

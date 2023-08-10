@@ -40,8 +40,6 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
     const res = await axios.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
     const result = res.data;
-    console.log('해당 과목을 듣는 학생리스트+성적');
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -145,5 +143,46 @@ export const getStudentInfo = async (_istudent, _setFunc) => {
     _setFunc(result);
   } catch (err) {
     console.log(err);
+  }
+};
+
+// 게시판 - 게시판 글 올리기
+export const postBoard = async (_title, _contents, _isChecked) => {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const postData = new FormData();
+  const param = {
+    iadmin: 1,
+    ctnt: _contents,
+    title: _title,
+    importance: _isChecked,
+  };
+  // const pics = [];
+  // postData.append("pics", fileRef.current.files[0]);
+  postData.append(
+    'param',
+    new Blob([JSON.stringify(param)], {
+      type: 'application/json',
+    })
+  );
+  try {
+    const res = await axios.post(`/api/board`, postData, { headers });
+    const result = res.data;
+    console.log(result);
+    return result;
+  } catch (err) {
+    console.log(err);
+    alert('에러가 발생했습니다');
+    return;
+  }
+};
+// 게시판 - 중요 공지사항 불러오기
+export const getImportantBoard = async _setFunc => {
+  try {
+    const res = await axios.get('/api/board/importanceList');
+    const result = await res.data;
+    _setFunc(result);
+  } catch (err) {
+    console.log(err);
+    return;
   }
 };
