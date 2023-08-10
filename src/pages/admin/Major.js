@@ -30,7 +30,7 @@ const Major = () => {
 
   ////DropDown////
   //DropDown value state
-  const [value, setValue] = useState(null);
+  const [statusValue, setStatusValue] = useState(null);
   //DropDown 메뉴 Item 상태데이터 state
   const [status, setStatus] = useState('');
   // DropDown 메뉴 Item 전공명데이터 state
@@ -71,6 +71,7 @@ const Major = () => {
 
   // 변경할 항목 pk값 저장할 state.
   const [selectMajorID, setSelectMajorID] = useState(null);
+
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorName, setSelectMajorName] = useState('');
 
@@ -96,12 +97,27 @@ const Major = () => {
     setShowModal(true);
   };
 
-  //변경버튼 클릭시 모달창 오픈
-  const changeModalOpen = (_imajor, _imajorName) => {
+  //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
+  const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
       // 과목명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
+      // 서버로 변경된 과목명을 전달한다.
+      const headers = { 'Content-Type': 'application/json' };
+      const patchData = {
+        imajor: _imajor,
+        majorName: `${tempStr}`,
+      };
+      try {
+        const res = await axios.patch(`/api/major`, patchData, { headers });
+        const result = res.data;
+        // console.log('전공명 서버 수정 완료 : ', result);
+      } catch (err) {
+        // console.log('전공명 서버 수정 실패 : ', err);
+      }
+
+      // 여기서 화면을 갱신한다.
       const temp = isDataArr.map(item => {
         if (item.imajor === selectMajorID) {
           if (item.majorName !== tempStr) {
@@ -124,6 +140,10 @@ const Major = () => {
       setChangeModalShow(true);
     }
   };
+  const handleChangeName = e => {
+    console.log(e.target.value);
+    setSelectMajorName(e.target.value);
+  };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
@@ -137,13 +157,6 @@ const Major = () => {
       setMajorId(_majorId);
     }
   };
-
-  //테이블 전공명 변경 input창
-  const handleChangeName = e => {
-    console.log(e.target.value);
-    setSelectMajorName(e.target.value);
-  };
-
   //api test
   const MajorDeleteTest = async _id => {
     try {
@@ -155,25 +168,11 @@ const Major = () => {
     }
   };
 
-  const [isDataArr, setDataArr] = useState([]);
-  useEffect(() => {
-    if (data) {
-      const temp = data.major.map(item => {
-        // 강제로 변경상태 기록
-        item.isChange = 0;
-        return item;
-      });
-      setDataArr(temp);
-      console.log(data.major);
-    }
-  }, [data]);
   // console.log(data?.major);
-
-  //button changedShow
 
   //변경 버튼 클릭시
   const changeClickShowOpen = () => {
-    console.log('텍스트필드 활성화 ', selectMajorID);
+    // console.log('텍스트필드 활성화 ', selectMajorID);
     setChangeClickShow(true);
   };
   const chnageClickCloseWin = () => {
@@ -182,7 +181,6 @@ const Major = () => {
     setSelectMajorName('');
     setShowModal(false);
   };
-  //button disabled
 
   //폐지모달창 확인 클릭시
   const disuesModalOk = async _id => {
@@ -207,6 +205,25 @@ const Major = () => {
   const handleModalCancel = () => {
     //setDisplay(false);
   };
+
+  // api 전공리스트 전체 보기
+  const [isDataArr, setDataArr] = useState([]);
+  useEffect(() => {
+    console.log(data);
+
+    if (data) {
+      const temp = data.major.map(item => {
+        // 강제로 변경상태 기록
+        item.isChange = 0;
+        if (item.remarks !== '') {
+          item.isChange = 1;
+        }
+        item.originName = item.remarks;
+        return item;
+      });
+      setDataArr(temp);
+    }
+  }, [data]);
 
   return (
     <>
@@ -236,8 +253,8 @@ const Major = () => {
         <Dropdown
           placeholder="상태"
           data={_status}
-          value={value}
-          setValue={setValue}
+          value={statusValue}
+          setValue={setStatusValue}
           reset={true}
           search={true}
         />
@@ -319,8 +336,7 @@ const Major = () => {
                   disabled={item.delYn}
                 ></CommonButton>
               </div>
-
-              <div>{item.remarks}</div>
+              <div>{item.isChange === 0 ? null : <span>{item.originName}</span>}</div>
             </div>
           );
         })}
