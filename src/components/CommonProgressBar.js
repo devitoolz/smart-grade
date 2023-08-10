@@ -1,18 +1,11 @@
 import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 
 const CommonProgressBar = ({ maxScore, nowScore }) => {
-  const percentage = Math.round((nowScore / maxScore) * 100);
+  const percentage = Math.floor((nowScore / maxScore) * 100);
   console.log(percentage);
   return (
     <div style={{ width: '50%', height: '100%', position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {/* <CircularProgressBar
-          colorCircle="#f1f1f1"
-          colorSlice="#880E4F"
-          fontSize="10px"
-          percent={75}
-          textPosition="1.5rem"
-        ></CircularProgressBar> */}
         <CircularProgressBar
           colorCircle="#F8F8F8"
           colorSlice="#1363df"
