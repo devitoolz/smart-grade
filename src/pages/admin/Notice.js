@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { BtnControl } from '../../styles/LectureRoomCss';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
-import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
-import { getImportantBoard } from '../../api/fetch';
 
 const Notice = () => {
   ////SearchBar////
@@ -38,7 +35,6 @@ const Notice = () => {
   // custom hook
   const url = '/api/board';
   const { data, pending } = useQuerySearch(url, click);
-  console.log(data);
   // 중요공지
   const urlImport = '/api/board/importanceList';
   const important = useQuerySearch(urlImport, click);
