@@ -6,6 +6,8 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
+import { deleteBoard } from '../../api/fetch';
+import { async } from 'q';
 
 const Notice = () => {
   ////SearchBar////
@@ -28,6 +30,12 @@ const Notice = () => {
   const deleteModalOpen = () => {
     setDeleteModalShow(true);
   };
+  // 게시클 삭제
+  const [boardPk, setBoardPk] = useState();
+  const deleteBoardWait = async () => {
+    await deleteBoard(boardPk);
+    window.location.reload();
+  };
 
   // 일반공지+중요공지 같이 불러오기
   // 전체 notice Data 담는 list
@@ -35,6 +43,7 @@ const Notice = () => {
   // custom hook
   const url = '/api/board';
   const { data, pending } = useQuerySearch(url, click);
+  console.log(data);
   // 중요공지
   const urlImport = '/api/board/importanceList';
   const important = useQuerySearch(urlImport, click);
@@ -103,7 +112,10 @@ const Notice = () => {
           setDisplay={setDeleteModalShow}
           modalSize="small"
           modalTitle="게시글 삭제"
-          handleModalOk={() => setDeleteModalShow(false)}
+          handleModalOk={() => {
+            deleteBoardWait();
+            setDeleteModalShow(false);
+          }}
           handleModalCancel={() => setDeleteModalShow(false)}
         >
           <p>게시글을 삭제하시겠습니까?</p>
@@ -140,7 +152,10 @@ const Notice = () => {
                   btnType="table"
                   color="red"
                   value="삭제"
-                  onClick={() => deleteModalOpen()}
+                  onClick={() => {
+                    setBoardPk(item.iboard);
+                    deleteModalOpen();
+                  }}
                 />
               </div>
               <div>{item.boardView}</div>

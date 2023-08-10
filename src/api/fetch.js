@@ -186,3 +186,13 @@ export const getImportantBoard = async _setFunc => {
     return;
   }
 };
+// 게시판 - 게시판 글 삭제
+export const deleteBoard = async _iboard => {
+  try {
+    await axios.delete(`/api/board/${_iboard}`);
+    console.log('삭제 완');
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};
