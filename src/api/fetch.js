@@ -40,8 +40,6 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
     const res = await axios.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
     const result = res.data;
-    console.log('해당 과목을 듣는 학생리스트+성적');
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);

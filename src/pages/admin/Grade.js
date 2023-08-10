@@ -40,7 +40,6 @@ const Grade = () => {
   // 데이터통신 - 학생 상세정보 불러오기
   const [studentDetail, setStudentDetail] = useState({});
   const handleGetStudentInfo = async _istudent => {
-    console.log('student pk 값 = ', _istudent);
     _istudent ? setDisplay(true) : null;
     await getStudentInfo(_istudent, setStudentDetail);
   };
@@ -49,9 +48,7 @@ const Grade = () => {
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
   const url = '/api/admin/grade';
-  const { data, pending, error } = useQuerySearch(url, click);
-  console.log(error);
-  console.log(data);
+  const { data, pending } = useQuerySearch(url, click);
 
   //
   // 학생 상세 정보 모달창
