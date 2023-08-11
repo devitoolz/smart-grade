@@ -3,6 +3,7 @@ import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-
 import Main from './pages/admin/Main';
 import Dashboard from './pages/admin/Dashboard';
 import Notice from './pages/admin/Notice';
+import NoticeDetail from './pages/admin/NoticeDetail';
 import Write from './pages/admin/Write';
 import Professor from './pages/admin/Professor';
 import Student from './pages/admin/Student';
@@ -43,6 +44,7 @@ const Admin = () => {
         <Route path="home" element={<Navigate to="dashboard" />} />
         <Route path="home/dashboard" element={<Dashboard />} />
         <Route path="home/notice" element={<Notice />} />
+        <Route path="home/notice/:id" element={<NoticeDetail />} />
         <Route path="home/notice/write" element={<Write />} />
         <Route path="user" element={<Navigate to="professor" />} />
         <Route path="user/professor" element={<Professor />} />

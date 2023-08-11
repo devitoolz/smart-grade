@@ -43,7 +43,7 @@ const CommonModal = ({
               onClick={() => {
                 handleModalOk();
                 // setCheckModal(true);
-                alert('정상 처리되었습니다');
+                alert('요청 중입니다');
                 setDisplay(false);
               }}
               btnType="modal"
