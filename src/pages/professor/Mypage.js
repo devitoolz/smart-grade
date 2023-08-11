@@ -28,6 +28,7 @@ const Mypage = () => {
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
   const [imgFile, setImgFile] = useState(null);
+  const [removeImg, setRemoveImg] = useState(false);
 
   const { user } = useSelector(state => state.main);
   const dispatch = useDispatch();
@@ -73,26 +74,30 @@ const Mypage = () => {
         address,
       };
 
-      if (imgFile) {
-        const res = await api.delete(`/api/professor`);
-        console.log(res.data);
+      console.log(user?.profile.pic);
+
+      if (imgFile && user?.profile.pic) {
+        await api.delete(`/api/professor`);
+        formData.append('pic', imgFile);
+      } else if (imgFile && !user?.profile.pic) {
+        formData.append('pic', imgFile);
+      } else if (removeImg) {
+        await api.delete(`/api/professor`);
       }
 
-      formData.append('pic', imgFile);
       formData.append('dto', JSON.stringify(payload));
 
-      const { data } = await api.put(`/api/professor`, formData, {
+      await api.put(`/api/professor`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
 
-      console.log(data);
-
       dispatch(
         main.setUser({ ...user, profile: { ...user.profile, phone, email, address, pic: img } })
       );
       setDisabled(true);
+      alert('프로필이 업데이트 되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -107,12 +112,17 @@ const Mypage = () => {
   const handleRemoveImage = () => {
     setImgFile(null);
     setImg(null);
+    setRemoveImg(true);
   };
 
   const handleCancel = () => {
     setPhone(user?.profile.phone);
     setEmail(user?.profile.email);
     setAddress(user?.profile.address);
+    setImg(
+      `http://192.168.0.144:5002/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
+    );
+    setRemoveImg(false);
     setDisabled(true);
   };
 
@@ -152,6 +162,7 @@ const Mypage = () => {
               취소
             </Button>
           )}
+          <Button>비밀번호 변경</Button>
         </ButtonContainer>
       </TopLayout>
       <MiddleLayout>
@@ -161,13 +172,15 @@ const Mypage = () => {
             <ModifyImage>
               <label>
                 <FontAwesomeIcon icon={faPencil} />
-                수정
+                {img ? '수정' : '등록'}
                 <input type="file" accept="image/jpeg, image/png" onChange={handleUpdateImage} />
               </label>
-              <CancelModifyButton onClick={handleRemoveImage}>
-                <FontAwesomeIcon icon={faTrash} />
-                삭제
-              </CancelModifyButton>
+              {img && (
+                <CancelModifyButton onClick={handleRemoveImage}>
+                  <FontAwesomeIcon icon={faTrash} />
+                  삭제
+                </CancelModifyButton>
+              )}
             </ModifyImage>
           )}
         </ProfileImage>
