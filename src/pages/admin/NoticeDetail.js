@@ -85,10 +85,7 @@ const NoticeDetail = () => {
                   {data?.ctnt}
                 </div>
               ) : (
-                <TextArea length="full" maxLength={100} onChange={handleChangeCtnt}>
-                  {ctnt}
-                  {/* <TextArea maxLength={100} onChange={inputRejectReason} /> */}
-                </TextArea>
+                <TextArea length="full" maxLength={100} value={ctnt} onChange={handleChangeCtnt} />
               )}
             </td>
           </tr>
