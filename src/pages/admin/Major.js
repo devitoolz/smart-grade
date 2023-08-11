@@ -8,6 +8,7 @@ import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
+import api from '../../api/api';
 
 const Major = () => {
   ////SearchBar////
@@ -51,6 +52,9 @@ const Major = () => {
 
   //전공명 imajor
   const [imajor, setImajor] = useState(null);
+
+  //전공추가 시 전공명
+  const [newMajorName, setNewMajorName] = useState('');
 
   //모달창 활성화
   const [showModal, setShowModal] = useState(false);
@@ -149,7 +153,26 @@ const Major = () => {
       setMajorId(_majorId);
     }
   };
-  //api test
+
+  //api post test
+  const MajorPostTest = async (newMajorName, graduationScore) => {
+    const headers = { 'Content-Type': 'application/json' };
+    const postData = {
+      majorName: newMajorName,
+      graduationScore: parseInt(graduationScore),
+    };
+    try {
+      const res = await api.post(
+        `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(graduationScore)}`,
+        { headers }
+      );
+      const result = res.data;
+      console.log('제발 나와', result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //api delete test
   const MajorDeleteTest = async _id => {
     try {
       const res = await axios.delete(`/api/major?imajor=${_id}`);
@@ -191,6 +214,7 @@ const Major = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
+    MajorPostTest(newMajorName, graduationScore);
   };
 
   //commonModal close state
@@ -286,8 +310,8 @@ const Major = () => {
               <Input
                 type="text"
                 length="long"
-                value={imajor}
-                setValue={e => setImajor(e.target.value)}
+                value={newMajorName}
+                setValue={e => setNewMajorName(e.target.value)}
               />
             </div>
           </div>
@@ -314,7 +338,7 @@ const Major = () => {
           </div>
         </CommonModal>
       ) : null}
-      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
+      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={6} pending={pending}>
         {isDataArr.map((item, index) => {
           return (
             <div key={item.imajor}>
