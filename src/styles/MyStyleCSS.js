@@ -190,14 +190,15 @@ export const ModalStyle = styled.div`
     .modal-title-small,
     .modal-title {
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '18%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '60px')};
+      min-height: 60px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 24px;
       font-weight: 700;
 
-      padding: 0 32px;
+      padding: 0 25px;
       border-bottom: 1px solid #dae8ff;
       button {
         font-size: 24px;
@@ -214,7 +215,7 @@ export const ModalStyle = styled.div`
       overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '62%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '100%')};
       ${({ modalSize }) =>
         modalSize === 'small'
           ? `display: flex;
@@ -232,6 +233,8 @@ export const ModalStyle = styled.div`
       display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'flex')};
       justify-content: center;
       width: 100%;
+      height: 60px;
+      min-height: 60px;
       text-align: center;
       /* padding: 8px 0; */
       /* border-top: 1px solid #dae8ff; */
@@ -252,21 +255,21 @@ export const ModalStyle = styled.div`
 // 공통 버튼
 const pageBtn = `
   padding: 8px 18px;
-  border-radius: 5px; 
+  border-radius: 5px;
   color: #7e7e7e;
   font-size: 16px;
 `;
 const tableBtn = `
   margin: 0 4px;
   padding: 4px 8px;
-  border-radius: 3px; 
+  border-radius: 3px;
   color: #fff;
   font-size: 12px;
 `;
 const modalBtn = `
   margin: 2px 8px;
   padding: 6px 24px;
-  border-radius: 5px; 
+  border-radius: 5px;
   color: #7e7e7e;
   font-size: 18px;
 `;

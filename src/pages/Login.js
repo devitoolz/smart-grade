@@ -54,6 +54,10 @@ const Login = () => {
       const { data } = await api.post(`/api/sign-in`, payload);
       console.log(data);
 
+      if (!data.success) {
+        throw Error('틀린 비번');
+      }
+
       if (data.secretKey) {
         setOpenOTP(true);
       } else {
@@ -61,6 +65,9 @@ const Login = () => {
         setCookie('refreshToken', data.refreshToken);
         if (payload.role === 'ROLE_ADMIN') {
           navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
+        } else {
+          console.log('최초 로그인');
+          navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);
         }
       }
     } catch (err) {

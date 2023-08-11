@@ -20,6 +20,7 @@ const MiddleLayout = styled.div`
 `;
 
 const NoticeContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   ${({ right }) => right && 'align-items: flex-end; padding-top: 10px;'};
@@ -72,8 +73,8 @@ const ModifyImage = styled.div`
   position: absolute;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(2px);
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -268,6 +269,18 @@ const Row = styled.div`
   }
 `;
 
+const PasswordForm = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  font-size: 16px;
+  gap: 15px;
+  > label {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 export {
   UserLayout,
   TopLayout,
@@ -282,4 +295,5 @@ export {
   LectureTableLayout,
   FormTable,
   Row,
+  PasswordForm,
 };
