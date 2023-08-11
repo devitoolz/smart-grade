@@ -163,7 +163,7 @@ const Grade = () => {
               </Row>
               <Row col={2}>
                 <div>성별</div>
-                <div>{studentDetail.gender === 'F' ? '여자' : '남자'}</div>
+                <div>{studentDetail.gender === 'F' ? '여' : '남'}</div>
                 <div>학과</div>
                 <div>{studentDetail.majorName}</div>
               </Row>
@@ -183,7 +183,7 @@ const Grade = () => {
               value="상세정보"
               onClick={() => {
                 setDisplay(false);
-                navigate(`/admin/user/students/${data.avgVo1.istudent}`);
+                navigate(`/admin/user/students/${data.student.istudent}`);
               }}
             />
           </div>
