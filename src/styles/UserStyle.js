@@ -79,9 +79,30 @@ const ModifyImage = styled.div`
   align-items: center;
   flex-direction: column;
   gap: 20px;
+  input {
+    position: absolute;
+    width: 100%;
+    visibility: hidden;
+  }
+  > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 0 10px;
+    height: 35px;
+    background: var(--primary-color);
+    color: var(--white);
+    > svg {
+      width: 20px;
+      padding-right: 10px;
+    }
+  }
 `;
 
-const ModifyButton = styled.span`
+const CancelModifyButton = styled.span`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +111,7 @@ const ModifyButton = styled.span`
   border-radius: 5px;
   padding: 0 10px;
   height: 35px;
-  background: ${({ negative }) => (negative ? 'var(--negative-color)' : 'var(--primary-color)')};
+  background: var(--negative-color);
   color: var(--white);
   > svg {
     width: 20px;
@@ -255,7 +276,7 @@ export {
   ImageUpload,
   ProfileImage,
   ModifyImage,
-  ModifyButton,
+  CancelModifyButton,
   ButtonContainer,
   Button,
   LectureTableLayout,

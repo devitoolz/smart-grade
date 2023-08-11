@@ -11,7 +11,7 @@ import {
   LectureTableLayout,
   ProfileImage,
   ModifyImage,
-  ModifyButton,
+  CancelModifyButton,
 } from '../../styles/UserStyle';
 import Input from '../../components/Input';
 import { useDispatch, useSelector } from 'react-redux';
@@ -27,6 +27,7 @@ const Mypage = () => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [address, setAddress] = useState('');
+  const [imgFile, setImgFile] = useState(null);
 
   const { user } = useSelector(state => state.main);
   const dispatch = useDispatch();
@@ -34,9 +35,11 @@ const Mypage = () => {
   const main = mainSlice.actions;
 
   useEffect(() => {
-    if (user?.profile?.pic) {
+    if (user?.profile.pic) {
       setImg(
-        `http://192.168.0.144:5002/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
+        user?.profile.pic.startsWith('blob')
+          ? user?.profile.pic
+          : `http://192.168.0.144:5002/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
       );
     }
     setPhone(user?.profile.phone);
@@ -64,21 +67,21 @@ const Mypage = () => {
       // TODO: API 작업
       const formData = new FormData();
 
-      // formData.append('profile, selectFile);
+      const payload = {
+        phone,
+        email,
+        address,
+      };
 
-      formData.append(
-        'dto',
-        JSON.stringify({
-          phone,
-          email,
-          address,
-        })
-      );
+      if (imgFile) {
+        const res = await api.delete(`/api/professor`);
+        console.log(res.data);
+      }
 
-      // const data = new Blob([{}], { type: 'application/json' });
-      // formData.append('data', data);
+      formData.append('pic', imgFile);
+      formData.append('dto', JSON.stringify(payload));
 
-      const { data } = await api.post('/upload', formData, {
+      const { data } = await api.put(`/api/professor`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
@@ -86,11 +89,24 @@ const Mypage = () => {
 
       console.log(data);
 
-      dispatch(main.setUser({ ...user, profile: { ...user.profile, phone, email, address } }));
+      dispatch(
+        main.setUser({ ...user, profile: { ...user.profile, phone, email, address, pic: img } })
+      );
       setDisabled(true);
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleUpdateImage = e => {
+    const file = e.target.files[0];
+    setImgFile(file);
+    setImg(file ? URL.createObjectURL(file) : null);
+  };
+
+  const handleRemoveImage = () => {
+    setImgFile(null);
+    setImg(null);
   };
 
   const handleCancel = () => {
@@ -143,14 +159,15 @@ const Mypage = () => {
           {img ? <img src={img} alt="프로필 이미지" /> : <FontAwesomeIcon icon={faUser} />}
           {!disabled && (
             <ModifyImage>
-              <ModifyButton>
+              <label>
                 <FontAwesomeIcon icon={faPencil} />
                 수정
-              </ModifyButton>
-              <ModifyButton negative>
+                <input type="file" accept="image/jpeg, image/png" onChange={handleUpdateImage} />
+              </label>
+              <CancelModifyButton onClick={handleRemoveImage}>
                 <FontAwesomeIcon icon={faTrash} />
                 삭제
-              </ModifyButton>
+              </CancelModifyButton>
             </ModifyImage>
           )}
         </ProfileImage>
