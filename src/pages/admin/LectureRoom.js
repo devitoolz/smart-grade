@@ -6,12 +6,10 @@ import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
+import api from '../../api/api';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const LectureRoom = () => {
-  ////SearchBar//////
-  //검색 시 사용할 쿼리스트링(건물명)
-  const queries = { building: 'a관 ' };
-
   // 검색 버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
 
@@ -22,12 +20,18 @@ const LectureRoom = () => {
   //Dropdown 메뉴 Item 데이터??
   const [bData, setBData] = useState([]);
 
-  //Dropdown 메뉴 Item 데이터
-  const _temp = [
-    { id: 1, title: 'a관' },
-    { id: 2, title: 'b관' },
-    { id: 3, title: 'c관' },
-  ];
+  //강의실 추가시 건물명 state
+
+  const [buildingName, setBuildingName] = useState('');
+  //강의실 추가시 호실명 state
+  const [lectureRoomName, setLectureRoomName] = useState(null);
+
+  //강의실 추가시 최대수용인원 state
+  const [maxCapacity, setMaxCapacity] = useState(null);
+
+  ////SearchBar//////
+  //검색 시 사용할 쿼리스트링(건물명)
+  const queries = { buildingName };
 
   ////Table////
   //table header
@@ -46,59 +50,32 @@ const LectureRoom = () => {
     setShowModal(true);
   };
 
-  //api test
-  const getBuildingTest = async () => {
+  //api get hook test
+  const url = '/api/lectureroom';
+  const { data, pending } = useQuerySearch(url, click);
+  const buildingDataList = [];
+  data?.lectureRoomList?.forEach(item => {
+    buildingDataList.push({ id: item.buildingName, title: item.buildingName });
+  });
+
+  //api get building List
+
+  //api post test
+  const postBuildinglist = async (lectureRoomName, buildingName, maxCapacity) => {
+    const headers = { 'Content-Type': 'application/json' };
+    const postData = {
+      lectureRoomName,
+      buildingName,
+      maxCapacity,
+    };
     try {
-      const res = await axios.get('/api/lectureroom');
+      const res = await api.post('/api/lectureroom', postData, { headers });
       const result = res.data;
-      console.log('나다', result);
-      return result;
-    } catch (error) {
-      console.log(error);
+      console.log('잘 나오나', result);
+    } catch (err) {
+      console.log(err);
     }
   };
-
-  ///getLoad
-  //lectureLoom data 담는 list
-  const [data, setData] = useState([]);
-
-  const getBuildingTestLoad = async () => {
-    try {
-      const _result = await getBuildingTest();
-      const buildingL = _result.lectureRoomList.map(item => {
-        const data = {
-          id: item.ilectureRoom,
-          title: item.buildingName,
-        };
-        return data;
-      });
-      setBData(buildingL);
-      // const buildingList = _result.lectureRoomList.map(item => {
-      //   const Bdata = {
-      //     buildingName: buildingName,
-      //   };
-      //   return Bdata;
-      // });
-      // console.log(_result);
-      // console.log(_result.lectureRoom);
-      // const buildingTable = _result.lectureRoom.map(item => {
-      //   let data = {
-      //     building: item.buildingName,
-      //     place: item.lectureRoomName,
-      //     capacity: item.maxCapacity,
-      //   };
-      //   return data;
-      // });
-
-      setData(_result.lectureRoom);
-      return _result.lectureRoom;
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  useEffect(() => {
-    getBuildingTestLoad();
-  }, []);
 
   //목록바꾸면 실행되는 함수
   const handleChangeBuilding = value => {
@@ -112,6 +89,7 @@ const LectureRoom = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
+    postBuildinglist(lectureRoomName, buildingName, maxCapacity);
   };
 
   //commonModal close state
@@ -123,7 +101,7 @@ const LectureRoom = () => {
   const LectureRoomDeleteTest = async _id => {
     try {
       await axios.delete(`/api/lectureroom?ilectureRoom=${_id}`);
-      await getBuildingTestLoad();
+      //await getBuildingTestLoad();
     } catch (err) {
       console.log(err);
     }
@@ -141,9 +119,9 @@ const LectureRoom = () => {
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="건물명"
-          data={bData}
-          value={value}
-          setValue={setValue}
+          data={buildingDataList}
+          value={buildingName}
+          setValue={setBuildingName}
           reset={true}
           search={true}
         />
@@ -162,24 +140,51 @@ const LectureRoom = () => {
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '45px',
+              justifyContent: 'flex-start',
               alignItems: 'center',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 25px',
             }}
           >
-            <p>장소</p> <Input length="middle" placeholder="건물명" />
-            <Input type="number" length="short" placeholder="호" />
+            <p>장소</p>
+
+            <div style={{ marginLeft: '63px' }}>
+              
+              <Input
+                length="middle"
+                placeholder="건물명"
+                value={buildingName}
+                setValue={e => setBuildingName(e.target.value)}
+              />
+            </div>
+            <Input
+              type="number"
+              length="short"
+              placeholder="호"
+              value={lectureRoomName}
+              setValue={e => setLectureRoomName(e.target.value)}
+            />
           </div>
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '30px',
               alignItems: 'center',
-
+              justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 20px',
             }}
           >
-            <p>최대수용인원</p> <Input type="number" length="short" />
+            <p>최대수용인원</p>{' '}
+            <Input
+              type="number"
+              length="middle"
+              value={maxCapacity}
+              setValue={e => setMaxCapacity(e.target.value)}
+            />
           </div>
         </CommonModal>
       ) : null}
@@ -196,9 +201,14 @@ const LectureRoom = () => {
         </CommonModal>
       ) : null}
 
-      <Table header={tableHeader} data={data} hasPage={true} maxPage={5}>
-        {data.map(item => {
-          console.log(item);
+      <Table
+        header={tableHeader}
+        data={data?.lectureRoom}
+        hasPage={true}
+        maxPage={data?.page?.maxPage}
+        pending={pending}
+      >
+        {data?.lectureRoom?.map(item => {
           return (
             <div key={item.ilectureRoom}>
               <div>

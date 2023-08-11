@@ -8,26 +8,28 @@ import axios from 'axios';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
+import api from '../../api/api';
 
 const Major = () => {
   ////SearchBar////
-  //검색 시 사용할 쿼리스트링(상태)
-  const situation = useState([]);
 
-  //검색 시 사용할 쿼리스트링(전공명)
-  const majorN = useState([]);
-
+  // 전공명 state
+  const [majorName, setMajorName] = useState('');
+  //전공명 상태 state
+  const [delYn, setDelYn] = useState(null);
   //검색 시 사용할 쿼리스트링목록
-  const queries = { situation, majorN };
+  const queries = { majorName, delYn };
 
   //검색버튼 클릭시 state 변경 함수
   const [click, setClick] = useState(false);
 
   ////DropDown////
   //DropDown value state
-  const [statusValue, setStatusValue] = useState(null);
 
-  // 상태 임시 데이터
+  //졸업학점
+  const [graduationScore, setGraduationScore] = useState('');
+
+  // 상태 데이터
   const _status = [
     {
       id: '0',
@@ -51,6 +53,9 @@ const Major = () => {
   //전공명 imajor
   const [imajor, setImajor] = useState(null);
 
+  //전공추가 시 전공명
+  const [newMajorName, setNewMajorName] = useState('');
+
   //모달창 활성화
   const [showModal, setShowModal] = useState(false);
 
@@ -68,7 +73,7 @@ const Major = () => {
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
-  //console.log(allMajorList);
+  console.log(allMajorList);
 
   //전공명 state
   const [majorId, setMajorId] = useState();
@@ -148,7 +153,26 @@ const Major = () => {
       setMajorId(_majorId);
     }
   };
-  //api test
+
+  //api post test
+  const MajorPostTest = async (newMajorName, graduationScore) => {
+    const headers = { 'Content-Type': 'application/json' };
+    const postData = {
+      majorName: newMajorName,
+      graduationScore: parseInt(graduationScore),
+    };
+    try {
+      const res = await api.post(
+        `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(graduationScore)}`,
+        { headers }
+      );
+      const result = res.data;
+      console.log('제발 나와', result);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  //api delete test
   const MajorDeleteTest = async _id => {
     try {
       const res = await axios.delete(`/api/major?imajor=${_id}`);
@@ -190,6 +214,7 @@ const Major = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
+    MajorPostTest(newMajorName, graduationScore);
   };
 
   //commonModal close state
@@ -244,8 +269,8 @@ const Major = () => {
         <Dropdown
           placeholder="상태"
           data={_status}
-          value={statusValue}
-          setValue={setStatusValue}
+          value={delYn}
+          setValue={setDelYn}
           reset={true}
           search={true}
         />
@@ -254,8 +279,8 @@ const Major = () => {
           placeholder="전공명"
           data={allMajorList}
           propertyName={{ key: 'imajor', value: 'majorName' }}
-          value={imajor}
-          setValue={setImajor}
+          value={majorName}
+          setValue={setMajorName}
           reset
           search
         />
@@ -272,27 +297,48 @@ const Major = () => {
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '45px',
               alignItems: 'center',
+              justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 25px',
             }}
           >
-            <p>전공명</p> <Input type="text" length="long" />
+            <p>전공명</p>
+            <div style={{ marginLeft: '40px' }}>
+              <Input
+                type="text"
+                length="long"
+                value={newMajorName}
+                setValue={e => setNewMajorName(e.target.value)}
+              />
+            </div>
           </div>
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '25px',
               alignItems: 'center',
-
+              justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 25px',
             }}
           >
-            <p>졸업학점</p> <Input type="number" length="short" />
+            <p>졸업학점</p>
+            <div style={{ marginLeft: '40px' }}>
+              <Input
+                type="number"
+                length="short"
+                value={graduationScore}
+                setValue={e => setGraduationScore(e.target.value)}
+              />
+            </div>
           </div>
         </CommonModal>
       ) : null}
-      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={5} pending={pending}>
+      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={6} pending={pending}>
         {isDataArr.map((item, index) => {
           return (
             <div key={item.imajor}>
@@ -327,7 +373,9 @@ const Major = () => {
                   disabled={item.delYn}
                 ></CommonButton>
               </div>
-              <div>{item.isChange === 0 ? null : <span>{item.originName}</span>}</div>
+              <div>
+                {item.isChange === 0 ? null : <span>{item.originName.replace('구', '(구)')}</span>}
+              </div>
             </div>
           );
         })}
