@@ -33,7 +33,7 @@ const NoticeDetail = () => {
   const putBoardWait = async () => {
     setDisplay(false);
     const importance = document.getElementById('check').checked ? 1 : 0;
-    await putBoard(iboard, title, ctnt, importance);
+    await putBoard(iboard, ctnt, title, importance);
     alert('처리되었습니다');
     navigate('/admin/home/notice');
   };
