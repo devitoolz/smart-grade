@@ -196,3 +196,19 @@ export const deleteBoard = async _iboard => {
     return;
   }
 };
+// 게시판 - 게시글 수정
+export const putBoard = async (_iboard, _ctnt, _title, _importance) => {
+  const headers = { 'Content-Type': 'application/json' };
+  const putData = {
+    iboard: _iboard,
+    ctnt: _ctnt,
+    title: _title,
+    importance: _importance,
+  };
+  try {
+    //
+  } catch (err) {
+    console.log(err);
+    return;
+  }
+};

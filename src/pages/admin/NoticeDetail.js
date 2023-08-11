@@ -5,6 +5,8 @@ import { TextArea } from '../../styles/MyStyleCSS';
 import CommonButton from '../../components/CommonButton';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import Input from '../../components/Input';
+import CommonModal from '../../components/CommonModal';
+import { putBoard } from '../../api/fetch';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();
@@ -27,6 +29,13 @@ const NoticeDetail = () => {
     setTitle(data.title);
     setCtnt(data.ctnt);
   };
+  // 모달창 오픈
+  const [display, setDisplay] = useState(false);
+  const putBoardWait = () => {
+    setDisplay(false);
+    putBoard(iboard);
+  };
+
   // JSX
   return (
     <div>
@@ -41,7 +50,9 @@ const NoticeDetail = () => {
           </th>
           <th className="inputTitle">
             {!edit ? (
-              <p style={{ textAlign: 'left', fontSize: 18 }}>{data?.title}</p>
+              <p style={{ textAlign: 'left', fontSize: '18px', lineHeight: '35px' }}>
+                {data?.title}
+              </p>
             ) : (
               <Input
                 length="full"
@@ -59,12 +70,20 @@ const NoticeDetail = () => {
               <h3>상태</h3>
             </td>
             <td className="importanceCheck">
-              <input type="checkbox" id="check" disabled checked={data?.importance} />
-              {data?.importance ? (
-                <label style={{ color: 'red', fontWeight: 700 }}>중요공지</label>
-              ) : (
-                <label>일반 게시글</label>
+              {edit && (
+                <>
+                  <input type="checkbox" id="check" defaultChecked={data?.importance} />
+                  <label htmlFor="check">중요공지사항으로 올리기</label>
+                </>
               )}
+              {edit ||
+                (data?.importance ? (
+                  <label htmlFor="check" style={{ color: 'red', fontWeight: 700 }}>
+                    중요공지
+                  </label>
+                ) : (
+                  <label htmlFor="check">일반 게시글</label>
+                ))}
             </td>
           </tr>
           <tr>
@@ -93,13 +112,42 @@ const NoticeDetail = () => {
       </Ltable>
       <Wbtns>
         {!edit ? (
-          <CommonButton value="수정하기" btnType="page" onClick={() => handleEditBoard()} />
+          <>
+            <CommonButton value="수정하기" btnType="page" onClick={() => handleEditBoard()} />
+            <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(-1)} />
+          </>
         ) : (
-          <CommonButton value="취소하기" btnType="page" onClick={() => setEdit(false)} />
+          <>
+            <CommonButton
+              value="수정완료"
+              btnType="page"
+              color="blue"
+              textColor="white"
+              onClick={() => setDisplay(true)}
+            />
+            <CommonButton
+              value="취소하기"
+              btnType="page"
+              color="red"
+              textColor="white"
+              onClick={() => setEdit(false)}
+            />
+          </>
         )}
-        <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(-1)} />
       </Wbtns>
+      {display && (
+        <CommonModal
+          setDisplay={setDisplay}
+          modalSize="small"
+          modalTitle="게시글 수정"
+          handleModalOk={() => putBoardWait()}
+          handleModalCancel={() => setDisplay(false)}
+        >
+          게시글 수정을 완료하시겠습니까?
+        </CommonModal>
+      )}
     </div>
   );
 };
+
 export default NoticeDetail;

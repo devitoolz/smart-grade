@@ -283,6 +283,8 @@ export const CommonBtn = styled.button`
       : '#dff6ff'};
 
   border: none;
+  color: ${({ textColor }) => (textColor === 'white' ? '#fff' : '#7e7e7e')};
+  color: ${({ btnType }) => (btnType === 'table' ? '#fff' : null)};
   font-weight: 500;
   text-align: center;
   cursor: pointer;
