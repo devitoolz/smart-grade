@@ -41,11 +41,9 @@ const Notice = () => {
   // 일반공지+중요공지 같이 불러오기
   // 전체 notice Data 담는 list
   const [noticeData, setNoticeData] = useState([]);
-  const [url, setUrl] = useState('/api/board');
   // custom hook
-  // const url = '/api/board';
+  const url = '/api/board';
   const { data, pending, error } = useQuerySearch(url, click);
-  console.log(data);
   // 중요공지
   const urlImport = '/api/board/importanceList';
   const important = useQuerySearch(urlImport, click);
@@ -57,45 +55,6 @@ const Notice = () => {
       ? null
       : setNoticeData([...important.data, ...data.list]);
   }, [data, important.data]);
-  //
-  const [query, setQuery] = useSearchParams();
-  // useEffect(() => {
-  //   keyword ? query.set('keyword', keyword) : null;
-  //   setQuery(query);
-  // }, []);
-  useEffect(() => {
-    query.get('keyword') ? setUrl('/api/board/search') : setUrl('/api/board');
-  }, [url, click, data]);
-  // 게시글 검색
-  // const [query, setQuery] = useSearchParams();
-  // useEffect(() => {
-  //   keyword ? query.set('keyword', keyword) : null;
-  //   setQuery(query);
-  // }, []);
-  // useEffect(() => {
-  //   query.get('keyword');
-  //   setQuery(query);
-  // }, []);
-  // const searchUrl = '/api/board/search';
-  // const searchBoard = useQuerySearch(searchUrl, click);
-  // console.log(searchBoard?.data?.list);
-  // useEffect(() => {
-  //   searchBoard.data.list === [] ? null : setNoticeData([...searchBoard.data.list]);
-  // }, [searchBoard.data.list]);
-
-  //notice test list
-  // const getNoticeListLoad = async () => {
-  //   try {
-  //     const res = await getNoticeList();
-  //     return res;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getNoticeList();
-  // }, []);
 
   ////Table////
   //table header
@@ -107,10 +66,6 @@ const Notice = () => {
     { title: '조회수', width: '1' },
   ];
 
-  // const data = [
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  // ];
   const navigate = useNavigate();
 
   return (
@@ -159,10 +114,9 @@ const Notice = () => {
       >
         {noticeData.map(item => {
           return (
-            <div key={item.iboard}>
+            <div key={item.iboard} style={{ background: item.importance ? 'lavenderblush' : null }}>
               <div>{item.importance ? `[중요]` : item.iboard}</div>
               <div>{item.title}</div>
-              {/* <div>{item.createdAt}</div> */}
               <div>{item.createdAt.split('T')[0]}</div>
               <div>
                 <CommonButton

@@ -16,6 +16,7 @@ const NoticeDetail = () => {
   const [click] = useState(false);
   const url = `/api/board/${iboard}`;
   const { data } = useQuerySearch(url, click);
+  console.log(data);
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
@@ -47,26 +48,36 @@ const NoticeDetail = () => {
           <col className="detail" width={'70%'} />
         </colgroup>
         <thead>
-          <th>
-            <h3>제목</h3>
-          </th>
-          <th className="inputTitle">
-            {!edit ? (
-              <p style={{ textAlign: 'left', fontSize: '18px', lineHeight: '35px' }}>
-                {data?.title}
-              </p>
-            ) : (
-              <Input
-                length="full"
-                maxLength={20}
-                value={title}
-                reset={setTitle}
-                setValue={handleChangeTitle}
-              />
-            )}
-          </th>
+          <tr>
+            <th>
+              <h3>제목</h3>
+            </th>
+            <th className="inputTitle">
+              {!edit ? (
+                <p style={{ textAlign: 'left', fontSize: '18px', lineHeight: '35px' }}>
+                  {data?.title}
+                </p>
+              ) : (
+                <Input
+                  length="full"
+                  maxLength={20}
+                  value={title}
+                  reset={setTitle}
+                  setValue={handleChangeTitle}
+                />
+              )}
+            </th>
+          </tr>
         </thead>
         <tbody>
+          <tr>
+            <td className="statusTitle">
+              <h3>작성일자</h3>
+            </td>
+            <td className="importanceCheck">
+              <span>{data?.createdAt.split('T')[0]}</span>
+            </td>
+          </tr>
           <tr>
             <td className="statusTitle">
               <h3>상태</h3>
