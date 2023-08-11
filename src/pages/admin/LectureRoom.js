@@ -95,6 +95,9 @@ const LectureRoom = () => {
   //commonModal close state
   const handleModalCancel = () => {
     //setDisplay(false);
+    setBuildingName('');
+    setLectureRoomName('');
+    setMaxCapacity('');
   };
 
   //api delete test
@@ -151,7 +154,6 @@ const LectureRoom = () => {
             <p>장소</p>
 
             <div style={{ marginLeft: '63px' }}>
-              
               <Input
                 length="middle"
                 placeholder="건물명"

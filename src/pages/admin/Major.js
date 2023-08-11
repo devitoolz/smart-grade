@@ -220,6 +220,8 @@ const Major = () => {
   //commonModal close state
   const handleModalCancel = () => {
     //setDisplay(false);
+    setNewMajorName('');
+    setGraduationScore('');
   };
 
   // api 전공리스트 전체 보기
