@@ -82,6 +82,28 @@ export const TableMini = styled.div`
     background-color: var(--main-bg-color);
   }
 `;
+export const StudentInfo = styled.div`
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  /* 스크롤바 */
+  overflow-y: auto;
+  // 커스텀
+  &::-webkit-scrollbar {
+    width: 8px; /* 스크롤바의 너비 */
+  }
+  &::-webkit-scrollbar-thumb {
+    height: 30%; /* 스크롤바의 길이 */
+    background: rgb(193, 193, 193); /* 스크롤바의 색상 */
+    border-radius: 10px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(241, 241, 241); /*스크롤바 뒷 배경 색상*/
+  }
+`;
 export const SearchArea = styled.div`
   display: flex;
   justify-content: center;
@@ -236,14 +258,6 @@ export const ModalStyle = styled.div`
       height: 60px;
       min-height: 60px;
       text-align: center;
-      /* padding: 8px 0; */
-      /* border-top: 1px solid #dae8ff; */
-      /* ${({ modalSize }) => (modalSize === 'middle' ? '#dae8ff' : 'transparent')}; */
-      /* ${({ modalSize }) =>
-        modalSize === 'middle'
-          ? `
-        `
-          : ''}; */
       button {
         margin: 6px 20px;
         padding: 7px 24px;

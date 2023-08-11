@@ -7,21 +7,21 @@ import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { deleteBoard } from '../../api/fetch';
-import { async } from 'q';
 
 const Notice = () => {
-  ////SearchBar////
-  //SearchBar queries
-  const queries = {};
   //검색버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
   ////Input창////
   //input value값
-  const [noticeTitle, setNoticeTitle] = useState('');
+  // const [noticeTitle, setNoticeTitle] = useState('');
+  const [keyword, setKeyword] = useState('');
   //input value change 함수
   const handleChangeValue = e => {
-    setNoticeTitle(e.target.value);
+    setKeyword(e.target.value);
   };
+  ////SearchBar////
+  //SearchBar queries
+  const queries = { keyword };
 
   //삭제모달 창 활성화 여부
   const [deleteModalShow, setDeleteModalShow] = useState(false);
@@ -37,13 +37,13 @@ const Notice = () => {
     window.location.reload();
   };
 
+  // 공지사항
   // 일반공지+중요공지 같이 불러오기
   // 전체 notice Data 담는 list
   const [noticeData, setNoticeData] = useState([]);
   // custom hook
   const url = '/api/board';
-  const { data, pending } = useQuerySearch(url, click);
-  console.log(data);
+  const { data, pending, error } = useQuerySearch(url, click);
   // 중요공지
   const urlImport = '/api/board/importanceList';
   const important = useQuerySearch(urlImport, click);
@@ -56,20 +56,6 @@ const Notice = () => {
       : setNoticeData([...important.data, ...data.list]);
   }, [data, important.data]);
 
-  //notice test list
-  // const getNoticeListLoad = async () => {
-  //   try {
-  //     const res = await getNoticeList();
-  //     return res;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   getNoticeList();
-  // }, []);
-
   ////Table////
   //table header
   const tableHeader = [
@@ -80,10 +66,6 @@ const Notice = () => {
     { title: '조회수', width: '1' },
   ];
 
-  // const data = [
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  //   { iboard: 1, _title: '서문, 북문 포교행위자 주의 바랍니다.', createdAt: '0000-00-00', gg: 1 },
-  // ];
   const navigate = useNavigate();
 
   return (
@@ -93,9 +75,9 @@ const Notice = () => {
           length="long"
           type="text"
           placeholder="제목"
-          value={noticeTitle}
+          value={keyword}
           setValue={handleChangeValue}
-          reset={setNoticeTitle}
+          reset={setKeyword}
           maxLength={20}
         />
       </SearchBar>
@@ -128,13 +110,14 @@ const Notice = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {noticeData.map(item => {
           return (
-            <div key={item.iboard}>
+            <div key={item.iboard} style={{ background: item.importance ? 'lavenderblush' : null }}>
               <div>{item.importance ? `[중요]` : item.iboard}</div>
               <div>{item.title}</div>
-              <div>{item.createdAt}</div>
+              <div>{item.createdAt.split('T')[0]}</div>
               <div>
                 <CommonButton
                   btnType="table"

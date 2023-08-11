@@ -17,18 +17,14 @@ const Approval = () => {
   // 승인 및 거절 선택 여부
   const [procedureState, setProcedureState] = useState(0);
   const handleRejectLecture = _item => {
-    console.log('Reject');
     setContents(_item);
     setProcedureState(0);
-    console.log(_item);
     setDisplay(true);
     setIsAccept(false);
   };
   const handleAcceptLecture = _item => {
-    console.log('Accept');
     setContents(_item);
     setProcedureState(_item.procedures);
-    console.log(_item);
     setDisplay(true);
     setIsAccept(true);
   };
@@ -59,20 +55,14 @@ const Approval = () => {
   };
   // 모달 버튼 클릭이벤트
   const handleModalOk = async () => {
-    console.log(contents);
-    console.log('modal click - ok');
-    // procedure = 0 이면 요청 거절
-    // procedureState ? console.log('승인') : await patchRejectLectureWait(contents.ilecture, reason);
     switch (procedureState) {
       case 0:
         await patchRejectLectureWait(contents.ilecture, reason);
         break;
       case 1:
-        console.log('개설 승인');
         await patchApproveLectureWait(contents.ilecture, procedureState);
         break;
       case 2:
-        console.log('개강 승인');
         await patchApproveLectureWait(contents.ilecture, procedureState);
         break;
       default:
@@ -82,29 +72,18 @@ const Approval = () => {
     window.location.reload();
   };
   const handleModalCancel = () => {
-    console.log(contents);
-    console.log('modal click - no');
     setReason('');
   };
-  /* 서버 데이터 연동 테스트 - 테이블에 정보 불러오기 */
-  // const [tableDatas, setTableDatas] = useState([]);
-  // const getApprovalData = async () => {
-  //   await handleGetApprovalLecture(setTableDatas);
-  // };
-  // useEffect(() => {
-  //   getApprovalData();
-  // }, []);
-  // const [pending, setPending] = useState(false);
+
   // 쿼리
   const [click, setClick] = useState(false);
-  // const queries = { lectureStatus, lectureName, professorName };
   const [query, setQuery] = useSearchParams();
   useEffect(() => {
     query.set('procedures', -2);
     setQuery(query);
   }, []);
   const url = '/api/admin/lecture';
-  const { data, pending } = useQuerySearch(url, click, '&procedures=-2');
+  const { data, pending, error } = useQuerySearch(url, click, '&procedures=-2');
 
   // textarea
   const [reason, setReason] = useState('');
@@ -146,18 +125,6 @@ const Approval = () => {
           reset={true}
         />
       </SearchBar>
-      {/* <div
-        style={{
-          width: '100%',
-          height: '95px',
-          background: 'var(--search-bg-color)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        강의 개설 요청 승인
-      </div> */}
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
       <Table
         header={tableHeader}
@@ -165,6 +132,7 @@ const Approval = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.lectures?.map((item, idx) => {
           return (

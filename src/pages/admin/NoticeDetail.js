@@ -1,4 +1,4 @@
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Ltable, Wbtns } from '../../styles/LectureRoomCss';
 import { TextArea } from '../../styles/MyStyleCSS';
@@ -16,7 +16,6 @@ const NoticeDetail = () => {
   const [click] = useState(false);
   const url = `/api/board/${iboard}`;
   const { data } = useQuerySearch(url, click);
-  console.log(data);
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
@@ -31,9 +30,12 @@ const NoticeDetail = () => {
   };
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
-  const putBoardWait = () => {
+  const putBoardWait = async () => {
     setDisplay(false);
-    putBoard(iboard);
+    const importance = document.getElementById('check').checked ? 1 : 0;
+    await putBoard(iboard, ctnt, title, importance);
+    alert('처리되었습니다');
+    navigate('/admin/home/notice');
   };
 
   // JSX
@@ -45,26 +47,36 @@ const NoticeDetail = () => {
           <col className="detail" width={'70%'} />
         </colgroup>
         <thead>
-          <th>
-            <h3>제목</h3>
-          </th>
-          <th className="inputTitle">
-            {!edit ? (
-              <p style={{ textAlign: 'left', fontSize: '18px', lineHeight: '35px' }}>
-                {data?.title}
-              </p>
-            ) : (
-              <Input
-                length="full"
-                maxLength={20}
-                value={title}
-                reset={setTitle}
-                setValue={handleChangeTitle}
-              />
-            )}
-          </th>
+          <tr>
+            <th>
+              <h3>제목</h3>
+            </th>
+            <th className="inputTitle">
+              {!edit ? (
+                <p style={{ textAlign: 'left', fontSize: '18px', lineHeight: '35px' }}>
+                  {data?.title}
+                </p>
+              ) : (
+                <Input
+                  length="full"
+                  maxLength={20}
+                  value={title}
+                  reset={setTitle}
+                  setValue={handleChangeTitle}
+                />
+              )}
+            </th>
+          </tr>
         </thead>
         <tbody>
+          <tr>
+            <td className="statusTitle">
+              <h3>작성일자</h3>
+            </td>
+            <td className="importanceCheck">
+              <span>{data?.createdAt.split('T')[0]}</span>
+            </td>
+          </tr>
           <tr>
             <td className="statusTitle">
               <h3>상태</h3>

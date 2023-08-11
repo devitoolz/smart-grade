@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NoDatas, TableMini } from '../../styles/MyStyleCSS';
+import { NoDatas, TableMini, StudentInfo } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
@@ -48,7 +48,7 @@ const Grade = () => {
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
   const url = '/api/admin/grade';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   //
   // 학생 상세 정보 모달창
@@ -75,7 +75,7 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {data?.avgVo1 === null || data === null ? (
+      {data?.student === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
@@ -93,6 +93,7 @@ const Grade = () => {
         hasPage={true}
         maxPage={data?.page.maxPage}
         pending={pending}
+        error={error}
       >
         {(data?.voList || Array(10).fill('')).map((item, idx) => {
           return (
@@ -115,17 +116,7 @@ const Grade = () => {
           modalTitle={`${data?.student?.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
-          <div
-            style={{
-              padding: 20,
-              width: '100%',
-              height: '100%',
-              overflowY: 'auto',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 20,
-            }}
-          >
+          <StudentInfo>
             <div style={{ display: 'flex' }}>
               <TableMini>
                 <div className="table-head-m">
@@ -174,19 +165,17 @@ const Grade = () => {
                 <div>{studentDetail.phone}</div>
               </Row>
             </FormTable>
-            {/* <div>
-              학생이 들은 학점 = {studentDetail.scoreStudent} <br />
-              졸업에 필요 학점 = {studentDetail.graduationScore}
-            </div> */}
-            <CommonButton
-              btnType="modal"
-              value="상세정보"
-              onClick={() => {
-                setDisplay(false);
-                navigate(`/admin/user/students/${data.student.istudent}`);
-              }}
-            />
-          </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <CommonButton
+                btnType="modal"
+                value="상세정보"
+                onClick={() => {
+                  setDisplay(false);
+                  navigate(`/admin/user/students/${data.student.istudent}`);
+                }}
+              />
+            </div>
+          </StudentInfo>
         </CommonModal>
       )}
     </>
