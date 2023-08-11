@@ -104,7 +104,7 @@ const Approval = () => {
     setQuery(query);
   }, []);
   const url = '/api/admin/lecture';
-  const { data, pending } = useQuerySearch(url, click, '&procedures=-2');
+  const { data, pending, error } = useQuerySearch(url, click, '&procedures=-2');
 
   // textarea
   const [reason, setReason] = useState('');
@@ -165,6 +165,7 @@ const Approval = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.lectures?.map((item, idx) => {
           return (

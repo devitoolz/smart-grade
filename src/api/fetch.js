@@ -1,10 +1,10 @@
-import axios from 'axios';
+import api from './api';
 
 // 통합 강의 관리 - 강의리스트 불러오기
 export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
   // try...catch
   try {
-    const res = await axios.get(`/api/admin/lecture?page=${_pageIdx}`);
+    const res = await api.get(`/api/admin/lecture?page=${_pageIdx}`);
     const result = await res.data;
     // console.log('통신 데이터 : ', result);
     // console.log('max page : ', result.page.maxPage);
@@ -38,7 +38,7 @@ export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
 // 해당 강의 수강 학생 리스트 출력
 export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
-    const res = await axios.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
+    const res = await api.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
     const result = res.data;
     return result;
   } catch (err) {
@@ -50,7 +50,7 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
 export const handleGetApprovalLecture = async _setFunc => {
   // try...catch
   try {
-    const res = await axios.get('/api/admin/lecture?procedures=-2');
+    const res = await api.get('/api/admin/lecture?procedures=-2');
     const result = await res.data;
     console.log('통신 데이터 : ', result);
     console.log('강의리스트 : ', result.lectures);
@@ -96,7 +96,7 @@ export const patchRejectLecture = async (_ilecture, reason) => {
     procedures: 0,
   };
   try {
-    const res = await axios.patch(`/api/admin/lecture`, patchData, { headers });
+    const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
     const result = res.data;
     console.log(result);
     return result;
@@ -114,7 +114,7 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
     procedures: _procedure + 1,
   };
   try {
-    const res = await axios.patch(`/api/admin/lecture`, patchData, { headers });
+    const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
     const result = res.data;
     console.log(result);
     return result;
@@ -126,7 +126,7 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
 // 통합 성적관리 - 특정 학생의 성적 검색
 export const getStudentGrade = async _setFunc => {
   try {
-    const res = await axios.get(`/api/admin/grade?studentNum=23100001`);
+    const res = await api.get(`/api/admin/grade?studentNum=23100001`);
     const result = res.data;
     console.log(result.voList);
     await _setFunc(result.voList);
@@ -138,7 +138,7 @@ export const getStudentGrade = async _setFunc => {
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
 export const getStudentInfo = async (_istudent, _setFunc) => {
   try {
-    const res = await axios.get(`/api/admin/grade/${_istudent}`);
+    const res = await api.get(`/api/admin/grade/${_istudent}`);
     const result = await res.data;
     _setFunc(result);
   } catch (err) {
@@ -165,7 +165,7 @@ export const postBoard = async (_title, _contents, _isChecked) => {
     })
   );
   try {
-    const res = await axios.post(`/api/board`, postData, { headers });
+    const res = await api.post(`/api/board`, postData, { headers });
     const result = res.data;
     console.log(result);
     return result;
@@ -178,7 +178,7 @@ export const postBoard = async (_title, _contents, _isChecked) => {
 // 게시판 - 중요 공지사항 불러오기
 export const getImportantBoard = async _setFunc => {
   try {
-    const res = await axios.get('/api/board/importanceList');
+    const res = await api.get('/api/board/importanceList');
     const result = await res.data;
     _setFunc(result);
   } catch (err) {
@@ -189,7 +189,7 @@ export const getImportantBoard = async _setFunc => {
 // 게시판 - 게시판 글 삭제
 export const deleteBoard = async _iboard => {
   try {
-    await axios.delete(`/api/board/${_iboard}`);
+    await api.delete(`/api/board/${_iboard}`);
     console.log('삭제 완');
   } catch (err) {
     console.log(err);

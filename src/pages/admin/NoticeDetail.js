@@ -33,7 +33,7 @@ const NoticeDetail = () => {
   const [display, setDisplay] = useState(false);
   const putBoardWait = () => {
     setDisplay(false);
-    putBoard(iboard);
+    putBoard(iboard, title, ctnt);
   };
 
   // JSX

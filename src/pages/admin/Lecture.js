@@ -93,7 +93,7 @@ const Lecture = () => {
   const queries = { procedures, lectureName, nm };
   const url = '/api/admin/lecture';
 
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   // 서버연동 테스트 - 테이블에 정보 불러오기
   // const [tableDatas, setTableDatas] = useState([]);
@@ -164,6 +164,7 @@ const Lecture = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.lectures.map((item, idx) => {
           return (

@@ -42,7 +42,7 @@ const Notice = () => {
   const [noticeData, setNoticeData] = useState([]);
   // custom hook
   const url = '/api/board';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
   console.log(data);
   // 중요공지
   const urlImport = '/api/board/importanceList';
@@ -128,6 +128,7 @@ const Notice = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {noticeData.map(item => {
           return (

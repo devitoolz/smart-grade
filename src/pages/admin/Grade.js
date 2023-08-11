@@ -48,7 +48,7 @@ const Grade = () => {
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
   const url = '/api/admin/grade';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   //
   // 학생 상세 정보 모달창
@@ -75,7 +75,7 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {data?.avgVo1 === null || data === null ? (
+      {data?.student === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
@@ -93,6 +93,7 @@ const Grade = () => {
         hasPage={true}
         maxPage={data?.page.maxPage}
         pending={pending}
+        error={error}
       >
         {(data?.voList || Array(10).fill('')).map((item, idx) => {
           return (
