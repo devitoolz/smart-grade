@@ -24,9 +24,11 @@ const Major = () => {
 
   ////DropDown////
   //DropDown value state
-  const [statusValue, setStatusValue] = useState(null);
 
-  // 상태 임시 데이터
+  //졸업학점
+  const [graduationScore, setGraduationScore] = useState('');
+
+  // 상태 데이터
   const _status = [
     {
       id: '0',
@@ -243,8 +245,8 @@ const Major = () => {
         <Dropdown
           placeholder="상태"
           data={_status}
-          value={statusValue}
-          setValue={setStatusValue}
+          value={delYn}
+          setValue={setDelYn}
           reset={true}
           search={true}
         />
@@ -253,8 +255,8 @@ const Major = () => {
           placeholder="전공명"
           data={allMajorList}
           propertyName={{ key: 'imajor', value: 'majorName' }}
-          value={imajor}
-          setValue={setImajor}
+          value={majorName}
+          setValue={setMajorName}
           reset
           search
         />
@@ -279,9 +281,14 @@ const Major = () => {
               padding: '15px 25px',
             }}
           >
-            <p>전공명</p>{' '}
+            <p>전공명</p>
             <div style={{ marginLeft: '40px' }}>
-              <Input type="text" length="long" />
+              <Input
+                type="text"
+                length="long"
+                value={imajor}
+                setValue={e => setImajor(e.target.value)}
+              />
             </div>
           </div>
           <div
@@ -297,7 +304,12 @@ const Major = () => {
           >
             <p>졸업학점</p>
             <div style={{ marginLeft: '40px' }}>
-              <Input type="number" length="short" />{' '}
+              <Input
+                type="number"
+                length="short"
+                value={graduationScore}
+                setValue={e => setGraduationScore(e.target.value)}
+              />
             </div>
           </div>
         </CommonModal>

@@ -151,7 +151,7 @@ const LectureRoom = () => {
             <p>장소</p>
 
             <div style={{ marginLeft: '63px' }}>
-              {' '}
+              
               <Input
                 length="middle"
                 placeholder="건물명"
