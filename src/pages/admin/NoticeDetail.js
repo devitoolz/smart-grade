@@ -16,7 +16,6 @@ const NoticeDetail = () => {
   const [click] = useState(false);
   const url = `/api/board/${iboard}`;
   const { data } = useQuerySearch(url, click);
-  console.log(data);
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
@@ -31,9 +30,12 @@ const NoticeDetail = () => {
   };
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
-  const putBoardWait = () => {
+  const putBoardWait = async () => {
     setDisplay(false);
-    putBoard(iboard, title, ctnt);
+    const importance = document.getElementById('check').checked ? 1 : 0;
+    await putBoard(iboard, title, ctnt, importance);
+    alert('처리되었습니다');
+    navigate('/admin/home/notice');
   };
 
   // JSX

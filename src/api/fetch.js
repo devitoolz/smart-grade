@@ -13,25 +13,7 @@ export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
     return result.lectures;
   } catch (error) {
     console.log(error);
-    // 임시 더미 데이터
-    return [
-      {
-        buildingNm: '백매관',
-        currentPeople: 5,
-        delYn: 0,
-        endDate: '2023-06-30',
-        endTime: '10:00:00',
-        ilecture: 4,
-        isemester: 21,
-        lectureNm: '물리학1',
-        lectureRoomNm: '503호',
-        maxPeople: 27,
-        nm: '김재경',
-        procedures: 0,
-        strDate: '2023-03-04',
-        strTime: '09:00:00',
-      },
-    ];
+    return;
   }
 };
 
@@ -52,43 +34,15 @@ export const handleGetApprovalLecture = async _setFunc => {
   try {
     const res = await api.get('/api/admin/lecture?procedures=-2');
     const result = await res.data;
-    console.log('통신 데이터 : ', result);
-    console.log('강의리스트 : ', result.lectures);
-    // console.log('max page : ', result.page.maxPage);
-    // const approvalList = [];
-    // await result.lectures.forEach(item => {
-    //   if (item.procedures !== 3 && item.procedures !== 0) approvalList.push(item);
-    // });
     _setFunc(result.lectures);
     return result;
   } catch (error) {
     console.log(error);
-    // 임시 더미 데이터
-    return [
-      {
-        buildingNm: '백매관',
-        currentPeople: 5,
-        delYn: 0,
-        endDate: '2023-06-30',
-        endTime: '10:00:00',
-        ilecture: 4,
-        isemester: 21,
-        lectureNm: '물리학1',
-        lectureRoomNm: '503호',
-        maxPeople: 27,
-        nm: '김재경',
-        procedures: 0,
-        strDate: '2023-03-04',
-        strTime: '09:00:00',
-      },
-    ];
+    return;
   }
 };
 // 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
 export const patchRejectLecture = async (_ilecture, reason) => {
-  console.log('개설 거절 사유 입력');
-  console.log(_ilecture);
-  console.log(reason);
   const headers = { 'Content-Type': 'application/json' };
   const patchData = {
     ilecture: _ilecture,
@@ -98,7 +52,6 @@ export const patchRejectLecture = async (_ilecture, reason) => {
   try {
     const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
     const result = res.data;
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -106,8 +59,6 @@ export const patchRejectLecture = async (_ilecture, reason) => {
 };
 // 강의 개설+개강 요청 승인페이지 >> 승인
 export const patchApproveLecture = async (_ilecture, _procedure) => {
-  console.log('요청 승인');
-  console.log(_ilecture);
   const headers = { 'Content-Type': 'application/json' };
   const patchData = {
     ilecture: _ilecture,
@@ -116,7 +67,6 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
   try {
     const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
     const result = res.data;
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -127,8 +77,7 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
 export const getStudentGrade = async _setFunc => {
   try {
     const res = await api.get(`/api/admin/grade?studentNum=23100001`);
-    const result = res.data;
-    console.log(result.voList);
+    const result = await res.data;
     await _setFunc(result.voList);
     return result;
   } catch (err) {
@@ -167,7 +116,6 @@ export const postBoard = async (_title, _contents, _isChecked) => {
   try {
     const res = await api.post(`/api/board`, postData, { headers });
     const result = res.data;
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
@@ -190,7 +138,6 @@ export const getImportantBoard = async _setFunc => {
 export const deleteBoard = async _iboard => {
   try {
     await api.delete(`/api/board/${_iboard}`);
-    console.log('삭제 완');
   } catch (err) {
     console.log(err);
     return;
@@ -206,7 +153,7 @@ export const putBoard = async (_iboard, _ctnt, _title, _importance) => {
     importance: _importance,
   };
   try {
-    //
+    await api.put(`/api/board`, putData, { headers });
   } catch (err) {
     console.log(err);
     return;
