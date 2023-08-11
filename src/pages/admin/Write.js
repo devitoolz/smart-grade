@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Ltable, Wbtns } from '../../styles/LectureRoomCss';
 import Input from '../../components/Input';
-import { Layout } from '../../styles/CommonStyle';
-import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import { useNavigate } from 'react-router-dom';
@@ -23,10 +21,6 @@ const Write = () => {
   //제목 인풋창?
   const handleTitle = e => {
     setTitle(e.target.value);
-  };
-  //임시
-  const gogo = () => {
-    console.log(gogo);
   };
 
   //저장 버튼 클릭시 모달오픈 여부

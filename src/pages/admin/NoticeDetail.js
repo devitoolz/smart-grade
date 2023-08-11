@@ -1,4 +1,4 @@
-import { useSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Ltable, Wbtns } from '../../styles/LectureRoomCss';
 import { TextArea } from '../../styles/MyStyleCSS';
@@ -16,7 +16,6 @@ const NoticeDetail = () => {
   const [click] = useState(false);
   const url = `/api/board/${iboard}`;
   const { data } = useQuerySearch(url, click);
-  console.log(data);
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
