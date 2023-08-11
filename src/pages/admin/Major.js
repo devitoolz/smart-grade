@@ -11,14 +11,13 @@ import { useSelector } from 'react-redux';
 
 const Major = () => {
   ////SearchBar////
-  //검색 시 사용할 쿼리스트링(상태)
-  const situation = useState([]);
 
-  //검색 시 사용할 쿼리스트링(전공명)
-  const majorN = useState([]);
-
+  // 전공명 state
+  const [majorName, setMajorName] = useState('');
+  //전공명 상태 state
+  const [delYn, setDelYn] = useState(null);
   //검색 시 사용할 쿼리스트링목록
-  const queries = { situation, majorN };
+  const queries = { majorName, delYn };
 
   //검색버튼 클릭시 state 변경 함수
   const [click, setClick] = useState(false);
@@ -68,7 +67,7 @@ const Major = () => {
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
-  //console.log(allMajorList);
+  console.log(allMajorList);
 
   //전공명 state
   const [majorId, setMajorId] = useState();
@@ -272,23 +271,34 @@ const Major = () => {
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '45px',
               alignItems: 'center',
+              justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 25px',
             }}
           >
-            <p>전공명</p> <Input type="text" length="long" />
+            <p>전공명</p>{' '}
+            <div style={{ marginLeft: '40px' }}>
+              <Input type="text" length="long" />
+            </div>
           </div>
           <div
             style={{
               display: 'flex',
-              gap: '15px',
+              gap: '25px',
               alignItems: 'center',
-
+              justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
+              width: '100%',
+              padding: '15px 25px',
             }}
           >
-            <p>졸업학점</p> <Input type="number" length="short" />
+            <p>졸업학점</p>
+            <div style={{ marginLeft: '40px' }}>
+              <Input type="number" length="short" />{' '}
+            </div>
           </div>
         </CommonModal>
       ) : null}
@@ -327,7 +337,9 @@ const Major = () => {
                   disabled={item.delYn}
                 ></CommonButton>
               </div>
-              <div>{item.isChange === 0 ? null : <span>{item.originName}</span>}</div>
+              <div>
+                {item.isChange === 0 ? null : <span>{item.originName.replace('구', '(구)')}</span>}
+              </div>
             </div>
           );
         })}
