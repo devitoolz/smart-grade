@@ -19,56 +19,73 @@ const Interceptor = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    api.interceptors.request.use(
-      config => {
-        const accessToken = getCookie('accessToken');
-        if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
+  const removeAuth = () => {
+    removeCookie('accessToken');
+    removeCookie('refreshToken');
+  };
 
-        // if (config.method === 'post') {
-        //   dispatch(main.setIsPosting(true));
-        // }
+  const requestInterceptor = api.interceptors.request.use(
+    config => {
+      const accessToken = getCookie('accessToken');
+      if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
 
-        return config;
-      },
-      error => {
-        return Promise.reject(error);
-      }
-    );
+      // if (config.method === 'post') {
+      //   dispatch(main.setIsPosting(true));
+      // }
+      return config;
+    },
+    error => {
+      return Promise.reject(error);
+    }
+  );
 
-    api.interceptors.response.use(
-      response => {
-        return response;
-      },
-      async error => {
-        const {
-          config,
-          response: { status },
-        } = error;
+  const responseInterceptor = api.interceptors.response.use(
+    response => {
+      return response;
+    },
+    async error => {
+      const {
+        config,
+        response: { status },
+      } = error;
 
-        const refreshToken = getCookie('refreshToken');
+      const refreshToken = getCookie('refreshToken');
 
-        if (status === 401 && refreshToken) {
-          console.log('토큰 만료! 갱신 시도');
-          try {
-            const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
-            const accessToken = data.accessToken;
-            setCookie('accessToken', accessToken);
-            setCookie('refreshToken', data.refreshToken);
-            config.headers.Authorization = `Bearer ${accessToken}`;
-            return axios(config);
-          } catch (error) {
-            console.log('인증 실패 로그아웃');
-            console.log(error);
-            removeCookie('accessToken');
-            removeCookie('refreshToken');
-            navigate('/');
-          }
+      if (status === 401 && refreshToken) {
+        console.log('토큰 만료! 갱신 시도');
+        try {
+          const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
+          console.log('갱신 성공');
+          const accessToken = data.accessToken;
+          setCookie('accessToken', accessToken);
+          setCookie('refreshToken', data.refreshToken);
+          config.headers.Authorization = `Bearer ${accessToken}`;
+          return axios(config);
+        } catch (error) {
+          console.log('토큰 갱신 실패, 토큰 삭제');
+          removeAuth();
+          alert('인증에 실패하여 로그인 페이지로 이동합니다.');
+          // navigate('/');
         }
-        return Promise.reject(error);
       }
-    );
-  }, []);
+
+      if (status === 401 && !refreshToken) {
+        console.log('토큰 없음, 토큰 삭제');
+        removeAuth();
+        alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
+        // navigate('/');
+      }
+
+      return Promise.reject(error);
+    }
+  );
+
+  useEffect(() => {
+    return () => {
+      api.interceptors.request.eject(requestInterceptor);
+      api.interceptors.response.eject(responseInterceptor);
+    };
+  }, [responseInterceptor, requestInterceptor]);
 
   return children;
 };

@@ -24,6 +24,7 @@ import adminImg from '../images/admin.png';
 import adminActiveImg from '../images/admin_active.png';
 import RoleRadioButton from '../components/RoleRadioButton';
 import OTPAuth from '../components/OTPAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const initialState = {
@@ -33,6 +34,8 @@ const Login = () => {
   };
   const [payload, setPayload] = useState(initialState);
   const [openOTP, setOpenOTP] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleRoleChange = e => {
     setPayload({ ...payload, role: e.target.value });
@@ -56,6 +59,9 @@ const Login = () => {
       } else {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
+        if (payload.role === 'ROLE_ADMIN') {
+          navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
+        }
       }
     } catch (err) {
       console.log(err);

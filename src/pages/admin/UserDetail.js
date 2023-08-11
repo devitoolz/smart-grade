@@ -24,8 +24,6 @@ import {
   faPencil,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
-import professorImg from '../../images/professor.png';
-import studentImg from '../../images/student.png';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -136,11 +134,7 @@ const UserDetail = () => {
       </TopLayout>
       <MiddleLayout>
         <ProfileImage>
-          {userDetail?.pic ? (
-            <img src={img} alt="프로필 이미지" />
-          ) : (
-            <FontAwesomeIcon icon={faUser} />
-          )}
+          {img ? <img src={img} alt="프로필 이미지" /> : <FontAwesomeIcon icon={faUser} />}
         </ProfileImage>
         <LectureTableLayout>
           <div className="lecture-table-header">

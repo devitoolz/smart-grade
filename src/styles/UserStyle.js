@@ -45,6 +45,8 @@ const ImageUpload = styled.div`
 `;
 
 const ProfileImage = styled.div`
+  border: 1px solid var(--table-border-color);
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -63,6 +65,57 @@ const ProfileImage = styled.div`
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+`;
+
+const ModifyImage = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(2px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  input {
+    position: absolute;
+    width: 100%;
+    visibility: hidden;
+  }
+  > label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+    padding: 0 10px;
+    height: 35px;
+    background: var(--primary-color);
+    color: var(--white);
+    > svg {
+      width: 20px;
+      padding-right: 10px;
+    }
+  }
+`;
+
+const CancelModifyButton = styled.span`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  font-size: 16px;
+  border-radius: 5px;
+  padding: 0 10px;
+  height: 35px;
+  background: var(--negative-color);
+  color: var(--white);
+  > svg {
+    width: 20px;
+    padding-right: 10px;
   }
 `;
 
@@ -222,6 +275,8 @@ export {
   NoticeContainer,
   ImageUpload,
   ProfileImage,
+  ModifyImage,
+  CancelModifyButton,
   ButtonContainer,
   Button,
   LectureTableLayout,
