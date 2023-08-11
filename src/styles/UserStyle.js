@@ -268,6 +268,18 @@ const Row = styled.div`
   }
 `;
 
+const PasswordForm = styled.form`
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  font-size: 16px;
+  gap: 15px;
+  > label {
+    display: flex;
+    align-items: center;
+  }
+`;
+
 export {
   UserLayout,
   TopLayout,
@@ -282,4 +294,5 @@ export {
   LectureTableLayout,
   FormTable,
   Row,
+  PasswordForm,
 };

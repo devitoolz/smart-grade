@@ -23,6 +23,7 @@ const Input = ({
         maxLength={maxLength}
         value={value}
         onChange={setValue}
+        autoComplete="off"
       />
       {!disabled && reset && <FontAwesomeIcon onClick={() => reset('')} icon={faCircleXmark} />}
     </CustomInput>

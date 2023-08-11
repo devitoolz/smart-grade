@@ -62,18 +62,16 @@ const Interceptor = ({ children }) => {
           config.headers.Authorization = `Bearer ${accessToken}`;
           return axios(config);
         } catch (error) {
-          console.log('토큰 갱신 실패, 토큰 삭제');
           removeAuth();
           alert('인증에 실패하여 로그인 페이지로 이동합니다.');
-          // navigate('/');
+          navigate('/');
         }
       }
 
       if (status === 401 && !refreshToken) {
-        console.log('토큰 없음, 토큰 삭제');
         removeAuth();
         alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
-        // navigate('/');
+        navigate('/');
       }
 
       return Promise.reject(error);

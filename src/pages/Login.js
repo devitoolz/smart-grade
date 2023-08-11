@@ -66,7 +66,7 @@ const Login = () => {
         if (payload.role === 'ROLE_ADMIN') {
           navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
         } else {
-          console.log('학생/교수 최초 로그인');
+          console.log('최초 로그인');
           navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);
         }
       }
