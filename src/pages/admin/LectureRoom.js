@@ -143,16 +143,15 @@ const LectureRoom = () => {
           <div
             style={{
               display: 'flex',
-              gap: '45px',
+              gap: '10px',
               justifyContent: 'flex-start',
               alignItems: 'center',
               borderBottom: '1px solid #dae8ff',
               width: '100%',
-              padding: '15px 25px',
+              padding: '15px 59px',
             }}
           >
             <p>장소</p>
-
             <div style={{ marginLeft: '63px' }}>
               <Input
                 length="middle"
@@ -164,10 +163,10 @@ const LectureRoom = () => {
             <Input
               type="number"
               length="short"
-              placeholder="호"
               value={lectureRoomName}
               setValue={e => setLectureRoomName(e.target.value)}
             />
+            <p>호</p>
           </div>
           <div
             style={{
@@ -180,7 +179,7 @@ const LectureRoom = () => {
               padding: '15px 20px',
             }}
           >
-            <p>최대수용인원</p>{' '}
+            <p>최대수용인원</p>
             <Input
               type="number"
               length="middle"
@@ -214,7 +213,10 @@ const LectureRoom = () => {
           return (
             <div key={item.ilectureRoom}>
               <div>
-                {item.buildingName} {item.lectureRoomName}
+                {item.buildingName}
+                {item.lectureRoomName.includes('호') === false
+                  ? item.lectureRoomName.concat('호')
+                  : null}
               </div>
               <div>{item.maxCapacity}</div>
               <div>
