@@ -20,6 +20,7 @@ const MiddleLayout = styled.div`
 `;
 
 const NoticeContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   ${({ right }) => right && 'align-items: flex-end; padding-top: 10px;'};

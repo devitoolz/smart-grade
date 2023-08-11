@@ -190,7 +190,8 @@ export const ModalStyle = styled.div`
     .modal-title-small,
     .modal-title {
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '18%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '60px')};
+      min-height: 60px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -214,7 +215,7 @@ export const ModalStyle = styled.div`
       overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '62%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '100%')};
       ${({ modalSize }) =>
         modalSize === 'small'
           ? `display: flex;
@@ -232,6 +233,8 @@ export const ModalStyle = styled.div`
       display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'flex')};
       justify-content: center;
       width: 100%;
+      height: 60px;
+      min-height: 60px;
       text-align: center;
       /* padding: 8px 0; */
       /* border-top: 1px solid #dae8ff; */

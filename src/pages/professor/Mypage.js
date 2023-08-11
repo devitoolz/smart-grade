@@ -21,6 +21,7 @@ import { faCircleExclamation, faPencil, faTrash, faUser } from '@fortawesome/fre
 import { checkValidEmail, checkValidPhone } from '../../modules/regex';
 import api from '../../api/api';
 import ChangePassword from '../../components/ChangePassword';
+import OTPRegister from '../../components/OTPRegister';
 
 const Mypage = () => {
   const [disabled, setDisabled] = useState(true);
@@ -32,6 +33,7 @@ const Mypage = () => {
   const [removeImg, setRemoveImg] = useState(false);
 
   const [openChangePassword, setOpenChangePassword] = useState(false);
+  const [openOTPRegister, setOpenOTPRegister] = useState(false);
 
   const { user } = useSelector(state => state.main);
   const dispatch = useDispatch();
@@ -67,46 +69,45 @@ const Mypage = () => {
       return;
     }
 
-    // 최초 로그인 시 비밀번호 수정 후 정보 수정
-    if (user.profile.secretKey !== 'true') {
-      setOpenChangePassword(true);
-    } else {
-      try {
-        const formData = new FormData();
+    try {
+      const formData = new FormData();
 
-        const payload = {
-          phone,
-          email,
-          address,
-        };
+      const payload = {
+        phone,
+        email,
+        address,
+      };
 
-        if (imgFile && user?.profile.pic) {
-          await api.delete(`/api/professor`);
-          formData.append('pic', imgFile);
-        } else if (imgFile && !user?.profile.pic) {
-          formData.append('pic', imgFile);
-        } else if (removeImg) {
-          await api.delete(`/api/professor`);
-        }
-
-        formData.append('dto', JSON.stringify(payload));
-
-        await api.put(`/api/professor`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        dispatch(
-          main.setUser({ ...user, profile: { ...user.profile, phone, email, address, pic: img } })
-        );
-        setDisabled(true);
-        alert('프로필이 업데이트 되었습니다.');
-
-        console.log('change password modal open');
-      } catch (err) {
-        console.log(err);
+      if (imgFile && user?.profile.pic) {
+        await api.delete(`/api/professor`);
+        formData.append('pic', imgFile);
+      } else if (imgFile && !user?.profile.pic) {
+        formData.append('pic', imgFile);
+      } else if (removeImg) {
+        await api.delete(`/api/professor`);
       }
+
+      formData.append('dto', JSON.stringify(payload));
+
+      await api.put(`/api/professor`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      dispatch(
+        main.setUser({ ...user, profile: { ...user.profile, phone, email, address, pic: img } })
+      );
+      setDisabled(true);
+
+      if (user.profile.secretKey !== 'true') {
+        alert('프로필이 업데이트 되었습니다. OTP 등록을 위해 비밀번호 변경을 해 주세요.');
+        setOpenChangePassword(true);
+      } else {
+        alert('프로필이 업데이트 되었습니다.');
+      }
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -172,7 +173,7 @@ const Mypage = () => {
                 취소
               </Button>
             )}
-            <Button>비밀번호 변경</Button>
+            <Button onClick={() => setOpenChangePassword(true)}>비밀번호 변경</Button>
           </ButtonContainer>
         </TopLayout>
         <MiddleLayout>
@@ -240,7 +241,7 @@ const Mypage = () => {
             <div>생년월일</div>
             <div>{user?.profile.birthdate}</div>
             <div>전공</div>
-            <div>{user?.profile.majorName}</div>
+            <div>{user?.profile.imajor}</div>
           </Row>
           <Row col={2}>
             <div>등록일</div>
@@ -306,7 +307,13 @@ const Mypage = () => {
           </Row>
         </FormTable>
       </UserLayout>
-      {openChangePassword && <ChangePassword setOpen={setOpenChangePassword} />}
+      {openChangePassword && (
+        <ChangePassword
+          setOpenChangePassword={setOpenChangePassword}
+          setOpenOTPRegister={setOpenOTPRegister}
+        />
+      )}
+      {openOTPRegister && <OTPRegister setOpenOTPRegister={setOpenOTPRegister} />}
     </>
   );
 };

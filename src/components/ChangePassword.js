@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
-import { PasswordForm } from '../styles/UserStyle';
+import { NoticeContainer, PasswordForm } from '../styles/UserStyle';
 import Input from './Input';
 import api from '../api/api';
 import { useSelector } from 'react-redux';
 
-const ChangePassword = ({ setOpen }) => {
+const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }) => {
   const [currentPw, setCurrentPw] = useState('');
   const [newPw, setNewPw] = useState('');
   const [confirmNewPw, setConfirmNewPw] = useState('');
@@ -14,15 +14,21 @@ const ChangePassword = ({ setOpen }) => {
   const { user } = useSelector(state => state.main);
   let role;
 
-  if (user?.iprofessor) {
+  if (user?.profile.iprofessor) {
     role = 'professor';
-  } else if (user?.istudent) {
+  } else if (user?.profile.istudent) {
     role = 'student';
   }
 
   const handleChangePw = async () => {
+    if (!(currentPw && newPw && confirmNewPw)) {
+      alert('입력되지 않은 값이 있습니다.');
+      return;
+    }
+
     if (newPw !== confirmNewPw) {
       alert('새 비밀번호가 일치하지 않습니다.');
+      setConfirmNewPw('');
       return;
     }
 
@@ -41,9 +47,16 @@ const ChangePassword = ({ setOpen }) => {
         `/api/${role}/changPassword`,
         (role === 'professor' && professorPayload) || (role === 'student' && studentPayload)
       );
+      alert('비밀번호가 변경되었습니다.');
+      setOpenChangePassword(false);
+
+      if (user?.profile.secretKey !== 'true') {
+        setOpenOTPRegister(true);
+      }
     } catch (err) {
       console.log(err);
       alert('현재 비밀번호가 올바르지 않습니다.');
+      setCurrentPw('');
     }
   };
 
@@ -54,6 +67,15 @@ const ChangePassword = ({ setOpen }) => {
           <div>비밀번호 변경</div>
         </div>
         <div className="modal-contents">
+          {user?.profile.secretKey !== 'true' && (
+            <NoticeContainer>
+              <span
+                style={{ fontSize: 14, lineHeight: 'normal', paddingTop: 0, paddingBottom: 15 }}
+              >
+                * 초기 비밀번호는 변경 전까지 생년월일 8자리입니다.
+              </span>
+            </NoticeContainer>
+          )}
           <PasswordForm>
             <label>현재 비밀번호</label>
             <Input
@@ -86,6 +108,13 @@ const ChangePassword = ({ setOpen }) => {
         </div>
         <div className="modal-footer">
           <CommonButton value="확인" onClick={handleChangePw} btnType="modal" />
+          {user?.profile.secretKey === 'true' && (
+            <CommonButton
+              value="취소"
+              onClick={() => setOpenChangePassword(false)}
+              btnType="modal"
+            />
+          )}
         </div>
       </div>
     </ModalStyle>
