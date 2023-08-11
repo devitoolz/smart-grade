@@ -1,16 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faX } from '@fortawesome/free-solid-svg-icons';
-import { PlusModal } from '../../styles/LectureRoomCss';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
-import { Layout } from '../../styles/CommonStyle';
 import CommonModal from '../../components/CommonModal';
-import { ModalStyle } from '../../styles/MyStyleCSS';
 
 const LectureRoom = () => {
   ////SearchBar//////
@@ -25,7 +20,7 @@ const LectureRoom = () => {
   const [value, setValue] = useState(null);
 
   //Dropdown 메뉴 Item 데이터??
-  const [temp, setTemp] = useState([]);
+  const [bData, setBData] = useState([]);
 
   //Dropdown 메뉴 Item 데이터
   const _temp = [
@@ -41,34 +36,6 @@ const LectureRoom = () => {
     { title: '최대수용인원', width: 1.5 },
     { title: '관리', width: 2 },
     { title: '비고', width: 1.5 },
-  ];
-
-  //추후 API GET 요청 데이터
-  const datas = [
-    {
-      ilectureRoom: '1',
-      buildingname: 'a관',
-      lectureRoomName: '201호',
-      maxCapacity: 100,
-      management: 2,
-      note: '',
-    },
-    {
-      ilectureRoom: '2',
-      buildingname: 'b관',
-      lectureRoomName: '202호',
-      maxCapacity: 100,
-      management: 2,
-      note: '',
-    },
-    {
-      ilectureRoom: '3',
-      buildingname: 'c관',
-      lectureRoomName: '203호',
-      maxCapacity: 100,
-      management: 2,
-      note: '',
-    },
   ];
 
   //modal 활성화 여부
@@ -98,6 +65,20 @@ const LectureRoom = () => {
   const getBuildingTestLoad = async () => {
     try {
       const _result = await getBuildingTest();
+      const buildingL = _result.lectureRoomList.map(item => {
+        const data = {
+          id: item.ilectureRoom,
+          title: item.buildingName,
+        };
+        return data;
+      });
+      setBData(buildingL);
+      // const buildingList = _result.lectureRoomList.map(item => {
+      //   const Bdata = {
+      //     buildingName: buildingName,
+      //   };
+      //   return Bdata;
+      // });
       // console.log(_result);
       // console.log(_result.lectureRoom);
       // const buildingTable = _result.lectureRoom.map(item => {
@@ -108,6 +89,7 @@ const LectureRoom = () => {
       //   };
       //   return data;
       // });
+
       setData(_result.lectureRoom);
       return _result.lectureRoom;
     } catch (error) {
@@ -117,6 +99,11 @@ const LectureRoom = () => {
   useEffect(() => {
     getBuildingTestLoad();
   }, []);
+
+  //목록바꾸면 실행되는 함수
+  const handleChangeBuilding = value => {
+    const bud = bData.find(item => item.value === value);
+  };
 
   //commonModal display state
   const [display, setDisplay] = useState(false);
@@ -141,6 +128,7 @@ const LectureRoom = () => {
       console.log(err);
     }
   };
+
   //삭제모달창 확인 클릭시
   //Id를 담을 state
   const [saveId, setSaveId] = useState('');
@@ -153,7 +141,7 @@ const LectureRoom = () => {
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="건물명"
-          data={_temp}
+          data={bData}
           value={value}
           setValue={setValue}
           reset={true}
