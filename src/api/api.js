@@ -7,6 +7,7 @@ import { getCookie, removeCookie, setCookie } from '../modules/cookies';
 
 const api = axios.create({
   baseURL: 'http://localhost:3000',
+  timeout: 3000,
   headers: {
     Authorization: `Bearer ${getCookie('accessToken')}`,
   },
@@ -44,18 +45,17 @@ const Interceptor = ({ children }) => {
       return response;
     },
     async error => {
-      const {
-        config,
-        response: { status },
-      } = error;
-
       const refreshToken = getCookie('refreshToken');
+      const config = error.config;
+      const response = error.response;
 
-      if (status === 401 && refreshToken) {
-        console.log('토큰 만료! 갱신 시도');
+      if (!response || response.status === 500) {
+        removeAuth();
+        alert('서버와의 연결이 원활하지 않습니다.');
+        navigate('/');
+      } else if (response.status === 401 && refreshToken) {
         try {
           const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
-          console.log('갱신 성공');
           const accessToken = data.accessToken;
           setCookie('accessToken', accessToken);
           setCookie('refreshToken', data.refreshToken);
@@ -66,9 +66,7 @@ const Interceptor = ({ children }) => {
           alert('인증에 실패하여 로그인 페이지로 이동합니다.');
           navigate('/');
         }
-      }
-
-      if (status === 401 && !refreshToken) {
+      } else if (response.status === 401 && !refreshToken) {
         removeAuth();
         alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
         navigate('/');
