@@ -71,6 +71,7 @@ const Major = () => {
 
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorName, setSelectMajorName] = useState('');
+  const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
@@ -96,22 +97,27 @@ const Major = () => {
 
   //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
   //변경버튼 클릭시 인풋창열리고 확인버튼 클릭시 전공명 변경 모달 열림
-  const [patchData, setPatchData] = useState({});
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
       // 과목명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
-      // 서버로 변경된 과목명을 전달한다.
+      // 과목명을 변경하지 않은 경우 체크
+      if (selectMajorNameNow === tempStr) {
+        alert('과목을 변경해 주세요.');
+        return;
+      }
+      // 서버로 변경된 전공명을 전달한다.
       const headers = { 'Content-Type': 'application/json' };
       const patchDatas = {
         imajor: _imajor,
         majorName: `${tempStr}`,
       };
-      setPatchData(patchDatas);
+
       try {
-        const res = await api.patch(`/api/major`, patchData, { headers });
+        const res = await api.patch(`/api/major`, patchDatas, { headers });
         const result = res.data;
+        setSelectMajorNameNow(tempStr);
         // console.log('전공명 서버 수정 완료 : ', result);
       } catch (err) {
         // console.log('전공명 서버 수정 실패 : ', err);
@@ -122,7 +128,7 @@ const Major = () => {
         if (item.imajor === selectMajorID) {
           if (item.majorName !== tempStr) {
             item.isChange = 1;
-            item.originName = item.majorName;
+            item.originName = '구 ' + item.majorName;
             item.majorName = tempStr;
           }
         }
@@ -132,11 +138,12 @@ const Major = () => {
       setDataArr(temp);
       setSelectMajorID(null);
       setSelectMajorName('');
-      // window.location.reload();
+      //window.location.reload();
     } else {
       // 다르므로 모달 창 띄우기
       setSelectMajorID(_imajor);
       setSelectMajorName(_imajorName);
+      setSelectMajorNameNow(_imajorName);
     }
   };
   // 확인버튼 클릭 시 patch 통신
@@ -179,7 +186,9 @@ const Major = () => {
         { headers }
       );
       const result = res.data;
-      console.log('제발 나와', result);
+      // console.log('제발 나와', result);
+      handleModalCancel();
+      alert('등록되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -200,6 +209,14 @@ const Major = () => {
   //변경 버튼 클릭시 ??
   const changeClickShowOpen = () => {
     // console.log('텍스트필드 활성화 ', selectMajorID);
+
+    // console.log(newMajorName, graduationScore);
+    // if (newMajorName !="" && graduationScore !="") {
+    //   setChangeClickShow(true);
+    // } else {
+
+    // }
+    alert('항목을 입력하셔야 합니다.');
     setChangeClickShow(true);
   };
 
@@ -224,19 +241,22 @@ const Major = () => {
     setDataArr(temp);
   };
 
-  const handleModalOk = async () => {
+  const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
-    if (newMajorName !== null && graduationScore !== 0) {
-      await MajorPostTest(newMajorName, graduationScore);
+    console.log('newMajorName : ', newMajorName);
+    console.log('graduationScore : ', graduationScore);
+    if (newMajorName != '' && graduationScore != '') {
+      MajorPostTest(newMajorName, graduationScore);
     } else {
-      alert('입력되지 않은 정보가 있습니다.');
+      alert('내용을 입력해 주세요.');
     }
   };
 
   //commonModal close state
   const handleModalCancel = () => {
     //setDisplay(false);
+    setShowModal(false);
     setNewMajorName('');
     setGraduationScore('');
   };
@@ -327,15 +347,13 @@ const Major = () => {
           >
             <p>전공명</p>
             <div style={{ marginLeft: '40px' }}>
-              <Dropdown
+              <Input
                 length="long"
+                type="text"
                 placeholder="전공명"
-                data={allMajorList}
-                propertyName={{ key: 'imajor', value: 'majorName' }}
-                value={majorName}
-                setValue={setMajorName}
-                reset
-                search
+                value={newMajorName}
+                setValue={e => setNewMajorName(e.target.value)}
+                reset={setNewMajorName}
               />
             </div>
           </div>
