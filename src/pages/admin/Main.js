@@ -19,9 +19,7 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
-import majorSlice from '../../slices/majorSlice';
 import mainSlice from '../../slices/mainSlice';
-import api from '../../api/api';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -30,7 +28,6 @@ const Main = () => {
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
-  const major = majorSlice.actions;
 
   const { title } = useSelector(state => state.main);
 
@@ -72,18 +69,6 @@ const Main = () => {
     if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
-  // TODO: 추후 axios GET 으로 변경 예정
-  useEffect(() => {
-    const result = [
-      { imajor: 1, majorName: '전공 1' },
-      { imajor: 2, majorName: '전공 2' },
-      { imajor: 3, majorName: '전공 3' },
-      { imajor: 4, majorName: '전공 4' },
-      { imajor: 5, majorName: '전공 5' },
-    ];
-    dispatch(major.setAllMajorList(result));
-  }, []);
-
   return (
     <MainLayout>
       <Sidebar>
@@ -107,7 +92,12 @@ const Main = () => {
         </SubMenu>
       </Sidebar>
       <Content>
-        <Title>{title}</Title>
+        <Title>
+          <div className="title">{title}</div>
+          <div className="user-info">
+            <span></span>
+          </div>
+        </Title>
         <Layout>
           <Outlet />
         </Layout>

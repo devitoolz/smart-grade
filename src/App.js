@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { GlobalLayout } from './styles/AppStyle';
 import Login from './pages/Login';
 import Admin from './Admin';
@@ -8,9 +8,21 @@ import { Interceptor } from './api/api';
 import { useSelector } from 'react-redux';
 import Loading from './components/Loading';
 import Professor from './Professor';
+import { getCookie, removeCookie } from './modules/cookies';
 
 const App = () => {
+  const { pathname } = useLocation();
   const { isPosting } = useSelector(state => state.main);
+
+  useEffect(() => {
+    const accessToken = getCookie('accessToken');
+    const refreshToken = getCookie('refreshToken');
+
+    if (pathname === '/' && (accessToken || refreshToken)) {
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+    }
+  }, []);
 
   return (
     <Interceptor>

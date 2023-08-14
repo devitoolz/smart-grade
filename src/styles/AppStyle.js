@@ -196,6 +196,7 @@ const Title = styled.div`
   height: 70px;
   width: 100%;
   position: fixed;
+  justify-content: space-between;
   align-items: center;
   background: var(--white);
   border-bottom: 1px solid var(--main-border-color);
@@ -204,18 +205,27 @@ const Title = styled.div`
   font-weight: bold;
   padding-left: calc(25px + 320px);
   z-index: 9;
-  > span:first-of-type {
-    padding: 5px;
-    transition: all 0.2s ease-in-out;
-    &.breadcrumb:hover {
-      cursor: pointer;
-      background: var(--main-bg-color);
-      border-radius: 5px;
+  > div.title {
+    display: flex;
+    align-items: center;
+    > span:first-of-type {
+      padding: 5px;
+      transition: all 0.2s ease-in-out;
+      &.breadcrumb:hover {
+        cursor: pointer;
+        background: var(--main-bg-color);
+        border-radius: 5px;
+      }
+    }
+    > svg {
+      font-size: 20px;
+      padding: 0 10px 0 5px;
     }
   }
-  > svg {
-    font-size: 20px;
-    padding: 0 10px 0 5px;
+  > div.user-info {
+    display: flex;
+    align-items: center;
+    padding-right: 25px;
   }
 `;
 

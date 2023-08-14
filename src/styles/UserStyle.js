@@ -239,7 +239,8 @@ const Row = styled.div`
     justify-content: center;
     font-size: 16px;
     text-align: center;
-    height: 50px;
+    height: 46px;
+    box-sizing: content-box;
     &:nth-of-type(odd) {
       font-weight: bold;
       color: var(--white);
