@@ -250,6 +250,8 @@ const Major = () => {
       MajorPostTest(newMajorName, graduationScore);
     } else {
       alert('내용을 입력해 주세요.');
+      setNewMajorName('');
+      setGraduationScore('');
     }
   };
 

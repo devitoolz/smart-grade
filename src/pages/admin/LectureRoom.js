@@ -83,13 +83,20 @@ const LectureRoom = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
 
-    if (lectureRoomName !== null && buildingName !== '' && maxCapacity !== 0) {
+    if (
+      buildingName !== '' &&
+      lectureRoomName !== null &&
+      lectureRoomName !== '' &&
+      maxCapacity !== null &&
+      maxCapacity !== ''
+    ) {
       await postBuildinglist(lectureRoomName, buildingName, maxCapacity);
-      window.location.reload();
+      //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-      // 3개 값이 있는지 확인
-      // lectureRoomName !== undefined && buildingName !== undefined && maxCapacity !== undefined;
+      setBuildingName('');
+      setLectureRoomName('');
+      setMaxCapacity('');
     }
   };
 
