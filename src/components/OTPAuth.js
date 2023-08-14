@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import api from '../api/api';
 import { useNavigate } from 'react-router';
-import { getCookie, setCookie } from '../modules/cookies';
+import { setCookie } from '../modules/cookies';
 
 const OTPAuth = ({ payload }) => {
   const [OTP, setOTP] = useState('');
@@ -17,14 +17,12 @@ const OTPAuth = ({ payload }) => {
   const handleOTPAuth = async () => {
     try {
       const { data } = await api.post(`/api/otp-valid`, newPayload);
-      console.log(data);
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
         navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
       }
-    } catch (err) {
-      console.log(err);
+    } catch {
       alert('인증 코드를 확인해주세요.');
     }
   };

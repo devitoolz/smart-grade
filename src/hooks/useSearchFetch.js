@@ -15,10 +15,10 @@ const useQuerySearch = (url, click) => {
       const { data } = await api.get(`${url}${location.search}`);
       setData(data);
       setIsPending(false);
-    } catch (error) {
+    } catch (err) {
+      console.log(err);
       setIsPending(false);
       setIsError(true);
-      return;
     }
   };
 
