@@ -51,6 +51,13 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
+    for (let key in payload) {
+      if (payload[key] === '') {
+        alert('입력되지 않은 값이 있습니다.');
+        return;
+      }
+    }
+
     try {
       const { data } = await axios.post(`/api/sign-in`, payload);
       console.log(data);
@@ -156,7 +163,7 @@ const Login = () => {
           </div>
         </LoginFooter>
       </LoginLayout>
-      {openOTP && <OTPAuth payload={payload} />}
+      {openOTP && <OTPAuth payload={payload} setOpenOTP={setOpenOTP} />}
       {openFindPw && <FindPassword setOpenFindPw={setOpenFindPw} payload={payload} />}
     </>
   );

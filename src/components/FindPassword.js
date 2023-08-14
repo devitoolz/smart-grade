@@ -78,7 +78,7 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{}}>
+      <div className="modal-box" style={{ height: 300 }}>
         <div className="modal-title-small">
           <div>
             {roleTxt} 비밀번호 {(activeIndex === 0 && '찾기') || (activeIndex === 1 && '변경')}
@@ -93,7 +93,7 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
             onSwiper={s => setSwiper(s)}
           >
             <SwiperSlide>
-              <PasswordForm style={{ gridTemplateRows: '1fr 1fr' }}>
+              <PasswordForm find>
                 <label>아이디</label>
                 <Input
                   type="text"
@@ -115,7 +115,7 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
               </PasswordForm>
             </SwiperSlide>
             <SwiperSlide>
-              <PasswordForm style={{ gridTemplateRows: '1fr 1fr' }}>
+              <PasswordForm find>
                 <label>새 비밀번호</label>
                 <Input
                   type="password"

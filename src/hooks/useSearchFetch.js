@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../api/api';
 
 const useQuerySearch = (url, click) => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [pending, setIsPending] = useState(false);
   const [error, setIsError] = useState(false);
   const [data, setData] = useState(null);

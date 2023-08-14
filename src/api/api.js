@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../slices/mainSlice';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../modules/cookies';
 
 const api = axios.create({
@@ -16,14 +16,16 @@ const api = axios.create({
 
 const main = mainSlice.actions;
 
+const removeAuth = () => {
+  removeCookie('accessToken');
+  removeCookie('refreshToken');
+  alert('접근 권한이 없습니다. 로그인 페이지로 이동합니다.');
+  location.href = '/';
+};
+
 const Interceptor = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const removeAuth = () => {
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-  };
 
   const requestInterceptor = api.interceptors.request.use(
     config => {
@@ -66,7 +68,8 @@ const Interceptor = ({ children }) => {
           alert('인증에 실패하여 로그인 페이지로 이동합니다.');
           navigate('/');
         }
-      } else if (response.status === 401 && !refreshToken) {
+      } else {
+        //if (response.status === 401 && !refreshToken) {
         removeAuth();
         alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
         navigate('/');
@@ -87,4 +90,4 @@ const Interceptor = ({ children }) => {
 };
 
 export default api;
-export { Interceptor };
+export { Interceptor, removeAuth };
