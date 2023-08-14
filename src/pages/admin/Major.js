@@ -4,7 +4,7 @@ import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
-import axios from 'axios';
+
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,8 @@ const Major = () => {
       title: '폐지',
     },
   ];
-
+  //운영,폐지 key, value 이름
+  const propertyName = { key: 'id', value: 'title' };
   //table header
   const tableHeader = [
     { title: '전공 명', width: 3 },
@@ -94,6 +95,8 @@ const Major = () => {
   };
 
   //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
+  //변경버튼 클릭시 인풋창열리고 확인버튼 클릭시 전공명 변경 모달 열림
+  const [patchData, setPatchData] = useState({});
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
@@ -101,12 +104,13 @@ const Major = () => {
       const tempStr = selectMajorName.trim();
       // 서버로 변경된 과목명을 전달한다.
       const headers = { 'Content-Type': 'application/json' };
-      const patchData = {
+      const patchDatas = {
         imajor: _imajor,
         majorName: `${tempStr}`,
       };
+      setPatchData(patchDatas);
       try {
-        const res = await axios.patch(`/api/major`, patchData, { headers });
+        const res = await api.patch(`/api/major`, patchData, { headers });
         const result = res.data;
         // console.log('전공명 서버 수정 완료 : ', result);
       } catch (err) {
@@ -126,16 +130,24 @@ const Major = () => {
       });
       console.log(temp);
       setDataArr(temp);
-
       setSelectMajorID(null);
       setSelectMajorName('');
+      // window.location.reload();
     } else {
       // 다르므로 모달 창 띄우기
       setSelectMajorID(_imajor);
       setSelectMajorName(_imajorName);
-      setChangeModalShow(true);
     }
   };
+  // 확인버튼 클릭 시 patch 통신
+  const patchMajorNameWait = () => {
+    //
+  };
+  //확인 버튼 눌렀을때 나오는 모달창
+  const clickOkModal = () => {
+    setChangeModalShow(true);
+  };
+
   const handleChangeName = e => {
     console.log(e.target.value);
     setSelectMajorName(e.target.value);
@@ -175,7 +187,7 @@ const Major = () => {
   //api delete test
   const MajorDeleteTest = async _id => {
     try {
-      const res = await axios.delete(`/api/major?imajor=${_id}`);
+      const res = await api.delete(`/api/major?imajor=${_id}`);
       const result = res.data;
       return result;
     } catch (error) {
@@ -185,11 +197,12 @@ const Major = () => {
 
   // console.log(data?.major);
 
-  //변경 버튼 클릭시
+  //변경 버튼 클릭시 ??
   const changeClickShowOpen = () => {
     // console.log('텍스트필드 활성화 ', selectMajorID);
     setChangeClickShow(true);
   };
+
   const chnageClickCloseWin = () => {
     // 초기화
     setSelectMajorID(null);
@@ -211,10 +224,14 @@ const Major = () => {
     setDataArr(temp);
   };
 
-  const handleModalOk = () => {
+  const handleModalOk = async () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
-    MajorPostTest(newMajorName, graduationScore);
+    if (newMajorName !== null && graduationScore !== 0) {
+      await MajorPostTest(newMajorName, graduationScore);
+    } else {
+      alert('입력되지 않은 정보가 있습니다.');
+    }
   };
 
   //commonModal close state
@@ -273,8 +290,9 @@ const Major = () => {
           data={_status}
           value={delYn}
           setValue={setDelYn}
-          reset={true}
-          search={true}
+          propertyName={propertyName}
+          reset
+          search
         />
         <Dropdown
           length="long"
@@ -309,11 +327,15 @@ const Major = () => {
           >
             <p>전공명</p>
             <div style={{ marginLeft: '40px' }}>
-              <Input
-                type="text"
+              <Dropdown
                 length="long"
-                value={newMajorName}
-                setValue={e => setNewMajorName(e.target.value)}
+                placeholder="전공명"
+                data={allMajorList}
+                propertyName={{ key: 'imajor', value: 'majorName' }}
+                value={majorName}
+                setValue={setMajorName}
+                reset
+                search
               />
             </div>
           </div>
@@ -341,7 +363,7 @@ const Major = () => {
         </CommonModal>
       ) : null}
       <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={6} pending={pending}>
-        {isDataArr.map((item, index) => {
+        {isDataArr.map(item => {
           return (
             <div key={item.imajor}>
               <div>
@@ -352,7 +374,7 @@ const Major = () => {
                     type="text"
                     value={selectMajorName}
                     setValue={handleChangeName}
-                  ></Input>
+                  />
                 ) : (
                   item.majorName
                 )}
