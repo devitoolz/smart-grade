@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Input from '../components/Input';
-import api from '../api/api';
-import { removeCookie, setCookie } from '../modules/cookies';
+import { setCookie } from '../modules/cookies';
 import {
   FindAccountForm,
   FindLogin,
@@ -25,6 +23,8 @@ import adminActiveImg from '../images/admin_active.png';
 import RoleRadioButton from '../components/RoleRadioButton';
 import OTPAuth from '../components/OTPAuth';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import FindPassword from '../components/FindPassword';
 
 const Login = () => {
   const initialState = {
@@ -34,6 +34,7 @@ const Login = () => {
   };
   const [payload, setPayload] = useState(initialState);
   const [openOTP, setOpenOTP] = useState(false);
+  const [openFindPw, setOpenFindPw] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,7 +52,7 @@ const Login = () => {
 
   const handleLogin = async () => {
     try {
-      const { data } = await api.post(`/api/sign-in`, payload);
+      const { data } = await axios.post(`/api/sign-in`, payload);
       console.log(data);
 
       if (!data.success) {
@@ -71,7 +72,6 @@ const Login = () => {
         }
       }
     } catch (err) {
-      console.log(err);
       alert('존재하지 않는 계정입니다.');
     }
   };
@@ -137,10 +137,12 @@ const Login = () => {
             </LoginInput>
             <FindLogin>
               <LoginBtn onClick={handleLogin}>로그인</LoginBtn>
-              <FindAccountForm>
-                <span>아이디 찾기</span>
-                <span>비밀번호 찾기</span>
-              </FindAccountForm>
+              {payload.role !== 'ROLE_ADMIN' && (
+                <FindAccountForm>
+                  <span>아이디 찾기</span>
+                  <span onClick={() => setOpenFindPw(true)}>비밀번호 찾기</span>
+                </FindAccountForm>
+              )}
             </FindLogin>
           </LoginForm>
         </LoginContent>
@@ -155,6 +157,7 @@ const Login = () => {
         </LoginFooter>
       </LoginLayout>
       {openOTP && <OTPAuth payload={payload} />}
+      {openFindPw && <FindPassword setOpenFindPw={setOpenFindPw} payload={payload} />}
     </>
   );
 };

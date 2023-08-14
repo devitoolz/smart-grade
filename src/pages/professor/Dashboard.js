@@ -1,7 +1,10 @@
 import React from 'react';
+import preventUnauth from '../../hooks/preventUnauth';
 
 const Dashboard = () => {
-  return <div style={{ background: 'blue' }}>Dashboard</div>;
+  preventUnauth();
+
+  return <div style={{ height: '100%' }}>Dashboard</div>;
 };
 
 export default Dashboard;
