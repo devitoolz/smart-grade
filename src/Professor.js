@@ -31,14 +31,15 @@ const Professor = () => {
 
   useEffect(() => {
     if (pathname === '/professor') {
-      navigate('home');
+      // navigate('home');
+      navigate('mypage');
     }
   }, [pathname]);
 
   return (
     <Routes>
       <Route element={<Main />}>
-        <Route path="home" element={<Dashboard />} />
+        {/* <Route path="home" element={<Dashboard />} /> */}
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Dashboard />} />
         <Route path="open" element={<Dashboard />} />

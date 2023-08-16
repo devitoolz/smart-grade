@@ -34,10 +34,10 @@ const Main = () => {
   const { title } = useSelector(state => state.main);
 
   const menuData = {
-    home: {
-      icon: faHouse,
-      title: '홈',
-    },
+    // home: {
+    //   icon: faHouse,
+    //   title: '홈',
+    // },
     mypage: {
       icon: faUser,
       title: '마이페이지',

@@ -51,8 +51,9 @@ const Admin = () => {
   return (
     <Routes>
       <Route element={<Main />}>
-        <Route path="home" element={<Navigate to="dashboard" />} />
-        <Route path="home/dashboard" element={<Dashboard />} />
+        {/* <Route path="home" element={<Navigate to="dashboard" />} /> */}
+        <Route path="home" element={<Navigate to="notice" />} />
+        {/* <Route path="home/dashboard" element={<Dashboard />} /> */}
         <Route path="home/notice" element={<Notice />} />
         <Route path="home/notice/:id" element={<NoticeDetail />} />
         <Route path="home/notice/write" element={<Write />} />

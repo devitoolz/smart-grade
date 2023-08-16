@@ -145,7 +145,7 @@ const Dropdown = ({
         ) : (
           <li className="data-error">
             <FontAwesomeIcon icon={faTriangleExclamation} />
-            <span>데이터를 불러오지 못했습니다.</span>
+            <span>데이터가 없습니다.</span>
           </li>
         )}
       </ul>
