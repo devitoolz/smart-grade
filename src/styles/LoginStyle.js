@@ -149,8 +149,7 @@ const LoginInput = styled.form`
 const FindLogin = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 15px;
+  justify-content: space-between;
   padding-left: 50px;
 `;
 
@@ -160,9 +159,6 @@ const FindAccountForm = styled.div`
   align-items: center;
   color: var(--button-bar-txt-color);
   gap: 5px;
-  > span {
-    cursor: pointer;
-  }
 `;
 
 const LoginBtn = styled.span`

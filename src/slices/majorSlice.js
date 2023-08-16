@@ -9,7 +9,7 @@ const majorSlice = createSlice({
   initialState,
   reducers: {
     setAllMajorList: (state, action) => {
-      state.allMajorList = [...state.allMajorList, ...action.payload];
+      state.allMajorList = action.payload;
     },
   },
 });

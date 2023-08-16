@@ -14,33 +14,23 @@ import Grade from './pages/admin/Grade';
 import LectureRoom from './pages/admin/LectureRoom';
 import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
-import { useDispatch } from 'react-redux';
-import majorSlice from './slices/majorSlice';
-import api, { removeAuth } from './api/api';
+import { getCookie } from './modules/cookies';
 
 const Admin = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const dispatch = useDispatch();
-  const major = majorSlice.actions;
+  // useEffect(() => {
+  //   const accessToken = getCookie('accessToken');
+  //   const role = getCookie('role');
 
-  useEffect(() => {
-    const getMajorList = async () => {
-      try {
-        const { data } = await api.get(`/api/major`);
-        let majorList = [];
-        for (let i = 0; i < data.page.maxPage; i++) {
-          const { data } = await api.get(`/api/major?page=${i + 1}`);
-          majorList.push(...data.major);
-        }
-        dispatch(major.setAllMajorList(majorList));
-      } catch (err) {
-        removeAuth();
-      }
-    };
-    getMajorList();
-  }, []);
+  //   if (accessToken && role === 'ROLE_ADMIN') {
+  //     console.log('관리자 맞음');
+  //   } else {
+  //     alert('관리자 페이지는 관리자만 접근할 수 있습니다.');
+  //     navigate('/');
+  //   }
+  // }, []);
 
   useEffect(() => {
     if (pathname === '/admin') {
