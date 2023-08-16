@@ -82,12 +82,12 @@ const SubMenu = styled.ul`
   padding-left: 40px;
   > span {
     color: var(--white);
-    font-size: 24px;
+    font-size: 26px;
     padding-bottom: 40px;
   }
   > a {
     color: var(--white);
-    font-size: 16px;
+    font-size: 18px;
     padding-bottom: 20px;
     &.active {
       font-weight: bold;
@@ -196,26 +196,62 @@ const Title = styled.div`
   height: 70px;
   width: 100%;
   position: fixed;
+  justify-content: space-between;
   align-items: center;
   background: var(--white);
   border-bottom: 1px solid var(--main-border-color);
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
-  padding-left: calc(25px + 320px);
+  padding-left: calc(20px + 320px);
   z-index: 9;
-  > span:first-of-type {
-    padding: 5px;
-    transition: all 0.2s ease-in-out;
-    &.breadcrumb:hover {
-      cursor: pointer;
-      background: var(--main-bg-color);
-      border-radius: 5px;
+  > div.title {
+    display: flex;
+    align-items: center;
+    > span:first-of-type {
+      padding: 5px;
+      transition: all 0.2s ease-in-out;
+      &.breadcrumb:hover {
+        cursor: pointer;
+        background: var(--main-bg-color);
+        border-radius: 5px;
+      }
+    }
+    > svg {
+      font-size: 20px;
+      padding: 0 10px 0 5px;
     }
   }
-  > svg {
-    font-size: 20px;
-    padding: 0 10px 0 5px;
+  > div.user-info {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+    gap: 10px;
+    > div.user-info-pic {
+      background: var(--search-bg-color);
+      overflow: hidden;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > svg {
+        align-self: flex-end;
+        font-size: 32px;
+        color: var(--search-ph-color);
+      }
+    }
+    > span {
+      font-size: 18px;
+      font-weight: normal;
+      color: black;
+    }
+    > svg {
+      cursor: pointer;
+      font-size: 38px;
+      padding-left: 10px;
+    }
   }
 `;
 

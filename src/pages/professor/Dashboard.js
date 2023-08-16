@@ -1,7 +1,7 @@
 import React from 'react';
 
 const Dashboard = () => {
-  return <div style={{ background: 'blue' }}>Dashboard</div>;
+  return <div style={{ height: '100%' }}>Dashboard</div>;
 };
 
 export default Dashboard;

@@ -22,10 +22,10 @@ const LectureRoom = () => {
   //강의실 추가시 건물명 state
   const [buildingName, setBuildingName] = useState('');
   //강의실 추가시 호실명 state
-  const [lectureRoomName, setLectureRoomName] = useState("");
+  const [lectureRoomName, setLectureRoomName] = useState(null);
 
   //강의실 추가시 최대수용인원 state
-  const [maxCapacity, setMaxCapacity] = useState("");
+  const [maxCapacity, setMaxCapacity] = useState(null);
 
   ////SearchBar//////
   //검색 시 사용할 쿼리스트링(건물명)
@@ -56,7 +56,6 @@ const LectureRoom = () => {
     buildingDataList.push({ id: item.buildingName, title: item.buildingName });
   });
 
-  console.log(data);
   //api get building List
 
   //api post test
@@ -176,7 +175,7 @@ const LectureRoom = () => {
               type="number"
               length="short"
               value={lectureRoomName}
-              setValue={e => setLectureRoomName(e.target.value.replace(/[^0-9]/g, ''))}
+              setValue={e => setLectureRoomName(e.target.value)}
             />
             <p>호</p>
           </div>
@@ -196,7 +195,7 @@ const LectureRoom = () => {
               type="number"
               length="middle"
               value={maxCapacity}
-              setValue={e => setMaxCapacity(e.target.value.replace(/[^0-9]/g, ''))}
+              setValue={e => setMaxCapacity(e.target.value)}
             />
           </div>
         </CommonModal>
@@ -225,10 +224,10 @@ const LectureRoom = () => {
           return (
             <div key={item.ilectureRoom}>
               <div>
-                {item.buildingName}{' '}
+                {item.buildingName}
                 {item.lectureRoomName.includes('호') === false
                   ? item.lectureRoomName.concat('호')
-                  : item.lectureRoomName}
+                  : null}
               </div>
               <div>{item.maxCapacity}</div>
               <div>
