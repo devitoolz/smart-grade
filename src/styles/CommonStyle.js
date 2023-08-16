@@ -166,21 +166,11 @@ const CustomDropdown = styled.div`
     transition: 0.2s all ease-in-out;
     overflow: auto;
     border-bottom: ${({ isForm, open }) =>
-      isForm
-        ? open
-          ? '2px solid var(--form-table-even-border-color)'
-          : null
-        : open
-        ? '1px solid var(--primary-border-color)'
-        : null};
+      isForm ? 'none' : open ? '1px solid var(--primary-border-color)' : null};
     > li {
       background: var(--white);
       height: ${({ isForm }) => (isForm ? '50px' : '35px')};
       border: ${({ isForm }) => (isForm ? 'none' : '1px solid var(--primary-border-color)')};
-      ${({ isForm }) =>
-        isForm
-          ? `border-left: 2px solid var(--form-table-even-border-color); border-right: 2px solid var(--form-table-even-border-color);`
-          : null};
       border-top: none;
       border-bottom: ${({ isForm }) =>
         isForm ? '2px solid var(--form-table-even-border-color)' : null};

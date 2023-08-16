@@ -16,7 +16,7 @@ const Major = () => {
   // 전공명 state
   const [majorName, setMajorName] = useState('');
   //전공명 상태 state
-  const [delYn, setDelYn] = useState(null);
+  const [delYn, setDelYn] = useState('');
   //검색 시 사용할 쿼리스트링목록
   const queries = { majorName, delYn };
 
@@ -67,7 +67,7 @@ const Major = () => {
   const [disUseModalShow, setDisUseModalShow] = useState(false);
 
   // 변경할 항목 pk값 저장할 state.
-  const [selectMajorID, setSelectMajorID] = useState(null);
+  const [selectMajorID, setSelectMajorID] = useState("");
 
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorName, setSelectMajorName] = useState('');
@@ -75,7 +75,7 @@ const Major = () => {
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
-  console.log(allMajorList);
+  
 
   //전공명 state
   const [majorId, setMajorId] = useState();
@@ -134,7 +134,7 @@ const Major = () => {
         }
         return item;
       });
-      console.log(temp);
+      // console.log(temp);
       setDataArr(temp);
       setSelectMajorID(null);
       setSelectMajorName('');
@@ -156,13 +156,13 @@ const Major = () => {
   };
 
   const handleChangeName = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setSelectMajorName(e.target.value);
   };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
-    console.log(_majorId);
+    // console.log(_majorId);
     if (selectMajorID === _majorId) {
       // 초기화
       setSelectMajorID(null);
@@ -244,8 +244,8 @@ const Major = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
-    console.log('newMajorName : ', newMajorName);
-    console.log('graduationScore : ', graduationScore);
+    // console.log('newMajorName : ', newMajorName);
+    // console.log('graduationScore : ', graduationScore);
     if (newMajorName != '' && graduationScore != '') {
       MajorPostTest(newMajorName, graduationScore);
     } else {
@@ -266,7 +266,7 @@ const Major = () => {
   // api 전공리스트 전체 보기
   const [isDataArr, setDataArr] = useState([]);
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
 
     if (data) {
       const temp = data.major.map(item => {

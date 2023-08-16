@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { setCookie } from '../modules/cookies';
+import Input from '../components/Input';
+import api from '../api/api';
+import { removeCookie, setCookie } from '../modules/cookies';
 import {
   FindAccountForm,
   FindLogin,
@@ -23,8 +25,6 @@ import adminActiveImg from '../images/admin_active.png';
 import RoleRadioButton from '../components/RoleRadioButton';
 import OTPAuth from '../components/OTPAuth';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import FindPassword from '../components/FindPassword';
 
 const Login = () => {
   const initialState = {
@@ -34,7 +34,6 @@ const Login = () => {
   };
   const [payload, setPayload] = useState(initialState);
   const [openOTP, setOpenOTP] = useState(false);
-  const [openFindPw, setOpenFindPw] = useState(false);
 
   const navigate = useNavigate();
 
@@ -51,15 +50,8 @@ const Login = () => {
   };
 
   const handleLogin = async () => {
-    for (let key in payload) {
-      if (payload[key] === '') {
-        alert('입력되지 않은 값이 있습니다.');
-        return;
-      }
-    }
-
     try {
-      const { data } = await axios.post(`/api/sign-in`, payload);
+      const { data } = await api.post(`/api/sign-in`, payload);
       console.log(data);
 
       if (!data.success) {
@@ -80,6 +72,7 @@ const Login = () => {
         }
       }
     } catch (err) {
+      console.log(err);
       alert('존재하지 않는 계정입니다.');
     }
   };
@@ -163,8 +156,7 @@ const Login = () => {
           </div>
         </LoginFooter>
       </LoginLayout>
-      {openOTP && <OTPAuth payload={payload} setOpenOTP={setOpenOTP} />}
-      {openFindPw && <FindPassword setOpenFindPw={setOpenFindPw} payload={payload} />}
+      {openOTP && <OTPAuth payload={payload} />}
     </>
   );
 };

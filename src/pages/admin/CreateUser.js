@@ -169,7 +169,7 @@ const CreateUser = () => {
             <Dropdown
               isForm={true}
               placeholder="전공을 선택하세요."
-              data={allMajorList.filter(item => item.delYn === 0)}
+              data={allMajorList}
               propertyName={{ key: 'imajor', value: 'majorName' }}
               value={major}
               setValue={setMajor}

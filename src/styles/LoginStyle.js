@@ -149,8 +149,7 @@ const LoginInput = styled.form`
 const FindLogin = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  gap: 15px;
+  justify-content: space-between;
   padding-left: 50px;
 `;
 

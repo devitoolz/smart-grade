@@ -17,7 +17,8 @@ const OTPRegister = ({ setOpenOTPRegister }) => {
     const registerOTP = async () => {
       try {
         const { data } = await api.get(`/api/otp`);
-        setQRUrl(data.barcodeUrl.replace('www.google', 'chart.googleapis'));
+        console.log(data);
+        setQRUrl(data.barcodeUrl.replace('https', 'http'));
         dispatch(main.setUser({ ...user, profile: { ...user.profile, secretKey: 'true' } }));
       } catch (err) {
         console.log(err);

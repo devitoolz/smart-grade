@@ -173,9 +173,7 @@ const Mypage = () => {
                 취소
               </Button>
             )}
-            {user?.profile.secretKey === 'true' && (
-              <Button onClick={() => setOpenChangePassword(true)}>비밀번호 변경</Button>
-            )}
+            <Button onClick={() => setOpenChangePassword(true)}>비밀번호 변경</Button>
           </ButtonContainer>
         </TopLayout>
         <MiddleLayout>

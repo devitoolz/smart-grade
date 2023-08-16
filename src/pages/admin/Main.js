@@ -16,13 +16,12 @@ import {
   faBuildingColumns,
   faGraduationCap,
   faHouse,
-  faRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
+import majorSlice from '../../slices/majorSlice';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../api/api';
-import { removeCookie } from '../../modules/cookies';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -31,6 +30,7 @@ const Main = () => {
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
+  const major = majorSlice.actions;
 
   const { title } = useSelector(state => state.main);
 
@@ -72,17 +72,17 @@ const Main = () => {
     if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
-  const handleLogout = async () => {
-    try {
-      await api.post(`/api/logout`);
-      removeCookie('accessToken');
-      removeCookie('refreshToken');
-      alert('로그아웃 되었습니다.');
-      navigate('/');
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // TODO: 추후 axios GET 으로 변경 예정
+  useEffect(() => {
+    const result = [
+      { imajor: 1, majorName: '전공 1' },
+      { imajor: 2, majorName: '전공 2' },
+      { imajor: 3, majorName: '전공 3' },
+      { imajor: 4, majorName: '전공 4' },
+      { imajor: 5, majorName: '전공 5' },
+    ];
+    dispatch(major.setAllMajorList(result));
+  }, []);
 
   return (
     <MainLayout>
@@ -107,16 +107,7 @@ const Main = () => {
         </SubMenu>
       </Sidebar>
       <Content>
-        <Title>
-          <div className="title">{title}</div>
-          <div className="user-info">
-            <div className="user-info-pic">
-              <FontAwesomeIcon icon={faUser} />
-            </div>
-            <span>관리자 님</span>
-            <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
-          </div>
-        </Title>
+        <Title>{title}</Title>
         <Layout>
           <Outlet />
         </Layout>
