@@ -14,7 +14,7 @@ const LectureRoom = () => {
 
   ////Dropdown////
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
 
   //Dropdown 메뉴 Item 데이터??
   const [bData, setBData] = useState([]);
@@ -176,7 +176,7 @@ const LectureRoom = () => {
               type="number"
               length="short"
               value={lectureRoomName}
-              setValue={e => setLectureRoomName(e.target.value.replace(/[^0-9]/g, ''))}
+              setValue={e => setLectureRoomName(e.target.value)}
             />
             <p>호</p>
           </div>
@@ -196,7 +196,7 @@ const LectureRoom = () => {
               type="number"
               length="middle"
               value={maxCapacity}
-              setValue={e => setMaxCapacity(e.target.value.replace(/[^0-9]/g, ''))}
+              setValue={e => setMaxCapacity(e.target.value)}
             />
           </div>
         </CommonModal>
