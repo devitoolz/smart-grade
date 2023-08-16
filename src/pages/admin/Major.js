@@ -4,7 +4,7 @@ import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
-import axios from 'axios';
+
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
@@ -40,7 +40,8 @@ const Major = () => {
       title: '폐지',
     },
   ];
-
+  //운영,폐지 key, value 이름
+  const propertyName = { key: 'id', value: 'title' };
   //table header
   const tableHeader = [
     { title: '전공 명', width: 3 },
@@ -70,6 +71,7 @@ const Major = () => {
 
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorName, setSelectMajorName] = useState('');
+  const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
@@ -94,20 +96,28 @@ const Major = () => {
   };
 
   //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
+  //변경버튼 클릭시 인풋창열리고 확인버튼 클릭시 전공명 변경 모달 열림
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
       // 과목명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
-      // 서버로 변경된 과목명을 전달한다.
+      // 과목명을 변경하지 않은 경우 체크
+      if (selectMajorNameNow === tempStr) {
+        alert('과목을 변경해 주세요.');
+        return;
+      }
+      // 서버로 변경된 전공명을 전달한다.
       const headers = { 'Content-Type': 'application/json' };
-      const patchData = {
+      const patchDatas = {
         imajor: _imajor,
         majorName: `${tempStr}`,
       };
+
       try {
-        const res = await axios.patch(`/api/major`, patchData, { headers });
+        const res = await api.patch(`/api/major`, patchDatas, { headers });
         const result = res.data;
+        setSelectMajorNameNow(tempStr);
         // console.log('전공명 서버 수정 완료 : ', result);
       } catch (err) {
         // console.log('전공명 서버 수정 실패 : ', err);
@@ -118,7 +128,7 @@ const Major = () => {
         if (item.imajor === selectMajorID) {
           if (item.majorName !== tempStr) {
             item.isChange = 1;
-            item.originName = item.majorName;
+            item.originName = '구 ' + item.majorName;
             item.majorName = tempStr;
           }
         }
@@ -126,16 +136,25 @@ const Major = () => {
       });
       console.log(temp);
       setDataArr(temp);
-
       setSelectMajorID(null);
       setSelectMajorName('');
+      //window.location.reload();
     } else {
       // 다르므로 모달 창 띄우기
       setSelectMajorID(_imajor);
       setSelectMajorName(_imajorName);
-      setChangeModalShow(true);
+      setSelectMajorNameNow(_imajorName);
     }
   };
+  // 확인버튼 클릭 시 patch 통신
+  const patchMajorNameWait = () => {
+    //
+  };
+  //확인 버튼 눌렀을때 나오는 모달창
+  const clickOkModal = () => {
+    setChangeModalShow(true);
+  };
+
   const handleChangeName = e => {
     console.log(e.target.value);
     setSelectMajorName(e.target.value);
@@ -167,7 +186,9 @@ const Major = () => {
         { headers }
       );
       const result = res.data;
-      console.log('제발 나와', result);
+      // console.log('제발 나와', result);
+      handleModalCancel();
+      alert('등록되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -175,7 +196,7 @@ const Major = () => {
   //api delete test
   const MajorDeleteTest = async _id => {
     try {
-      const res = await axios.delete(`/api/major?imajor=${_id}`);
+      const res = await api.delete(`/api/major?imajor=${_id}`);
       const result = res.data;
       return result;
     } catch (error) {
@@ -185,11 +206,20 @@ const Major = () => {
 
   // console.log(data?.major);
 
-  //변경 버튼 클릭시
+  //변경 버튼 클릭시 ??
   const changeClickShowOpen = () => {
     // console.log('텍스트필드 활성화 ', selectMajorID);
+
+    // console.log(newMajorName, graduationScore);
+    // if (newMajorName !="" && graduationScore !="") {
+    //   setChangeClickShow(true);
+    // } else {
+
+    // }
+    alert('항목을 입력하셔야 합니다.');
     setChangeClickShow(true);
   };
+
   const chnageClickCloseWin = () => {
     // 초기화
     setSelectMajorID(null);
@@ -214,12 +244,23 @@ const Major = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
-    MajorPostTest(newMajorName, graduationScore);
+    console.log('newMajorName : ', newMajorName);
+    console.log('graduationScore : ', graduationScore);
+    if (newMajorName != '' && graduationScore != '') {
+      MajorPostTest(newMajorName, graduationScore);
+    } else {
+      alert('내용을 입력해 주세요.');
+      setNewMajorName('');
+      setGraduationScore('');
+    }
   };
 
   //commonModal close state
   const handleModalCancel = () => {
     //setDisplay(false);
+    setShowModal(false);
+    setNewMajorName('');
+    setGraduationScore('');
   };
 
   // api 전공리스트 전체 보기
@@ -271,8 +312,9 @@ const Major = () => {
           data={_status}
           value={delYn}
           setValue={setDelYn}
-          reset={true}
-          search={true}
+          propertyName={propertyName}
+          reset
+          search
         />
         <Dropdown
           length="long"
@@ -308,10 +350,12 @@ const Major = () => {
             <p>전공명</p>
             <div style={{ marginLeft: '40px' }}>
               <Input
-                type="text"
                 length="long"
+                type="text"
+                placeholder="전공명"
                 value={newMajorName}
                 setValue={e => setNewMajorName(e.target.value)}
+                reset={setNewMajorName}
               />
             </div>
           </div>
@@ -339,7 +383,7 @@ const Major = () => {
         </CommonModal>
       ) : null}
       <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={6} pending={pending}>
-        {isDataArr.map((item, index) => {
+        {isDataArr.map(item => {
           return (
             <div key={item.imajor}>
               <div>
@@ -350,7 +394,7 @@ const Major = () => {
                     type="text"
                     value={selectMajorName}
                     setValue={handleChangeName}
-                  ></Input>
+                  />
                 ) : (
                   item.majorName
                 )}
