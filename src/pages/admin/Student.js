@@ -102,11 +102,11 @@ const Student = () => {
               <div>{item.grade}</div>
               <div>{item.majorName}</div>
               <div>{item.nm}</div>
-              <div>{item.gender === 'M' ? '남' : '여'}</div>
+              <div>{(item.gender === 'M' && '남') || (item.gender === 'F' && '여')}</div>
               <div>{item.birthdate}</div>
               <div>{item.phone}</div>
               <div>{item.createdAt}</div>
-              <div>{item.finishedYn === 1 ? '졸업' : '재학 중'}</div>
+              <div>{(item.finishedYn === 1 && '재학 중') || (item.finishedYn === 2 && '졸업')}</div>
               <div>{item.score}</div>
               <div>
                 <CommonButton

@@ -128,7 +128,7 @@ const Dropdown = ({
       </div>
       <ul>
         {result.length !== 0 ? (
-          result.map(item => (
+          result.map((item, index) => (
             <li
               ref={
                 item[propertyName ? propertyName.value : 'title'] === searchValue ? itemRef : null
@@ -136,7 +136,7 @@ const Dropdown = ({
               className={
                 item[propertyName ? propertyName.value : 'title'] === searchValue ? 'active' : null
               }
-              key={item[propertyName ? propertyName.key : 'id']}
+              key={index}
               onClick={() => handleItemClick(item)}
             >
               <span>{item[propertyName ? propertyName.value : 'title']}</span>
@@ -145,7 +145,7 @@ const Dropdown = ({
         ) : (
           <li className="data-error">
             <FontAwesomeIcon icon={faTriangleExclamation} />
-            <span>데이터를 불러오지 못했습니다.</span>
+            <span>데이터가 없습니다.</span>
           </li>
         )}
       </ul>

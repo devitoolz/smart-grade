@@ -20,10 +20,13 @@ import {
   faBookOpen,
   faGraduationCap,
   faHouse,
+  faRightFromBracket,
   faUser,
   faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import api from '../../api/api';
+import { removeCookie } from '../../modules/cookies';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -36,10 +39,10 @@ const Main = () => {
   const { user } = useSelector(state => state.main);
 
   const menuData = {
-    home: {
-      icon: faHouse,
-      title: '홈',
-    },
+    // home: {
+    //   icon: faHouse,
+    //   title: '홈',
+    // },
     mypage: {
       icon: faUser,
       title: '마이페이지',
@@ -72,6 +75,18 @@ const Main = () => {
     dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
+  const handleLogout = async () => {
+    try {
+      await api.post(`/api/logout`);
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      alert('로그아웃 되었습니다.');
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MainLayout>
       <Sidebar>
@@ -102,7 +117,17 @@ const Main = () => {
         </Menu>
       </Sidebar>
       <Content>
-        <Title>{title}</Title>
+        <Title>
+          <div className="title">{title}</div>
+          <div className="user-info">
+            <div className="user-info-pic">
+              {/* TODO: 이미지 추가 */}
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            <span>{user?.profile.name} 교수님</span>
+            <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
+          </div>
+        </Title>
         <Layout>
           <Outlet />
         </Layout>
