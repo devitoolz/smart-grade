@@ -82,12 +82,12 @@ const SubMenu = styled.ul`
   padding-left: 40px;
   > span {
     color: var(--white);
-    font-size: 24px;
+    font-size: 26px;
     padding-bottom: 40px;
   }
   > a {
     color: var(--white);
-    font-size: 16px;
+    font-size: 18px;
     padding-bottom: 20px;
     &.active {
       font-weight: bold;
@@ -203,7 +203,7 @@ const Title = styled.div`
   color: var(--title-txt-color);
   font-size: 30px;
   font-weight: bold;
-  padding-left: calc(25px + 320px);
+  padding-left: calc(20px + 320px);
   z-index: 9;
   > div.title {
     display: flex;
@@ -225,7 +225,33 @@ const Title = styled.div`
   > div.user-info {
     display: flex;
     align-items: center;
-    padding-right: 25px;
+    padding-right: 20px;
+    gap: 10px;
+    > div.user-info-pic {
+      background: var(--search-bg-color);
+      overflow: hidden;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      > svg {
+        align-self: flex-end;
+        font-size: 32px;
+        color: var(--search-ph-color);
+      }
+    }
+    > span {
+      font-size: 18px;
+      font-weight: normal;
+      color: black;
+    }
+    > svg {
+      cursor: pointer;
+      font-size: 38px;
+      padding-left: 10px;
+    }
   }
 `;
 

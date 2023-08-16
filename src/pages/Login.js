@@ -72,7 +72,7 @@ const Login = () => {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
         if (payload.role === 'ROLE_ADMIN') {
-          navigate(`/${payload.role.toLowerCase().replace('role_', '')}`, { state: payload.id });
+          navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
         } else {
           console.log('최초 로그인');
           navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);

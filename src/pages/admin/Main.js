@@ -16,10 +16,13 @@ import {
   faBuildingColumns,
   faGraduationCap,
   faHouse,
+  faRightFromBracket,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
+import api from '../../api/api';
+import { removeCookie } from '../../modules/cookies';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -69,6 +72,18 @@ const Main = () => {
     if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
+  const handleLogout = async () => {
+    try {
+      await api.post(`/api/logout`);
+      removeCookie('accessToken');
+      removeCookie('refreshToken');
+      alert('로그아웃 되었습니다.');
+      navigate('/');
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <MainLayout>
       <Sidebar>
@@ -95,7 +110,11 @@ const Main = () => {
         <Title>
           <div className="title">{title}</div>
           <div className="user-info">
-            <span></span>
+            <div className="user-info-pic">
+              <FontAwesomeIcon icon={faUser} />
+            </div>
+            <span>관리자 님</span>
+            <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
           </div>
         </Title>
         <Layout>
