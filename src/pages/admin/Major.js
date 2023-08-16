@@ -14,7 +14,7 @@ const Major = () => {
   ////SearchBar////
 
   // 전공명 state
-  const [majorName, setMajorName] = useState('');
+  const [majorName, setMajorName] = useState();
   //전공명 상태 state
   const [delYn, setDelYn] = useState(null);
   //검색 시 사용할 쿼리스트링목록
@@ -73,7 +73,7 @@ const Major = () => {
   const [selectMajorName, setSelectMajorName] = useState('');
   const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
 
-  //전공리스트 state 전역관리?
+  //전공리스트 state
   const { allMajorList } = useSelector(state => state.major);
   console.log(allMajorList);
 
@@ -95,8 +95,7 @@ const Major = () => {
     setShowModal(true);
   };
 
-  //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
-  //변경버튼 클릭시 인풋창열리고 확인버튼 클릭시 전공명 변경 모달 열림
+  //변경버튼 클릭시
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
@@ -104,7 +103,7 @@ const Major = () => {
       const tempStr = selectMajorName.trim();
       // 과목명을 변경하지 않은 경우 체크
       if (selectMajorNameNow === tempStr) {
-        alert('과목을 변경해 주세요.');
+        alert('전공명을 변경해 주세요.');
         return;
       }
       // 서버로 변경된 전공명을 전달한다.
@@ -320,7 +319,7 @@ const Major = () => {
           length="long"
           placeholder="전공명"
           data={allMajorList}
-          propertyName={{ key: 'imajor', value: 'majorName' }}
+          propertyName={{ key: 'majorName', value: 'majorName' }}
           value={majorName}
           setValue={setMajorName}
           reset
