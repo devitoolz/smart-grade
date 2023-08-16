@@ -14,7 +14,7 @@ const Major = () => {
   ////SearchBar////
 
   // 전공명 state
-  const [majorName, setMajorName] = useState();
+  const [majorName, setMajorName] = useState('');
   //전공명 상태 state
   const [delYn, setDelYn] = useState(null);
   //검색 시 사용할 쿼리스트링목록
