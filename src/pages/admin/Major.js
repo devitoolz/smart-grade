@@ -52,7 +52,7 @@ const Major = () => {
   ];
 
   //전공명 imajor
-  const [imajor, setImajor] = useState(null);
+  const [imajor, setImajor] = useState("");
 
   //전공추가 시 전공명
   const [newMajorName, setNewMajorName] = useState('');
@@ -100,11 +100,11 @@ const Major = () => {
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
-      // 과목명 앞뒤 공백 제거하기
+      // 전공명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
-      // 과목명을 변경하지 않은 경우 체크
+      // 전공명을 변경하지 않은 경우 체크
       if (selectMajorNameNow === tempStr) {
-        alert('과목을 변경해 주세요.');
+        alert('전공명을 변경해 주세요.');
         return;
       }
       // 서버로 변경된 전공명을 전달한다.
@@ -320,7 +320,7 @@ const Major = () => {
           length="long"
           placeholder="전공명"
           data={allMajorList}
-          propertyName={{ key: 'imajor', value: 'majorName' }}
+          propertyName={{ key: 'majorName', value: 'majorName' }}
           value={majorName}
           setValue={setMajorName}
           reset

@@ -14,7 +14,7 @@ const LectureRoom = () => {
 
   ////Dropdown////
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState("");
 
   //Dropdown 메뉴 Item 데이터??
   const [bData, setBData] = useState([]);
