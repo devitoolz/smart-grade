@@ -156,11 +156,12 @@ const FindLogin = styled.div`
 
 const FindAccountForm = styled.div`
   display: flex;
-  flex-direction: column;
+  justify-content: center;
   align-items: center;
+  visibility: ${({ role }) => (role === 'ROLE_ADMIN' ? 'hidden' : null)};
   color: var(--button-bar-txt-color);
   gap: 5px;
-  > span {
+  > span:not(:nth-of-type(2)) {
     cursor: pointer;
   }
 `;

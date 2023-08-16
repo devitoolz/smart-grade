@@ -75,6 +75,7 @@ const Login = () => {
           navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
         } else {
           console.log('최초 로그인');
+          alert('최초 로그인입니다. 마이 페이지로 이동하여 정보 수정 후 OTP 등록을 진행해주세요.');
           navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);
         }
       }
@@ -144,12 +145,11 @@ const Login = () => {
             </LoginInput>
             <FindLogin>
               <LoginBtn onClick={handleLogin}>로그인</LoginBtn>
-              {payload.role !== 'ROLE_ADMIN' && (
-                <FindAccountForm>
-                  <span>아이디 찾기</span>
-                  <span onClick={() => setOpenFindPw(true)}>비밀번호 찾기</span>
-                </FindAccountForm>
-              )}
+              <FindAccountForm role={payload.role}>
+                <span>ID 찾기</span>
+                <span>|</span>
+                <span onClick={() => setOpenFindPw(true)}>PW 찾기</span>
+              </FindAccountForm>
             </FindLogin>
           </LoginForm>
         </LoginContent>
