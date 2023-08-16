@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, Outlet, useLocation } from 'react-router-dom';
 import {
   Content,
   Footer,
@@ -27,13 +27,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Main = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
 
   const { title } = useSelector(state => state.main);
-  const { user } = useSelector(state => state.main);
 
   const menuData = {
     home: {
@@ -62,12 +60,6 @@ const Main = () => {
   const mainPath = pathSegments[1];
 
   useEffect(() => {
-    if (user && user.profile.secretKey !== 'true' && pathname !== '/professor/mypage') {
-      alert('OTP 등록을 하지 않으면 접근할 수 없습니다.');
-      navigate('mypage');
-      return;
-    }
-
     const title = menuData[mainPath].title;
     dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);

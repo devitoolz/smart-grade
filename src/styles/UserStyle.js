@@ -239,7 +239,8 @@ const Row = styled.div`
     justify-content: center;
     font-size: 16px;
     text-align: center;
-    height: 50px;
+    height: 46px;
+    box-sizing: content-box;
     &:nth-of-type(odd) {
       font-weight: bold;
       color: var(--white);
@@ -272,9 +273,10 @@ const Row = styled.div`
 const PasswordForm = styled.form`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: ${({ find }) => (find ? '1fr 1fr' : '1fr 1fr 1fr')};
   font-size: 16px;
   gap: 15px;
+  row-gap: ${({ find }) => (find ? '30px' : null)};
   > label {
     display: flex;
     align-items: center;

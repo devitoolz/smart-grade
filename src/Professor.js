@@ -2,12 +2,15 @@ import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Main from './pages/professor/Main';
 import Dashboard from './pages/professor/Dashboard';
-import api from './api/api';
+import api, { removeAuth } from './api/api';
 import Mypage from './pages/professor/Mypage';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
+import otpNotFound from './hooks/otpNotFound';
 
 const Professor = () => {
+  otpNotFound();
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
@@ -20,7 +23,7 @@ const Professor = () => {
         const { data } = await api.get(`/api/professor`);
         dispatch(main.setUser({ ...data }));
       } catch (err) {
-        console.log(err);
+        removeAuth();
       }
     };
     getProfile();

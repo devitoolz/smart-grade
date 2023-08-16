@@ -16,14 +16,16 @@ const api = axios.create({
 
 const main = mainSlice.actions;
 
+const removeAuth = () => {
+  removeCookie('accessToken');
+  removeCookie('refreshToken');
+  alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
+  location.href = '/';
+};
+
 const Interceptor = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  const removeAuth = () => {
-    removeCookie('accessToken');
-    removeCookie('refreshToken');
-  };
 
   const requestInterceptor = api.interceptors.request.use(
     config => {
@@ -66,10 +68,6 @@ const Interceptor = ({ children }) => {
           alert('인증에 실패하여 로그인 페이지로 이동합니다.');
           navigate('/');
         }
-      } else if (response.status === 401 && !refreshToken) {
-        removeAuth();
-        alert('인증 정보가 없습니다. 로그인 페이지로 이동합니다.');
-        navigate('/');
       }
 
       return Promise.reject(error);
@@ -87,4 +85,4 @@ const Interceptor = ({ children }) => {
 };
 
 export default api;
-export { Interceptor };
+export { Interceptor, removeAuth };
