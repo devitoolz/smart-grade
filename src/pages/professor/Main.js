@@ -65,12 +65,6 @@ const Main = () => {
   const mainPath = pathSegments[1];
 
   useEffect(() => {
-    if (user && user.profile.secretKey !== 'true' && pathname !== '/professor/mypage') {
-      alert('OTP 등록을 하지 않으면 접근할 수 없습니다.');
-      navigate('mypage');
-      return;
-    }
-
     const title = menuData[mainPath].title;
     dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
