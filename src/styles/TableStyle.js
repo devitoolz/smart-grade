@@ -8,8 +8,8 @@ const TableLayout = styled.div`
 
 const TableContainer = styled.div`
   width: 100%;
-  border-top: 2px solid var(--title-txt-color);
-  border-bottom: 2px solid var(--title-txt-color);
+  border-top: 2px solid var(--table-outline-color);
+  border-bottom: 2px solid var(--table-outline-color);
   div {
     overflow: hidden;
     white-space: nowrap;
@@ -21,7 +21,7 @@ const TableContainer = styled.div`
 const TableHead = styled.div`
   display: grid;
   grid-template-columns: ${props => props.template};
-  border-bottom: 2px solid var(--title-txt-color);
+  border-bottom: 2px solid var(--table-outline-color);
   background: var(--main-bg-color);
   > div {
     padding: 0 5px;
@@ -39,6 +39,7 @@ const TableHead = styled.div`
 `;
 
 const TableBody = styled.div`
+  position: relative;
   > div {
     display: grid;
     grid-template-columns: ${props => props.template};
@@ -56,6 +57,23 @@ const TableBody = styled.div`
       &:last-of-type {
         border-right: none;
       }
+    }
+  }
+  > div.table-loading {
+    position: absolute;
+    border: none;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--main-border-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    > span {
+      font-size: 16px;
     }
   }
 `;

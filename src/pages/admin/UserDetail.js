@@ -22,8 +22,10 @@ import {
   faChevronRight,
   faCircleExclamation,
   faPencil,
+  faTriangleExclamation,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
+import { PulseLoader } from 'react-spinners';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -33,6 +35,7 @@ const UserDetail = () => {
   const [name, setName] = useState('');
   const [major, setMajor] = useState('');
   const [img, setImg] = useState(null);
+  const [error, setError] = useState(false);
 
   const { allMajorList } = useSelector(state => state.major);
   const { pathname } = useLocation();
@@ -81,6 +84,7 @@ const UserDetail = () => {
 
       dispatch(main.setTitle(title));
     } catch (error) {
+      setError(true);
       console.log(error);
     }
   };
@@ -143,32 +147,62 @@ const UserDetail = () => {
             <div>강의 시간</div>
           </div>
           <div className="lecture-table-body">
-            {lectureList?.length === 0 && (
-              <div className="lecture-table-no-content">
-                <FontAwesomeIcon icon={faCircleExclamation} />
-                <span>
-                  {(role === 'students' && '수강 중인 ') || (role === 'professor' && '강의 중인 ')}
-                  강의가 없습니다.
-                </span>
-              </div>
-            )}
-            {lectureList?.map((item, index) => (
-              <div key={index} className="lecture-table-content">
-                <div>{item.lectureName}</div>
-                <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
-                <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
-              </div>
-            ))}
-            {lectureList?.length <= 7 &&
-              Array(7 - (lectureList?.length ?? 0))
-                .fill()
-                .map((_, index) => (
+            {lectureList ? (
+              <>
+                {lectureList.map((item, index) => (
                   <div key={index} className="lecture-table-content">
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                    <div>{item.lectureName}</div>
+                    <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
+                    <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
                   </div>
                 ))}
+                {lectureList.length === 0 && (
+                  <div className="lecture-table-no-content">
+                    <FontAwesomeIcon icon={faCircleExclamation} />
+                    <span>
+                      {(role === 'students' && '수강 중인 ') ||
+                        (role === 'professor' && '강의 중인 ')}
+                      강의가 없습니다.
+                    </span>
+                  </div>
+                )}
+                {lectureList.length <= 7 &&
+                  Array(7 - (lectureList?.length ?? 0))
+                    .fill()
+                    .map((_, index) => (
+                      <div key={index} className="lecture-table-content">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    ))}
+              </>
+            ) : (
+              <>
+                {Array(7)
+                  .fill()
+                  .map((_, index) => (
+                    <div key={index} className="lecture-table-content">
+                      <div></div>
+                      <div></div>
+                      <div></div>
+                    </div>
+                  ))}
+                <div className="lecture-table-no-content">
+                  {error ? (
+                    <>
+                      <FontAwesomeIcon icon={faTriangleExclamation} />
+                      <span>데이터를 불러올 수 없습니다.</span>
+                    </>
+                  ) : (
+                    <>
+                      <PulseLoader color="#47b5ff" margin={6} size={12} speedMultiplier={0.7} />
+                      <span>로딩 중...</span>
+                    </>
+                  )}
+                </div>
+              </>
+            )}
           </div>
         </LectureTableLayout>
       </MiddleLayout>
