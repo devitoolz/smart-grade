@@ -243,7 +243,7 @@ const Mypage = () => {
             <div>생년월일</div>
             <div>{user?.profile.birthdate}</div>
             <div>전공</div>
-            <div>{user?.profile.imajor}</div>
+            <div>{user?.profile.majorName}</div>
           </Row>
           <Row col={2}>
             <div>등록일</div>

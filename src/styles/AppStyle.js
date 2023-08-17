@@ -11,6 +11,7 @@ const light = css`
     --primary-border-color: #cacaca;
     --negative-color: #ff6b6b;
     --table-border-color: #dae8ff;
+    --table-outline-color: #a5c9f6;
     --form-table-bg-color: #f8f8f8;
     --form-table-odd-border-color: #61bfff;
     --form-table-even-border-color: #f2f2f2;

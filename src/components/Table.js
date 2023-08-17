@@ -14,9 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronLeft,
   faChevronRight,
-  faSpinner,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
+import { PulseLoader } from 'react-spinners';
 
 const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => {
   const width = header?.map(item => item.width + 'fr').join(' ');
@@ -76,10 +76,23 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
           </TableHead>
         ) : null}
         {pending ? (
-          <TableNoData>
-            <FontAwesomeIcon icon={faSpinner} />
-            <span>로딩 중</span>
-          </TableNoData>
+          <TableBody template={width}>
+            <div className="table-loading">
+              <PulseLoader color="#47b5ff" margin={6} size={12} speedMultiplier={0.7} />
+              <span>로딩 중...</span>
+            </div>
+            {Array(10)
+              .fill()
+              .map((_, index) => (
+                <div key={index}>
+                  {Array(header?.length)
+                    .fill()
+                    .map((_, index) => (
+                      <div key={index}></div>
+                    ))}
+                </div>
+              ))}
+          </TableBody>
         ) : data && header ? (
           <>
             <TableBody template={width}>

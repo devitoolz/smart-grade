@@ -171,6 +171,7 @@ const LectureTableLayout = styled.div`
     overflow: auto;
     > div.lecture-table-no-content {
       position: absolute;
+      top: 0;
       height: 100%;
       width: 100%;
       display: flex;
