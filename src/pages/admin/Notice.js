@@ -115,7 +115,9 @@ const Notice = () => {
         {noticeData.map(item => {
           return (
             <div key={item.iboard} style={{ background: item.importance ? 'lavenderblush' : null }}>
-              <div>{item.importance ? `[중요]` : item.iboard}</div>
+              <div>
+                {item.importance ? <span style={{ fontWeight: '700' }}>중요</span> : item.iboard}
+              </div>
               <div>{item.title}</div>
               <div>{item.createdAt.split('T')[0]}</div>
               <div>

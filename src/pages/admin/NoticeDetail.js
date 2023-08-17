@@ -85,7 +85,7 @@ const NoticeDetail = () => {
               {edit && (
                 <>
                   <input type="checkbox" id="check" defaultChecked={data?.importance} />
-                  <label htmlFor="check">중요공지사항으로 올리기</label>
+                  <label htmlFor="check">중요공지사항</label>
                 </>
               )}
               {edit ||
