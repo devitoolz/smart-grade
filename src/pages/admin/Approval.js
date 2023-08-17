@@ -156,7 +156,7 @@ const Approval = () => {
                   color={item.procedures === 0 ? 'gray' : 'blue'}
                   value={status[item.procedures]}
                   onClick={() => handleAcceptLecture(item)}
-                  disabled={!item.procedures}
+                  disabled={!item.procedures || item.procedures === 3}
                 />
                 {item.procedures ? (
                   <CommonButton
@@ -164,6 +164,7 @@ const Approval = () => {
                     color="red"
                     value="거절"
                     onClick={() => handleRejectLecture(item)}
+                    disabled={!item.procedures || item.procedures === 3}
                   />
                 ) : (
                   <></>
