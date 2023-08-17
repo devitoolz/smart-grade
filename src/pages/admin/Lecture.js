@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableArea, IsClosed } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
@@ -9,6 +9,7 @@ import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
 import { getStudentList } from '../../api/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import api from '../../api/api';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
@@ -48,24 +49,41 @@ const Lecture = () => {
       title: '개강',
     },
   ];
-  const tempLecture = [
-    {
-      id: 1,
-      title: '강의 1',
-    },
-    {
-      id: 2,
-      title: '강의 2',
-    },
-    {
-      id: 3,
-      title: '강의 3',
-    },
-    {
-      id: 4,
-      title: '강의 4',
-    },
-  ];
+  // 강의명 리스트 +불러오기
+  const [lectureNameList, setLectureNameList] = useState([]);
+  useEffect(() => {
+    const getLectureName = async () => {
+      try {
+        const { data } = await api.get(`/api/admin/lecture-name`);
+        setLectureNameList(data.vo);
+        //         ilectureName: 141
+        // lectureName : "공학의역사와 이해"
+        // dispatch(major.setAllMajorList(majorList));
+      } catch (err) {
+        console.log(err);
+        alert('강의 목록을 불러올 수 없습니다');
+      }
+    };
+    getLectureName();
+  }, []);
+  // const lectureNameList = [
+  //   {
+  //     id: 1,
+  //     title: '강의 1',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: '강의 2',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: '강의 3',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: '강의 4',
+  //   },
+  // ];
   const [nm, setProfessorName] = useState('');
   const professorNameChange = e => {
     setProfessorName(e.target.value);
@@ -129,7 +147,8 @@ const Lecture = () => {
         <Dropdown
           length="long"
           placeholder="강의명"
-          data={tempLecture}
+          data={lectureNameList}
+          propertyName={{ key: 'ilectureName', value: 'lectureName' }}
           value={lectureName}
           setValue={setLectureName}
           reset={true}
