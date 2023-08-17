@@ -14,18 +14,18 @@ const LectureRoom = () => {
 
   ////Dropdown////
 
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
-  //Dropdown 메뉴 Item 데이터??
+  //Dropdown 메뉴 Item 데이터
   const [bData, setBData] = useState([]);
 
   //강의실 추가시 건물명 state
   const [buildingName, setBuildingName] = useState('');
   //강의실 추가시 호실명 state
-  const [lectureRoomName, setLectureRoomName] = useState(null);
+  const [lectureRoomName, setLectureRoomName] = useState('');
 
   //강의실 추가시 최대수용인원 state
-  const [maxCapacity, setMaxCapacity] = useState(null);
+  const [maxCapacity, setMaxCapacity] = useState('');
 
   ////SearchBar//////
   //검색 시 사용할 쿼리스트링(건물명)
@@ -69,7 +69,8 @@ const LectureRoom = () => {
     try {
       const res = await api.post('/api/lectureroom', postData, { headers });
       const result = res.data;
-      console.log('잘 나오나', result);
+      // console.log('잘 나오나', result);
+      alert('등록되었습니다.');
     } catch (err) {
       console.log(err);
     }
@@ -224,10 +225,10 @@ const LectureRoom = () => {
           return (
             <div key={item.ilectureRoom}>
               <div>
-                {item.buildingName}
+                {item.buildingName}{"  "}
                 {item.lectureRoomName.includes('호') === false
                   ? item.lectureRoomName.concat('호')
-                  : null}
+                  : item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
               <div>
