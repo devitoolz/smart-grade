@@ -75,7 +75,7 @@ const Major = () => {
 
   //전공리스트 state 전역관리?
   const { allMajorList } = useSelector(state => state.major);
-  console.log(allMajorList);
+  // console.log(allMajorList);
 
   //전공명 state
   const [majorId, setMajorId] = useState();
@@ -95,8 +95,7 @@ const Major = () => {
     setShowModal(true);
   };
 
-  //1.변경버튼 클릭시 모달창 오픈 2.확인버튼 클릭시 전공명 변경 전달
-  //변경버튼 클릭시 인풋창열리고 확인버튼 클릭시 전공명 변경 모달 열림
+  //변경버튼 클릭시 pk값, majorName 담는것
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
       // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
@@ -134,7 +133,7 @@ const Major = () => {
         }
         return item;
       });
-      console.log(temp);
+      // console.log(temp);
       setDataArr(temp);
       setSelectMajorID(null);
       setSelectMajorName('');
@@ -148,7 +147,7 @@ const Major = () => {
   };
   // 확인버튼 클릭 시 patch 통신
   const patchMajorNameWait = () => {
-    //
+    
   };
   //확인 버튼 눌렀을때 나오는 모달창
   const clickOkModal = () => {
@@ -156,13 +155,13 @@ const Major = () => {
   };
 
   const handleChangeName = e => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setSelectMajorName(e.target.value);
   };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
-    console.log(_majorId);
+    // console.log(_majorId);
     if (selectMajorID === _majorId) {
       // 초기화
       setSelectMajorID(null);
@@ -199,14 +198,14 @@ const Major = () => {
       const res = await api.delete(`/api/major?imajor=${_id}`);
       const result = res.data;
       return result;
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
     }
   };
 
   // console.log(data?.major);
 
-  //변경 버튼 클릭시 ??
+  //변경 버튼 클릭시
   const changeClickShowOpen = () => {
     // console.log('텍스트필드 활성화 ', selectMajorID);
 
@@ -244,8 +243,8 @@ const Major = () => {
   const handleModalOk = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
-    console.log('newMajorName : ', newMajorName);
-    console.log('graduationScore : ', graduationScore);
+    // console.log('newMajorName : ', newMajorName);
+    // console.log('graduationScore : ', graduationScore);
     if (newMajorName != '' && graduationScore != '') {
       MajorPostTest(newMajorName, graduationScore);
     } else {
@@ -266,7 +265,7 @@ const Major = () => {
   // api 전공리스트 전체 보기
   const [isDataArr, setDataArr] = useState([]);
   useEffect(() => {
-    console.log(data);
+    // console.log(data);
 
     if (data) {
       const temp = data.major.map(item => {
