@@ -33,7 +33,7 @@ export const TableArea = styled.div`
     .table_body {
       border-top: 2px solid #1363df;
       border-bottom: 2px solid #1363df;
-      max-height: 570px;
+      max-height: 500px;
       .table_body_item {
         border-bottom: 1px solid var(--table-border-color);
         div {
