@@ -119,7 +119,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
       </TableContainer>
       {data && hasPage && (
         <Pagination>
-          {maxPage !== 0 ? (
+          {maxPage ? (
             <PrevNextButton onClick={prevPage} isFirst={currentPage === 1 ? true : false}>
               <FontAwesomeIcon icon={faChevronLeft} />
             </PrevNextButton>
@@ -136,7 +136,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
               </PageButton>
             );
           })}
-          {maxPage !== 0 ? (
+          {maxPage ? (
             <PrevNextButton onClick={nextPage} isLast={currentPage === maxPage ? true : false}>
               <FontAwesomeIcon icon={faChevronRight} />
             </PrevNextButton>
