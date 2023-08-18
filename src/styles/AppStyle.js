@@ -256,6 +256,31 @@ const Title = styled.div`
   }
 `;
 
+const NotFoundLayout = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  > svg {
+    font-size: 90px;
+    color: var(--negative-color);
+  }
+  > span {
+    font-size: 30px;
+  }
+  > button {
+    border: none;
+    font-size: 18px;
+    background: var(--primary-color);
+    padding: 10px 30px;
+    border-radius: 5px;
+    color: var(--white);
+  }
+`;
+
 export {
   light,
   dark,
@@ -272,4 +297,5 @@ export {
   Footer,
   Content,
   Title,
+  NotFoundLayout,
 };

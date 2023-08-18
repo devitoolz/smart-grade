@@ -45,7 +45,7 @@ const Mypage = () => {
       setImg(
         user?.profile.pic.startsWith('blob')
           ? user?.profile.pic
-          : `http://192.168.0.144:5002/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
+          : `/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
       );
     }
     setPhone(user?.profile.phone);

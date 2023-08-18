@@ -62,7 +62,7 @@ const UserDetail = () => {
       setMajor(data.profile.imajor);
       data.profile.pic
         ? setImg(
-            `http://192.168.0.144:5002/imgs/${role}/${
+            `/imgs/${role}/${
               data.profile[
                 (role === 'professor' && 'iprofessor') || (role === 'students' && 'istudent')
               ]
