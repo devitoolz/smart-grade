@@ -81,7 +81,7 @@ const Approval = () => {
   useEffect(() => {
     query.set('procedures', -2);
     setQuery(query);
-  }, []);
+  }, [query]);
   const url = '/api/admin/lecture';
   const { data, pending, error } = useQuerySearch(url, click, '&procedures=-2');
 
