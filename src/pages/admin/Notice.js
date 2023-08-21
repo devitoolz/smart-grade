@@ -9,11 +9,12 @@ import CommonModal from '../../components/CommonModal';
 import { deleteBoard } from '../../api/fetch';
 
 const Notice = () => {
+  const navigate = useNavigate();
+
   //검색버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
   ////Input창////
   //input value값
-  // const [noticeTitle, setNoticeTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   //input value change 함수
   const handleChangeValue = e => {
@@ -66,8 +67,7 @@ const Notice = () => {
     { title: '조회수', width: '1' },
   ];
 
-  const navigate = useNavigate();
-
+  // JSX
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -118,19 +118,17 @@ const Notice = () => {
               <div>
                 {item.importance ? <span style={{ fontWeight: '700' }}>중요</span> : item.iboard}
               </div>
-              <div>{item.title}</div>
+              <div>
+                <span style={{ cursor: 'pointer' }} onClick={() => navigate(`${item.iboard}`)}>
+                  {item.title}
+                </span>
+              </div>
               <div>{item.createdAt.split('T')[0]}</div>
               <div>
                 <CommonButton
                   btnType="table"
                   color="blue"
                   value="수정"
-                  onClick={() => navigate(`${item.iboard}`)}
-                />
-                <CommonButton
-                  btnType="table"
-                  color="blue"
-                  value="보기"
                   onClick={() => navigate(`${item.iboard}`)}
                 />
                 <CommonButton

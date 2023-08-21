@@ -7,18 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { TextArea } from '../../styles/MyStyleCSS';
 import { postBoard } from '../../api/fetch';
 const Write = () => {
-  //공지사항  제목
+  //공지사항 제목
   const [title, setTitle] = useState('');
-
-  //공지사항 체크박스 value
-  const [check, setCheck] = useState(false);
-
-  //checkbox value change 함수
-  const handleChangvalue = () => {
-    setCheck(false);
-  };
-
-  //제목 인풋창?
+  //제목 인풋창
   const handleTitle = e => {
     setTitle(e.target.value);
   };
@@ -92,19 +83,21 @@ const Write = () => {
           <col className="detail" width={'70%'} />
         </colgroup>
         <thead>
-          <th>
-            <h3>제목</h3>
-          </th>
-          <th className="inputTitle">
-            <Input
-              type="text"
-              length="full"
-              placeholder="제목 (최대 30자)"
-              maxLength={30}
-              value={title}
-              setValue={handleTitle}
-            />
-          </th>
+          <tr>
+            <th>
+              <h3>제목</h3>
+            </th>
+            <th className="inputTitle">
+              <Input
+                type="text"
+                length="full"
+                placeholder="제목 (최대 30자)"
+                maxLength={30}
+                value={title}
+                setValue={handleTitle}
+              />
+            </th>
+          </tr>
         </thead>
         <tbody>
           <tr>

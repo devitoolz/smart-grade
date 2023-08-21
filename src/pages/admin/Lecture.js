@@ -25,7 +25,7 @@ const Lecture = () => {
   // 강의상태
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
   // 검색 영역
-  const [lectureName, setLectureName] = useState();
+  const [ilectureName, setLectureName] = useState();
   const [procedures, setLectureStatus] = useState();
   const statusList = [
     {
@@ -66,29 +66,11 @@ const Lecture = () => {
     };
     getLectureName();
   }, []);
-  // const lectureNameList = [
-  //   {
-  //     id: 1,
-  //     title: '강의 1',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: '강의 2',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: '강의 3',
-  //   },
-  //   {
-  //     id: 4,
-  //     title: '강의 4',
-  //   },
-  // ];
   const [nm, setProfessorName] = useState('');
   const professorNameChange = e => {
     setProfessorName(e.target.value);
   };
-  const queries = { procedures, lectureName, nm };
+  const queries = { procedures, ilectureName, nm };
   const url = '/api/admin/lecture';
 
   // table header
@@ -149,17 +131,10 @@ const Lecture = () => {
           placeholder="강의명"
           data={lectureNameList}
           propertyName={{ key: 'ilectureName', value: 'lectureName' }}
-          value={lectureName}
+          value={ilectureName}
           setValue={setLectureName}
           reset={true}
         />
-        {/* <Input
-          length="long"
-          placeholder="강의명"
-          value={lectureName}
-          setValue={e => setLectureName(e.target.value)}
-          reset={setLectureName}
-        /> */}
         <Input
           length="short"
           type="string"
