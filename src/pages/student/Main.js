@@ -21,6 +21,7 @@ import {
   faGraduationCap,
   faHouse,
   faRightFromBracket,
+  faSignature,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -50,8 +51,12 @@ const Main = () => {
       icon: faUser,
       title: '마이페이지',
     },
-    grade: {
+    lecture: {
       icon: faBookOpen,
+      title: '강의 조회',
+    },
+    grade: {
+      icon: faSignature,
       title: '성적 조회',
     },
     register: {

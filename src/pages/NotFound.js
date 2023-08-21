@@ -17,8 +17,8 @@ const NotFound = () => {
       case 'professor':
         path = '/professor/home';
         break;
-      case 'students':
-        path = '/students/home';
+      case 'student':
+        path = '/student/home';
         break;
       default:
         path = '/';
