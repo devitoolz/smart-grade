@@ -19,8 +19,11 @@ const LectureRoom = () => {
   //Dropdown 메뉴 Item 데이터
   const [bData, setBData] = useState([]);
 
+  //searchBar dropdown buildingName state
+  const [buildingNameData,setBuildingNameData]=useState('');
   //강의실 추가시 건물명 state
   const [buildingName, setBuildingName] = useState('');
+
   //강의실 추가시 호실명 state
   const [lectureRoomName, setLectureRoomName] = useState('');
 
@@ -51,10 +54,13 @@ const LectureRoom = () => {
   //api get hook test
   const url = '/api/lectureroom';
   const { data, pending } = useQuerySearch(url, click);
+  //searchBar dropdown
   const buildingDataList = [];
   data?.lectureRoomList?.forEach(item => {
     buildingDataList.push({ id: item.buildingName, title: item.buildingName });
   });
+
+
 
   //api get building List
 
@@ -95,7 +101,7 @@ const LectureRoom = () => {
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-      setBuildingName('');
+      setBuildingNameData('');
       setLectureRoomName('');
       setMaxCapacity('');
     }
@@ -167,10 +173,10 @@ const LectureRoom = () => {
                 length="middle"
                 placeholder="건물명"
                 data={buildingDataList}
-                value={buildingName}
-                setValue={setBuildingName}
+                value={buildingNameData}
+                setValue={setBuildingNameData}
               />
-              {}
+         
             </div>
             <Input
               type="number"
