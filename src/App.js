@@ -5,14 +5,15 @@ import Login from './pages/Login';
 import Admin from './Admin';
 import NotFound from './pages/NotFound';
 import { Interceptor } from './api/api';
-import { useSelector } from 'react-redux';
-import Loading from './components/Loading';
+// import { useSelector } from 'react-redux';
+// import Loading from './components/Loading';
 import Professor from './Professor';
 import { getCookie, removeCookie } from './modules/cookies';
+import Student from './Student';
 
 const App = () => {
   const { pathname } = useLocation();
-  const { isPosting } = useSelector(state => state.main);
+  // const { isPosting } = useSelector(state => state.main);
 
   useEffect(() => {
     const accessToken = getCookie('accessToken');
@@ -27,11 +28,12 @@ const App = () => {
   return (
     <Interceptor>
       <GlobalLayout isDark={false} />
-      {isPosting ? <Loading /> : null}
+      {/* {isPosting ? <Loading /> : null} */}
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/admin/*" element={<Admin />} />
         <Route path="/professor/*" element={<Professor />} />
+        <Route path="/student/*" element={<Student />} />
         <Route path="/notfound" element={<NotFound />} />
         <Route path="*" element={<Navigate to="/notfound" />} />
       </Routes>
