@@ -13,7 +13,6 @@ const Notice = () => {
   const [click, setClick] = useState(false);
   ////Input창////
   //input value값
-  // const [noticeTitle, setNoticeTitle] = useState('');
   const [keyword, setKeyword] = useState('');
   //input value change 함수
   const handleChangeValue = e => {
