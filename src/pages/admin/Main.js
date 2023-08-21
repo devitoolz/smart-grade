@@ -39,7 +39,7 @@ const Main = () => {
       index: 1,
       icon: faHouse,
       title: '홈',
-      submenu: { /* dashboard: '대시보드',  */ notice: '공지사항' },
+      submenu: { dashboard: '대시보드', notice: '공지사항' },
     },
     user: {
       index: 2,
