@@ -22,14 +22,13 @@ import {
   faHouse,
   faRightFromBracket,
   faUser,
-  faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../api/api';
 import { removeCookie } from '../../modules/cookies';
 
-// export const PROFESSOR_IMG_URL = '/imgs/professor';
-export const PROFESSOR_IMG_URL = 'http://192.168.0.144:5002/imgs/professor';
+// export const STUDENT_IMG_URL = '/imgs/student';
+export const STUDENT_IMG_URL = 'http://192.168.0.144:5002/imgs/student';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -51,17 +50,13 @@ const Main = () => {
       icon: faUser,
       title: '마이페이지',
     },
-    lecture: {
+    grade: {
       icon: faBookOpen,
-      title: '담당 강의 조회',
+      title: '성적 조회',
     },
     register: {
       icon: faGraduationCap,
-      title: '강의 개설 신청',
-    },
-    students: {
-      icon: faUserGraduate,
-      title: '수강생 조회',
+      title: '수강 신청',
     },
   };
 
@@ -78,7 +73,7 @@ const Main = () => {
       ? setImg(
           user?.profile.pic.startsWith('blob')
             ? user?.profile.pic
-            : `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
+            : `${STUDENT_IMG_URL}/${user?.profile.istudent}/${user?.profile.pic}`
         )
       : setImg(null);
   }, [user]);
@@ -131,7 +126,7 @@ const Main = () => {
             <div className="user-info-pic">
               {img ? <img src={img} alt="프로필 이미지" /> : <FontAwesomeIcon icon={faUser} />}
             </div>
-            <span>{user?.profile.name} 교수님</span>
+            <span>{user?.profile.name} 학생</span>
             <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
           </div>
         </Title>

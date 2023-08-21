@@ -38,14 +38,11 @@ const UserDetail = () => {
   const [error, setError] = useState(false);
 
   const { allMajorList } = useSelector(state => state.major);
-  const { pathname } = useLocation();
+  const { state } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const main = mainSlice.actions;
-
-  const pathSegments = pathname.split('/').filter(Boolean);
-  const role = pathSegments[2];
 
   const roleKor = {
     professor: '교수',
@@ -54,7 +51,7 @@ const UserDetail = () => {
 
   const getUserDetail = async () => {
     try {
-      const { data } = await api.get(`/api/admin/${role}/${id}`);
+      const { data } = await api.get(`/api/admin/${state}/${id}`);
       console.log(data);
       setUserDetail(data.profile);
       setLectureList(data.lectureList);
@@ -62,9 +59,9 @@ const UserDetail = () => {
       setMajor(data.profile.imajor);
       data.profile.pic
         ? setImg(
-            `/imgs/${role}/${
+            `/imgs/${state}/${
               data.profile[
-                (role === 'professor' && 'iprofessor') || (role === 'students' && 'istudent')
+                (state === 'professor' && 'iprofessor') || (state === 'students' && 'istudent')
               ]
             }/${data.profile.pic}`
           )
@@ -72,12 +69,12 @@ const UserDetail = () => {
 
       const title = (
         <>
-          <span className="breadcrumb" onClick={() => navigate(`/admin/user/${role}`)}>
-            {roleKor[role]} 계정 관리
+          <span className="breadcrumb" onClick={() => navigate(`/admin/user/${state}`)}>
+            {roleKor[state]} 계정 관리
           </span>
           <FontAwesomeIcon icon={faChevronRight} />
           <span>
-            {data.profile.name} {roleKor[role]} 정보
+            {data.profile.name} {roleKor[state]} 정보
           </span>
         </>
       );
@@ -90,6 +87,11 @@ const UserDetail = () => {
   };
 
   useEffect(() => {
+    if (!state) {
+      alert('잘못된 접근입니다.');
+      navigate(-1);
+    }
+
     getUserDetail();
   }, []);
 
@@ -102,11 +104,11 @@ const UserDetail = () => {
   const handleRemove = async () => {
     try {
       alert(
-        `${userDetail?.name} ${roleKor[role]}${
-          (role === 'professor' && '가 퇴직') || (role === 'students' && '이 퇴학')
+        `${userDetail?.name} ${roleKor[state]}${
+          (state === 'professor' && '가 퇴직') || (state === 'students' && '이 퇴학')
         } 처리되었습니다.`
       );
-      navigate(`/admin/user/${role}`);
+      navigate(`/admin/user/${state}`);
     } catch (err) {
       console.log(err);
     }
@@ -160,8 +162,8 @@ const UserDetail = () => {
                   <div className="lecture-table-no-content">
                     <FontAwesomeIcon icon={faCircleExclamation} />
                     <span>
-                      {(role === 'students' && '수강 중인 ') ||
-                        (role === 'professor' && '강의 중인 ')}
+                      {(state === 'students' && '수강 중인 ') ||
+                        (state === 'professor' && '강의 중인 ')}
                       강의가 없습니다.
                     </span>
                   </div>
@@ -251,21 +253,23 @@ const UserDetail = () => {
           </div>
         </Row>
         <Row col={2}>
-          <div>{(role === 'students' && '학번') || (role === 'professor' && '등록일')}</div>
+          <div>{(state === 'students' && '학번') || (state === 'professor' && '등록일')}</div>
           <div>
-            {(role === 'students' && userDetail?.studentNum) ||
-              (role === 'professor' && userDetail?.createdAt?.split('T')[0])}
+            {(state === 'students' && userDetail?.studentNum) ||
+              (state === 'professor' && userDetail?.createdAt?.split('T')[0])}
           </div>
-          <div>{(role === 'students' && '졸업 여부') || (role === 'professor' && '퇴직 여부')}</div>
           <div>
-            {role === 'students' &&
+            {(state === 'students' && '졸업 여부') || (state === 'professor' && '퇴직 여부')}
+          </div>
+          <div>
+            {state === 'students' &&
               ((userDetail?.finishedYn === 1 && '재학 중') ||
                 (userDetail?.finishedYn === 2 && '졸업'))}
-            {role === 'professor' &&
+            {state === 'professor' &&
               ((userDetail?.delYn === 0 && '재직 중') || (userDetail?.delYn === 1 && '퇴직'))}
           </div>
         </Row>
-        {role === 'students' && (
+        {state === 'students' && (
           <Row col={2}>
             <div>학년</div>
             <div>{userDetail?.grade}</div>

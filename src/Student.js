@@ -1,17 +1,16 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import Main from './pages/professor/Main';
-import Dashboard from './pages/professor/Dashboard';
 import api, { removeAuth } from './api/api';
-import Mypage from './pages/professor/Mypage';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
 import otpNotFound from './hooks/otpNotFound';
-import Lecture from './pages/professor/Lecture';
-import Register from './pages/professor/Register';
-import Students from './pages/professor/Students';
+import Main from './pages/student/Main';
+import Dashboard from './pages/student/Dashboard';
+import Mypage from './pages/student/Mypage';
+import Grade from './pages/student/Grade';
+import Register from './pages/student/Register';
 
-const Professor = () => {
+const Student = () => {
   otpNotFound();
 
   const { pathname } = useLocation();
@@ -23,7 +22,7 @@ const Professor = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get(`/api/professor`);
+        const { data } = await api.get(`/api/student/profile`);
         dispatch(main.setUser({ ...data }));
       } catch (err) {
         removeAuth();
@@ -33,7 +32,7 @@ const Professor = () => {
   }, []);
 
   useEffect(() => {
-    if (pathname === '/professor') {
+    if (pathname === '/student') {
       navigate('home');
     }
   }, [pathname]);
@@ -43,13 +42,12 @@ const Professor = () => {
       <Route element={<Main />}>
         <Route path="home" element={<Dashboard />} />
         <Route path="mypage" element={<Mypage />} />
-        <Route path="lecture" element={<Lecture />} />
+        <Route path="grade" element={<Grade />} />
         <Route path="register" element={<Register />} />
-        <Route path="students" element={<Students />} />
       </Route>
-      <Route path="*" element={<Navigate to="/notfound" state={{ user: 'professor' }} />} />
+      <Route path="*" element={<Navigate to="/notfound" state={{ user: 'student' }} />} />
     </Routes>
   );
 };
 
-export default Professor;
+export default Student;

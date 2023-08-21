@@ -113,7 +113,7 @@ const Student = () => {
                   btnType="table"
                   value="상세보기"
                   color="gray"
-                  onClick={() => navigate(`${item.istudent}`)}
+                  onClick={() => navigate(`${item.istudent}`, { state: 'students' })}
                 ></CommonButton>
               </div>
             </div>
