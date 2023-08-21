@@ -9,18 +9,9 @@ import api from '../../api/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const LectureRoom = () => {
-  // 검색 버튼 클릭 state 변경 함수
-  const [click, setClick] = useState(false);
-
-  ////Dropdown////
-
-  const [value, setValue] = useState('');
-
-  //Dropdown 메뉴 Item 데이터
-  const [bData, setBData] = useState([]);
-
   //강의실 추가시 건물명 state
   const [buildingName, setBuildingName] = useState('');
+
   //강의실 추가시 호실명 state
   const [lectureRoomName, setLectureRoomName] = useState('');
 
@@ -28,8 +19,14 @@ const LectureRoom = () => {
   const [maxCapacity, setMaxCapacity] = useState('');
 
   ////SearchBar//////
+
+  // 검색 버튼 클릭 state 변경 함수
+  const [click, setClick] = useState(false);
+  const [buildingNameData, setBuildingNameData] = useState('');
   //검색 시 사용할 쿼리스트링(건물명)
   const queries = { buildingName };
+
+  //searchBar dropdown buildingName state
 
   ////Table////
   //table header
@@ -51,12 +48,11 @@ const LectureRoom = () => {
   //api get hook test
   const url = '/api/lectureroom';
   const { data, pending } = useQuerySearch(url, click);
+  //searchBar dropdown
   const buildingDataList = [];
   data?.lectureRoomList?.forEach(item => {
     buildingDataList.push({ id: item.buildingName, title: item.buildingName });
   });
-
-  //api get building List
 
   //api post test
   const postBuildinglist = async (lectureRoomName, buildingName, maxCapacity) => {
@@ -95,7 +91,7 @@ const LectureRoom = () => {
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-      setBuildingName('');
+      setBuildingNameData('');
       setLectureRoomName('');
       setMaxCapacity('');
     }
@@ -126,6 +122,13 @@ const LectureRoom = () => {
     LectureRoomDeleteTest(saveId);
     window.location.reload();
   };
+
+
+///임시 데이터 모달창 드롭다운용
+const jj=[
+  
+]
+
 
   return (
     <>
@@ -167,10 +170,9 @@ const LectureRoom = () => {
                 length="middle"
                 placeholder="건물명"
                 data={buildingDataList}
-                value={buildingName}
-                setValue={setBuildingName}
+                value={buildingNameData}
+                setValue={setBuildingNameData}
               />
-              {}
             </div>
             <Input
               type="number"
@@ -225,7 +227,8 @@ const LectureRoom = () => {
           return (
             <div key={item.ilectureRoom}>
               <div>
-                {item.buildingName}{"  "}
+                {item.buildingName}
+                {'  '}
                 {item.lectureRoomName.includes('호') === false
                   ? item.lectureRoomName.concat('호')
                   : item.lectureRoomName}
