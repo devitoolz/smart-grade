@@ -55,7 +55,7 @@ const Main = () => {
       icon: faBookOpen,
       title: '담당 강의 조회',
     },
-    open: {
+    register: {
       icon: faGraduationCap,
       title: '강의 개설 신청',
     },
@@ -129,14 +129,7 @@ const Main = () => {
           <div className="title">{title}</div>
           <div className="user-info">
             <div className="user-info-pic">
-              {img ? (
-                <img
-                  src={`${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`}
-                  alt="프로필 이미지"
-                />
-              ) : (
-                <FontAwesomeIcon icon={faUser} />
-              )}
+              {img ? <img src={img} alt="프로필 이미지" /> : <FontAwesomeIcon icon={faUser} />}
             </div>
             <span>{user?.profile.name} 교수님</span>
             <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />

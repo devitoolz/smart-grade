@@ -8,6 +8,7 @@ import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
 import otpNotFound from './hooks/otpNotFound';
 import Lecture from './pages/professor/Lecture';
+import Register from './pages/professor/Register';
 import Students from './pages/professor/Students';
 
 const Professor = () => {
@@ -43,7 +44,7 @@ const Professor = () => {
         <Route path="home" element={<Dashboard />} />
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Lecture />} />
-        <Route path="register" element={<Dashboard />} />
+        <Route path="register" element={<Register />} />
         <Route path="students" element={<Students />} />
       </Route>
       <Route path="*" element={<Navigate to="/notfound" state={{ user: 'professor' }} />} />
