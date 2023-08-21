@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink, Outlet, useLocation, useNavigate } from 'react-router-dom';
 import {
   Content,
@@ -28,9 +28,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../api/api';
 import { removeCookie } from '../../modules/cookies';
 
+// export const PROFESSOR_IMG_URL = '/imgs/professor';
+export const PROFESSOR_IMG_URL = 'http://192.168.0.144:5002/imgs/professor';
+
 const Main = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const [img, setImg] = useState(null);
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
@@ -39,10 +43,10 @@ const Main = () => {
   const { user } = useSelector(state => state.main);
 
   const menuData = {
-    // home: {
-    //   icon: faHouse,
-    //   title: '홈',
-    // },
+    home: {
+      icon: faHouse,
+      title: '홈',
+    },
     mypage: {
       icon: faUser,
       title: '마이페이지',
@@ -68,6 +72,16 @@ const Main = () => {
     const title = menuData[mainPath].title;
     dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
+
+  useEffect(() => {
+    user?.profile.pic
+      ? setImg(
+          user?.profile.pic.startsWith('blob')
+            ? user?.profile.pic
+            : `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
+        )
+      : setImg(null);
+  }, [user]);
 
   const handleLogout = async () => {
     try {
@@ -115,8 +129,14 @@ const Main = () => {
           <div className="title">{title}</div>
           <div className="user-info">
             <div className="user-info-pic">
-              {/* TODO: 이미지 추가 */}
-              <FontAwesomeIcon icon={faUser} />
+              {img ? (
+                <img
+                  src={`${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`}
+                  alt="프로필 이미지"
+                />
+              ) : (
+                <FontAwesomeIcon icon={faUser} />
+              )}
             </div>
             <span>{user?.profile.name} 교수님</span>
             <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />

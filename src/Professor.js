@@ -7,6 +7,8 @@ import Mypage from './pages/professor/Mypage';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
 import otpNotFound from './hooks/otpNotFound';
+import Lecture from './pages/professor/Lecture';
+import Students from './pages/professor/Students';
 
 const Professor = () => {
   otpNotFound();
@@ -31,19 +33,18 @@ const Professor = () => {
 
   useEffect(() => {
     if (pathname === '/professor') {
-      // navigate('home');
-      navigate('mypage');
+      navigate('home');
     }
   }, [pathname]);
 
   return (
     <Routes>
       <Route element={<Main />}>
-        {/* <Route path="home" element={<Dashboard />} /> */}
+        <Route path="home" element={<Dashboard />} />
         <Route path="mypage" element={<Mypage />} />
-        <Route path="lecture" element={<Dashboard />} />
-        <Route path="open" element={<Dashboard />} />
-        <Route path="students" element={<Dashboard />} />
+        <Route path="lecture" element={<Lecture />} />
+        <Route path="register" element={<Dashboard />} />
+        <Route path="students" element={<Students />} />
       </Route>
       <Route path="*" element={<Navigate to="/notfound" state={{ user: 'professor' }} />} />
     </Routes>

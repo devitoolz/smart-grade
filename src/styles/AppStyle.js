@@ -231,12 +231,18 @@ const Title = styled.div`
     > div.user-info-pic {
       background: var(--search-bg-color);
       overflow: hidden;
+      border: 1px solid var(--table-border-color);
       border-radius: 50%;
       width: 40px;
       height: 40px;
       display: flex;
       justify-content: center;
       align-items: center;
+      > img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
       > svg {
         align-self: flex-end;
         font-size: 32px;

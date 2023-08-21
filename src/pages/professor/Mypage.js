@@ -22,6 +22,7 @@ import { checkValidEmail, checkValidPhone } from '../../modules/regex';
 import api from '../../api/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';
+import { PROFESSOR_IMG_URL } from './Main';
 
 const Mypage = () => {
   const [disabled, setDisabled] = useState(true);
@@ -45,7 +46,7 @@ const Mypage = () => {
       setImg(
         user?.profile.pic.startsWith('blob')
           ? user?.profile.pic
-          : `/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
+          : `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
       );
     }
     setPhone(user?.profile.phone);
@@ -129,7 +130,7 @@ const Mypage = () => {
     setAddress(user?.profile.address);
     setImg(
       user?.profile.pic
-        ? `http://192.168.0.144:5002/imgs/professor/${user?.profile.iprofessor}/${user?.profile.pic}`
+        ? `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
         : null
     );
     setRemoveImg(false);
