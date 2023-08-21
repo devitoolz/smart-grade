@@ -193,9 +193,14 @@ const Approval = () => {
           ) : (
             <>
               <p>{status[procedureState]}</p>
-              <span>요청 거절 사유</span>
-              <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
-              <TextArea maxLength={100} onChange={inputRejectReason} />
+              {/* <span>
+                요청 거절 사유 <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
+              </span> */}
+              <TextArea
+                maxLength={100}
+                onChange={inputRejectReason}
+                placeholder="요청 거절 사유 입력(100자 제한)"
+              />
             </>
           )}
         </CommonModal>
