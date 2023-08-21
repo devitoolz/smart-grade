@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import api, { removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './api/api';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
 import otpNotFound from './hooks/otpNotFound';
@@ -9,6 +9,7 @@ import Dashboard from './pages/student/Dashboard';
 import Mypage from './pages/student/Mypage';
 import Grade from './pages/student/Grade';
 import Register from './pages/student/Register';
+import Lecture from './pages/student/Lecture';
 
 const Student = () => {
   otpNotFound();
@@ -25,7 +26,13 @@ const Student = () => {
         const { data } = await api.get(`/api/student/profile`);
         dispatch(main.setUser({ ...data }));
       } catch (err) {
-        removeAuth();
+        if (getAuth()) {
+          alert('학생만 접근할 수 있습니다.');
+          navigate(-2);
+        } else {
+          alert('로그인이 필요합니다.');
+          removeAuth();
+        }
       }
     };
     getProfile();
@@ -42,6 +49,7 @@ const Student = () => {
       <Route element={<Main />}>
         <Route path="home" element={<Dashboard />} />
         <Route path="mypage" element={<Mypage />} />
+        <Route path="lecture" element={<Lecture />} />
         <Route path="grade" element={<Grade />} />
         <Route path="register" element={<Register />} />
       </Route>

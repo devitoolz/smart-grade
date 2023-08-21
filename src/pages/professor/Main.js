@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import {
   faBookOpen,
+  faFileSignature,
   faGraduationCap,
   faHouse,
   faRightFromBracket,
@@ -53,7 +54,11 @@ const Main = () => {
     },
     lecture: {
       icon: faBookOpen,
-      title: '담당 강의 조회',
+      title: '강의 조회',
+    },
+    grade: {
+      icon: faFileSignature,
+      title: '성적 관리',
     },
     register: {
       icon: faGraduationCap,

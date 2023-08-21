@@ -16,7 +16,7 @@ import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
 import { useDispatch } from 'react-redux';
 import majorSlice from './slices/majorSlice';
-import api, { removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './api/api';
 
 const Admin = () => {
   const { pathname } = useLocation();
@@ -36,7 +36,13 @@ const Admin = () => {
         }
         dispatch(major.setAllMajorList(majorList));
       } catch (err) {
-        removeAuth();
+        if (getAuth()) {
+          alert('관리자만 접근할 수 있습니다.');
+          navigate(-2);
+        } else {
+          alert('로그인이 필요합니다.');
+          removeAuth();
+        }
       }
     };
     getMajorList();

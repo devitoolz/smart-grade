@@ -22,6 +22,12 @@ const removeAuth = () => {
   location.href = '/';
 };
 
+const getAuth = () => {
+  const accessToken = getCookie('accessToken');
+  const refreshToken = getCookie('refreshToken');
+  return accessToken && refreshToken;
+};
+
 const Interceptor = ({ children }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -84,4 +90,4 @@ const Interceptor = ({ children }) => {
 };
 
 export default api;
-export { Interceptor, removeAuth };
+export { Interceptor, removeAuth, getAuth };
