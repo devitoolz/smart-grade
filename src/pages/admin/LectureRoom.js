@@ -123,13 +123,6 @@ const LectureRoom = () => {
     window.location.reload();
   };
 
-
-///임시 데이터 모달창 드롭다운용
-const jj=[
-  
-]
-
-
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
