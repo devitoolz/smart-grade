@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 const TableLayout = styled.div`
   width: 100%;
-  height: 500px;
+  height: 470px;
   overflow: auto;
 `;
 
@@ -95,7 +95,7 @@ const Pagination = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 30px;
+  padding-top: 30px;
 `;
 
 const PageButton = styled.span`

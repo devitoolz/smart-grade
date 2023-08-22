@@ -263,12 +263,18 @@ const Mypage = () => {
             <div>{user?.profile.majorName}</div>
           </Row>
           <Row col={2}>
-            <div>등록일</div>
+            <div>학번</div>
             <div>{user?.profile.createdAt?.split('T')[0]}</div>
-            <div>퇴직 여부</div>
+            <div>졸업 여부</div>
             <div>
               {(user?.profile.delYn === 0 && '재직 중') || (user?.profile.delYn === 1 && '퇴직')}
             </div>
+          </Row>
+          <Row col={2}>
+            <div>학년</div>
+            <div></div>
+            <div>이수학점</div>
+            <div></div>
           </Row>
           <Row col={2}>
             <div>
