@@ -34,7 +34,8 @@ export const TableArea = styled.div`
       border-top: 2px solid var(--table-outline-color);
       border-bottom: 2px solid var(--table-outline-color);
       /* height: 100vh; */
-      max-height: 500px;
+      height: 500px;
+      /* min-height: 420px; */
       .table_body_item {
         border-bottom: 1px solid var(--table-border-color);
         div {
@@ -179,9 +180,9 @@ export const TextArea = styled.textarea`
   align-items: center;
   position: relative;
   width: ${({ length }) => (length === 'full' ? '100%' : '70%')};
-  height: ${({ length }) => (length === 'full' ? '500px' : '35%')};
-  padding: 10px;
-  line-height: 1.5;
+  height: ${({ length }) => (length === 'full' ? '500px' : '50%')};
+  padding: ${({ length }) => (length === 'full' ? '10px' : '0 5px')};
+  line-height: 1.2;
   font-size: ${({ length }) => (length === 'full' ? '18px' : '16px')};
   font-family: 'Pretendard', sans-serif;
 `;
@@ -201,9 +202,9 @@ export const ModalStyle = styled.div`
   z-index: 999;
   overflow: hidden;
   .modal-box {
-    width: ${({ modalSize }) => (modalSize === 'small' ? '400px' : '1136px')};
+    width: ${({ modalSize }) => (modalSize === 'small' ? '400px' : '1024px')};
     /* min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')}; */
-    height: ${({ modalSize }) => (modalSize === 'small' ? '250px' : '72%')};
+    height: ${({ modalSize }) => (modalSize === 'small' ? '250px' : '70%')};
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -212,7 +213,7 @@ export const ModalStyle = styled.div`
     .modal-title-small,
     .modal-title {
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '48px')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '10%' : '48px')};
       min-height: 48px;
       display: flex;
       justify-content: space-between;
@@ -220,24 +221,24 @@ export const ModalStyle = styled.div`
       font-size: 20px;
       font-weight: 700;
 
-      padding: 0 25px;
+      padding: 0 20px;
       border-bottom: 1px solid #dae8ff;
       button {
-        font-size: 20px;
+        font-size: 18px;
         border: none;
         background-color: transparent;
         cursor: pointer;
       }
     }
     .modal-title {
-      font-size: 32px;
+      font-size: 27px;
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
       overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '100%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '90%' : '100%')};
       ${({ modalSize }) =>
         modalSize === 'small'
           ? `display: flex;
@@ -247,6 +248,9 @@ export const ModalStyle = styled.div`
           : null};
       font-size: ${({ modalSize }) => (modalSize === 'big' ? null : '18px')};
 
+      .procedure {
+        margin-bottom: 10px;
+      }
       & > * {
         line-height: 2;
       }
