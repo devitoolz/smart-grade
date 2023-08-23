@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { NoticeContainer, PasswordForm } from '../styles/UserStyle';

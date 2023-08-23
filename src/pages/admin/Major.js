@@ -51,9 +51,6 @@ const Major = () => {
     { title: '비고', width: 1 },
   ];
 
-  //전공명 imajor
-  const [imajor, setImajor] = useState("");
-
   //전공추가 시 전공명
   const [newMajorName, setNewMajorName] = useState('');
 
@@ -81,10 +78,10 @@ const Major = () => {
   const [majorId, setMajorId] = useState();
 
   //변경버튼 state
-  const [changeClickShow, setChangeClickShow] = useState(false);
+  const [, setChangeClickShow] = useState(false);
 
   //disable 버튼 state
-  const [disabled, setDisabled] = useState(false);
+  const [, setDisabled] = useState(false);
 
   //api get hook test
   const url = '/api/major';
@@ -114,8 +111,7 @@ const Major = () => {
       };
 
       try {
-        const res = await api.patch(`/api/major`, patchDatas, { headers });
-        const result = res.data;
+        await api.patch(`/api/major`, patchDatas, { headers });
         setSelectMajorNameNow(tempStr);
         // console.log('전공명 서버 수정 완료 : ', result);
       } catch (err) {
@@ -145,14 +141,6 @@ const Major = () => {
       setSelectMajorNameNow(_imajorName);
     }
   };
-  // 확인버튼 클릭 시 patch 통신
-  const patchMajorNameWait = () => {
-    
-  };
-  //확인 버튼 눌렀을때 나오는 모달창
-  const clickOkModal = () => {
-    setChangeModalShow(true);
-  };
 
   const handleChangeName = e => {
     // console.log(e.target.value);
@@ -175,16 +163,12 @@ const Major = () => {
   //api post test
   const MajorPostTest = async (newMajorName, graduationScore) => {
     const headers = { 'Content-Type': 'application/json' };
-    const postData = {
-      majorName: newMajorName,
-      graduationScore: parseInt(graduationScore),
-    };
+
     try {
-      const res = await api.post(
+      await api.post(
         `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(graduationScore)}`,
         { headers }
       );
-      const result = res.data;
       // console.log('제발 나와', result);
       handleModalCancel();
       alert('등록되었습니다.');

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -63,8 +63,8 @@ const LectureRoom = () => {
       maxCapacity,
     };
     try {
-      const res = await api.post('/api/lectureroom', postData, { headers });
-      const result = res.data;
+      await api.post('/api/lectureroom', postData, { headers });
+      // const result = res.data;
       // console.log('잘 나오나', result);
       alert('등록되었습니다.');
     } catch (err) {

@@ -1,5 +1,6 @@
-import { Global, css } from '@emotion/react';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
+import { MainMenuProps } from '../types/style';
 
 const light = css`
   :root {
@@ -28,10 +29,6 @@ const dark = css`
   }
 `;
 
-const GlobalLayout = ({ isDark }) => {
-  return <Global styles={isDark ? dark : light} />;
-};
-
 const MainLayout = styled.div`
   display: flex;
   height: 100%;
@@ -44,7 +41,7 @@ const Sidebar = styled.div`
   height: 100%;
 `;
 
-const MainMenu = styled.ul`
+const MainMenu = styled.ul<MainMenuProps>`
   background: var(--main-bg-color);
   > li:nth-of-type(${props => props.activeIndex}) {
     background: var(--side-bg-color);
@@ -291,7 +288,6 @@ const NotFoundLayout = styled.div`
 export {
   light,
   dark,
-  GlobalLayout,
   MainLayout,
   Sidebar,
   MainMenu,

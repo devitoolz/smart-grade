@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
-import { GlobalLayout } from './styles/AppStyle';
+import { dark, light } from './styles/AppStyle';
 import Login from './pages/Login';
 import Admin from './Admin';
 import NotFound from './pages/NotFound';
@@ -10,14 +10,20 @@ import { Interceptor } from './api/api';
 import Professor from './Professor';
 import { getCookie, removeCookie } from './modules/cookies';
 import Student from './Student';
+import { Global } from '@emotion/react';
+import { GlobalLayoutProps } from './types/style';
+
+const GlobalLayout = ({ isDark }: GlobalLayoutProps) => {
+  return <Global styles={isDark ? dark : light} />;
+};
 
 const App = () => {
   const { pathname } = useLocation();
   // const { isPosting } = useSelector(state => state.main);
 
   useEffect(() => {
-    const accessToken = getCookie('accessToken');
-    const refreshToken = getCookie('refreshToken');
+    const accessToken: string = getCookie('accessToken');
+    const refreshToken: string = getCookie('refreshToken');
 
     if (pathname === '/' && (accessToken || refreshToken)) {
       removeCookie('accessToken');

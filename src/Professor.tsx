@@ -11,6 +11,7 @@ import Lecture from './pages/professor/Lecture';
 import Register from './pages/professor/Register';
 import Students from './pages/professor/Students';
 import Grade from './pages/professor/Grade';
+import { ProfessorProfile } from './types/profile';
 
 const Professor = () => {
   otpNotFound();
@@ -24,9 +25,9 @@ const Professor = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get(`/api/professor`);
+        const { data } = await api.get<ProfessorProfile>(`/api/professor`);
         dispatch(main.setUser({ ...data }));
-      } catch (err) {
+      } catch {
         if (getAuth()) {
           alert('교수님만 접근할 수 있습니다.');
           navigate(-2);

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CustomInputProps } from '../types/style';
 
 const Layout = styled.div`
   width: 100%;
@@ -11,7 +12,7 @@ const Layout = styled.div`
   justify-content: center;
 `;
 
-const CustomInput = styled.div`
+const CustomInput = styled.div<CustomInputProps>`
   display: flex;
   width: ${({ isForm, length }) =>
     isForm
@@ -73,7 +74,7 @@ const CustomInput = styled.div`
   }
 `;
 
-const CustomDropdown = styled.div`
+const CustomDropdown = styled.div<CustomInputProps>`
   position: relative;
   width: ${({ isForm, length }) =>
     isForm

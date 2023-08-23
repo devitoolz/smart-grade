@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import mainSlice from '../slices/mainSlice';
+// import { useDispatch } from 'react-redux';
+// import mainSlice from '../slices/mainSlice';
 import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../modules/cookies';
 
 const api = axios.create({
-  // baseURL: 'http://localhost:3000',
   timeout: 3000,
   headers: {
     Authorization: `Bearer ${getCookie('accessToken')}`,
@@ -14,7 +13,7 @@ const api = axios.create({
   // withCredentials: true,
 });
 
-const main = mainSlice.actions;
+// const main = mainSlice.actions;
 
 const removeAuth = () => {
   removeCookie('accessToken');
@@ -29,7 +28,7 @@ const getAuth = () => {
 };
 
 const Interceptor = ({ children }) => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const requestInterceptor = api.interceptors.request.use(

@@ -26,6 +26,7 @@ const Admin = () => {
   const major = majorSlice.actions;
 
   useEffect(() => {
+    // TODO: 전공 목록 api 수정 예정, 타입 추후 추가
     const getMajorList = async () => {
       try {
         const { data } = await api.get(`/api/major`);

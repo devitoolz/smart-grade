@@ -10,6 +10,7 @@ import Mypage from './pages/student/Mypage';
 import Grade from './pages/student/Grade';
 import Register from './pages/student/Register';
 import Lecture from './pages/student/Lecture';
+import { StudentProfile } from './types/profile';
 
 const Student = () => {
   otpNotFound();
@@ -23,9 +24,9 @@ const Student = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get(`/api/student/profile`);
+        const { data } = await api.get<StudentProfile>(`/api/student/profile`);
         dispatch(main.setUser({ ...data }));
-      } catch (err) {
+      } catch {
         if (getAuth()) {
           alert('학생만 접근할 수 있습니다.');
           navigate(-2);
