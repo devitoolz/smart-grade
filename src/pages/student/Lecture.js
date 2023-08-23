@@ -6,19 +6,19 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   ////searchBar////
-  //쿼리스트링
-  const queries = {};
-
+  //강의명 state
+  const [ilectureName, setIlectureName] = useState('');
+  //교수명 state
+  const [professorName, setProfessorName] = useState('');
+  //검색 시 사용할 쿼리스트링
+  const queries = { ilectureName, professorName };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
-  //tabel pending
-  const [pending, setPending] = useState(false);
-  //tabel error
-  const [error, setError] = useState(false);
   //tabel header
   const tableHeader = [
     {
@@ -73,7 +73,7 @@ const Lecture = () => {
       professor: '도하나',
       score: 3,
       lectureLoom: '백매관 303호',
-      lectureHour: '9:00~10:00',
+      lectureHour: '09:00~10:00',
       maxCapacity: 30,
     },
     {
@@ -129,6 +129,10 @@ const Lecture = () => {
   const handlePageBtnClick = () => {
     setDisplay(true);
   };
+  //api get hook test
+  const url = '';
+  //더미데이터 삭제후 _data변수명 변경 예정
+  const { _data, pending, error } = useQuerySearch(url, click);
 
   return (
     <div>
@@ -144,10 +148,12 @@ const Lecture = () => {
           {''} <p>세로토닌과 코르티솔의 상관관계</p>
         </CommonModal>
       ) : null}
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown length="long" placeholder="강의명" />
-        <Input length="long" type="text" placeholder="교수명" />
-      </SearchBar>
+      <div style={{ marginBottom: '94.41px' }}>
+        <SearchBar queries={queries} setPage={true} setClick={setClick}>
+          <Dropdown length="long" placeholder="강의명" />
+          <Input length="long" type="text" placeholder="교수명" />
+        </SearchBar>
+      </div>
       <Table
         header={tableHeader}
         data={data}
