@@ -2,19 +2,15 @@ import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
-import CommonModalEnd from './CommonModalEnd';
-import { useState } from 'react';
 
 const CommonModal = ({
   setDisplay,
-  contents,
   modalSize,
   modalTitle,
   children,
   handleModalOk,
   handleModalCancel,
 }) => {
-  const [checkModal, setCheckModal] = useState(false);
   // JSX
   return (
     <>
@@ -35,6 +31,7 @@ const CommonModal = ({
               </button>
             </div>
           )}
+
           <div className="modal-contents">{children}</div>
 
           <div className="modal-footer">
@@ -42,7 +39,6 @@ const CommonModal = ({
               value={modalSize === 'middle' ? '등록' : '확인'}
               onClick={() => {
                 handleModalOk();
-                // setCheckModal(true);
                 // alert('요청 중입니다');
                 setDisplay(false);
               }}
@@ -61,7 +57,6 @@ const CommonModal = ({
           </div>
         </div>
       </ModalStyle>
-      {/* {checkModal && <CommonModalEnd setDisplay={setDisplay} />} */}
     </>
   );
 };

@@ -12,7 +12,7 @@ export const TableArea = styled.div`
   width: 100%;
   .table {
     width: 100%;
-    border-top: 2px solid #1363df;
+    border-top: 2px solid var(--table-outline-color);
     text-align: center;
     border-collapse: collapse;
     .table_head,
@@ -21,26 +21,28 @@ export const TableArea = styled.div`
       grid-template-columns: 0.8fr 1.5fr 3fr 1fr 1fr 1fr 1fr 1fr 1fr;
     }
     .table_head {
-      height: 54px;
+      height: 45px;
       background-color: #dff6ff;
       div {
-        height: 54px;
-        line-height: 54px;
+        height: 45px;
+        line-height: 45px;
         font-weight: 700;
         border-right: 1px solid #dae8ff;
       }
     }
     .table_body {
-      border-top: 2px solid #1363df;
-      border-bottom: 2px solid #1363df;
-      max-height: 500px;
+      border-top: 2px solid var(--table-outline-color);
+      border-bottom: 2px solid var(--table-outline-color);
+      /* height: 100vh; */
+      height: 500px;
+      /* min-height: 420px; */
       .table_body_item {
         border-bottom: 1px solid var(--table-border-color);
         div {
           padding: 0 5px;
           text-align: center;
-          height: 42px;
-          line-height: 42px;
+          height: 40px;
+          line-height: 40px;
           border-right: 1px solid var(--table-border-color);
         }
       }
@@ -178,11 +180,10 @@ export const TextArea = styled.textarea`
   align-items: center;
   position: relative;
   width: ${({ length }) => (length === 'full' ? '100%' : '70%')};
-  height: ${({ length }) => (length === 'full' ? '500px' : '35%')};
-  padding: 10px;
-
-  line-height: 1.5;
-  font-size: 18px;
+  height: ${({ length }) => (length === 'full' ? '500px' : '50%')};
+  padding: ${({ length }) => (length === 'full' ? '10px' : '0 5px')};
+  line-height: 1.2;
+  font-size: ${({ length }) => (length === 'full' ? '18px' : '16px')};
   font-family: 'Pretendard', sans-serif;
 `;
 
@@ -201,9 +202,9 @@ export const ModalStyle = styled.div`
   z-index: 999;
   overflow: hidden;
   .modal-box {
-    width: ${({ modalSize }) => (modalSize === 'small' ? '520px' : '1136px')};
+    width: ${({ modalSize }) => (modalSize === 'small' ? '400px' : '1024px')};
     /* min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')}; */
-    height: ${({ modalSize }) => (modalSize === 'small' ? '320px' : '72%')};
+    height: ${({ modalSize }) => (modalSize === 'small' ? '250px' : '70%')};
     background-color: #fff;
     border-radius: 10px;
     display: flex;
@@ -212,32 +213,32 @@ export const ModalStyle = styled.div`
     .modal-title-small,
     .modal-title {
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '14%' : '60px')};
-      min-height: 60px;
+      height: ${({ modalSize }) => (modalSize === 'big' ? '10%' : '48px')};
+      min-height: 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 24px;
+      font-size: 20px;
       font-weight: 700;
 
-      padding: 0 25px;
+      padding: 0 20px;
       border-bottom: 1px solid #dae8ff;
       button {
-        font-size: 24px;
+        font-size: 18px;
         border: none;
         background-color: transparent;
         cursor: pointer;
       }
     }
     .modal-title {
-      font-size: 32px;
+      font-size: 27px;
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
       overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
-      height: ${({ modalSize }) => (modalSize === 'big' ? '92%' : '100%')};
+      height: ${({ modalSize }) => (modalSize === 'big' ? '90%' : '100%')};
       ${({ modalSize }) =>
         modalSize === 'small'
           ? `display: flex;
@@ -245,8 +246,11 @@ export const ModalStyle = styled.div`
             align-items: center;
             flex-direction: column;`
           : null};
-      font-size: ${({ modalSize }) => (modalSize === 'big' ? null : '24px')};
+      font-size: ${({ modalSize }) => (modalSize === 'big' ? null : '18px')};
 
+      .procedure {
+        margin-bottom: 10px;
+      }
       & > * {
         line-height: 2;
       }
@@ -254,13 +258,15 @@ export const ModalStyle = styled.div`
     .modal-footer {
       display: ${({ modalSize }) => (modalSize === 'big' ? 'none' : 'flex')};
       justify-content: center;
+      align-items: center;
       width: 100%;
-      height: 60px;
-      min-height: 60px;
+      height: 58px;
+      min-height: 58px;
       text-align: center;
       button {
         margin: 6px 20px;
-        padding: 7px 24px;
+        padding: 7px 21px;
+        font-size: 16px;
       }
     }
   }

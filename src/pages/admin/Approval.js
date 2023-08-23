@@ -187,15 +187,20 @@ const Approval = () => {
         >
           {isAccept ? (
             <>
-              <p>{status[procedureState]}</p>
+              <p className="procedure">{status[procedureState]}</p>
               <p>다음 요청을 승인하시겠습니까?</p>
             </>
           ) : (
             <>
-              <p>{status[procedureState]}</p>
-              <span>요청 거절 사유</span>
-              <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
-              <TextArea maxLength={100} onChange={inputRejectReason} />
+              <p className="procedure">{status[procedureState]}</p>
+              {/* <span>
+                요청 거절 사유 <span style={{ fontSize: 16, color: 'red' }}>* 100자 제한</span>
+              </span> */}
+              <TextArea
+                maxLength={100}
+                onChange={inputRejectReason}
+                placeholder="요청 거절 사유 입력(100자 제한)"
+              />
             </>
           )}
         </CommonModal>
