@@ -36,7 +36,7 @@ const Professor = () => {
         }
       }
     };
-    getProfile();
+    // getProfile();
   }, []);
 
   useEffect(() => {

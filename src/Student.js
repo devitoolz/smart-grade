@@ -35,7 +35,7 @@ const Student = () => {
         }
       }
     };
-    getProfile();
+    // getProfile();
   }, []);
 
   useEffect(() => {

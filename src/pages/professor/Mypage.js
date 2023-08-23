@@ -25,6 +25,7 @@ import OTPRegister from '../../components/OTPRegister';
 import { PROFESSOR_IMG_URL } from './Main';
 
 const Mypage = () => {
+  const [lectureList, setLectureList] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [img, setImg] = useState(null);
   const [phone, setPhone] = useState('');
@@ -49,6 +50,7 @@ const Mypage = () => {
           : `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
       );
     }
+    setLectureList(user?.lectureList);
     setPhone(user?.profile.phone);
     setEmail(user?.profile.email);
     setAddress(user?.profile.address);
@@ -205,29 +207,45 @@ const Mypage = () => {
               <div>강의 시간</div>
             </div>
             <div className="lecture-table-body">
-              {user?.lectureList?.length === 0 && (
-                <div className="lecture-table-no-content">
-                  <FontAwesomeIcon icon={faCircleExclamation} />
-                  <span>강의 중인 강의가 없습니다.</span>
-                </div>
-              )}
-              {user?.lectureList?.map((item, index) => (
-                <div key={index} className="lecture-table-content">
-                  <div>{item.lectureName}</div>
-                  <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
-                  <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
-                </div>
-              ))}
-              {user?.lectureList?.length <= 7 &&
-                Array(7 - (user?.lectureList?.length ?? 0))
-                  .fill()
-                  .map((_, index) => (
+              {lectureList ? (
+                <>
+                  {lectureList.map((item, index) => (
                     <div key={index} className="lecture-table-content">
-                      <div></div>
-                      <div></div>
-                      <div></div>
+                      <div>{item.lectureName}</div>
+                      <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
+                      <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
                     </div>
                   ))}
+                  {lectureList.length === 0 && (
+                    <div className="lecture-table-no-content">
+                      <FontAwesomeIcon icon={faCircleExclamation} />
+                      <span>강의 중인 강의가 없습니다.</span>
+                    </div>
+                  )}
+                  {lectureList.length <= 7 &&
+                    Array(7 - (lectureList?.length ?? 0))
+                      .fill()
+                      .map((_, index) => (
+                        <div key={index} className="lecture-table-content">
+                          <div></div>
+                          <div></div>
+                          <div></div>
+                        </div>
+                      ))}
+                </>
+              ) : (
+                <>
+                  {Array(7)
+                    .fill()
+                    .map((_, index) => (
+                      <div key={index} className="lecture-table-content">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    ))}
+                </>
+              )}
             </div>
           </LectureTableLayout>
         </MiddleLayout>
