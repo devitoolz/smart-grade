@@ -10,12 +10,15 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   ////searchBar////
+
+  //학기 state
+  const [semester, setSemester] = useState('');
   //강의명 state
-  const [ilectureName, setIlectureName] = useState('');
+  const [lectureName, setLectureName] = useState('');
   //교수명 state
   const [professorName, setProfessorName] = useState('');
   //검색 시 사용할 쿼리스트링
-  const queries = { ilectureName, professorName };
+  const queries = { lectureName, professorName };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
@@ -62,8 +65,37 @@ const Lecture = () => {
       width: '1',
     },
   ];
-  //임시데이터
-  const data = [
+
+  //학기 임시 더미 데이터
+  const semesterList = [
+    {
+      id: 1,
+      title: '1학기',
+    },
+    {
+      id: 2,
+      title: '2학기',
+    },
+  ];
+
+  //강의명 임시 더미 데이터
+  const LectureNameList = [
+    {
+      id: '1',
+      title: '산업공학의 이해',
+    },
+    {
+      id: '2',
+      title: '디자인 마케팅 개론',
+    },
+    {
+      id: '1',
+      title: '디자인실습(1)',
+    },
+  ];
+
+  //임시 더미 데이터
+  const _data = [
     {
       id: '1',
       semester: '1',
@@ -131,8 +163,11 @@ const Lecture = () => {
   };
   //api get hook test
   const url = '';
-  //더미데이터 삭제후 _data변수명 변경 예정
-  const { _data, pending, error } = useQuerySearch(url, click);
+
+  const { data, pending, error } = useQuerySearch(url, click);
+
+  //searchBar dropDown
+  //데이터 추후 작성
 
   return (
     <div>
@@ -150,20 +185,41 @@ const Lecture = () => {
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>
         <SearchBar queries={queries} setPage={true} setClick={setClick}>
-          <Dropdown length="long" placeholder="강의명" />
-          <Input length="long" type="text" placeholder="교수명" />
+          <Dropdown
+            length="short"
+            placeholder="학기"
+            data={semesterList}
+            value={semester}
+            setValue={setSemester}
+            reset
+          />
+          <Dropdown
+            length="long"
+            placeholder="강의명"
+            data={LectureNameList}
+            value={lectureName}
+            setValue={setLectureName}
+            reset
+          />
+          <Input
+            length="long"
+            type="text"
+            placeholder="교수명"
+            value={professorName}
+            setValue={e => setProfessorName(e.target.value)}
+          />
         </SearchBar>
       </div>
       <Table
         header={tableHeader}
-        data={data}
+        data={_data}
         hasPage={true}
-        maxPage={5}
+        maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {' '}
-        {data.map(item => {
+        {_data.map(item => {
           return (
             <div key={item.id}>
               <div>{item.semester}</div>
