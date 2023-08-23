@@ -45,7 +45,7 @@ const Admin = () => {
         }
       }
     };
-    getMajorList();
+    // getMajorList();
   }, []);
 
   useEffect(() => {

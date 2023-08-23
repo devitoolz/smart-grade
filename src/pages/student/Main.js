@@ -18,10 +18,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import {
   faBookOpen,
+  faFileContract,
   faGraduationCap,
   faHouse,
   faRightFromBracket,
-  faSignature,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -56,7 +56,7 @@ const Main = () => {
       title: '강의 조회',
     },
     grade: {
-      icon: faSignature,
+      icon: faFileContract,
       title: '성적 조회',
     },
     register: {

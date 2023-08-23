@@ -37,7 +37,7 @@ const ImageUpload = styled.div`
   min-width: 250px;
   height: 339px;
   border: 1px dashed var(--black);
-  border-radius: 15px;
+  border-radius: 10px;
   > img {
     width: 100%;
     height: 100%;
@@ -54,7 +54,7 @@ const ProfileImage = styled.div`
   width: 250px;
   min-width: 250px;
   height: 339px;
-  border-radius: 15px;
+  border-radius: 10px;
   background: var(--search-bg-color);
   overflow: hidden;
   > svg {
@@ -212,7 +212,8 @@ const FormTable = styled.div`
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: ${({ col }) => (col === 2 ? '1fr 2fr 1fr 2fr' : '1fr 5fr')};
+  grid-template-columns: ${({ col }) =>
+    col === 2 ? '1fr 2fr 1fr 2fr' : col === 1 ? '1fr 3fr' : '1fr 5fr'};
   &:first-of-type {
     > div {
       &:nth-of-type(odd) {
