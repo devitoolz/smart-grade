@@ -11,6 +11,7 @@ import Lecture from './pages/professor/Lecture';
 import Register from './pages/professor/Register';
 import Students from './pages/professor/Students';
 import Grade from './pages/professor/Grade';
+import GradeInput from './pages/professor/GradeInput';
 
 const Professor = () => {
   otpNotFound();
@@ -52,6 +53,7 @@ const Professor = () => {
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Lecture />} />
         <Route path="grade" element={<Grade />} />
+        <Route path="grade/input" element={<GradeInput />} />
         <Route path="register" element={<Register />} />
         <Route path="students" element={<Students />} />
       </Route>

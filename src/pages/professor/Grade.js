@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
-import Dropdown from '../../components/Dropdown';
+import { useNavigate } from 'react-router-dom';
+import GradeDemur from '../../components/professor/GradeDemur';
 
 const Grade = () => {
+  const navigate = useNavigate();
   const tableHeader = [
     { title: '년도', width: 1 },
     { title: '학기', width: 1 },
@@ -17,30 +19,14 @@ const Grade = () => {
   // 임시데이터
   const data = Array(5).fill();
 
-  // 검색
-  const queries = {};
-  const [click, setClick] = useState(false);
-  // 검색 - 드롭다운 - 강의명
-  const dropData = [
-    { id: 1, title: '강의명 1' },
-    { id: 2, title: '강의명 2' },
-    { id: 3, title: '강의명 3' },
-    { id: 4, title: '강의명 4' },
-  ];
-  const [dropValue, setDropValue] = useState('');
+  // 이의신청 모달
+  const [demur, setDemur] = useState(false);
+  const [studentId, setStudentId] = useState(null);
 
   return (
     <>
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <div>강의명으로 검색</div>
-        <Dropdown
-          length="middle"
-          placeholder="강의명"
-          data={dropData}
-          value={dropValue}
-          setValue={setDropValue}
-          reset={true}
-        />
+      <SearchBar>
+        <div>교수가 현재 수업 중인 강의리스트</div>
       </SearchBar>
       <div>
         <span>flow</span>
@@ -68,7 +54,8 @@ const Grade = () => {
                   btnType="table"
                   color="gray"
                   onClick={() => {
-                    alert(idx + ' click');
+                    setDemur(true);
+                    setStudentId(idx);
                   }}
                 />
                 <CommonButton
@@ -76,7 +63,7 @@ const Grade = () => {
                   btnType="table"
                   color="blue"
                   onClick={() => {
-                    alert('성적입력으로 넘어가기');
+                    navigate('/professor/grade/input');
                   }}
                 />
               </div>
@@ -84,6 +71,7 @@ const Grade = () => {
           );
         })}
       </Table>
+      {demur && <GradeDemur setDemur={setDemur} studentId={studentId} />}
     </>
   );
 };

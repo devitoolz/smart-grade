@@ -107,3 +107,8 @@ export const putBoard = async (_iboard, _ctnt, _title, _importance) => {
     return;
   }
 };
+
+/* * * * * 교수페이지 * * * * */
+export const putStudentGrade = async () => {
+  //
+};
