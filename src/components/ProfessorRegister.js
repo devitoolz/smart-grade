@@ -20,15 +20,19 @@ const ProfessorRegister = ({ setOpenRegister }) => {
             <ProfessorRegisterModal>
               <div className="book-img"></div>
               <div className="register-form">
-                <Row col={2}>
+                <Row>
                   <div>강의명</div>
                   <div></div>
+                </Row>
+                <Row>
                   <div>전공</div>
                   <div></div>
                 </Row>
-                <Row col={2}>
+                <Row>
                   <div>강의실</div>
                   <div></div>
+                </Row>
+                <Row>
                   <div>인원 수</div>
                   <div></div>
                 </Row>
