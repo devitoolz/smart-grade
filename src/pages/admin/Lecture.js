@@ -55,10 +55,7 @@ const Lecture = () => {
     const getLectureName = async () => {
       try {
         const { data } = await api.get(`/api/admin/lecture-name`);
-        setLectureNameList(data.vo);
-        //         ilectureName: 141
-        // lectureName : "공학의역사와 이해"
-        // dispatch(major.setAllMajorList(majorList));
+        setLectureNameList(data.vo); 
       } catch (err) {
         console.log(err);
         alert('강의 목록을 불러올 수 없습니다');

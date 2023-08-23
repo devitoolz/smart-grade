@@ -13,14 +13,10 @@ const Notice = () => {
 
   //검색버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
-  ////Input창////
   //input value값
   const [keyword, setKeyword] = useState('');
   //input value change 함수
-  const handleChangeValue = e => {
-    setKeyword(e.target.value);
-  };
-  ////SearchBar////
+  const handleChangeValue = e => setKeyword(e.target.value);
   //SearchBar queries
   const queries = { keyword };
 
@@ -38,11 +34,10 @@ const Notice = () => {
     window.location.reload();
   };
 
-  // 공지사항
-  // 일반공지+중요공지 같이 불러오기
+  // 공지사항 = 일반공지+중요공지 같이 불러오기
   // 전체 notice Data 담는 list
   const [noticeData, setNoticeData] = useState([]);
-  // custom hook
+  // 일반
   const url = '/api/board';
   const { data, pending, error } = useQuerySearch(url, click);
   // 중요공지
@@ -57,7 +52,6 @@ const Notice = () => {
       : setNoticeData([...important.data, ...data.list]);
   }, [data, important.data]);
 
-  ////Table////
   //table header
   const tableHeader = [
     { title: 'NO.', width: '1' },

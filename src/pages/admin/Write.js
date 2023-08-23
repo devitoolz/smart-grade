@@ -10,14 +10,10 @@ const Write = () => {
   //공지사항 제목
   const [title, setTitle] = useState('');
   //제목 인풋창
-  const handleTitle = e => {
-    setTitle(e.target.value);
-  };
+  const handleTitle = e => setTitle(e.target.value);
 
-  //저장 버튼 클릭시 모달오픈 여부
+  //저장+취소 버튼 클릭시 모달오픈 여부
   const [saveDisplay, setSaveDisplay] = useState(false);
-
-  //취소버튼 클릭시 모달오픈 여부
   const [cancelDisplay, setCancelDisplay] = useState(false);
 
   //save modal 확인 버튼 클릭시
@@ -44,9 +40,7 @@ const Write = () => {
   const navigate = useNavigate();
   // 공지사항 POST
   const [boardContents, setBoardContents] = useState('');
-  const boardArea = e => {
-    setBoardContents(e.target.value);
-  };
+  const boardArea = e => setBoardContents(e.target.value);
   const postBoardWait = async () => {
     const isChecked = document.getElementById('check').checked ? 1 : 0;
     await postBoard(title, boardContents, isChecked);
