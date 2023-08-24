@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
+import { useNavigate } from 'react-router-dom';
+import GradeDemur from '../../components/professor/GradeDemur';
 
 const Grade = () => {
+  const navigate = useNavigate();
   const tableHeader = [
     { title: '년도', width: 1 },
     { title: '학기', width: 1 },
@@ -13,11 +16,18 @@ const Grade = () => {
     { title: '학점', width: 1 },
     { title: '비고', width: 2 },
   ];
-  const data = Array(10).fill();
+  // 임시데이터
+  const data = Array(5).fill();
+
+  // 이의신청 모달
+  const [demur, setDemur] = useState(false);
+  const [studentId, setStudentId] = useState(null);
 
   return (
     <>
-      <SearchBar>여긴 검색할만한 내용이 없을 듯</SearchBar>
+      <SearchBar>
+        <div>교수가 현재 수업 중인 강의리스트</div>
+      </SearchBar>
       <div>
         <span>flow</span>
         <ul>
@@ -28,7 +38,7 @@ const Grade = () => {
           <li>5. 이의신청 확인 후 처리</li>
         </ul>
       </div>
-      <Table header={tableHeader} data={data}>
+      <Table header={tableHeader} data={data} hasPage={true}>
         {data.map((_, idx) => {
           return (
             <div key={idx}>
@@ -44,7 +54,8 @@ const Grade = () => {
                   btnType="table"
                   color="gray"
                   onClick={() => {
-                    alert(idx + ' click');
+                    setDemur(true);
+                    setStudentId(idx);
                   }}
                 />
                 <CommonButton
@@ -52,7 +63,7 @@ const Grade = () => {
                   btnType="table"
                   color="blue"
                   onClick={() => {
-                    alert('성적입력으로 넘어가기');
+                    navigate('/professor/grade/input');
                   }}
                 />
               </div>
@@ -60,6 +71,7 @@ const Grade = () => {
           );
         })}
       </Table>
+      {demur && <GradeDemur setDemur={setDemur} studentId={studentId} />}
     </>
   );
 };

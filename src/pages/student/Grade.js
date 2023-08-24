@@ -1,8 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import { NoDatas } from '../../styles/MyStyleCSS';
+<<<<<<< HEAD
+=======
+import Dropdown from '../../components/Dropdown';
+import LectureInfo from '../../components/student/LectureInfo';
+import CommonModal from '../../components/CommonModal';
+>>>>>>> d10fea56834beef683069b4d2e72fb885c7768db
 
 const Grade = () => {
   // 강의명, 담당 교수, 학점, 성적(출석, 중간, 기말), 최종 성적(A+~F), 평점(4.5~0)+이의신청
@@ -15,16 +21,54 @@ const Grade = () => {
     { title: '강의실', width: 1 },
     // 점수
     { title: '학점', width: 1 },
-    { title: '성적', width: 1 },
+    { title: '최종성적', width: 1 },
     { title: '평점', width: 1 },
     { title: '등급', width: 1 },
     { title: '비고', width: 2 },
   ];
-  const data = Array(10).fill();
+  // 임시데이터
+  const data = Array(7).fill();
+
+  // 검색
+  const queries = {};
+  const [click, setClick] = useState(false);
+  // 검색 - 드롭다운 - 학년학기 검색?
+  const dropData = [
+    { id: 1, title: '1학년 1학기' },
+    { id: 2, title: '1학년 2학기' },
+    { id: 3, title: '2학년 1학기' },
+    { id: 4, title: '2학년 2학기' },
+  ];
+  const [dropValue, setDropValue] = useState('');
+
+  // 강의 pk
+  const [ilecture, setIlecture] = useState(null);
+  // 강의정보 모달창
+  const [showLectureInfo, setShowLectureInfo] = useState(false);
+  // 이의신청 모달창
+  const [demur, setDemur] = useState(false);
+  const handleApplyDemurOk = async () => {
+    console.log(ilecture);
+    alert('처리되었습니다');
+    setDemur(false);
+  };
+  const handleApplyDemurCancel = () => {
+    setDemur(false);
+    setIlecture(null);
+  };
+
   return (
     <>
-      <SearchBar>
-        <div>학생 개인의 성적 조회 + 학년학기별/ 등 드롭다운 추가 예정</div>
+      <SearchBar queries={queries} setPage={true} setClick={setClick}>
+        <div>학생 개인의 성적 조회</div>
+        <Dropdown
+          length="middle"
+          placeholder="학년학기"
+          data={dropData}
+          value={dropValue}
+          setValue={setDropValue}
+          reset={true}
+        />
       </SearchBar>
       <NoDatas />
       <Table header={tableHeader} hasPage={true} data={data}>
@@ -33,7 +77,7 @@ const Grade = () => {
             <div key={idx}>
               <div>1</div>
               <div>1</div>
-              <div>GUI웹프로그래밍</div>
+              <div>GUI웹프로그래밍{idx + 1}</div>
               <div>김교수</div>
               <div>14:00~16:00</div>
               <div>그린관 502호</div>
@@ -47,7 +91,8 @@ const Grade = () => {
                   btnType="table"
                   color="gray"
                   onClick={() => {
-                    alert(idx + ' click');
+                    setIlecture(idx);
+                    setDemur(true);
                   }}
                 />
                 <CommonButton
@@ -55,7 +100,8 @@ const Grade = () => {
                   btnType="table"
                   color="blue"
                   onClick={() => {
-                    alert('강의 상세 정보 출력 모달창');
+                    setIlecture(idx);
+                    setShowLectureInfo(true);
                   }}
                 />
               </div>
@@ -63,6 +109,21 @@ const Grade = () => {
           );
         })}
       </Table>
+      {showLectureInfo && (
+        <LectureInfo setShowLectureInfo={setShowLectureInfo} ilecture={ilecture} />
+      )}
+      {demur && (
+        <CommonModal
+          setDisplay={setDemur}
+          modalSize="small"
+          modalTitle="이의신청"
+          handleModalOk={handleApplyDemurOk}
+          handleModalCancel={handleApplyDemurCancel}
+        >
+          <span>강의 번호 : {ilecture}</span>
+          이의신청을 하겠습니까?
+        </CommonModal>
+      )}
     </>
   );
 };

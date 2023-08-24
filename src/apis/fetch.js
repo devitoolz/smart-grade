@@ -1,23 +1,6 @@
 import api from './api';
 
-// 통합 강의 관리 - 강의리스트 불러오기
-export const handleTestClick = async (_pageIdx, _setFunc, _setMaxPage) => {
-  // try...catch
-  try {
-    const res = await api.get(`/api/admin/lecture?page=${_pageIdx}`);
-    const result = await res.data;
-    // console.log('통신 데이터 : ', result);
-    // console.log('max page : ', result.page.maxPage);
-    _setFunc(result.lectures);
-    _setMaxPage(result.page.maxPage);
-    return result.lectures;
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-};
-
-// 해당 강의 수강 학생 리스트 출력
+// 통합 강의 관리 - 해당 강의 수강 학생 리스트 출력
 export const getStudentList = async (_ilecture, _pageIdx) => {
   try {
     const res = await api.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
@@ -28,19 +11,6 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
   }
 };
 
-// 강의 개설+개강 요청 승인페이지
-export const handleGetApprovalLecture = async _setFunc => {
-  // try...catch
-  try {
-    const res = await api.get('/api/admin/lecture?procedures=-2');
-    const result = await res.data;
-    _setFunc(result.lectures);
-    return result;
-  } catch (error) {
-    console.log(error);
-    return;
-  }
-};
 // 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
 export const patchRejectLecture = async (_ilecture, reason) => {
   const headers = { 'Content-Type': 'application/json' };
@@ -73,17 +43,6 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
   }
 };
 
-// 통합 성적관리 - 특정 학생의 성적 검색
-export const getStudentGrade = async _setFunc => {
-  try {
-    const res = await api.get(`/api/admin/grade?studentNum=23100001`);
-    const result = await res.data;
-    await _setFunc(result.voList);
-    return result;
-  } catch (err) {
-    console.log(err);
-  }
-};
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
 export const getStudentInfo = async (_istudent, _setFunc) => {
   try {
@@ -123,17 +82,6 @@ export const postBoard = async (_title, _contents, _isChecked) => {
     return;
   }
 };
-// 게시판 - 중요 공지사항 불러오기
-export const getImportantBoard = async _setFunc => {
-  try {
-    const res = await api.get('/api/board/importanceList');
-    const result = await res.data;
-    _setFunc(result);
-  } catch (err) {
-    console.log(err);
-    return;
-  }
-};
 // 게시판 - 게시판 글 삭제
 export const deleteBoard = async _iboard => {
   try {
@@ -158,4 +106,9 @@ export const putBoard = async (_iboard, _ctnt, _title, _importance) => {
     console.log(err);
     return;
   }
+};
+
+/* * * * * 교수페이지 * * * * */
+export const putStudentGrade = async () => {
+  //
 };
