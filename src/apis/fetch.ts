@@ -1,7 +1,7 @@
 import api from './api';
 
 // 통합 강의 관리 - 해당 강의 수강 학생 리스트 출력
-export const getStudentList = async (_ilecture, _pageIdx) => {
+export const getStudentList = async (_ilecture: number, _pageIdx: number) => {
   try {
     const res = await api.get(`/api/admin/lecture/${_ilecture}?page=${_pageIdx}`);
     const result = res.data;
@@ -12,7 +12,7 @@ export const getStudentList = async (_ilecture, _pageIdx) => {
 };
 
 // 강의 개설+개강 요청 승인페이지 >> 거절사유 입력
-export const patchRejectLecture = async (_ilecture, reason) => {
+export const patchRejectLecture = async (_ilecture: number, reason: string) => {
   const headers = { 'Content-Type': 'application/json' };
   const patchData = {
     ilecture: _ilecture,
@@ -28,7 +28,7 @@ export const patchRejectLecture = async (_ilecture, reason) => {
   }
 };
 // 강의 개설+개강 요청 승인페이지 >> 승인
-export const patchApproveLecture = async (_ilecture, _procedure) => {
+export const patchApproveLecture = async (_ilecture: number, _procedure: number) => {
   const headers = { 'Content-Type': 'application/json' };
   const patchData = {
     ilecture: _ilecture,
@@ -44,7 +44,7 @@ export const patchApproveLecture = async (_ilecture, _procedure) => {
 };
 
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
-export const getStudentInfo = async (_istudent, _setFunc) => {
+export const getStudentInfo = async (_istudent: number, _setFunc: any) => {
   try {
     const res = await api.get(`/api/admin/grade/${_istudent}`);
     const result = await res.data;
@@ -55,7 +55,7 @@ export const getStudentInfo = async (_istudent, _setFunc) => {
 };
 
 // 게시판 - 게시판 글 올리기
-export const postBoard = async (_title, _contents, _isChecked) => {
+export const postBoard = async (_title: string, _contents: string, _isChecked: number) => {
   const headers = { 'Content-Type': 'multipart/form-data' };
   const postData = new FormData();
   const param = {
@@ -83,7 +83,7 @@ export const postBoard = async (_title, _contents, _isChecked) => {
   }
 };
 // 게시판 - 게시판 글 삭제
-export const deleteBoard = async _iboard => {
+export const deleteBoard = async (_iboard: number) => {
   try {
     await api.delete(`/api/board/${_iboard}`);
   } catch (err) {
@@ -92,7 +92,12 @@ export const deleteBoard = async _iboard => {
   }
 };
 // 게시판 - 게시글 수정
-export const putBoard = async (_iboard, _ctnt, _title, _importance) => {
+export const putBoard = async (
+  _iboard: number,
+  _ctnt: string,
+  _title: string,
+  _importance: number
+) => {
   const headers = { 'Content-Type': 'application/json' };
   const putData = {
     iboard: _iboard,
