@@ -4,18 +4,18 @@ import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import { useNavigate } from 'react-router-dom';
-import { TextArea } from '../../styles/MyStyleCSS';
 import { postBoard } from '../../api/fetch';
+
 const Write = () => {
+  const navigate = useNavigate();
+
   //공지사항 제목
   const [title, setTitle] = useState('');
   //제목 인풋창
   const handleTitle = e => setTitle(e.target.value);
-
   //저장+취소 버튼 클릭시 모달오픈 여부
   const [saveDisplay, setSaveDisplay] = useState(false);
   const [cancelDisplay, setCancelDisplay] = useState(false);
-
   //save modal 확인 버튼 클릭시
   const saveModalOk = async () => {
     await postBoardWait();
@@ -26,18 +26,11 @@ const Write = () => {
   const saveModalCancel = () => {
     setSaveDisplay(false);
   };
-
   //cancel modal 확인 버튼 클릭시
-  const cancelModalOk = () => {
-    navigate('/admin/home/notice/');
-  };
+  const cancelModalOk = () => navigate('/admin/home/notice/');
   //cancel modal 취소 버튼 클릭시
-  const cancelModalCancel = () => {
-    setCancelDisplay(false);
-  };
+  const cancelModalCancel = () => setCancelDisplay(false);
 
-  //취소버튼 클릭시 공지사항 목록으로 이동
-  const navigate = useNavigate();
   // 공지사항 POST
   const [boardContents, setBoardContents] = useState('');
   const boardArea = e => setBoardContents(e.target.value);
@@ -45,6 +38,8 @@ const Write = () => {
     const isChecked = document.getElementById('check').checked ? 1 : 0;
     await postBoard(title, boardContents, isChecked);
   };
+  // 이미지 업로드 관련
+  const [imgList, setImgList] = useState([]);
 
   // JSX
   return (
@@ -71,6 +66,46 @@ const Write = () => {
           <p>취소 하시겠습니까?</p>
         </CommonModal>
       ) : null}
+      <div style={{ width: '100%', height: '100%', padding: 50 }}>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            paddingBottom: 18,
+            borderBottom: '1px solid black',
+          }}
+        >
+          <h3 style={{ fontSize: 22 }}>게시판 글쓰기</h3>
+        </div>
+        <div style={{ width: 100, height: 20 }}></div>
+        <Input
+          type="text"
+          length="full"
+          placeholder="제목 (최대 50자)"
+          maxLength={50}
+          value={title}
+          setValue={handleTitle}
+        />
+        <div style={{ width: 100, height: 20 }}></div>
+        <div>
+          <span>첨부파일 </span>
+        </div>
+        <div style={{ width: 100, height: 20 }}></div>
+        <div style={{ width: '100%', height: 560, border: '1px solid gray' }}>
+          내용을 입력하세요
+        </div>
+        <Wbtns>
+          <CommonButton
+            btnType="page"
+            value="저장"
+            onClick={() => {
+              setSaveDisplay(true);
+            }}
+          />
+          <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
+        </Wbtns>
+      </div>
+      {/* 
       <Ltable>
         <colgroup>
           <col className="title" width={'30%'} />
@@ -117,7 +152,6 @@ const Write = () => {
               <h3>내용</h3>
             </td>
             <td className="controlTextarea">
-              {/* <textarea name="content" id="content" cols="80" rows="20"></textarea> */}
               <TextArea length="full" onChange={boardArea} />
             </td>
           </tr>
@@ -133,6 +167,7 @@ const Write = () => {
         />
         <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
       </Wbtns>
+       */}
     </>
   );
 };
