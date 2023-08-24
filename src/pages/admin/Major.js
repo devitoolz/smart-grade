@@ -52,7 +52,7 @@ const Major = () => {
   ];
 
   //전공명 imajor
-  const [imajor, setImajor] = useState("");
+  const [imajor, setImajor] = useState('');
 
   //전공추가 시 전공명
   const [newMajorName, setNewMajorName] = useState('');
@@ -146,9 +146,7 @@ const Major = () => {
     }
   };
   // 확인버튼 클릭 시 patch 통신
-  const patchMajorNameWait = () => {
-    
-  };
+  const patchMajorNameWait = () => {};
   //확인 버튼 눌렀을때 나오는 모달창
   const clickOkModal = () => {
     setChangeModalShow(true);
@@ -338,7 +336,7 @@ const Major = () => {
           <div
             style={{
               display: 'flex',
-              gap: '45px',
+              gap: '41px',
               alignItems: 'center',
               justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
