@@ -24,7 +24,7 @@ const Grade = () => {
     { title: '비고', width: 2 },
   ];
   // 임시데이터
-  const data = Array(7).fill();
+  const data = Array(7).fill('');
 
   // 검색
   const queries = {};
@@ -36,10 +36,11 @@ const Grade = () => {
     { id: 3, title: '2학년 1학기' },
     { id: 4, title: '2학년 2학기' },
   ];
-  const [dropValue, setDropValue] = useState('');
+  // 타입 수정 필요 !!
+  const [dropValue, setDropValue] = useState<any>('');
 
   // 강의 pk
-  const [ilecture, setIlecture] = useState(null);
+  const [ilecture, setIlecture] = useState<number | null>(null);
   // 강의정보 모달창
   const [showLectureInfo, setShowLectureInfo] = useState(false);
   // 이의신청 모달창
@@ -68,7 +69,7 @@ const Grade = () => {
         />
       </SearchBar>
       <NoDatas />
-      <Table header={tableHeader} hasPage={true} data={data}>
+      <Table header={tableHeader} hasPage={true} data={data} pending={false} error={false}>
         {data.map((_, idx) => {
           return (
             <div key={idx}>
