@@ -128,6 +128,7 @@ const LectureRoom = () => {
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="건물명"
+          length="small"
           data={buildingDataList}
           value={buildingName}
           setValue={setBuildingName}
@@ -154,7 +155,8 @@ const LectureRoom = () => {
               alignItems: 'center',
               borderBottom: '1px solid #dae8ff',
               width: '100%',
-              padding: '15px 59px',
+              padding: '15px 20px',
+              marginLeft: '16px',
             }}
           >
             <p>장소</p>
@@ -183,7 +185,8 @@ const LectureRoom = () => {
               justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
               width: '100%',
-              padding: '15px 20px',
+              padding: '15px 23px',
+              marginLeft: '-27px',
             }}
           >
             <p>최대수용인원</p>

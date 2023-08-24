@@ -322,7 +322,7 @@ const Major = () => {
           <div
             style={{
               display: 'flex',
-              gap: '45px',
+              gap: '41px',
               alignItems: 'center',
               justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
