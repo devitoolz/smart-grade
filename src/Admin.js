@@ -16,7 +16,7 @@ import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
 import { useDispatch } from 'react-redux';
 import majorSlice from './slices/majorSlice';
-import api, { getAuth, removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './apis/api';
 
 const Admin = () => {
   const { pathname } = useLocation();
@@ -26,6 +26,7 @@ const Admin = () => {
   const major = majorSlice.actions;
 
   useEffect(() => {
+    // TODO: 전공 목록 api 수정 예정, 타입 추후 추가
     const getMajorList = async () => {
       try {
         const { data } = await api.get(`/api/major`);

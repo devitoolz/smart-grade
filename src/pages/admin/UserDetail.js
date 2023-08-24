@@ -16,7 +16,7 @@ import Dropdown from '../../components/Dropdown';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
-import api from '../../api/api';
+import api from '../../apis/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faChevronRight,
@@ -52,7 +52,6 @@ const UserDetail = () => {
   const getUserDetail = async () => {
     try {
       const { data } = await api.get(`/api/admin/${state}/${id}`);
-      console.log(data);
       setUserDetail(data.profile);
       setLectureList(data.lectureList);
       setName(data.profile.name);

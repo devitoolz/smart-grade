@@ -1,7 +1,6 @@
 import React from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
-import { NoDatas } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 
 const Grade = () => {

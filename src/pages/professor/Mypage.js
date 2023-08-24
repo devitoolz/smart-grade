@@ -19,7 +19,7 @@ import mainSlice from '../../slices/mainSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faPencil, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { checkValidEmail, checkValidPhone } from '../../modules/regex';
-import api from '../../api/api';
+import api from '../../apis/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';
 import { PROFESSOR_IMG_URL } from './Main';

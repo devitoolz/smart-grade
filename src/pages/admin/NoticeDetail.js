@@ -6,7 +6,7 @@ import CommonButton from '../../components/CommonButton';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import Input from '../../components/Input';
 import CommonModal from '../../components/CommonModal';
-import { putBoard } from '../../api/fetch';
+import { putBoard } from '../../apis/fetch';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();

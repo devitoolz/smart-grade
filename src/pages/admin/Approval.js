@@ -4,7 +4,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { patchRejectLecture, patchApproveLecture } from '../../api/fetch';
+import { patchRejectLecture, patchApproveLecture } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
