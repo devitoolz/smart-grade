@@ -6,19 +6,22 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Lecture = () => {
   ////searchBar////
-  //쿼리스트링
-  const queries = {};
 
+  //학기 state
+  const [semester, setSemester] = useState('');
+  //강의명 state
+  const [lectureName, setLectureName] = useState('');
+  //교수명 state
+  const [professorName, setProfessorName] = useState('');
+  //검색 시 사용할 쿼리스트링
+  const queries = { semester, lectureName, professorName };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
-  //tabel pending
-  const [pending, setPending] = useState(false);
-  //tabel error
-  const [error, setError] = useState(false);
   //tabel header
   const tableHeader = [
     {
@@ -62,8 +65,37 @@ const Lecture = () => {
       width: '1',
     },
   ];
-  //임시데이터
-  const data = [
+
+  //학기 임시 더미 데이터
+  const semesterList = [
+    {
+      id: 1,
+      title: '1학기',
+    },
+    {
+      id: 2,
+      title: '2학기',
+    },
+  ];
+
+  //강의명 임시 더미 데이터
+  const LectureNameList = [
+    {
+      id: '1',
+      title: '산업공학의 이해',
+    },
+    {
+      id: '2',
+      title: '디자인 마케팅 개론',
+    },
+    {
+      id: '1',
+      title: '디자인실습(1)',
+    },
+  ];
+
+  //임시 더미 데이터
+  const _data = [
     {
       id: '1',
       semester: '1',
@@ -73,7 +105,7 @@ const Lecture = () => {
       professor: '도하나',
       score: 3,
       lectureLoom: '백매관 303호',
-      lectureHour: '9:00~10:00',
+      lectureHour: '09:00~10:00',
       maxCapacity: 30,
     },
     {
@@ -129,6 +161,13 @@ const Lecture = () => {
   const handlePageBtnClick = () => {
     setDisplay(true);
   };
+  //api get hook test
+  const url = '';
+
+  const { data, pending, error } = useQuerySearch(url, click);
+
+  //searchBar dropDown
+  //데이터 추후 작성
 
   return (
     <div>
@@ -144,20 +183,44 @@ const Lecture = () => {
           {''} <p>세로토닌과 코르티솔의 상관관계</p>
         </CommonModal>
       ) : null}
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown length="long" placeholder="강의명" />
-        <Input length="long" type="text" placeholder="교수명" />
-      </SearchBar>
+      <div style={{ marginBottom: '94.41px' }}>
+        <SearchBar queries={queries} setPage={true} setClick={setClick}>
+          <Dropdown
+            length="short"
+            placeholder="학기"
+            data={semesterList}
+            value={semester}
+            setValue={setSemester}
+            reset
+          />
+          <Dropdown
+            length="long"
+            placeholder="강의명"
+            data={LectureNameList}
+            value={lectureName}
+            setValue={setLectureName}
+            reset
+          />
+          <Input
+            length="long"
+            type="text"
+            placeholder="교수명"
+            value={professorName}
+            setValue={e => setProfessorName(e.target.value)}
+            reset={setProfessorName}
+          />
+        </SearchBar>
+      </div>
       <Table
         header={tableHeader}
-        data={data}
+        data={_data}
         hasPage={true}
-        maxPage={5}
+        maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {' '}
-        {data.map(item => {
+        {_data.map(item => {
           return (
             <div key={item.id}>
               <div>{item.semester}</div>

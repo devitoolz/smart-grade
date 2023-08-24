@@ -6,19 +6,25 @@ import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Students = () => {
   ////searchBar////
+
+  //학년 state
+  const [grade, setGrade] = useState('');
+  //전공 state
+  const [major, setMajor] = useState('');
+  //학번 state
+  const [studentID, setStudentID] = useState('');
+  //이름 state
+  const [studentName, setStudentName] = useState('');
   //쿼리스트링
-  const queries = {};
+  const queries = { grade, major, studentID, studentName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
-  //tabel pending
-  const [pending, setPending] = useState(false);
-  //tabel error
-  const [error, setError] = useState(false);
   //tabel header
   const tableHeader = [
     {
@@ -42,8 +48,43 @@ const Students = () => {
       width: '2',
     },
   ];
-  //임시데이터
-  const data = [
+  //학기 임시 더미데이터
+  const majorList = [
+    {
+      id: 1,
+      title: '산업디자인학과',
+    },
+    {
+      id: 2,
+      title: '컴퓨터 공학과',
+    },
+    {
+      id: 3,
+      title: '신소재 공학과',
+    },
+  ];
+  //학년 임시 더미데이터
+  const gradeList = [
+    {
+      id: 1,
+      title: '1학년',
+    },
+    {
+      id: 2,
+      title: '2학년',
+    },
+    {
+      id: 3,
+      title: '3학년',
+    },
+    {
+      id: 4,
+      title: '4학년',
+    },
+  ];
+
+  //테이블 임시 더미데이터
+  const _data = [
     {
       id: '1',
       grade: '3',
@@ -86,6 +127,10 @@ const Students = () => {
     setDisplay(true);
   };
 
+  //api get hook test
+  const url = '';
+
+  const { data, pending, error } = useQuerySearch(url, click);
   return (
     <div>
       {display === true ? (
@@ -101,21 +146,53 @@ const Students = () => {
         </CommonModal>
       ) : null}
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown length="short" placeholder="학년" />
-        <Dropdown length="long" placeholder="전공" />
-        <Input length="long" type="number" placeholder="학번" maxLength={8} />
-        <Input length="short" type="text" placeholder="이름" />
+        <Dropdown
+          length="short"
+          placeholder="학년"
+          data={gradeList}
+          propertyName={{ key: 'id', value: 'title' }}
+          value={grade}
+          setValue={setGrade}
+          reset
+          search
+        />
+        <Dropdown
+          length="long"
+          placeholder="전공"
+          data={majorList}
+          propertyName={{ key: 'id', value: 'title' }}
+          value={major}
+          setValue={setMajor}
+          reset
+          search
+        />
+        <Input
+          length="long"
+          type="number"
+          placeholder="학번"
+          value={studentID}
+          setValue={e => setStudentID(e.target.value)}
+          reset={setStudentID}
+        />
+        <Input
+          length="short"
+          type="text"
+          placeholder="이름"
+          value={studentName}
+          setValue={e => setStudentName(e.target.value)}
+          reset={setStudentName}
+        />
       </SearchBar>
       <Table
         header={tableHeader}
-        data={data}
+        data={_data}
         hasPage={true}
-        maxPage={5}
+        maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {' '}
-        {data.map(item => {
+        {_data.map(item => {
           return (
             <div key={item.id}>
               <div>{item.grade}</div>
