@@ -4,6 +4,7 @@ import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
+import { SearchBarLayout } from '../../styles/SearchBarStyle';
 
 const Grade = () => {
   const navigate = useNavigate();
@@ -17,17 +18,17 @@ const Grade = () => {
     { title: '비고', width: 2 },
   ];
   // 임시데이터
-  const data = Array(5).fill();
+  const data = Array(5).fill('');
 
   // 이의신청 모달
-  const [demur, setDemur] = useState(false);
-  const [studentId, setStudentId] = useState(null);
+  const [demur, setDemur] = useState<boolean>(false);
+  const [studentId, setStudentId] = useState<number | null>(null);
 
   return (
     <>
-      <SearchBar>
-        <div>교수가 현재 수업 중인 강의리스트</div>
-      </SearchBar>
+      <SearchBarLayout>
+        <div style={{ height: 35 }}>교수가 현재 수업 중인 강의리스트</div>
+      </SearchBarLayout>
       <div>
         <span>flow</span>
         <ul>
@@ -38,7 +39,7 @@ const Grade = () => {
           <li>5. 이의신청 확인 후 처리</li>
         </ul>
       </div>
-      <Table header={tableHeader} data={data} hasPage={true}>
+      <Table header={tableHeader} data={data} hasPage={true} pending={false} error={false}>
         {data.map((_, idx) => {
           return (
             <div key={idx}>
