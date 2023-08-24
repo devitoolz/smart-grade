@@ -4,13 +4,8 @@ import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-import { TextArea } from '../../styles/MyStyleCSS';
 import { postBoard } from '../../apis/fetch';
-=======
-import { postBoard } from '../../api/fetch';
 
->>>>>>> d10fea56834beef683069b4d2e72fb885c7768db
 const Write = () => {
   const navigate = useNavigate();
 
@@ -110,7 +105,7 @@ const Write = () => {
           <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
         </Wbtns>
       </div>
-      {/* 
+      {/*
       <Ltable>
         <colgroup>
           <col className="title" width={'30%'} />

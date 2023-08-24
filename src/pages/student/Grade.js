@@ -3,12 +3,9 @@ import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import { NoDatas } from '../../styles/MyStyleCSS';
-<<<<<<< HEAD
-=======
 import Dropdown from '../../components/Dropdown';
 import LectureInfo from '../../components/student/LectureInfo';
 import CommonModal from '../../components/CommonModal';
->>>>>>> d10fea56834beef683069b4d2e72fb885c7768db
 
 const Grade = () => {
   // 강의명, 담당 교수, 학점, 성적(출석, 중간, 기말), 최종 성적(A+~F), 평점(4.5~0)+이의신청
