@@ -1,7 +1,17 @@
+import React from 'react';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
+
+interface CommonModalProps {
+  setDisplay: React.Dispatch<React.SetStateAction<boolean>>;
+  modalSize: 'small' | 'big';
+  modalTitle: string;
+  children?: React.ReactNode;
+  handleModalOk?: Function;
+  handleModalCancel?: Function;
+}
 
 const CommonModal = ({
   setDisplay,
@@ -10,7 +20,7 @@ const CommonModal = ({
   children,
   handleModalOk,
   handleModalCancel,
-}) => {
+}: CommonModalProps) => {
   // JSX
   return (
     <>
@@ -36,10 +46,9 @@ const CommonModal = ({
 
           <div className="modal-footer">
             <CommonButton
-              value={modalSize === 'middle' ? '등록' : '확인'}
+              value="확인"
               onClick={() => {
-                handleModalOk();
-                // alert('요청 중입니다');
+                handleModalOk?.();
                 setDisplay(false);
               }}
               btnType="modal"
@@ -48,7 +57,7 @@ const CommonModal = ({
             <CommonButton
               value="취소"
               onClick={() => {
-                handleModalCancel();
+                handleModalCancel?.();
                 setDisplay(false);
               }}
               btnType="modal"
