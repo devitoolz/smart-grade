@@ -16,7 +16,7 @@ const Lecture = () => {
   const [lectureName, setLectureName] = useState('');
 
   //검색 시 사용할 쿼리스트링
-  const queries = { lectureName };
+  const queries = { semester, lectureName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
@@ -77,21 +77,21 @@ const Lecture = () => {
     },
   ];
 
- //강의명 임시 더미 데이터
- const LectureNameList = [
-  {
-    id: '1',
-    title: '산업공학의 이해',
-  },
-  {
-    id: '2',
-    title: '디자인 마케팅 개론',
-  },
-  {
-    id: '1',
-    title: '디자인실습(1)',
-  },
-];
+  //강의명 임시 더미 데이터
+  const LectureNameList = [
+    {
+      id: '1',
+      title: '산업공학의 이해',
+    },
+    {
+      id: '2',
+      title: '디자인 마케팅 개론',
+    },
+    {
+      id: '3',
+      title: '디자인실습(1)',
+    },
+  ];
 
   //임시 더미 데이터
   const _data = [
@@ -145,7 +145,6 @@ const Lecture = () => {
     },
   ];
 
- 
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기

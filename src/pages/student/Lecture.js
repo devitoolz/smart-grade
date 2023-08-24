@@ -18,7 +18,7 @@ const Lecture = () => {
   //교수명 state
   const [professorName, setProfessorName] = useState('');
   //검색 시 사용할 쿼리스트링
-  const queries = { lectureName, professorName };
+  const queries = { semester, lectureName, professorName };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
@@ -207,6 +207,7 @@ const Lecture = () => {
             placeholder="교수명"
             value={professorName}
             setValue={e => setProfessorName(e.target.value)}
+            reset={setProfessorName}
           />
         </SearchBar>
       </div>

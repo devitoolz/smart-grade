@@ -20,7 +20,7 @@ const Students = () => {
   //이름 state
   const [studentName, setStudentName] = useState('');
   //쿼리스트링
-  const queries = { grade };
+  const queries = { grade, major, studentID, studentName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
@@ -150,17 +150,21 @@ const Students = () => {
           length="short"
           placeholder="학년"
           data={gradeList}
+          propertyName={{ key: 'id', value: 'title' }}
           value={grade}
           setValue={setGrade}
           reset
+          search
         />
         <Dropdown
           length="long"
           placeholder="전공"
           data={majorList}
+          propertyName={{ key: 'id', value: 'title' }}
           value={major}
           setValue={setMajor}
           reset
+          search
         />
         <Input
           length="long"
