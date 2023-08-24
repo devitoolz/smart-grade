@@ -3,9 +3,13 @@ import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
 import { Row } from '../../styles/UserStyle';
 import CommonModal from '../CommonModal';
 
-const LectureInfo = ({ setShowLectureInfo }) => {
+const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
   return (
-    <CommonModal modalSize="big" modalTitle="강의정보" setDisplay={setShowLectureInfo}>
+    <CommonModal
+      modalSize="big"
+      modalTitle={ilecture + '번 강의정보'}
+      setDisplay={setShowLectureInfo}
+    >
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
         <ProfessorRegisterModal>
           <div className="book-img"></div>

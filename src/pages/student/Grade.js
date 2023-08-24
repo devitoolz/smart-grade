@@ -38,16 +38,20 @@ const Grade = () => {
   ];
   const [dropValue, setDropValue] = useState('');
 
+  // 강의 pk
+  const [ilecture, setIlecture] = useState(null);
   // 강의정보 모달창
   const [showLectureInfo, setShowLectureInfo] = useState(false);
   // 이의신청 모달창
-  const [demur, setDemur] = useState(true);
+  const [demur, setDemur] = useState(false);
   const handleModalOk = async () => {
+    console.log(ilecture);
     alert('처리되었습니다');
     setDemur(false);
   };
   const handleModalCancel = () => {
     setDemur(false);
+    setIlecture(null);
   };
 
   return (
@@ -84,6 +88,7 @@ const Grade = () => {
                   btnType="table"
                   color="gray"
                   onClick={() => {
+                    setIlecture(idx);
                     setDemur(true);
                   }}
                 />
@@ -92,6 +97,7 @@ const Grade = () => {
                   btnType="table"
                   color="blue"
                   onClick={() => {
+                    setIlecture(idx);
                     setShowLectureInfo(true);
                   }}
                 />
@@ -100,7 +106,9 @@ const Grade = () => {
           );
         })}
       </Table>
-      {showLectureInfo && <LectureInfo setShowLectureInfo={setShowLectureInfo} />}
+      {showLectureInfo && (
+        <LectureInfo setShowLectureInfo={setShowLectureInfo} ilecture={ilecture} />
+      )}
       {demur && (
         <CommonModal
           setDisplay={setDemur}
@@ -109,6 +117,7 @@ const Grade = () => {
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
         >
+          <span>강의 번호 : {ilecture}</span>
           이의신청을 하겠습니까?
         </CommonModal>
       )}
