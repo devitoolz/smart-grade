@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { MainSliceState } from '../types/slice';
 
-const initialState = {
+const initialState: MainSliceState = {
   title: '',
   isPosting: false,
   user: null,

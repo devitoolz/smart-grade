@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import api from '../api/api';
 
-const useQuerySearch = (url, click) => {
+const useQuerySearch = (url: string, click: boolean) => {
   const location = useLocation();
   const [pending, setIsPending] = useState(false);
   const [error, setIsError] = useState(false);

@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { TableStyleProps } from '../types/style';
 
 const TableLayout = styled.div`
   width: 100%;
@@ -18,7 +19,7 @@ const TableContainer = styled.div`
   }
 `;
 
-const TableHead = styled.div`
+const TableHead = styled.div<TableStyleProps>`
   display: grid;
   grid-template-columns: ${props => props.template};
   border-bottom: 2px solid var(--table-outline-color);
@@ -38,7 +39,7 @@ const TableHead = styled.div`
   }
 `;
 
-const TableBody = styled.div`
+const TableBody = styled.div<TableStyleProps>`
   position: relative;
   > div {
     display: grid;
@@ -98,7 +99,7 @@ const Pagination = styled.div`
   padding-top: 30px;
 `;
 
-const PageButton = styled.span`
+const PageButton = styled.span<TableStyleProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -111,7 +112,7 @@ const PageButton = styled.span`
   transition: all 0.3s ease-in-out;
 `;
 
-const PrevNextButton = styled.span`
+const PrevNextButton = styled.span<TableStyleProps>`
   display: flex;
   justify-content: center;
   align-items: center;

@@ -10,7 +10,7 @@ import Mypage from './pages/student/Mypage';
 import Grade from './pages/student/Grade';
 import Register from './pages/student/Register';
 import Lecture from './pages/student/Lecture';
-import { StudentProfile } from './types/profile';
+import { StudentProfile } from './types/api';
 
 const Student = () => {
   otpNotFound();

@@ -11,7 +11,7 @@ import Lecture from './pages/professor/Lecture';
 import Register from './pages/professor/Register';
 import Students from './pages/professor/Students';
 import Grade from './pages/professor/Grade';
-import { ProfessorProfile } from './types/profile';
+import { ProfessorProfile } from './types/api';
 
 const Professor = () => {
   otpNotFound();

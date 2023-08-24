@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { RoleButtonProps } from '../types/style';
 
 const LoginLayout = styled.div`
   width: 100%;
@@ -53,7 +54,7 @@ const RoleButtonContainer = styled.div`
   justify-content: space-between;
 `;
 
-const RoleButton = styled.label`
+const RoleButton = styled.label<RoleButtonProps>`
   display: flex;
   flex-direction: column;
   justify-content: space-between;

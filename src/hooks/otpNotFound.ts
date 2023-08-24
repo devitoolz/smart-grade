@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation, useNavigate } from 'react-router-dom';
+import type { RootState } from '../store';
 
 const otpNotFound = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const { user } = useSelector(state => state.main);
+  const { user } = useSelector((state: RootState) => state.main);
 
   const role = pathname.split('/').filter(Boolean)[0];
 

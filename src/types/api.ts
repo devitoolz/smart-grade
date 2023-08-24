@@ -43,3 +43,10 @@ export interface StudentProfile {
   lectureList: Array<LectureData>;
   profile: StudentProfileData;
 }
+
+// export interface RefreshToken {
+//   success: boolean;
+//   code: number;
+//   secretKey: boolean;
+//   msg: string;
+// }

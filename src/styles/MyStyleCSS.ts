@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { CommonBtnProps, CustomInputProps, ModalStyleProps } from '../types/style';
 
 export const ScoreProgressBar = styled.div`
   width: 80%;
@@ -171,7 +172,7 @@ export const NoDatas = styled.div`
 `;
 
 // textarea
-export const TextArea = styled.textarea`
+export const TextArea = styled.textarea<CustomInputProps>`
   resize: none;
 
   display: flex;
@@ -188,7 +189,7 @@ export const TextArea = styled.textarea`
 `;
 
 // 공통 모달
-export const ModalStyle = styled.div`
+export const ModalStyle = styled.div<ModalStyleProps>`
   position: fixed;
   top: 0;
   left: 0;
@@ -293,7 +294,7 @@ const modalBtn = `
   color: #7e7e7e;
   font-size: 18px;
 `;
-export const CommonBtn = styled.button`
+export const CommonBtn = styled.button<CommonBtnProps>`
   display: ${({ onClick }) => (onClick ? 'block' : 'none')};
   ${({ btnType }) => (btnType === 'page' ? pageBtn : btnType === 'modal' ? modalBtn : tableBtn)};
   background-color: ${({ color }) =>
@@ -321,7 +322,7 @@ const btnContainer = `
 const btnBox = `
   display: inline-block;
 `;
-export const CommonBtnArea = styled.div`
+export const CommonBtnArea = styled.div<CommonBtnProps>`
   ${({ btnType }) => (btnType === 'page' ? btnContainer : btnBox)};
   .student-info {
     font-size: 15px;

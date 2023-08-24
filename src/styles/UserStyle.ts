@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { UserStyleProps } from '../types/style';
 
 const UserLayout = styled.div`
   display: flex;
@@ -19,7 +20,7 @@ const MiddleLayout = styled.div`
   gap: 40px;
 `;
 
-const NoticeContainer = styled.div`
+const NoticeContainer = styled.div<UserStyleProps>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -126,7 +127,7 @@ const ButtonContainer = styled.div`
   gap: 15px;
 `;
 
-const Button = styled.span`
+const Button = styled.span<UserStyleProps>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -210,7 +211,7 @@ const FormTable = styled.div`
   padding-top: 20px;
 `;
 
-const Row = styled.div`
+const Row = styled.div<UserStyleProps>`
   display: grid;
   grid-template-columns: ${({ col }) =>
     col === 2 ? '1fr 2fr 1fr 2fr' : col === 1 ? '1fr 3fr' : '1fr 5fr'};
@@ -272,7 +273,7 @@ const Row = styled.div`
   }
 `;
 
-const PasswordForm = styled.form`
+const PasswordForm = styled.form<UserStyleProps>`
   display: grid;
   grid-template-columns: 1fr 1.5fr;
   grid-template-rows: ${({ find }) => (find ? '1fr 1fr' : '1fr 1fr 1fr')};
