@@ -6,6 +6,7 @@ import {
   faCircleXmark,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
+import { DropdownProps, ObjectType } from '../types/components';
 
 const Dropdown = ({
   isForm,
@@ -18,14 +19,14 @@ const Dropdown = ({
   reset,
   search,
   disabled,
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState('');
+}: DropdownProps) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState<string | number>('');
 
-  const [result, setResult] = useState([]);
-  const menuRef = useRef(null);
-  const inputRef = useRef(null);
-  const itemRef = useRef(null);
+  const [result, setResult] = useState<Array<ObjectType>>([]);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const itemRef = useRef<HTMLLIElement>(null);
 
   const handleMenuOpen = () => {
     itemRef.current?.scrollIntoView({ block: 'start' });
@@ -36,8 +37,8 @@ const Dropdown = ({
     isOpen ? inputRef.current?.blur() : inputRef.current?.focus();
   };
 
-  const handleOutsideClick = e => {
-    if (!menuRef.current?.contains(e.target)) {
+  const handleOutsideClick = (e: MouseEvent) => {
+    if (!menuRef.current?.contains(e.target as Node)) {
       setIsOpen(false);
     }
   };
@@ -52,7 +53,7 @@ const Dropdown = ({
   useEffect(() => {
     value &&
       setSearchValue(
-        data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
+        data?.find((item: ObjectType) => item[propertyName ? propertyName.key : 'id'] === value)?.[
           propertyName ? propertyName.value : 'title'
         ]
       );
@@ -63,21 +64,22 @@ const Dropdown = ({
       setTimeout(() => setResult(data || []), 200);
       if (
         data?.length !== 0 &&
-        data?.filter(item => item[propertyName ? propertyName.value : 'title'] === searchValue)
-          .length === 0
+        data?.filter(
+          (item: ObjectType) => item[propertyName ? propertyName.value : 'title'] === searchValue
+        ).length === 0
       ) {
         setSearchValue('');
       }
     }
   }, [isOpen]);
 
-  const handleItemClick = item => {
+  const handleItemClick = (item: ObjectType) => {
     setValue && setValue(item[propertyName ? propertyName.key : 'id']);
     setSearchValue(item[propertyName ? propertyName.value : 'title']);
     handleMenuOpen();
   };
 
-  const handleResetClick = e => {
+  const handleResetClick = (e: React.MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
     setResult(data || []);
     setValue && setValue(null);
@@ -85,16 +87,16 @@ const Dropdown = ({
     setIsOpen(false);
   };
 
-  const handleSearchValueChange = e => {
+  const handleSearchValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
-    const find = data?.find(
-      item => item[propertyName ? propertyName.value : 'title'] === e.target.value
+    const find: ObjectType = data?.find(
+      (item: ObjectType) => item[propertyName ? propertyName.value : 'title'] === e.target.value
     );
     find
       ? setValue && setValue(find[propertyName ? propertyName.key : 'id'])
       : setValue && setValue(null);
     setResult(
-      data?.filter(item =>
+      data?.filter((item: ObjectType) =>
         item[propertyName ? propertyName.value : 'title'].includes(e.target.value)
       ) || []
     );
@@ -103,7 +105,7 @@ const Dropdown = ({
 
   return (
     <CustomDropdown ref={menuRef} open={isOpen} isForm={isForm} length={length} value={searchValue}>
-      <div onClick={disabled ? null : handleMenuOpen}>
+      <div onClick={disabled ? undefined : handleMenuOpen}>
         {!disabled && search ? (
           <input
             ref={inputRef}
@@ -113,7 +115,7 @@ const Dropdown = ({
             onChange={handleSearchValueChange}
           />
         ) : (
-          <span className={value ? null : 'placeholder'}>
+          <span className={value ? undefined : 'placeholder'}>
             {value
               ? data?.find(item => item[propertyName ? propertyName.key : 'id'] === value)?.[
                   propertyName ? propertyName.value : 'title'
@@ -121,7 +123,7 @@ const Dropdown = ({
               : placeholder}
           </span>
         )}
-        {!disabled && <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : 0} />}
+        {!disabled && <FontAwesomeIcon icon={faChevronDown} rotation={isOpen ? 180 : undefined} />}
         {!disabled && reset && (
           <FontAwesomeIcon className="reset" icon={faCircleXmark} onClick={handleResetClick} />
         )}
@@ -131,10 +133,14 @@ const Dropdown = ({
           result.map((item, index) => (
             <li
               ref={
-                item[propertyName ? propertyName.value : 'title'] === searchValue ? itemRef : null
+                item[propertyName ? propertyName.value : 'title'] === searchValue
+                  ? itemRef
+                  : undefined
               }
               className={
-                item[propertyName ? propertyName.value : 'title'] === searchValue ? 'active' : null
+                item[propertyName ? propertyName.value : 'title'] === searchValue
+                  ? 'active'
+                  : undefined
               }
               key={index}
               onClick={() => handleItemClick(item)}

@@ -1,5 +1,10 @@
 import React from 'react';
 import { LoginData } from './apis';
+import FindPassword from '../components/FindPassword';
+
+export interface ObjectType {
+  [key: string | number]: any;
+}
 
 export interface ButtonBarProps {
   value: string;
@@ -11,16 +16,28 @@ export interface ChangePasswordProps {
   setOpenOTPRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface InputProps {
+interface CommonInputProps {
   isForm?: boolean;
   disabled?: boolean;
   length?: string;
+  placeholder?: string;
+}
+
+export interface InputProps extends CommonInputProps {
   maxLength?: number;
   type?: string;
-  placeholder?: string;
   reset?: React.Dispatch<React.SetStateAction<string>>;
   value: string;
   setValue: React.ChangeEventHandler<HTMLInputElement>;
+}
+
+export interface DropdownProps extends CommonInputProps {
+  data: Array<any> | null;
+  value: string | number;
+  setValue: React.Dispatch<React.SetStateAction<string | number | null>>;
+  propertyName?: ObjectType;
+  reset?: boolean;
+  search?: boolean;
 }
 
 export interface CommonButtonProps {
@@ -51,13 +68,33 @@ export interface RoleRadioButtonProps {
   onChange: React.ChangeEventHandler<HTMLInputElement>;
 }
 
-interface SearchBarQueries {
-  [key: string]: string;
-}
-
 export interface SearchBarProps {
   children: React.ReactNode;
-  queries: SearchBarQueries;
+  queries: ObjectType;
   setPage?: boolean;
   setClick: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface TableHeaderType {
+  title: string;
+  width: number;
+}
+
+export interface TableProps {
+  header: Array<TableHeaderType>;
+  data: Array<any> | null;
+  children: React.ReactNode;
+  hasPage?: boolean;
+  maxPage?: number;
+  pending: boolean;
+  error: boolean;
+}
+
+export interface FindPasswordProps {
+  setOpenFindPw: React.Dispatch<React.SetStateAction<boolean>>;
+  payload: LoginData;
+}
+
+export interface LectureRegister {
+  setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -9,7 +9,7 @@ export interface MainMenuProps {
 export interface CustomInputProps {
   isForm?: boolean;
   length?: string;
-  value?: string;
+  value?: string | number;
   open?: boolean;
 }
 

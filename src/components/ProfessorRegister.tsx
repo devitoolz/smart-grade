@@ -3,8 +3,9 @@ import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { Row } from '../styles/UserStyle';
 import { ProfessorRegisterModal } from '../styles/RegisterStyle';
+import { LectureRegister } from '../types/components';
 
-const ProfessorRegister = ({ setOpenRegister }) => {
+const ProfessorRegister = ({ setOpenRegister }: LectureRegister) => {
   const handleCancel = () => {
     alert('개설 신청이 취소되었습니다.');
     setOpenRegister(false);

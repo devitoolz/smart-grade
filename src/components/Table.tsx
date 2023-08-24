@@ -17,51 +17,52 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import { PulseLoader } from 'react-spinners';
+import { TableProps } from '../types/components';
 
-const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => {
+const Table = ({ header, data, children, hasPage, maxPage, pending, error }: TableProps) => {
   const width = header?.map(item => item.width + 'fr').join(' ');
 
   const [query, setQuery] = useSearchParams();
-  const currentPage = query.get('page') ? parseInt(query.get('page')) : 1;
-  const [listIndex, setListIndex] = useState(0);
+  const currentPage = query.get('page') ? parseInt(query.get('page') as string) : 1;
+  const [listIndex, setListIndex] = useState<number>(0);
 
-  const [pageList, setPageList] = useState([1]);
+  const [pageList, setPageList] = useState<Array<number>>([1]);
 
   useEffect(() => {
     if (maxPage) {
       const maxListIndex = Math.ceil(maxPage / 5) - 1;
       const startIndex = (listIndex + 1) * 5 - 4;
-      let length;
+      let length: number = 0;
       if (maxListIndex === listIndex) {
         length = maxPage % 5 === 0 ? 5 : maxPage % 5;
       } else if (listIndex < maxListIndex) {
         length = 5;
       }
       const list = Array(length)
-        .fill()
+        .fill('')
         .map((_, index) => startIndex + index);
       setPageList(list);
     }
   }, [maxPage, listIndex]);
 
   useEffect(() => {
-    setListIndex(parseInt((currentPage - 1) / 5));
+    setListIndex((currentPage - 1) / 5);
   }, [query]);
 
-  const movePage = num => {
-    query.set('page', num);
+  const movePage = (num: number) => {
+    query.set('page', num.toString());
     setQuery(query);
   };
 
   const prevPage = () => {
     if (currentPage == 1) return;
-    query.set('page', currentPage - 1);
+    query.set('page', (currentPage - 1).toString());
     setQuery(query);
   };
 
   const nextPage = () => {
     if (currentPage == maxPage) return;
-    query.set('page', currentPage + 1);
+    query.set('page', (currentPage + 1).toString());
     setQuery(query);
   };
 
@@ -70,7 +71,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
       <TableContainer>
         {header ? (
           <TableHead template={width}>
-            {header?.map((item, index) => (
+            {header.map((item, index) => (
               <div key={index}>{item.title}</div>
             ))}
           </TableHead>
@@ -82,11 +83,11 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
               <span>로딩 중...</span>
             </div>
             {Array(10)
-              .fill()
+              .fill('')
               .map((_, index) => (
                 <div key={index}>
                   {Array(header?.length)
-                    .fill()
+                    .fill('')
                     .map((_, index) => (
                       <div key={index}></div>
                     ))}
@@ -98,11 +99,11 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
             <TableBody template={width}>
               {children}
               {Array(10 - data.length)
-                .fill()
+                .fill('')
                 .map((_, index) => (
                   <div key={index}>
                     {Array(header.length)
-                      .fill()
+                      .fill('')
                       .map((_, index) => (
                         <div key={index}></div>
                       ))}
@@ -125,7 +126,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }) => 
             </PrevNextButton>
           ) : null}
           {pageList.map(page => {
-            const isCurrent = parseInt(currentPage) === page;
+            const isCurrent = currentPage === page;
             return (
               <PageButton
                 onClick={() => movePage(page)}

@@ -3,34 +3,35 @@ import { ModalStyle } from '../styles/MyStyleCSS';
 import { PasswordForm } from '../styles/UserStyle';
 import CommonButton from './CommonButton';
 import Input from './Input';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import axios from 'axios';
+import { FindPasswordProps, ObjectType } from '../types/components';
 
-const FindPassword = ({ setOpenFindPw, payload }) => {
-  const swiperRef = useRef(null);
-  const [swiper, setSwiper] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [roleTxt, setRoleTxt] = useState(null);
-  const [id, setId] = useState('');
-  const [OTP, setOTP] = useState('');
-  const [newPw, setNewPw] = useState('');
-  const [confirmNewPw, setConfirmNewPw] = useState('');
+const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
+  const swiperRef = useRef<SwiperRef>(null);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const [roleTxt, setRoleTxt] = useState<string>('');
+  const [id, setId] = useState<string>('');
+  const [OTP, setOTP] = useState<string>('');
+  const [newPw, setNewPw] = useState<string>('');
+  const [confirmNewPw, setConfirmNewPw] = useState<string>('');
 
   useEffect(() => {
-    const roleKor = {
+    const roleKor: ObjectType = {
       ROLE_PROFESSOR: '교수',
       ROLE_STUDENT: '학생',
     };
     setRoleTxt(roleKor[payload.role]);
 
-    swiperRef.current.swiper.allowTouchMove = false;
+    if (swiperRef.current) {
+      swiperRef.current.swiper.allowTouchMove = false;
+    }
   }, []);
 
-  const handleOTPChange = e => {
+  const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setOTP(value.replace(/[^0-9]/g, ''));
   };
@@ -42,9 +43,9 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
     }
     try {
       await axios.put(`/api/forgetPassword?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
-      setActiveIndex(swiper.activeIndex + 1);
-      swiper.slideNext();
-    } catch (err) {
+      setActiveIndex(prevActiveIndex => prevActiveIndex + 1);
+      swiperRef.current?.swiper.slideNext();
+    } catch {
       alert('인증에 실패하였습니다.');
     }
   };
@@ -71,7 +72,7 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
       await axios.put(`/api/changPassword`, data);
       alert('비밀번호가 변경되었습니다.');
       setOpenFindPw(false);
-    } catch (err) {
+    } catch {
       alert('서버와의 연결이 원활하지 않습니다.');
     }
   };
@@ -90,7 +91,6 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
             modules={[Pagination]}
             navigation={true}
             ref={swiperRef}
-            onSwiper={s => setSwiper(s)}
           >
             <SwiperSlide>
               <PasswordForm find>
@@ -140,9 +140,13 @@ const FindPassword = ({ setOpenFindPw, payload }) => {
         </div>
         <div className="modal-footer">
           <CommonButton
-            value={(activeIndex === 0 && '다음') || (activeIndex === 1 && '변경')}
+            value={activeIndex === 0 ? '다음' : activeIndex === 1 ? '변경' : undefined}
             onClick={
-              activeIndex === 0 ? handleNextClick : activeIndex === 1 ? handlePwUpdateClick : null
+              activeIndex === 0
+                ? handleNextClick
+                : activeIndex === 1
+                ? handlePwUpdateClick
+                : undefined
             }
             btnType="modal"
           />
