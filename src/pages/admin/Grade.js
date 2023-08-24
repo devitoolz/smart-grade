@@ -6,7 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { getStudentInfo } from '../../api/fetch';
+import { getStudentInfo } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
 import { useNavigate } from 'react-router-dom';

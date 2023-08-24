@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import api, { getAuth, removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './apis/api';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
 import otpNotFound from './hooks/otpNotFound';
@@ -10,7 +10,7 @@ import Mypage from './pages/student/Mypage';
 import Grade from './pages/student/Grade';
 import Register from './pages/student/Register';
 import Lecture from './pages/student/Lecture';
-import { StudentProfile } from './types/api';
+import { UserProfile } from './types/apis';
 
 const Student = () => {
   otpNotFound();
@@ -24,7 +24,7 @@ const Student = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get<StudentProfile>(`/api/student/profile`);
+        const { data } = await api.get<UserProfile>(`/api/student/profile`);
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {

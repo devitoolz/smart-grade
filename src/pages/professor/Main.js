@@ -26,7 +26,7 @@ import {
   faUserGraduate,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import api from '../../api/api';
+import api from '../../apis/api';
 import { removeCookie } from '../../modules/cookies';
 
 // export const PROFESSOR_IMG_URL = '/imgs/professor';

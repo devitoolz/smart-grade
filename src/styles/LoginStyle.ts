@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { RoleButtonProps } from '../types/style';
+import { RoleButtonProps } from '../types/styles';
 
 const LoginLayout = styled.div`
   width: 100%;

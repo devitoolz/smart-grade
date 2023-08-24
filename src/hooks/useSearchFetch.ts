@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import api from '../api/api';
+import api from '../apis/api';
 
 const useQuerySearch = (url: string, click: boolean) => {
   const location = useLocation();

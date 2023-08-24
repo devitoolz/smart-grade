@@ -1,7 +1,15 @@
 import React from 'react';
 import { RoleButton } from '../styles/LoginStyle';
+import { RoleRadioButtonProps } from '../types/components';
 
-const RoleRadioButton = ({ img, imgHeight, text, value, checked, onChange }) => {
+const RoleRadioButton = ({
+  img,
+  imgHeight,
+  text,
+  value,
+  checked,
+  onChange,
+}: RoleRadioButtonProps) => {
   return (
     <RoleButton imgHeight={imgHeight} checked={checked}>
       <div className="role-input">

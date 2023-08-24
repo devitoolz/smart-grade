@@ -8,7 +8,7 @@ import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
-import api from '../../api/api';
+import api from '../../apis/api';
 
 const Major = () => {
   ////SearchBar////

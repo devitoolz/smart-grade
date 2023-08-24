@@ -5,7 +5,7 @@ import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
-import api from '../../api/api';
+import api from '../../apis/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const LectureRoom = () => {

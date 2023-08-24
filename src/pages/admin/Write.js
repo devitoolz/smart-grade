@@ -5,7 +5,7 @@ import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import { useNavigate } from 'react-router-dom';
 import { TextArea } from '../../styles/MyStyleCSS';
-import { postBoard } from '../../api/fetch';
+import { postBoard } from '../../apis/fetch';
 const Write = () => {
   //공지사항 제목
   const [title, setTitle] = useState('');

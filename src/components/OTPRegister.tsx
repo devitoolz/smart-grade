@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { useDispatch, useSelector } from 'react-redux';
-import api from '../api/api';
+import api from '../apis/api';
 import mainSlice from '../slices/mainSlice';
+import { RootState } from '../store';
+import { OTPRegisterProps } from '../types/components';
+import { OTPData } from '../types/apis';
 
-const OTPRegister = ({ setOpenOTPRegister }) => {
-  const [QRUrl, setQRUrl] = useState(null);
+const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
+  const [QRUrl, setQRUrl] = useState<string | undefined>(undefined);
 
-  const { user } = useSelector(state => state.main);
+  const { user } = useSelector((state: RootState) => state.main);
   const main = mainSlice.actions;
 
   const dispatch = useDispatch();
@@ -16,11 +19,11 @@ const OTPRegister = ({ setOpenOTPRegister }) => {
   useEffect(() => {
     const registerOTP = async () => {
       try {
-        const { data } = await api.get(`/api/otp`);
+        const { data } = await api.get<OTPData>(`/api/otp`);
         setQRUrl(data.barcodeUrl.replace('www.google', 'chart.googleapis'));
-        dispatch(main.setUser({ ...user, profile: { ...user.profile, secretKey: 'true' } }));
-      } catch (err) {
-        console.log(err);
+        dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: 'true' } }));
+      } catch {
+        alert('OTP 발급 중 오류가 발생했습니다.');
       }
     };
     registerOTP();

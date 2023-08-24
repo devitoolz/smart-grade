@@ -4,14 +4,14 @@ import { dark, light } from './styles/AppStyle';
 import Login from './pages/Login';
 import Admin from './Admin';
 import NotFound from './pages/NotFound';
-import { Interceptor } from './api/api';
+import { Interceptor } from './apis/api';
 // import { useSelector } from 'react-redux';
 // import Loading from './components/Loading';
 import Professor from './Professor';
 import { getCookie, removeCookie } from './modules/cookies';
 import Student from './Student';
 import { Global } from '@emotion/react';
-import { GlobalLayoutProps } from './types/style';
+import { GlobalLayoutProps } from './types/styles';
 
 const GlobalLayout = ({ isDark }: GlobalLayoutProps) => {
   return <Global styles={isDark ? dark : light} />;

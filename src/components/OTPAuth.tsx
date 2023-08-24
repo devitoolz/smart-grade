@@ -5,24 +5,27 @@ import { useNavigate } from 'react-router';
 import { setCookie } from '../modules/cookies';
 import CommonButton from './CommonButton';
 import Input from './Input';
+import { OTPAuthProps } from '../types/components';
+import { OTPAuthData } from '../types/apis';
 
-const OTPAuth = ({ payload, setOpenOTP }) => {
-  const [OTP, setOTP] = useState('');
+const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
+  const [OTP, setOTP] = useState<string>('');
   const navigate = useNavigate();
 
-  const authPayload = {
+  const authPayload: OTPAuthData = {
     uid: payload.id,
     otpNum: OTP,
     role: payload.role,
   };
 
-  const handleOTPChange = e => {
+  const handleOTPChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setOTP(value.replace(/[^0-9]/g, ''));
   };
 
   const handleOTPAuth = async () => {
     try {
+      // TODO: data 타입 지정
       const { data } = await axios.post(`/api/otp-valid`, authPayload);
       if (data.success) {
         setCookie('accessToken', data.accessToken);

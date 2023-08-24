@@ -3,8 +3,9 @@ import { SearchButton, SearchBarLayout } from '../styles/SearchBarStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { SearchBarProps } from '../types/components';
 
-const SearchBar = ({ children, queries, setPage, setClick }) => {
+const SearchBar = ({ children, queries, setPage, setClick }: SearchBarProps) => {
   const [query, setQuery] = useSearchParams();
   const { search } = useLocation();
 
@@ -21,7 +22,7 @@ const SearchBar = ({ children, queries, setPage, setClick }) => {
     Object.keys(queries).forEach(key => {
       queries[key] ? query.set(key, queries[key]) : query.delete(key);
     });
-    setPage ? query.set('page', 1) : null;
+    setPage ? query.set('page', '1') : null;
     setQuery(query);
     setClick(prevState => !prevState);
   };

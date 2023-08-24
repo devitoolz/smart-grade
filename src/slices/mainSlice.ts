@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { MainSliceState } from '../types/slice';
+import { MainSliceState } from '../types/slices';
 
 const initialState: MainSliceState = {
   title: '',

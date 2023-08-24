@@ -7,9 +7,9 @@ import CommonButton from '../../components/CommonButton';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
-import { getStudentList } from '../../api/fetch';
+import { getStudentList } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import api from '../../api/api';
+import api from '../../apis/api';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();

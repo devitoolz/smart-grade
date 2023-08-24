@@ -1,6 +1,6 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { MainMenuProps } from '../types/style';
+import { MainMenuProps } from '../types/styles';
 
 const light = css`
   :root {

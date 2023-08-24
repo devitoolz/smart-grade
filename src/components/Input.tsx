@@ -2,6 +2,7 @@ import React from 'react';
 import { CustomInput } from '../styles/CommonStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleXmark } from '@fortawesome/free-solid-svg-icons';
+import { InputProps } from '../types/components';
 
 const Input = ({
   isForm,
@@ -13,7 +14,7 @@ const Input = ({
   reset,
   value,
   setValue,
-}) => {
+}: InputProps) => {
   return (
     <CustomInput isForm={isForm} length={length} value={value}>
       <input

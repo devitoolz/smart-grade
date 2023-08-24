@@ -6,7 +6,7 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
-import { deleteBoard } from '../../api/fetch';
+import { deleteBoard } from '../../apis/fetch';
 
 const Notice = () => {
   const navigate = useNavigate();

@@ -57,7 +57,7 @@ const Interceptor = ({ children }: { children: ReactNode }) => {
           navigate('/');
         } else if (response.status === 401 && refreshToken) {
           try {
-            // TODO: 밑에 줄 마저하기
+            // TODO: data 타입 지정
             const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
             const accessToken = data.accessToken;
             setCookie('accessToken', accessToken);

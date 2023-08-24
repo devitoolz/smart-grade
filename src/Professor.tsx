@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Main from './pages/professor/Main';
 import Dashboard from './pages/professor/Dashboard';
-import api, { getAuth, removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './apis/api';
 import Mypage from './pages/professor/Mypage';
 import { useDispatch } from 'react-redux';
 import mainSlice from './slices/mainSlice';
@@ -11,7 +11,7 @@ import Lecture from './pages/professor/Lecture';
 import Register from './pages/professor/Register';
 import Students from './pages/professor/Students';
 import Grade from './pages/professor/Grade';
-import { ProfessorProfile } from './types/api';
+import { UserProfile } from './types/apis';
 
 const Professor = () => {
   otpNotFound();
@@ -25,7 +25,7 @@ const Professor = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get<ProfessorProfile>(`/api/professor`);
+        const { data } = await api.get<UserProfile>(`/api/professor`);
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {

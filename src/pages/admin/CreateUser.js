@@ -15,7 +15,7 @@ import Input from '../../components/Input';
 import Dropdown from '../../components/Dropdown';
 import { useDispatch, useSelector } from 'react-redux';
 import { checkValidDate, checkValidPhone } from '../../modules/regex';
-import api from '../../api/api';
+import api from '../../apis/api';
 import mainSlice from '../../slices/mainSlice';
 
 const CreateUser = () => {

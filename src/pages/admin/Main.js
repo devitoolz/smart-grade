@@ -21,7 +21,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
-import api from '../../api/api';
+import api from '../../apis/api';
 import { removeCookie } from '../../modules/cookies';
 
 const Main = () => {

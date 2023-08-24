@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { TableStyleProps } from '../types/style';
+import { TableStyleProps } from '../types/styles';
 
 const TableLayout = styled.div`
   width: 100%;

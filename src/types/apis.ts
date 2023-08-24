@@ -7,7 +7,7 @@ interface LectureData {
   lectureName: string;
 }
 
-interface ProfileData {
+export interface ProfileData {
   name: string;
   gender: string;
   birthdate: string;
@@ -34,14 +34,26 @@ interface StudentProfileData extends ProfileData {
   studentNum: number;
 }
 
-export interface ProfessorProfile {
+export interface UserProfile {
   lectureList: Array<LectureData>;
-  profile: ProfessorProfileData;
+  profile: ProfessorProfileData | StudentProfileData;
 }
 
-export interface StudentProfile {
-  lectureList: Array<LectureData>;
-  profile: StudentProfileData;
+export interface LoginData {
+  id: string;
+  password: string;
+  role: string;
+}
+
+export interface OTPAuthData {
+  otpNum: string;
+  uid: string;
+  role: string;
+}
+
+export interface OTPData {
+  secretKey: string;
+  barcodeUrl: string;
 }
 
 // export interface RefreshToken {

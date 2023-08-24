@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CustomInputProps } from '../types/style';
+import { CustomInputProps } from '../types/styles';
 
 const Layout = styled.div`
   width: 100%;

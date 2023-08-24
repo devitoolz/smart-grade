@@ -19,11 +19,11 @@ export interface RoleButtonProps {
 }
 
 export interface ModalStyleProps {
-  modalSize: string;
+  modalSize?: string;
 }
 
 export interface CommonBtnProps {
-  btnType: string;
+  btnType?: string;
   textColor?: string;
 }
 

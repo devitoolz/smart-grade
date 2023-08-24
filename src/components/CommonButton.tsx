@@ -1,7 +1,16 @@
 import React from 'react';
 import { CommonBtn, CommonBtnArea } from '../styles/MyStyleCSS';
+import { CommonButtonProps } from '../types/components';
 
-const CommonButton = ({ btnType, color, textColor, value, onClick, disabled, children }) => {
+const CommonButton = ({
+  btnType,
+  color,
+  textColor,
+  value,
+  onClick,
+  disabled,
+  children,
+}: CommonButtonProps) => {
   return (
     <CommonBtnArea btnType={btnType}>
       <span className="student-info">{children}</span>

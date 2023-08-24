@@ -16,7 +16,7 @@ import Major from './pages/admin/Major';
 import UserDetail from './pages/admin/UserDetail';
 import { useDispatch } from 'react-redux';
 import majorSlice from './slices/majorSlice';
-import api, { getAuth, removeAuth } from './api/api';
+import api, { getAuth, removeAuth } from './apis/api';
 
 const Admin = () => {
   const { pathname } = useLocation();

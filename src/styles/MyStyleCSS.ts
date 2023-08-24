@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { CommonBtnProps, CustomInputProps, ModalStyleProps } from '../types/style';
+import { CommonBtnProps, CustomInputProps, ModalStyleProps } from '../types/styles';
 
 export const ScoreProgressBar = styled.div`
   width: 80%;

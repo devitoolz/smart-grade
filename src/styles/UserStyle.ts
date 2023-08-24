@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { UserStyleProps } from '../types/style';
+import { UserStyleProps } from '../types/styles';
 
 const UserLayout = styled.div`
   display: flex;

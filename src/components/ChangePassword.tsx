@@ -3,20 +3,22 @@ import { ModalStyle } from '../styles/MyStyleCSS';
 import CommonButton from './CommonButton';
 import { NoticeContainer, PasswordForm } from '../styles/UserStyle';
 import Input from './Input';
-import api from '../api/api';
+import api from '../apis/api';
 import { useSelector } from 'react-redux';
+import { RootState } from '../store';
+import { ChangePasswordProps } from '../types/components';
 
-const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }) => {
-  const [currentPw, setCurrentPw] = useState('');
-  const [newPw, setNewPw] = useState('');
-  const [confirmNewPw, setConfirmNewPw] = useState('');
+const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePasswordProps) => {
+  const [currentPw, setCurrentPw] = useState<string>('');
+  const [newPw, setNewPw] = useState<string>('');
+  const [confirmNewPw, setConfirmNewPw] = useState<string>('');
 
-  const { user } = useSelector(state => state.main);
-  let role;
+  const { user } = useSelector((state: RootState) => state.main);
+  let role: string;
 
-  if (user?.profile.iprofessor) {
+  if (user && 'iprofessor' in user.profile) {
     role = 'professor';
-  } else if (user?.profile.istudent) {
+  } else if (user && 'istudent' in user.profile) {
     role = 'student';
   }
 
