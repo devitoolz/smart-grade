@@ -1,7 +1,13 @@
 import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 
-const CommonProgressBar = ({ maxScore, nowScore }) => {
+interface CommonProgressBarProps {
+  maxScore: number;
+  nowScore: number;
+}
+
+const CommonProgressBar = ({ maxScore, nowScore }: CommonProgressBarProps) => {
   const percentage = Math.floor((nowScore / maxScore) * 100);
+
   return (
     <div style={{ width: '50%', height: '100%', position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
