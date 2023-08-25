@@ -1,5 +1,6 @@
-import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
-import { Row } from '../../styles/UserStyle';
+import React from 'react';
+// import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
+// import { Row } from '../../styles/UserStyle';
 import CommonModal from '../CommonModal';
 
 const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
@@ -10,7 +11,7 @@ const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
       setDisplay={setShowLectureInfo}
     >
       <div style={{ height: '100%', display: 'flex', alignItems: 'center' }}>
-        <ProfessorRegisterModal>
+        {/* <ProfessorRegisterModal>
           <div className="book-img"></div>
           <div className="register-form">
             <Row>
@@ -42,7 +43,7 @@ const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
               <div></div>
             </Row>
           </div>
-        </ProfessorRegisterModal>
+        </ProfessorRegisterModal> */}
       </div>
     </CommonModal>
   );

@@ -219,7 +219,7 @@ export const ModalStyle = styled.div<ModalStyleProps>`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 20px;
+      font-size: 22px;
       font-weight: 700;
 
       padding: 0 20px;

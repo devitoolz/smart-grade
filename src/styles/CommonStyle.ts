@@ -128,6 +128,7 @@ const CustomDropdown = styled.div<CustomInputProps>`
       }
     }
     > span {
+      font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
       &.placeholder {
         color: var(--search-ph-color);
       }
@@ -164,6 +165,7 @@ const CustomDropdown = styled.div<CustomInputProps>`
     max-height: ${props => (props.open ? '200px' : 0)};
     top: ${({ isForm }) => (isForm ? '48px' : '34px')};
     left: ${({ isForm }) => (isForm ? 0 : '-1px')};
+    font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
     transition: 0.2s all ease-in-out;
     overflow: auto;
     border-bottom: ${({ isForm, open }) =>
