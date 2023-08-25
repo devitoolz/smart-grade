@@ -1,9 +1,19 @@
 import React, { useState } from 'react';
 import CommonModal from '../CommonModal';
 import { GradeDemurProps } from '../../types/temp';
+import { TableArea } from '../../styles/MyStyleCSS';
+import CommonButton from '../CommonButton';
 
 const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
-  let [vanilla, setVanilla] = useState(0);
+  const tableHeader = [
+    { title: '학번', width: 1 },
+    { title: '이름', width: 1 },
+    { title: '학과', width: 2 },
+    { title: '진행상태', width: 1 },
+    { title: '처리', width: 1 },
+  ];
+  const tableBody = Array(10).fill('');
+
   return (
     <>
       <CommonModal setDisplay={setDemur} modalSize="big" modalTitle="이의 신청 목록">
@@ -15,10 +25,35 @@ const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
         </mark>
         <button onClick={() => alert('click')}>click</button>
         <hr />
-        <button onClick={() => setVanilla(vanilla - 1)}>－</button>
-        <span>{vanilla}</span>
-        <button onClick={() => setVanilla(vanilla + 1)}>＋</button>
-        <hr />
+        <TableArea>
+          <div className="table">
+            <div className="table_head">
+              {tableHeader.map((item, idx) => {
+                return <div key={idx}>{item.title}</div>;
+              })}
+            </div>
+            <div className="table_body">
+              {tableBody?.map((_, idx) => {
+                return (
+                  <div className="table_body_item" key={idx}>
+                    <div>{idx}</div>
+                    <div>학생 {idx + 1}번</div>
+                    <div>학생 소속 학과</div>
+                    <div>처리중</div>
+                    <div>
+                      <CommonButton
+                        value="처리하기"
+                        btnType="table"
+                        color="blue"
+                        onClick={() => alert(idx)}
+                      />
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </TableArea>
       </CommonModal>
     </>
   );
