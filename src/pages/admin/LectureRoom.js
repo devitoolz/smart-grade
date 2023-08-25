@@ -47,7 +47,7 @@ const LectureRoom = () => {
 
   //api get hook test
   const url = '/api/lectureroom';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
   //searchBar dropdown
   const buildingDataList = [];
   data?.lectureRoomList?.forEach(item => {
@@ -156,7 +156,6 @@ const LectureRoom = () => {
               borderBottom: '1px solid #dae8ff',
               width: '100%',
               padding: '15px 20px',
-              marginLeft: '16px',
             }}
           >
             <p>장소</p>
@@ -186,7 +185,6 @@ const LectureRoom = () => {
               borderBottom: '1px solid #dae8ff',
               width: '100%',
               padding: '15px 23px',
-              marginLeft: '-27px',
             }}
           >
             <p>최대수용인원</p>
@@ -218,6 +216,7 @@ const LectureRoom = () => {
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
+        error={error}
       >
         {data?.lectureRoom?.map(item => {
           return (

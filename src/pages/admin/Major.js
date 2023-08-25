@@ -66,16 +66,17 @@ const Major = () => {
   // 변경할 항목 pk값 저장할 state.
   const [selectMajorID, setSelectMajorID] = useState(null);
 
-  // 변경할 항목 전공명 저장할 state.
+  //선택한 전공명 state
   const [selectMajorName, setSelectMajorName] = useState('');
+  // 변경할 항목 전공명 저장할 state.
   const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
 
-  //전공리스트 state 전역관리?
+  //전공리스트 state 전역관리
   const { allMajorList } = useSelector(state => state.major);
   // console.log(allMajorList);
 
-  //전공명 state
-  const [majorId, setMajorId] = useState();
+  //전공명 id state
+  const [majorId, setMajorId] = useState('');
 
   //변경버튼 state
   const [, setChangeClickShow] = useState(false);
@@ -85,7 +86,7 @@ const Major = () => {
 
   //api get hook test
   const url = '/api/major';
-  const { data, pending } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url, click);
 
   //버튼 onClick시 모달창 열기
   const modalOpen = () => {
@@ -133,7 +134,6 @@ const Major = () => {
       setDataArr(temp);
       setSelectMajorID(null);
       setSelectMajorName('');
-      //window.location.reload();
     } else {
       // 다르므로 모달 창 띄우기
       setSelectMajorID(_imajor);
@@ -143,13 +143,11 @@ const Major = () => {
   };
 
   const handleChangeName = e => {
-    // console.log(e.target.value);
     setSelectMajorName(e.target.value);
   };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
-    // console.log(_majorId);
     if (selectMajorID === _majorId) {
       // 초기화
       setSelectMajorID(null);
@@ -169,7 +167,6 @@ const Major = () => {
         `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(graduationScore)}`,
         { headers }
       );
-      // console.log('제발 나와', result);
       handleModalCancel();
       alert('등록되었습니다.');
     } catch (err) {
@@ -191,18 +188,11 @@ const Major = () => {
 
   //변경 버튼 클릭시
   const changeClickShowOpen = () => {
-    // console.log('텍스트필드 활성화 ', selectMajorID);
-
-    // console.log(newMajorName, graduationScore);
-    // if (newMajorName !="" && graduationScore !="") {
-    //   setChangeClickShow(true);
-    // } else {
-
-    // }
     alert('항목을 입력하셔야 합니다.');
     setChangeClickShow(true);
   };
 
+  //전공명 변경 모달 취소버튼 클릭시
   const chnageClickCloseWin = () => {
     // 초기화
     setSelectMajorID(null);
@@ -365,7 +355,14 @@ const Major = () => {
           </div>
         </CommonModal>
       ) : null}
-      <Table header={tableHeader} data={data?.major} hasPage={true} maxPage={6} pending={pending}>
+      <Table
+        header={tableHeader}
+        data={data?.major}
+        hasPage={true}
+        maxPage={6}
+        pending={pending}
+        error={error}
+      >
         {isDataArr.map(item => {
           return (
             <div key={item.imajor}>
@@ -391,14 +388,14 @@ const Major = () => {
                   value={selectMajorID === item.imajor ? '확인' : '변경'}
                   onClick={() => changeModalOpen(item.imajor, item.majorName)}
                   disabled={item.delYn}
-                ></CommonButton>
+                />
                 <CommonButton
                   btnType="table"
                   color={item.delYn ? 'gray' : 'red'}
                   value={selectMajorID === item.imajor ? '취소' : '폐지'}
                   onClick={() => disUseModalOpen(item.imajor)}
                   disabled={item.delYn}
-                ></CommonButton>
+                />
               </div>
               <div>
                 {item.isChange === 0 ? null : <span>{item.originName.replace('구', '(구)')}</span>}

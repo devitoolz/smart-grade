@@ -179,8 +179,29 @@ const Lecture = () => {
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
         >
-          <p>강의명</p>
-          {''} <p>세로토닌과 코르티솔의 상관관계</p>
+          <div
+            style={{
+              display: 'flex',
+              flexdirection: 'column',
+              borderBottom: '1px solid var(--table-border-color)',
+              width: '100%',
+            }}
+          >
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-around ',
+                borderBottom: '1px solid var(--table-border-color)',
+                width: '100%',
+              }}
+            >
+              <p>강의명</p> <p>강의명 받을 자리</p>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+              <p>학점</p>
+              <p>교수명</p>
+            </div>
+          </div>
         </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>
