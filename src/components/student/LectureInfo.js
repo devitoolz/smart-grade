@@ -3,7 +3,7 @@ import { Row } from '../../styles/UserStyle';
 import CommonModal from '../CommonModal';
 import { LectureInfoProps } from '../../types/temp';
 
-const LectureInfo = ({ setShowLectureInfo, ilecture }: LectureInfoProps) => {
+const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
   return (
     <CommonModal
       modalSize="big"
