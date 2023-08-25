@@ -64,7 +64,7 @@ const Grade = () => {
                   btnType="table"
                   color="blue"
                   onClick={() => {
-                    navigate('/professor/grade/input');
+                    navigate(`/professor/grade/input/${idx}`);
                   }}
                 />
               </div>

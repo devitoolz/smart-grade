@@ -9,7 +9,7 @@ const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
       <CommonModal setDisplay={setDemur} modalSize="big" modalTitle="이의 신청 목록">
         <mark>
           <q>
-            <span>학생 {studentId}번</span>
+            <span>강의 {studentId}번 : </span>
             <span>해당 과목의 이의신청 내역 확인 가능</span>
           </q>
         </mark>

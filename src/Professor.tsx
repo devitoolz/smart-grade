@@ -54,7 +54,7 @@ const Professor = () => {
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Lecture />} />
         <Route path="grade" element={<Grade />} />
-        <Route path="grade/input" element={<GradeInput />} />
+        <Route path="grade/input/:id" element={<GradeInput />} />
         <Route path="register" element={<Register />} />
         <Route path="students" element={<Students />} />
       </Route>
