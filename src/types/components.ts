@@ -95,6 +95,10 @@ export interface FindPasswordProps {
   payload: LoginData;
 }
 
-export interface LectureRegister {
+interface LectureRegister {
   setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface RegisterTimeTable extends LectureRegister {
+  setLectureRoom: React.Dispatch<React.SetStateAction<string>>;
 }
