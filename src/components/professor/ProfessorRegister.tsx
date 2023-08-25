@@ -4,8 +4,6 @@ import CommonButton from '../CommonButton';
 import { Row } from '../../styles/UserStyle';
 import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
 import { LectureRegister } from '../../types/components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';

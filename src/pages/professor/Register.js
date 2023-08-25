@@ -4,6 +4,7 @@ import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
 import ProfessorRegister from '../../components/professor/ProfessorRegister';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 
 const Button = styled.button`
   border: none;
@@ -25,9 +26,10 @@ const Button = styled.button`
 `;
 
 const Register = () => {
-  const [openRegister, setOpenRegister] = useState(false);
+  // const [openRegister, setOpenRegister] = useState(false);
   const [selected, setSelected] = useState([]);
   const ref = useRef([]);
+  const navigate = useNavigate();
 
   const data = [5, 10, 15, 20, 3, 8, 13, 18];
 
@@ -100,7 +102,7 @@ const Register = () => {
   return (
     <>
       {/* <SearchBar></SearchBar> */}
-      <ButtonBar value="개설 신청" onClick={() => setOpenRegister(true)} />
+      <ButtonBar value="개설 신청" onClick={() => navigate('apply')} />
       <button onClick={handleSubmit}>신청 시간</button>
       <div
         style={{
@@ -126,7 +128,7 @@ const Register = () => {
           })}
       </div>
       {/* <Table></Table> */}
-      {openRegister && <ProfessorRegister setOpenRegister={setOpenRegister} />}
+      {/* {openRegister && <ProfessorRegister setOpenRegister={setOpenRegister} />} */}
     </>
   );
 };
