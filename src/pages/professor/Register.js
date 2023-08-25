@@ -31,6 +31,17 @@ const Register = () => {
 
   const data = [5, 10, 15, 20, 3, 8, 13, 18];
 
+  const timeData = {
+    0: 9,
+    1: 10,
+    2: 11,
+    3: 12,
+    4: 13,
+    5: 14,
+    6: 15,
+    7: 16,
+  };
+
   useEffect(() => {
     const disableButton = index => {
       if (
@@ -47,6 +58,8 @@ const Register = () => {
     ref.current.forEach((button, index) => {
       button.disabled = disableButton(index);
     });
+
+    console.log(selected);
   }, [selected]);
 
   const handleClick = index => {
@@ -66,11 +79,29 @@ const Register = () => {
     }
   };
 
+  const handleSubmit = () => {
+    if (selected.length === 0) {
+      alert('최소 1시간 선택');
+    } else {
+      const week = selected[0] % 5;
+      const startTime = timeData[parseInt(selected[0] / 5)];
+      const endTime = timeData[parseInt(selected[selected.length - 1] / 5)] + 1;
+
+      const payload = {
+        week,
+        startTime,
+        endTime,
+      };
+
+      alert(JSON.stringify(payload));
+    }
+  };
+
   return (
     <>
       {/* <SearchBar></SearchBar> */}
       <ButtonBar value="개설 신청" onClick={() => setOpenRegister(true)} />
-      <button onClick={() => alert(selected)}>신청 시간</button>
+      <button onClick={handleSubmit}>신청 시간</button>
       <div
         style={{
           background: 'skyblue',
