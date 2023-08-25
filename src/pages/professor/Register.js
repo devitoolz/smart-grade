@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
-import ProfessorRegister from '../../components/professor/ProfessorRegister';
+import RegisterTimetable from '../../components/professor/RegisterTimetable';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 
@@ -26,7 +26,6 @@ const Button = styled.button`
 `;
 
 const Register = () => {
-  // const [openRegister, setOpenRegister] = useState(false);
   const [selected, setSelected] = useState([]);
   const ref = useRef([]);
   const navigate = useNavigate();
@@ -128,7 +127,6 @@ const Register = () => {
           })}
       </div>
       {/* <Table></Table> */}
-      {/* {openRegister && <ProfessorRegister setOpenRegister={setOpenRegister} />} */}
     </>
   );
 };
