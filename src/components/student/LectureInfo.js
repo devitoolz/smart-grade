@@ -1,7 +1,6 @@
 import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
 import { Row } from '../../styles/UserStyle';
 import CommonModal from '../CommonModal';
-import { LectureInfoProps } from '../../types/temp';
 
 const LectureInfo = ({ setShowLectureInfo, ilecture }) => {
   return (
