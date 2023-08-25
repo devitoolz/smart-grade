@@ -33,7 +33,7 @@ export interface InputProps extends CommonInputProps {
 
 export interface DropdownProps extends CommonInputProps {
   data: Array<any> | null;
-  value: string | number;
+  value: string | number | null;
   setValue: React.Dispatch<React.SetStateAction<string | number | null>>;
   propertyName?: ObjectType;
   reset?: boolean;
