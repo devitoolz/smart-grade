@@ -7,16 +7,16 @@ import Input from '../../components/Input';
 import RegisterTimetable from '../../components/professor/RegisterTimetable';
 
 const RegisterApply = () => {
-  const [openRegister, setOpenRegister] = useState(false);
-  const [lectureName, setLectureName] = useState('');
-  const [lectureRoom, setLectureRoom] = useState('');
-  const [studentNum, setStudentNum] = useState('');
-  const [grade, setGrade] = useState('');
-  const [score, setScore] = useState('');
+  const [openRegister, setOpenRegister] = useState<boolean>(false);
+  const [lectureName, setLectureName] = useState<string>('');
+  const [lectureRoom, setLectureRoom] = useState<string | number | null>('');
+  const [studentNum, setStudentNum] = useState<string>('');
+  const [grade, setGrade] = useState<string | number | null>('');
+  const [score, setScore] = useState<string | number | null>('');
 
   const navigate = useNavigate();
 
-  const handleLecutreNameChange = e => {
+  const handleLecutreNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setLectureName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9\s]/g, ''));
   };
@@ -124,9 +124,7 @@ const RegisterApply = () => {
           </Row>
         </FormTable>
       </RegisterLayout>
-      {openRegister && (
-        <RegisterTimetable setOpenRegister={setOpenRegister} setLectureRoom={setLectureRoom} />
-      )}
+      {openRegister && <RegisterTimetable setOpenRegister={setOpenRegister} />}
     </>
   );
 };

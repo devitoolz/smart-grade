@@ -1,4 +1,4 @@
-interface LectureData {
+export interface LectureData {
   ilecture: number;
   lectureStrDate: string;
   lectureEndDate: string;
@@ -21,12 +21,12 @@ export interface ProfileData {
   secretKey: string;
 }
 
-interface ProfessorProfileData extends ProfileData {
+export interface ProfessorProfileData extends ProfileData {
   iprofessor: number;
   createdAt: string;
 }
 
-interface StudentProfileData extends ProfileData {
+export interface StudentProfileData extends ProfileData {
   istudent: number;
   finishedYn: number;
   score: number;
@@ -40,6 +40,7 @@ export interface UserProfile {
 }
 
 export interface LoginData {
+  [key: string]: string;
   id: string;
   password: string;
   role: string;
@@ -60,6 +61,15 @@ export interface MajorData {
   imajor: number;
   majorName: string;
   delYn: number;
+}
+
+export interface LoginResult {
+  success: boolean;
+  code: number;
+  secretKey: boolean;
+  msg: string;
+  accessToken: string | null;
+  refreshToken: string | null;
 }
 
 // export interface RefreshToken {

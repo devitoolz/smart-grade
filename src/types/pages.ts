@@ -3,9 +3,9 @@ import { ObjectType } from './components';
 
 export interface MenuDataType {
   [key: string]: {
-    index: number;
+    index?: number;
     icon: IconDefinition;
     title: string;
-    submenu: ObjectType;
+    submenu?: ObjectType;
   };
 }

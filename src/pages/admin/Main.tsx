@@ -25,6 +25,7 @@ import api from '../../apis/api';
 import { removeCookie } from '../../modules/cookies';
 import { RootState } from '../../store';
 import { MenuDataType } from '../../types/pages';
+import { ObjectType } from '../../types/components';
 
 const Main = () => {
   const { pathname } = useLocation();
@@ -70,7 +71,7 @@ const Main = () => {
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    const title: string = menuData[mainPath].submenu[subPath];
+    const title = (menuData[mainPath].submenu as ObjectType)[subPath];
     if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 
@@ -101,9 +102,9 @@ const Main = () => {
         </MainMenu>
         <SubMenu>
           <span>{menuData[mainPath].title}</span>
-          {Object.keys(menuData[mainPath].submenu).map(key => (
+          {Object.keys(menuData[mainPath].submenu as ObjectType).map(key => (
             <NavLink key={key} to={`${mainPath}/${key}`}>
-              {menuData[mainPath].submenu[key]}
+              {(menuData[mainPath].submenu as ObjectType)[key]}
             </NavLink>
           ))}
         </SubMenu>

@@ -8,23 +8,25 @@ import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonButton from '../../components/CommonButton';
+import { RootState } from '../../store';
+import { ObjectType } from '../../types/components';
 
 const Student = () => {
   const navigate = useNavigate();
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState<boolean>(false);
 
   const gradeList = Array(4)
-    .fill()
+    .fill('')
     .map((_, index) => {
       return { id: index + 1, title: index + 1 + '학년' };
     });
 
-  const [grade, setGrade] = useState(null);
-  const [imajor, setImajor] = useState(null);
-  const [studentNum, setStudentNum] = useState('');
-  const [nm, setNm] = useState('');
+  const [grade, setGrade] = useState<string | number | null>(null);
+  const [imajor, setImajor] = useState<string | number | null>(null);
+  const [studentNum, setStudentNum] = useState<string>('');
+  const [nm, setNm] = useState<string>('');
 
-  const { allMajorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector((state: RootState) => state.major);
 
   const tableHeader = [
     { title: '학번', width: 2 },
@@ -44,6 +46,8 @@ const Student = () => {
   const url = '/api/admin/students';
 
   const { data, pending, error } = useQuerySearch(url, click);
+
+  const studentsList: Array<ObjectType> = (data as ObjectType)?.students;
 
   return (
     <>
@@ -89,13 +93,13 @@ const Student = () => {
       />
       <Table
         header={tableHeader}
-        data={data?.students}
+        data={studentsList}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.students.map(item => {
+        {studentsList.map(item => {
           return (
             <div key={item.istudent}>
               <div>{item.studentNum}</div>

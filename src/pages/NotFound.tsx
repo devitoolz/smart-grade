@@ -6,10 +6,10 @@ import { NotFoundLayout } from '../styles/AppStyle';
 
 const NotFound = () => {
   const navigate = useNavigate();
-  const { state } = useLocation();
+  const { state }: { state: { user: string } } = useLocation();
 
   const goHome = () => {
-    let path;
+    let path: string;
     switch (state?.user) {
       case 'admin':
         path = '/admin/home';

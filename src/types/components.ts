@@ -98,6 +98,4 @@ interface LectureRegister {
   setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface RegisterTimeTable extends LectureRegister {
-  setLectureRoom: React.Dispatch<React.SetStateAction<string>>;
-}
+export interface RegisterTimeTable extends LectureRegister {}
