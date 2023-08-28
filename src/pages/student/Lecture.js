@@ -7,6 +7,7 @@ import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import { Btn, LPlanTable, LPTWrap } from '../../styles/LectureRoomCss';
 
 const Lecture = () => {
   ////searchBar////
@@ -146,6 +147,15 @@ const Lecture = () => {
     },
   ];
 
+  const data_ = [
+    {
+      lectureName: '치킨의 미학적 아름다움에대한 이해',
+      score: 3,
+      professorName: '지긴만',
+      lecturePurpose:
+        '치킨이란 무엇인가에  대해 토론해보는 장을 마련하여 서로가 가진 치킨에 대한 생각을 나눠보고 또한 치킨이 가진 미학점 아름다움에서 주는 경이로움을 깨달을수있다.',
+    },
+  ];
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기
@@ -179,29 +189,87 @@ const Lecture = () => {
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
         >
-          <div
-            style={{
-              display: 'flex',
-              flexdirection: 'column',
-              borderBottom: '1px solid var(--table-border-color)',
-              width: '100%',
-            }}
-          >
-            <div
-              style={{
-                display: 'flex',
-                justifyContent: 'space-around ',
-                borderBottom: '1px solid var(--table-border-color)',
-                width: '100%',
-              }}
-            >
-              <p>강의명</p> <p>강의명 받을 자리</p>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-              <p>학점</p>
-              <p>교수명</p>
-            </div>
-          </div>
+          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+          {/* <LPTWrap>
+            <LPlanTable>
+              <colgroup>
+                <col />
+                <col />
+                <col />
+                <col />
+              </colgroup>
+              <tbody>
+                <tr>
+                  <td className="lectureName">강의명</td>
+                  <td className="inputLectureName">강의명 올자리</td>
+                </tr>
+
+                <tr>
+                  <td>학점</td>
+                  <td>학점 올 자리</td>
+                </tr>
+
+                <tr>
+                  <td>교수명</td>
+                  <td>교수명 올자리</td>
+                </tr>
+
+                <tr>
+                  <td>강의목표</td>
+                </tr>
+
+                <tr>
+                  <td>강의목표에 대한 설명</td>
+                </tr>
+
+                <tr>
+                  <td>
+                    <img src=""></img>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td>교재명</td>
+                  <td>ISBN</td>
+                </tr>
+              </tbody>
+            </LPlanTable>
+          </LPTWrap> */}
+
+          <colgroup>
+            <col style={{ width: '25%' }} />
+            <col style={{ width: '25%' }} />
+            <col style={{ width: '25%' }} />
+            <col style={{ width: '25%' }} />
+          </colgroup>
+          <tbody>
+            <tr>
+              <td style={{ colspan: '2' }}>강의명</td>
+              <td style={{ colspan: '2' }}>강의명 들어갈자리</td>
+            </tr>
+
+            <tr>
+              <td>학점</td>
+              <td>학점 들어갈자리</td>
+              <td>교수명</td>
+              <td>교수명 들어갈자리</td>
+            </tr>
+
+            <tr>
+              <th>컬럼3</th>
+              <td>colspan 3</td>
+            </tr>
+            <tr>
+              <th>컬럼4</th>
+              <td>이것은 데이터3</td>
+              <th>컬럼5</th>
+              <td>이것은 데이터4</td>
+            </tr>
+          </tbody>
+
+          <Btn>
+            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+          </Btn>
         </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>

@@ -69,3 +69,48 @@ export const Wbtns = styled.div`
   display: flex;
   justify-content: center;
 `;
+
+//
+export const LPTWrap = styled.div`
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  align-content: center;
+  border-collapse: collapse;
+`;
+// 학생 강의 상세정보
+export const LPlanTable = styled.table`
+  width: 80%;
+  /* justify-content: center; */
+
+  /* padding: 30px; */
+  tr {
+    colgroup {
+      col {
+        width: 25%;
+      }
+    }
+    td {
+      conspan: 2;
+    }
+    td {
+      border-top: 1px solid #1363df;
+      border-right: 1px solid #dae8ff;
+      border-left: 1px solid #dae8ff;
+      border-bottom: 1px solid #dae8ff;
+      padding: 10px 10px;
+    }
+    .lectureName {
+      colspan: 2;
+    }
+    .inputLectureName {
+      colspan: 2;
+    }
+  }
+`;
+export const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 20px 10px;
+  /* padding */
+`;
