@@ -13,14 +13,14 @@ import api from '../../apis/api';
 const Major = () => {
   ////SearchBar////
 
-  // 전공명 state
+  // searchBar 전공명 state
   const [majorName, setMajorName] = useState('');
-  //전공명 상태 state
+  //searchBar 전공명 상태 state
   const [delYn, setDelYn] = useState(null);
   //검색 시 사용할 쿼리스트링목록
   const queries = { majorName, delYn };
 
-  //검색버튼 클릭시 state 변경 함수
+  //searchBar 검색버튼 클릭시 state 변경 함수
   const [click, setClick] = useState(false);
 
   ////DropDown////
@@ -40,15 +40,15 @@ const Major = () => {
       title: '폐지',
     },
   ];
-  //운영,폐지 key, value 이름
+  //searchBar 운영,폐지 key, value 이름
   const propertyName = { key: 'id', value: 'title' };
   //table header
   const tableHeader = [
-    { title: '전공 명', width: 3 },
+    { title: '전공 명', width: 2 },
     { title: '졸업학점', width: 1 },
     { title: '폐지여부', width: 1 },
-    { title: '관리', width: 2 },
-    { title: '비고', width: 1 },
+    { title: '관리', width: 1.5 },
+    { title: '비고', width: 2 },
   ];
 
   //전공추가 시 전공명
@@ -66,7 +66,7 @@ const Major = () => {
   // 변경할 항목 pk값 저장할 state.
   const [selectMajorID, setSelectMajorID] = useState(null);
 
-  //선택한 전공명 state
+  //변경전 전공명 state
   const [selectMajorName, setSelectMajorName] = useState('');
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
@@ -96,10 +96,10 @@ const Major = () => {
   //변경버튼 클릭시 pk값, majorName 담는것
   const changeModalOpen = async (_imajor, _imajorName) => {
     if (selectMajorID === _imajor) {
-      // 선택된 번호와 현재 수정 중인 ID 가 같다면 팝업창 안띄우고 처리
       // 전공명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
-      // 전공명을 변경하지 않은 경우 체크
+
+      //전공명을 변경하지 않은 경우 체크
       if (selectMajorNameNow === tempStr) {
         alert('전공명을 변경해 주세요.');
         return;
@@ -113,10 +113,11 @@ const Major = () => {
 
       try {
         await api.patch(`/api/major`, patchDatas, { headers });
+        //변경 전 전공명 state
         setSelectMajorNameNow(tempStr);
         // console.log('전공명 서버 수정 완료 : ', result);
       } catch (err) {
-        // console.log('전공명 서버 수정 실패 : ', err);
+        console.log('전공명 서버 수정 실패 : ', err);
       }
 
       // 여기서 화면을 갱신한다.
@@ -135,13 +136,14 @@ const Major = () => {
       setSelectMajorID(null);
       setSelectMajorName('');
     } else {
-      // 다르므로 모달 창 띄우기
+      // 다르므로
       setSelectMajorID(_imajor);
       setSelectMajorName(_imajorName);
       setSelectMajorNameNow(_imajorName);
     }
   };
 
+  // 변경버튼 클릭시 전공명 변경 실행할 함수
   const handleChangeName = e => {
     setSelectMajorName(e.target.value);
   };
@@ -215,10 +217,6 @@ const Major = () => {
   };
 
   const handleModalOk = () => {
-    //setDisplay(false); //setter쓰면 이중으로 됨.
-    //하지만 function은 써줘야 함.
-    // console.log('newMajorName : ', newMajorName);
-    // console.log('graduationScore : ', graduationScore);
     if (newMajorName != '' && graduationScore != '') {
       MajorPostTest(newMajorName, graduationScore);
     } else {
