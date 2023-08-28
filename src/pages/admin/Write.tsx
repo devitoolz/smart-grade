@@ -16,7 +16,7 @@ const Write = () => {
   //공지사항 제목
   const [title, setTitle] = useState('');
   //제목 인풋창
-  const handleTitle = e => setTitle(e.target.value);
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   //저장+취소 버튼 클릭시 모달오픈 여부
   const [saveDisplay, setSaveDisplay] = useState(false);
   const [cancelDisplay, setCancelDisplay] = useState(false);
@@ -35,14 +35,16 @@ const Write = () => {
 
   // 공지사항 POST
   const [boardContents, setBoardContents] = useState('');
-  const boardArea = e => setBoardContents(e.target.value);
+  // const boardArea = e => setBoardContents(e.target.value);
   const postBoardWait = async () => {
-    const isChecked = document.getElementById('check').checked ? 1 : 0;
+    const $check = document.getElementById('check') as HTMLInputElement | null;
+    const isChecked = $check?.checked ? 1 : 0;
     await postBoard(title, boardContents, isChecked);
   };
 
   // 게시판
-  const editorRef = useRef(null);
+  // const editorRef = useRef<HTMLElement | null>(null);
+  const editorRef = useRef<Editor>(null);
   // 이미지 업로드 관련
   const [imgList, setImgList] = useState([]);
   // 툴바 커스텀
@@ -68,6 +70,7 @@ const Write = () => {
   // JSX
   return (
     <>
+      {console.log(editorRef)}
       {saveDisplay === true ? (
         <CommonModal
           setDisplay={setSaveDisplay}
