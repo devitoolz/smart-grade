@@ -1,7 +1,7 @@
+import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { Ltable, Wbtns } from '../../styles/LectureRoomCss';
-import { TextArea } from '../../styles/MyStyleCSS';
+import { Wbtns } from '../../styles/LectureRoomCss';
 import CommonButton from '../../components/CommonButton';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import Input from '../../components/Input';
@@ -10,6 +10,7 @@ import { putBoard } from '../../apis/fetch';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer } from '@toast-ui/react-editor';
 import Dropdown from '../../components/Dropdown';
+import { ObjectType } from '../../types/components';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();
@@ -22,14 +23,14 @@ const NoticeDetail = () => {
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useState(data?.title);
-  const [ctnt, setCtnt] = useState(data?.ctnt);
-  const handleChangeTitle = e => setTitle(e.target.value);
-  const handleChangeCtnt = e => setCtnt(e.target.value);
+  const [title, setTitle] = useState((data as ObjectType)?.title);
+  const [ctnt, setCtnt] = useState((data as ObjectType)?.ctnt);
+  const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const handleChangeCtnt = (e: React.ChangeEvent<HTMLInputElement>) => setCtnt(e.target.value);
   const handleEditBoard = () => {
     setEdit(true);
-    setTitle(data.title);
-    setCtnt(data.ctnt);
+    setTitle((data as ObjectType).title);
+    setCtnt((data as ObjectType).ctnt);
   };
   // 툴바 커스텀
   const toolbarItems = [
@@ -39,12 +40,15 @@ const NoticeDetail = () => {
     ['table', 'image', 'link'],
   ];
   const editorRef = useRef(null);
+  const checkRef = useRef(null);
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
   const putBoardWait = async () => {
     setDisplay(false);
-    const importance = document.getElementById('check').checked ? 1 : 0;
-    await putBoard(iboard, ctnt, title, importance);
+    const $check = document.getElementById('check') as HTMLInputElement | null;
+    const importance = $check?.checked ? 1 : 0;
+
+    await putBoard(Number(iboard), ctnt, title, importance);
     alert('처리되었습니다');
     navigate('/admin/home/notice');
   };
@@ -79,12 +83,11 @@ const NoticeDetail = () => {
   Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
   Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
   `;
-  // 중요공지 체크
+  // 중요공지 드롭다운
   const statusList = [
     { id: '0', title: '일반공지' },
     { id: '1', title: '중요공지' },
   ];
-  const [importance, setImportance] = useState('');
 
   // JSX
   return (
@@ -107,12 +110,17 @@ const NoticeDetail = () => {
           <div>
             {edit && (
               <>
-                <input type="checkbox" id="check" defaultChecked={data?.importance} />
+                <input
+                  ref={checkRef}
+                  type="checkbox"
+                  id="check"
+                  defaultChecked={(data as ObjectType)?.importance}
+                />
                 <label htmlFor="check">중요공지사항</label>
               </>
             )}
             {edit ||
-              (data?.importance ? (
+              ((data as ObjectType)?.importance ? (
                 <label htmlFor="check" style={{ color: 'red', fontWeight: 700 }}>
                   중요공지
                 </label>
