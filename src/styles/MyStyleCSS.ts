@@ -332,3 +332,57 @@ export const CommonBtnArea = styled.div<CommonBtnProps>`
     vertical-align: middle;
   }
 `;
+
+/* * * * * * * * * * * * * * * */
+// professor
+
+export const DemurTable = styled.div`
+  width: 100%;
+  .table {
+    width: 100%;
+    border-top: 2px solid var(--table-outline-color);
+    text-align: center;
+    border-collapse: collapse;
+    .table-head,
+    .table-body > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+    }
+    .table-head {
+      height: 45px;
+      background-color: #dff6ff;
+      div {
+        height: 45px;
+        line-height: 45px;
+        font-weight: 700;
+        border-right: 1px solid #dae8ff;
+      }
+    }
+    .table-body {
+      border-top: 2px solid var(--table-outline-color);
+      border-bottom: 2px solid var(--table-outline-color);
+      // height: 500px;
+      .table-body-item {
+        border-bottom: 1px solid var(--table-border-color);
+        div {
+          padding: 0 5px;
+          text-align: center;
+          height: 40px;
+          line-height: 40px;
+          border-right: 1px solid var(--table-border-color);
+          &:last-of-type {
+            border-right: none;
+          }
+        }
+      }
+      /* 스크롤바 */
+      overflow-y: auto;
+      /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* 인터넷 익스플로러 */
+      scrollbar-width: none; /* 파이어폭스 */
+    }
+  }
+`;

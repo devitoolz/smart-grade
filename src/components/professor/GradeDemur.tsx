@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import CommonModal from '../CommonModal';
 import { GradeDemurProps } from '../../types/temp';
-import { TableArea } from '../../styles/MyStyleCSS';
+import { DemurTable } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
 
 const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
   const tableHeader = [
-    { title: '학번', width: 1 },
+    { title: '학번', width: 1.5 },
     { title: '이름', width: 1 },
     { title: '학과', width: 2 },
     { title: '진행상태', width: 1 },
@@ -24,18 +24,17 @@ const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
           </q>
         </mark>
         <button onClick={() => alert('click')}>click</button>
-        <hr />
-        <TableArea>
+        <DemurTable>
           <div className="table">
-            <div className="table_head">
+            <div className="table-head">
               {tableHeader.map((item, idx) => {
                 return <div key={idx}>{item.title}</div>;
               })}
             </div>
-            <div className="table_body">
+            <div className="table-body">
               {tableBody?.map((_, idx) => {
                 return (
-                  <div className="table_body_item" key={idx}>
+                  <div className="table-body-item" key={idx}>
                     <div>{idx}</div>
                     <div>학생 {idx + 1}번</div>
                     <div>학생 소속 학과</div>
@@ -53,7 +52,7 @@ const GradeDemur = ({ setDemur, studentId }: GradeDemurProps) => {
               })}
             </div>
           </div>
-        </TableArea>
+        </DemurTable>
       </CommonModal>
     </>
   );
