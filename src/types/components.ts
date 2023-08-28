@@ -1,6 +1,5 @@
 import React from 'react';
 import { LoginData } from './apis';
-import FindPassword from '../components/FindPassword';
 
 export interface ObjectType {
   [key: string | number]: any;
@@ -27,8 +26,8 @@ export interface InputProps extends CommonInputProps {
   maxLength?: number;
   type?: string;
   reset?: React.Dispatch<React.SetStateAction<string>>;
-  value: string;
-  setValue: React.ChangeEventHandler<HTMLInputElement>;
+  value?: string;
+  setValue?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
 export interface DropdownProps extends CommonInputProps {
@@ -99,6 +98,4 @@ interface LectureRegister {
   setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export interface RegisterTimeTable extends LectureRegister {
-  setLectureRoom: React.Dispatch<React.SetStateAction<string>>;
-}
+export interface RegisterTimeTable extends LectureRegister {}

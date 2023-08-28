@@ -17,17 +17,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { checkValidDate, checkValidPhone } from '../../modules/regex';
 import api from '../../apis/api';
 import mainSlice from '../../slices/mainSlice';
+import { RootState } from '../../store';
+import { ObjectType } from '../../types/components';
 
 const CreateUser = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [major, setMajor] = useState('');
-  const [gender, setGender] = useState('');
-  const [birth, setBirth] = useState('');
-  const [phone, setPhone] = useState('');
+  const [name, setName] = useState<string>('');
+  const [major, setMajor] = useState<string | number | null>('');
+  const [gender, setGender] = useState<string | number | null>('');
+  const [birth, setBirth] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
 
-  const { allMajorList } = useSelector(state => state.major);
-  const { state } = useLocation();
+  const { allMajorList } = useSelector((state: RootState) => state.major);
+  const { state }: { state: string } = useLocation();
   const dispatch = useDispatch();
 
   const main = mainSlice.actions;
@@ -38,7 +40,7 @@ const CreateUser = () => {
       navigate(-1);
     }
 
-    const role = {
+    const role: ObjectType = {
       professor: '교수',
       students: '학생',
     };
@@ -73,18 +75,18 @@ const CreateUser = () => {
     try {
       await api.post(`/api/admin/${state}`, payload);
       navigate(-1);
-    } catch (error) {
+    } catch {
       alert('오류가 발생하였습니다.');
       return;
     }
   };
 
-  const handleNameChange = e => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ''));
   };
 
-  const handleBirthChange = e => {
+  const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setBirth(
       value
@@ -94,7 +96,7 @@ const CreateUser = () => {
     );
   };
 
-  const handlePhoneChange = e => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPhone(
       value

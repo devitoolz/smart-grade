@@ -8,15 +8,17 @@ import { useNavigate } from 'react-router-dom';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
+import { RootState } from '../../store';
+import { ObjectType } from '../../types/components';
 
 const Professor = () => {
   const navigate = useNavigate();
-  const [click, setClick] = useState(false);
+  const [click, setClick] = useState<boolean>(false);
 
-  const [imajor, setImajor] = useState(null);
-  const [name, setName] = useState('');
+  const [imajor, setImajor] = useState<string | number | null>(null);
+  const [name, setName] = useState<string>('');
 
-  const { allMajorList } = useSelector(state => state.major);
+  const { allMajorList } = useSelector((state: RootState) => state.major);
 
   const tableHeader = [
     { title: '전공', width: 4 },
@@ -33,6 +35,8 @@ const Professor = () => {
   const url = '/api/admin/professor';
 
   const { data, pending, error } = useQuerySearch(url, click);
+
+  const professorList: Array<ObjectType> = (data as ObjectType)?.professor;
 
   return (
     <>
@@ -62,13 +66,13 @@ const Professor = () => {
       />
       <Table
         header={tableHeader}
-        data={data?.professors}
+        data={professorList}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.professors.map(item => {
+        {professorList.map(item => {
           return (
             <div key={item.iprofessor}>
               <div>{item.majorName}</div>

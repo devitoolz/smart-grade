@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { MajorSliceState } from '../types/slices';
 
-const initialState = {
+const initialState: MajorSliceState = {
   allMajorList: [],
 };
 

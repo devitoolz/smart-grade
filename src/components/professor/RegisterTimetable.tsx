@@ -3,9 +3,8 @@ import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
 import { RegisterTimeTable } from '../../types/components';
 
-const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: RegisterTimeTable) => {
+const RegisterTimetable = ({ setOpenRegister }: RegisterTimeTable) => {
   const handleCancel = () => {
-    setLectureRoom('');
     alert('취소');
     setOpenRegister(false);
   };

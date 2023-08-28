@@ -23,37 +23,43 @@ import api from '../../apis/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';
 import { PROFESSOR_IMG_URL } from './Main';
+import { RootState } from '../../store';
+import { LectureData, ProfessorProfileData } from '../../types/apis';
 
 const Mypage = () => {
-  const [lectureList, setLectureList] = useState(null);
-  const [disabled, setDisabled] = useState(true);
-  const [img, setImg] = useState(null);
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
-  const [address, setAddress] = useState('');
-  const [imgFile, setImgFile] = useState(null);
-  const [removeImg, setRemoveImg] = useState(false);
+  const [lectureList, setLectureList] = useState<Array<LectureData> | null>(null);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [img, setImg] = useState<string | null>(null);
+  const [phone, setPhone] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
+  const [address, setAddress] = useState<string>('');
+  const [imgFile, setImgFile] = useState<File | null>(null);
+  const [removeImg, setRemoveImg] = useState<boolean>(false);
 
-  const [openChangePassword, setOpenChangePassword] = useState(false);
-  const [openOTPRegister, setOpenOTPRegister] = useState(false);
+  const [openChangePassword, setOpenChangePassword] = useState<boolean>(false);
+  const [openOTPRegister, setOpenOTPRegister] = useState<boolean>(false);
 
-  const { user } = useSelector(state => state.main);
+  const { user } = useSelector((state: RootState) => state.main);
   const dispatch = useDispatch();
 
   const main = mainSlice.actions;
 
   useEffect(() => {
-    if (user?.profile.pic) {
-      setImg(
-        user?.profile.pic.startsWith('blob')
-          ? user?.profile.pic
-          : `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
-      );
+    if (user) {
+      setLectureList(user.lectureList);
+      setPhone(user.profile.phone);
+      setEmail(user.profile.email);
+      setAddress(user.profile.address);
+      if (user.profile.pic) {
+        setImg(
+          user.profile.pic.startsWith('blob')
+            ? user.profile.pic
+            : `${PROFESSOR_IMG_URL}/${(user.profile as ProfessorProfileData).iprofessor}/${
+                user.profile.pic
+              }`
+        );
+      }
     }
-    setLectureList(user?.lectureList);
-    setPhone(user?.profile.phone);
-    setEmail(user?.profile.email);
-    setAddress(user?.profile.address);
   }, [user]);
 
   const handleEdit = async () => {
@@ -99,11 +105,11 @@ const Mypage = () => {
       });
 
       dispatch(
-        main.setUser({ ...user, profile: { ...user.profile, phone, email, address, pic: img } })
+        main.setUser({ ...user, profile: { ...user?.profile, phone, email, address, pic: img } })
       );
       setDisabled(true);
 
-      if (user.profile.secretKey !== 'true') {
+      if (user?.profile.secretKey !== 'true') {
         alert('프로필이 업데이트 되었습니다. OTP 등록을 위해 비밀번호 변경을 해 주세요.');
         setOpenChangePassword(true);
       } else {
@@ -114,8 +120,8 @@ const Mypage = () => {
     }
   };
 
-  const handleUpdateImage = e => {
-    const file = e.target.files[0];
+  const handleUpdateImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = (e.target.files as FileList)[0];
     setImgFile(file);
     setImg(file ? URL.createObjectURL(file) : null);
   };
@@ -127,19 +133,23 @@ const Mypage = () => {
   };
 
   const handleCancel = () => {
-    setPhone(user?.profile.phone);
-    setEmail(user?.profile.email);
-    setAddress(user?.profile.address);
-    setImg(
-      user?.profile.pic
-        ? `${PROFESSOR_IMG_URL}/${user?.profile.iprofessor}/${user?.profile.pic}`
-        : null
-    );
+    if (user) {
+      setPhone(user.profile.phone);
+      setEmail(user.profile.email);
+      setAddress(user.profile.address);
+      setImg(
+        user.profile.pic
+          ? `${PROFESSOR_IMG_URL}/${(user.profile as ProfessorProfileData).iprofessor}/${
+              user.profile.pic
+            }`
+          : null
+      );
+    }
     setRemoveImg(false);
     setDisabled(true);
   };
 
-  const handlePhoneChange = e => {
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPhone(
       value
@@ -149,12 +159,12 @@ const Mypage = () => {
     );
   };
 
-  const handleEmailChange = e => {
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setEmail(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9-_.@]/g, ''));
   };
 
-  const handleAddressChange = e => {
+  const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setAddress(value);
   };
@@ -224,7 +234,7 @@ const Mypage = () => {
                   )}
                   {lectureList.length <= 7 &&
                     Array(7 - (lectureList?.length ?? 0))
-                      .fill()
+                      .fill('')
                       .map((_, index) => (
                         <div key={index} className="lecture-table-content">
                           <div></div>
@@ -236,7 +246,7 @@ const Mypage = () => {
               ) : (
                 <>
                   {Array(7)
-                    .fill()
+                    .fill('')
                     .map((_, index) => (
                       <div key={index} className="lecture-table-content">
                         <div></div>
@@ -266,7 +276,7 @@ const Mypage = () => {
           </Row>
           <Row col={2}>
             <div>등록일</div>
-            <div>{user?.profile.createdAt?.split('T')[0]}</div>
+            <div>{(user?.profile as ProfessorProfileData).createdAt?.split('T')[0]}</div>
             <div>퇴직 여부</div>
             <div>
               {(user?.profile.delYn === 0 && '재직 중') || (user?.profile.delYn === 1 && '퇴직')}

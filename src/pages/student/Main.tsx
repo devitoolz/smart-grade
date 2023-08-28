@@ -27,6 +27,9 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import api from '../../apis/api';
 import { removeCookie } from '../../modules/cookies';
+import { RootState } from '../../store';
+import { MenuDataType } from '../../types/pages';
+import { StudentProfileData } from '../../types/apis';
 
 // export const STUDENT_IMG_URL = '/imgs/student';
 export const STUDENT_IMG_URL = 'http://192.168.0.144:5002/imgs/student';
@@ -34,15 +37,14 @@ export const STUDENT_IMG_URL = 'http://192.168.0.144:5002/imgs/student';
 const Main = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [img, setImg] = useState(null);
+  const [img, setImg] = useState<string | null>(null);
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
 
-  const { title } = useSelector(state => state.main);
-  const { user } = useSelector(state => state.main);
+  const { title, user } = useSelector((state: RootState) => state.main);
 
-  const menuData = {
+  const menuData: MenuDataType = {
     home: {
       icon: faHouse,
       title: '홈',
@@ -78,7 +80,8 @@ const Main = () => {
       ? setImg(
           user?.profile.pic.startsWith('blob')
             ? user?.profile.pic
-            : `${STUDENT_IMG_URL}/${user?.profile.istudent}/${user?.profile.pic}`
+            : `${STUDENT_IMG_URL}/${(user?.profile as StudentProfileData).istudent}/${user?.profile
+                .pic}`
         )
       : setImg(null);
   }, [user]);

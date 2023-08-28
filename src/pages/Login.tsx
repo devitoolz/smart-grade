@@ -25,6 +25,7 @@ import OTPAuth from '../components/OTPAuth';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import FindPassword from '../components/FindPassword';
+import { LoginData, LoginResult } from '../types/apis';
 
 const Login = () => {
   const initialState = {
@@ -32,21 +33,22 @@ const Login = () => {
     password: '',
     role: 'ROLE_PROFESSOR',
   };
-  const [payload, setPayload] = useState(initialState);
-  const [openOTP, setOpenOTP] = useState(false);
-  const [openFindPw, setOpenFindPw] = useState(false);
+
+  const [payload, setPayload] = useState<LoginData>(initialState);
+  const [openOTP, setOpenOTP] = useState<boolean>(false);
+  const [openFindPw, setOpenFindPw] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  const handleRoleChange = e => {
+  const handleRoleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayload({ ...payload, role: e.target.value });
   };
 
-  const handleIdChange = e => {
+  const handleIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayload({ ...payload, id: e.target.value });
   };
 
-  const handlePwChange = e => {
+  const handlePwChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPayload({ ...payload, password: e.target.value });
   };
 
@@ -54,13 +56,13 @@ const Login = () => {
     for (let key in payload) {
       if (payload[key] === '') {
         alert('입력되지 않은 값이 있습니다.');
+        console.log(key);
         return;
       }
     }
 
     try {
-      const { data } = await axios.post(`/api/sign-in`, payload);
-      console.log(data);
+      const { data } = await axios.post<LoginResult>(`/api/sign-in`, payload);
 
       if (!data.success) {
         throw Error('틀린 비번');
@@ -69,12 +71,11 @@ const Login = () => {
       if (data.secretKey) {
         setOpenOTP(true);
       } else {
-        setCookie('accessToken', data.accessToken);
-        setCookie('refreshToken', data.refreshToken);
+        data.accessToken && setCookie('accessToken', data.accessToken);
+        data.refreshToken && setCookie('refreshToken', data.refreshToken);
         if (payload.role === 'ROLE_ADMIN') {
           navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
         } else {
-          console.log('최초 로그인');
           alert('최초 로그인입니다. 마이 페이지로 이동하여 정보 수정 후 OTP 등록을 진행해주세요.');
           navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);
         }

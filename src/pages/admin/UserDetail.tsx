@@ -26,42 +26,45 @@ import {
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { PulseLoader } from 'react-spinners';
+import { RootState } from '../../store';
+import { ObjectType } from '../../types/components';
+import { ProfessorProfileData, StudentProfileData, UserProfile } from '../../types/apis';
 
 const UserDetail = () => {
   const navigate = useNavigate();
-  const [userDetail, setUserDetail] = useState(null);
-  const [lectureList, setLectureList] = useState(null);
-  const [disabled, setDisabled] = useState(true);
-  const [name, setName] = useState('');
-  const [major, setMajor] = useState('');
-  const [img, setImg] = useState(null);
-  const [error, setError] = useState(false);
+  const [userDetail, setUserDetail] = useState<ObjectType | null>(null);
+  const [lectureList, setLectureList] = useState<Array<ObjectType> | null>(null);
+  const [disabled, setDisabled] = useState<boolean>(true);
+  const [name, setName] = useState<string>('');
+  const [major, setMajor] = useState<string | number | null>('');
+  const [img, setImg] = useState<string | null>(null);
+  const [error, setError] = useState<boolean>(false);
 
-  const { allMajorList } = useSelector(state => state.major);
-  const { state } = useLocation();
+  const { allMajorList } = useSelector((state: RootState) => state.major);
+  const { state }: { state: string } = useLocation();
   const { id } = useParams();
   const dispatch = useDispatch();
 
   const main = mainSlice.actions;
 
-  const roleKor = {
+  const roleKor: ObjectType = {
     professor: '교수',
     students: '학생',
   };
 
   const getUserDetail = async () => {
     try {
-      const { data } = await api.get(`/api/admin/${state}/${id}`);
+      const { data } = await api.get<UserProfile>(`/api/admin/${state}/${id}`);
       setUserDetail(data.profile);
       setLectureList(data.lectureList);
       setName(data.profile.name);
       setMajor(data.profile.imajor);
+
       data.profile.pic
         ? setImg(
             `/imgs/${state}/${
-              data.profile[
-                (state === 'professor' && 'iprofessor') || (state === 'students' && 'istudent')
-              ]
+              (state === 'professor' && (data.profile as ProfessorProfileData).iprofessor) ||
+              (state === 'students' && (data.profile as StudentProfileData).istudent)
             }/${data.profile.pic}`
           )
         : null;
@@ -119,7 +122,7 @@ const UserDetail = () => {
     setDisabled(true);
   };
 
-  const handleNameChange = e => {
+  const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ''));
   };
@@ -169,7 +172,7 @@ const UserDetail = () => {
                 )}
                 {lectureList.length <= 7 &&
                   Array(7 - (lectureList?.length ?? 0))
-                    .fill()
+                    .fill('')
                     .map((_, index) => (
                       <div key={index} className="lecture-table-content">
                         <div></div>
@@ -181,7 +184,7 @@ const UserDetail = () => {
             ) : (
               <>
                 {Array(7)
-                  .fill()
+                  .fill('')
                   .map((_, index) => (
                     <div key={index} className="lecture-table-content">
                       <div></div>
