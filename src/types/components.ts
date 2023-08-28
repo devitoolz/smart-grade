@@ -94,8 +94,11 @@ export interface FindPasswordProps {
   payload: LoginData;
 }
 
-interface LectureRegister {
+export interface LectureRegister {
   setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
+  setLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
 }
 
-export interface RegisterTimeTable extends LectureRegister {}
+export interface TimetableData {
+  [key: number]: number;
+}

@@ -124,7 +124,9 @@ const RegisterApply = () => {
           </Row>
         </FormTable>
       </RegisterLayout>
-      {openRegister && <RegisterTimetable setOpenRegister={setOpenRegister} />}
+      {openRegister && (
+        <RegisterTimetable setOpenRegister={setOpenRegister} setLectureRoom={setLectureRoom} />
+      )}
     </>
   );
 };
