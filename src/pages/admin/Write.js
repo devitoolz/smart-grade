@@ -9,8 +9,6 @@ import { postBoard } from '../../apis/fetch';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { Viewer } from '@toast-ui/react-editor';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -55,10 +53,6 @@ const Write = () => {
     ['table', 'image', 'link'],
   ];
 
-  // 게시글 확인-toast ui test
-  const test = `# markdown
-  ~~***test***~~
-  ing`;
   // 게시글 작성
   const handleBoardSave = () => {
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
@@ -132,6 +126,14 @@ const Write = () => {
           setValue={handleTitle}
         />
         <div style={{ width: 100, height: 20 }}></div>
+        <div className="importanceCheck">
+          <input type="checkbox" id="check" style={{ cursor: 'pointer' }} />
+          <label htmlFor="check">
+            <span style={{ cursor: 'pointer' }}>중요</span>
+          </label>
+          <span className="colorRed">* 체크 시 제일 상단 공지로 표시됩니다.</span>
+        </div>
+        <div style={{ width: 100, height: 20 }}></div>
         <div>
           <span>첨부파일 </span>
         </div>
@@ -158,72 +160,6 @@ const Write = () => {
           />
         </div>
       </div>
-      <div style={{ width: '100%', height: '100%', padding: '10px 50px 0' }}>
-        <Viewer initialValue={test} />
-      </div>
-      {/*
-      <Ltable>
-        <colgroup>
-          <col className="title" width={'30%'} />
-          <col className="detail" width={'70%'} />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>
-              <h3>제목</h3>
-            </th>
-            <th className="inputTitle">
-              <Input
-                type="text"
-                length="full"
-                placeholder="제목 (최대 30자)"
-                maxLength={30}
-                value={title}
-                setValue={handleTitle}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="statusTitle">
-              <h3>상태</h3>
-            </td>
-            <td className="importanceCheck">
-              <input type="checkbox" id="check" style={{ cursor: 'pointer' }} />
-              <label htmlFor="check">
-                <h3 style={{ cursor: 'pointer' }}>중요</h3>
-              </label>
-              <p className="colorRed">* 체크 시 제일 상단 공지로 표시됩니다.</p>
-            </td>
-          </tr>
-          <tr>
-            <td className="fileTitle">
-              <h3>첨부파일</h3>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td className="contentTitle">
-              <h3>내용</h3>
-            </td>
-            <td className="controlTextarea">
-              <TextArea length="full" onChange={boardArea} />
-            </td>
-          </tr>
-        </tbody>
-      </Ltable>
-      <Wbtns>
-        <CommonButton
-          btnType="page"
-          value="저장"
-          onClick={() => {
-            setSaveDisplay(true);
-          }}
-        />
-        <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
-      </Wbtns>
-       */}
     </>
   );
 };
