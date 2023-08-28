@@ -23,18 +23,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import api from '../../apis/api';
 import { removeCookie } from '../../modules/cookies';
+import { RootState } from '../../store';
+import { MenuDataType } from '../../types/pages';
 
 const Main = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState<number>(1);
 
   const dispatch = useDispatch();
   const main = mainSlice.actions;
 
-  const { title } = useSelector(state => state.main);
+  const { title } = useSelector((state: RootState) => state.main);
 
-  const menuData = {
+  const menuData: MenuDataType = {
     home: {
       index: 1,
       icon: faHouse,
@@ -68,7 +70,7 @@ const Main = () => {
 
   useEffect(() => {
     setActiveIndex(menuData[mainPath].index || 1);
-    const title = menuData[mainPath].submenu[subPath];
+    const title: string = menuData[mainPath].submenu[subPath];
     if (title && !paramPath) dispatch(main.setTitle(<span>{title}</span>));
   }, [pathname]);
 

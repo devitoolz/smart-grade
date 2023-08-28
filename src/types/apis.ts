@@ -56,6 +56,12 @@ export interface OTPData {
   barcodeUrl: string;
 }
 
+export interface MajorData {
+  imajor: number;
+  majorName: string;
+  delYn: number;
+}
+
 // export interface RefreshToken {
 //   success: boolean;
 //   code: number;
