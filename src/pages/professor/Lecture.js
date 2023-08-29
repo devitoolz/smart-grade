@@ -6,7 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
-
+import { LectureDetail, Btn } from '../../styles/LectureRoomCss';
 const Lecture = () => {
   ////searchBar////
 
@@ -171,12 +171,31 @@ const Lecture = () => {
         <CommonModal
           setDisplay={setDisplay}
           modalSize="big"
-          modalTitle="개설 승인"
+          modalTitle="강의 상세정보"
           handleModalOk={handleModalOk}
           handleModalCancel={handleModalCancel}
         >
-          <p>모달 작은 창 버전</p>
-          <p>내용추가</p>
+          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+
+          <LectureDetail>
+            <div className="innerContainer">
+              <div className="lectureName">강의명</div>
+              <div className="inputLectureName">강의명들어갈자리</div>
+              <div className="score">학점</div>
+              <div className="inputScore">학점들어갈자리</div>
+              <div className="professor">교수명</div>
+              <div className="inputProfessor">교수명들어갈자리</div>
+              <div className="purpose">강의목표</div>
+              <div className="inputPurpose">강의목표들어갈자리</div>
+              <div className="bookPic">교재사진</div>
+              <div className="bookName">교재명</div>
+              <div className="isbn">ISBN</div>
+            </div>
+          </LectureDetail>
+
+          <Btn>
+            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+          </Btn>
         </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>

@@ -7,7 +7,7 @@ import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import { Btn, LPlanTable, LPTWrap } from '../../styles/LectureRoomCss';
+import { LectureDetail, Btn } from '../../styles/LectureRoomCss';
 
 const Lecture = () => {
   ////searchBar////
@@ -173,7 +173,6 @@ const Lecture = () => {
   };
   //api get hook test
   const url = '';
-
   const { data, pending, error } = useQuerySearch(url, click);
 
   //searchBar dropDown
@@ -190,82 +189,68 @@ const Lecture = () => {
           handleModalCancel={handleModalCancel}
         >
           <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+
           {/* <LPTWrap>
             <LPlanTable>
               <colgroup>
-                <col />
-                <col />
-                <col />
-                <col />
+                <col width="25%" />
+                <col width="25%" />
+                <col width="25%" />
+                <col width="25%" />
               </colgroup>
+              <thead>
+                <tr>
+                  <th colSpan="2">강의명</th>
+                  <td colSpan="2">강의명 들어갈자리</td>
+                </tr>
+              </thead>
+
               <tbody>
                 <tr>
-                  <td className="lectureName">강의명</td>
-                  <td className="inputLectureName">강의명 올자리</td>
+                  <th>학점</th>
+                  <td>학점 들어갈자리</td>
+                  <th>교수명</th>
+                  <td>교수명 들어갈자리</td>
                 </tr>
 
                 <tr>
-                  <td>학점</td>
-                  <td>학점 올 자리</td>
+                  <th colSpan="4" rowSpan="1  ">
+                    강의목표
+                  </th>
                 </tr>
 
                 <tr>
-                  <td>교수명</td>
-                  <td>교수명 올자리</td>
+                  <td colSpan="4">강의목표 들어갈 자리</td>
                 </tr>
 
                 <tr>
-                  <td>강의목표</td>
-                </tr>
-
-                <tr>
-                  <td>강의목표에 대한 설명</td>
-                </tr>
-
-                <tr>
-                  <td>
-                    <img src=""></img>
+                  <td colSpan="1" rowSpan="2">
+                    <img src="../images/강의교재.jpg" width="204px" height="98px" />
                   </td>
+                  <td colSpan="3">교재명</td>
                 </tr>
 
                 <tr>
-                  <td>교재명</td>
-                  <td>ISBN</td>
+                  <td colSpan="3">교재ISBN</td>
                 </tr>
               </tbody>
             </LPlanTable>
           </LPTWrap> */}
-
-          <colgroup>
-            <col style={{ width: '25%' }} />
-            <col style={{ width: '25%' }} />
-            <col style={{ width: '25%' }} />
-            <col style={{ width: '25%' }} />
-          </colgroup>
-          <tbody>
-            <tr>
-              <td style={{ colspan: '2' }}>강의명</td>
-              <td style={{ colspan: '2' }}>강의명 들어갈자리</td>
-            </tr>
-
-            <tr>
-              <td>학점</td>
-              <td>학점 들어갈자리</td>
-              <td>교수명</td>
-              <td>교수명 들어갈자리</td>
-            </tr>
-
-            <tr>
-              <th>컬럼3</th>
-              <td>colspan 3</td>
-            </tr>
-            <tr>
-              <th>컬럼4</th>
-              <td>이것은 데이터3</td>
-              <th>컬럼5</th>
-              <td>이것은 데이터4</td>
-            </tr>
-          </tbody>
+          <LectureDetail>
+            <div className="innerContainer">
+              <div className="lectureName">강의명</div>
+              <div className="inputLectureName">강의명들어갈자리</div>
+              <div className="score">학점</div>
+              <div className="inputScore">학점들어갈자리</div>
+              <div className="professor">교수명</div>
+              <div className="inputProfessor">교수명들어갈자리</div>
+              <div className="purpose">강의목표</div>
+              <div className="inputPurpose">강의목표들어갈자리</div>
+              <div className="bookPic">교재사진</div>
+              <div className="bookName">교재명</div>
+              <div className="isbn">ISBN</div>
+            </div>
+          </LectureDetail>
 
           <Btn>
             <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
