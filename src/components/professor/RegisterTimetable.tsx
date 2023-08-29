@@ -1,29 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { LectureRegister, TimetableData } from '../../types/components';
-import styled from '@emotion/styled';
-
-const Button = styled.button`
-  border: none;
-  background: white;
-  width: 100%;
-  height: 100%;
-  border-right: 1px solid black;
-  border-bottom: 1px solid black;
-  &:active {
-    background: lightgray;
-  }
-  &:disabled {
-    background: gray;
-  }
-  &.selected {
-    background: lightblue;
-  }
-  &.otherday {
-    background: pink;
-  }
-`;
+import { DayData, LectureRegister, TimetableData } from '../../types/components';
+import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
 
 const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister) => {
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
@@ -44,6 +23,22 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
     8: 17,
   };
 
+  const dayData: DayData = {
+    0: '월요일',
+    1: '화요일',
+    2: '수요일',
+    3: '목요일',
+    4: '금요일',
+  };
+
+  const numberToString = (number: number) => {
+    if (number < 10) {
+      return `0${number}:00`;
+    } else {
+      return `${number}:00`;
+    }
+  };
+
   useEffect(() => {
     const disableButton = (index: number) => {
       if (
@@ -51,6 +46,9 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
         data.includes(index) ||
         (selectedTime.length !== 0 && selectedTime[0] % 5 !== index % 5)
       ) {
+        if (data.includes(index)) {
+          timeBtnRef.current?.[index].classList.add('already-used');
+        }
         return true;
       }
       return false;
@@ -79,7 +77,7 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
     if (selectedTime.length === 0) {
       alert('최소 1시간 선택');
     } else {
-      const week = selectedTime[0] % 5;
+      const week = dayData[selectedTime[0] % 5];
       const startTime = timeData[Math.floor(selectedTime[0] / 5)];
       const endTime = timeData[Math.floor(selectedTime[selectedTime.length - 1] / 5)] + 1;
 
@@ -89,8 +87,12 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
         endTime,
       };
 
-      alert(JSON.stringify(payload));
-      setOpenRegister(false);
+      if (
+        confirm(`${week} ${numberToString(startTime)} ~ ${numberToString(endTime)} 가 맞습니까?`)
+      ) {
+        setOpenRegister(false);
+        //set
+      }
     }
   };
 
@@ -102,21 +104,13 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
   return (
     <>
       <ModalStyle modalSize="small">
-        <div className="modal-box" style={{ width: 1000, height: 800 }}>
+        <div className="modal-box" style={{ width: 'auto', height: 'auto' }}>
           <div className="modal-title-small">
             <div>강의 개설 신청</div>
           </div>
           <div className="modal-contents">
-            <div>
-              <div
-                style={{
-                  background: 'red',
-                  display: 'grid',
-                  height: 50,
-                  placeItems: 'center',
-                  gridTemplateColumns: 'repeat(6, 100px)',
-                }}
-              >
+            <ProfessorRegisterModal>
+              <div className="timetable-header">
                 <div></div>
                 <div>월요일</div>
                 <div>화요일</div>
@@ -124,41 +118,24 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
                 <div>목요일</div>
                 <div>금요일</div>
               </div>
-              <div style={{ display: 'flex' }}>
-                <div
-                  style={{
-                    background: 'red',
-                    display: 'grid',
-                    width: 100,
-                    placeItems: 'center',
-                    gridTemplateRows: 'repeat(9, 50px)',
-                  }}
-                >
-                  <div>09:00 ~ 10:00</div>
-                  <div>10:00 ~ 11:00</div>
-                  <div>11:00 ~ 12:00</div>
-                  <div>12:00 ~ 13:00</div>
-                  <div>13:00 ~ 14:00</div>
-                  <div>14:00 ~ 15:00</div>
-                  <div>15:00 ~ 16:00</div>
-                  <div>16:00 ~ 17:00</div>
-                  <div>17:00 ~ 18:00</div>
+              <div className="timetable-content" style={{ display: 'flex' }}>
+                <div className="timetable-time">
+                  {Object.keys(timeData).map((item, index) => {
+                    const time = timeData[parseInt(item)];
+                    return (
+                      <div key={index}>
+                        <span>{parseInt(item) + 1}교시</span>
+                        <span>{`(${numberToString(time)} ~ ${numberToString(time + 1)})`}</span>
+                      </div>
+                    );
+                  })}
                 </div>
-                <div
-                  style={{
-                    background: 'skyblue',
-                    display: 'grid',
-                    gridTemplate: 'repeat(9, 50px) / repeat(5, 100px)',
-                    placeItems: 'center',
-                    borderTop: '1px solid black',
-                    borderLeft: '1px solid black',
-                  }}
-                >
+                <div className="timetable-btns">
                   {Array(45)
                     .fill('')
                     .map((_, index) => {
                       return (
-                        <Button
+                        <button
                           ref={el => {
                             if (el) {
                               timeBtnRef.current![index] = el;
@@ -166,12 +143,12 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
                           }}
                           key={index}
                           onClick={() => handleTimeClick(index)}
-                        ></Button>
+                        ></button>
                       );
                     })}
                 </div>
               </div>
-            </div>
+            </ProfessorRegisterModal>
           </div>
           <div className="modal-footer">
             <CommonButton value="확인" onClick={handleConfirm} btnType="modal" />

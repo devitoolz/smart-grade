@@ -102,3 +102,7 @@ export interface LectureRegister {
 export interface TimetableData {
   [key: number]: number;
 }
+
+export interface DayData {
+  [key: number]: string;
+}
