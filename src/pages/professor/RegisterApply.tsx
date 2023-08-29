@@ -20,6 +20,7 @@ const RegisterApply = () => {
   const [time, setTime] = useState<ObjectType | null>(null);
 
   const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>('');
+  const [prevScore, setPrevScore] = useState<ObjectType | null>(null);
 
   const navigate = useNavigate();
 
@@ -128,7 +129,7 @@ const RegisterApply = () => {
             </div>
             <div>배점</div>
             <div onClick={() => setOpenRegisterScore(true)}>
-              <span>배점을 등록하세요.</span>
+              {score ? score.attendance : <span>배점을 등록하세요.</span>}
             </div>
           </Row>
           <Row col={2}>
@@ -158,7 +159,15 @@ const RegisterApply = () => {
           setTime={setTime}
         />
       )}
-      {openRegisterScore && <RegisterScore />}
+      {openRegisterScore && (
+        <RegisterScore
+          setOpenRegisterScore={setOpenRegisterScore}
+          score={score}
+          prevScore={prevScore}
+          setScore={setScore}
+          setPrevScore={setPrevScore}
+        />
+      )}
     </>
   );
 };

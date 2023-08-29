@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { DayData, LectureRegister, TimetableData } from '../../types/components';
-import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
+import { DayData, RegisterTimetableProps, TimetableData } from '../../types/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { RegisterTimetableModal } from '../../styles/RegisterStyle';
 
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
@@ -13,7 +13,7 @@ const RegisterTimetable = ({
   setLectureRoom,
   setPrevLectureRoom,
   setTime,
-}: LectureRegister) => {
+}: RegisterTimetableProps) => {
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
 
@@ -82,6 +82,13 @@ const RegisterTimetable = ({
     }
   };
 
+  const handleReset = () => {
+    setSelectedTime([]);
+    timeBtnRef.current?.forEach(button => {
+      button.classList.remove('selected');
+    });
+  };
+
   const handleConfirm = () => {
     if (selectedTime.length === 0) {
       alert('최소 1시간 선택해야 합니다.');
@@ -122,16 +129,20 @@ const RegisterTimetable = ({
             </button>
           </div>
           <div className="modal-contents">
-            <ProfessorRegisterModal>
+            <RegisterTimetableModal>
+              <span className="notice">
+                * 강의 시간은 3시간을 초과할 수 없으며, 최소 1시간을 선택하셔야 합니다.
+              </span>
               <div className="timetable-help">
                 <div>
-                  <div className="already-used"></div> 사용 중
+                  <div className="already-used" />
+                  사용 중
                 </div>
                 <div>
-                  <div className="disabled"></div> 선택 불가
+                  <div className="disabled" /> 선택 불가
                 </div>
                 <div>
-                  <div className="selected"></div> 선택됨 (최대 3시간)
+                  <div className="selected" /> 선택됨 (최대 3시간)
                 </div>
               </div>
               <div className="timetable-header">
@@ -172,7 +183,7 @@ const RegisterTimetable = ({
                     })}
                 </div>
               </div>
-            </ProfessorRegisterModal>
+            </RegisterTimetableModal>
           </div>
           <div className="modal-footer">
             <CommonButton value="확인" onClick={handleConfirm} btnType="modal" />

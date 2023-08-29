@@ -13,12 +13,20 @@ const ButtonContainer = styled.div`
   gap: 15px;
 `;
 
-const ProfessorRegisterModal = styled.div`
+const RegisterTimetableModal = styled.div`
   display: flex;
+  width: 100%;
+  height: 100%;
   flex-direction: column;
   line-height: normal !important;
   font-size: 16px;
   padding: 15px 0;
+  > span.notice {
+    font-size: 14px;
+    color: var(--negative-color);
+    padding-left: 15px;
+    padding-bottom: 15px;
+  }
   > div.timetable-help {
     display: flex;
     justify-content: center;
@@ -124,4 +132,30 @@ const ProfessorRegisterModal = styled.div`
   }
 `;
 
-export { RegisterLayout, ButtonContainer, ProfessorRegisterModal };
+const RegisterScoreModal = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  line-height: normal !important;
+  font-size: 16px;
+  padding: 15px;
+  gap: 15px;
+  > span.notice {
+    font-size: 14px;
+    color: var(--negative-color);
+  }
+  > div.score-inputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    > div.score {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+`;
+
+export { RegisterLayout, ButtonContainer, RegisterTimetableModal, RegisterScoreModal };

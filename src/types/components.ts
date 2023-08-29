@@ -94,7 +94,7 @@ export interface FindPasswordProps {
   payload: LoginData;
 }
 
-export interface LectureRegister {
+export interface RegisterTimetableProps {
   setOpenRegisterTimetable: React.Dispatch<React.SetStateAction<boolean>>;
   lectureRoom: string | number | null;
   prevLectureRoom: string | number | null;
@@ -109,4 +109,12 @@ export interface TimetableData {
 
 export interface DayData {
   [key: number]: string;
+}
+
+export interface RegisterScoreProps {
+  setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
+  score: ObjectType | null;
+  prevScore: ObjectType | null;
+  setScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
+  setPrevScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
 }
