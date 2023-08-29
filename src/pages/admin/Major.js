@@ -361,46 +361,49 @@ const Major = () => {
         pending={pending}
         error={error}
       >
-        {isDataArr.map(item => {
-          return (
-            <div key={item.imajor}>
-              <div>
-                {/* {changeClickShow === true ? <Input length="long" type="text"></Input> : null} */}
-                {selectMajorID === item.imajor ? (
-                  <Input
-                    length="long"
-                    type="text"
-                    value={selectMajorName}
-                    setValue={handleChangeName}
+        {isDataArr &&
+          isDataArr.map(item => {
+            return (
+              <div key={item.imajor}>
+                <div>
+                  {/* {changeClickShow === true ? <Input length="long" type="text"></Input> : null} */}
+                  {selectMajorID === item.imajor ? (
+                    <Input
+                      length="long"
+                      type="text"
+                      value={selectMajorName}
+                      setValue={handleChangeName}
+                    />
+                  ) : (
+                    item.majorName
+                  )}
+                </div>
+                <div>{item.graduationScore}</div>
+                <div>{item.delYn === 0 ? null : '폐지'}</div>
+                <div>
+                  <CommonButton
+                    btnType="table"
+                    color={item.delYn ? 'gray' : 'blue'}
+                    value={selectMajorID === item.imajor ? '확인' : '변경'}
+                    onClick={() => changeModalOpen(item.imajor, item.majorName)}
+                    disabled={item.delYn}
                   />
-                ) : (
-                  item.majorName
-                )}
+                  <CommonButton
+                    btnType="table"
+                    color={item.delYn ? 'gray' : 'red'}
+                    value={selectMajorID === item.imajor ? '취소' : '폐지'}
+                    onClick={() => disUseModalOpen(item.imajor)}
+                    disabled={item.delYn}
+                  />
+                </div>
+                <div>
+                  {item.isChange === 0 ? null : (
+                    <span>{item.originName.replace('구', '(구)')}</span>
+                  )}
+                </div>
               </div>
-              <div>{item.graduationScore}</div>
-              <div>{item.delYn === 0 ? null : '폐지'}</div>
-              <div>
-                <CommonButton
-                  btnType="table"
-                  color={item.delYn ? 'gray' : 'blue'}
-                  value={selectMajorID === item.imajor ? '확인' : '변경'}
-                  onClick={() => changeModalOpen(item.imajor, item.majorName)}
-                  disabled={item.delYn}
-                />
-                <CommonButton
-                  btnType="table"
-                  color={item.delYn ? 'gray' : 'red'}
-                  value={selectMajorID === item.imajor ? '취소' : '폐지'}
-                  onClick={() => disUseModalOpen(item.imajor)}
-                  disabled={item.delYn}
-                />
-              </div>
-              <div>
-                {item.isChange === 0 ? null : <span>{item.originName.replace('구', '(구)')}</span>}
-              </div>
-            </div>
-          );
-        })}
+            );
+          })}
       </Table>
     </>
   );
