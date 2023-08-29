@@ -3,8 +3,15 @@ import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
 import { DayData, LectureRegister, TimetableData } from '../../types/components';
 import { ProfessorRegisterModal } from '../../styles/RegisterStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
-const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister) => {
+const RegisterTimetable = ({
+  setOpenRegisterTimetable,
+  lectureRoom,
+  setLectureRoom,
+  setTime,
+}: LectureRegister) => {
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
 
@@ -75,30 +82,30 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
 
   const handleConfirm = () => {
     if (selectedTime.length === 0) {
-      alert('최소 1시간 선택');
+      alert('최소 1시간 선택해야 합니다.');
     } else {
       const week = dayData[selectedTime[0] % 5];
-      const startTime = timeData[Math.floor(selectedTime[0] / 5)];
-      const endTime = timeData[Math.floor(selectedTime[selectedTime.length - 1] / 5)] + 1;
+      const startTime = numberToString(timeData[Math.floor(selectedTime[0] / 5)]);
+      const endTime = numberToString(
+        timeData[Math.floor(selectedTime[selectedTime.length - 1] / 5)] + 1
+      );
 
-      const payload = {
+      const time = {
         week,
         startTime,
         endTime,
       };
 
-      if (
-        confirm(`${week} ${numberToString(startTime)} ~ ${numberToString(endTime)} 가 맞습니까?`)
-      ) {
-        setOpenRegister(false);
-        //set
+      if (confirm(`${week} ${startTime} ~ ${endTime} 가 맞습니까?`)) {
+        setOpenRegisterTimetable(false);
+        setTime(time);
       }
     }
   };
 
   const handleCancel = () => {
     setLectureRoom('');
-    setOpenRegister(false);
+    setOpenRegisterTimetable(false);
   };
 
   return (
@@ -106,10 +113,24 @@ const RegisterTimetable = ({ setOpenRegister, setLectureRoom }: LectureRegister)
       <ModalStyle modalSize="small">
         <div className="modal-box" style={{ width: 'auto', height: 'auto' }}>
           <div className="modal-title-small">
-            <div>강의 개설 신청</div>
+            <div>{lectureRoom} 강의실 시간표</div>
+            <button onClick={handleCancel}>
+              <FontAwesomeIcon icon={faXmark} size="lg" />
+            </button>
           </div>
           <div className="modal-contents">
             <ProfessorRegisterModal>
+              <div className="timetable-help">
+                <div>
+                  <div className="already-used"></div> 사용 중
+                </div>
+                <div>
+                  <div className="disabled"></div> 선택 불가
+                </div>
+                <div>
+                  <div className="selected"></div> 선택됨 (최대 3시간)
+                </div>
+              </div>
               <div className="timetable-header">
                 <div></div>
                 <div>월요일</div>

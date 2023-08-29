@@ -95,8 +95,10 @@ export interface FindPasswordProps {
 }
 
 export interface LectureRegister {
-  setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
+  setOpenRegisterTimetable: React.Dispatch<React.SetStateAction<boolean>>;
+  lectureRoom: string | number | null;
   setLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
+  setTime: React.Dispatch<React.SetStateAction<ObjectType | null>>;
 }
 
 export interface TimetableData {

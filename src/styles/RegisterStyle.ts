@@ -19,6 +19,34 @@ const ProfessorRegisterModal = styled.div`
   line-height: normal !important;
   font-size: 16px;
   padding: 15px 0;
+  > div.timetable-help {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 15px;
+    gap: 25px;
+    font-size: 14px;
+    > div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      > div {
+        width: 40px;
+        height: 25px;
+        border: 1px solid var(--table-border-color);
+        &.selected {
+          background: var(--primary-color);
+        }
+        &.disabled {
+          background: var(--primary-border-color);
+        }
+        &.already-used {
+          background: var(--negative-color);
+        }
+      }
+    }
+  }
   > div.timetable-header {
     display: grid;
     height: 45px;

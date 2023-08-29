@@ -5,14 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import RegisterTimetable from '../../components/professor/RegisterTimetable';
+import { ObjectType } from '../../types/components';
+import RegisterScore from '../../components/professor/RegisterScore';
 
 const RegisterApply = () => {
-  const [openRegister, setOpenRegister] = useState<boolean>(false);
+  const [openRegisterTimetable, setOpenRegisterTimetable] = useState<boolean>(false);
+  const [openRegisterScore, setOpenRegisterScore] = useState<boolean>(false);
   const [lectureName, setLectureName] = useState<string>('');
   const [lectureRoom, setLectureRoom] = useState<string | number | null>('');
   const [studentNum, setStudentNum] = useState<string>('');
   const [grade, setGrade] = useState<string | number | null>('');
-  const [score, setScore] = useState<string | number | null>('');
+  const [credit, setCredit] = useState<string | number | null>('');
+  const [score, setScore] = useState<ObjectType | null>(null);
+  const [time, setTime] = useState<ObjectType | null>(null);
 
   const navigate = useNavigate();
 
@@ -23,7 +28,9 @@ const RegisterApply = () => {
 
   useEffect(() => {
     if (lectureRoom !== '') {
-      setOpenRegister(true);
+      setOpenRegisterTimetable(true);
+    } else {
+      setTime(null);
     }
   }, [lectureRoom]);
 
@@ -58,7 +65,7 @@ const RegisterApply = () => {
                   { id: 0, title: '테스트 1' },
                   { id: 1, title: '테스트 2' },
                 ]}
-                propertyName={{ key: 'id', value: 'title' }}
+                propertyName={{ key: 'title', value: 'title' }}
                 value={lectureRoom}
                 setValue={setLectureRoom}
                 reset
@@ -67,7 +74,7 @@ const RegisterApply = () => {
             </div>
           </Row>
           <Row col={2}>
-            <div>수강 인원</div>
+            <div>수강 인원 수</div>
             <div>
               <Input
                 type="number"
@@ -108,25 +115,39 @@ const RegisterApply = () => {
                   { id: 4, title: '4학점' },
                 ]}
                 propertyName={{ key: 'id', value: 'title' }}
-                value={score}
-                setValue={setScore}
+                value={credit}
+                setValue={setCredit}
                 reset
               />
             </div>
-            <div>평가 방법</div>
-            <div>출석 20% / 중간 40% / 기말 40%</div>
+            <div>배점</div>
+            <div onClick={() => setOpenRegisterScore(true)}>
+              <span>배점을 등록하세요.</span>
+            </div>
           </Row>
           <Row col={2}>
             <div>강의 기간</div>
             <div></div>
             <div>강의 시간</div>
-            <div></div>
+            <div>
+              {time ? (
+                `${time.week} ${time.startTime} ~ ${time.endTime}`
+              ) : (
+                <span>(강의실 선택 필요)</span>
+              )}
+            </div>
           </Row>
         </FormTable>
       </RegisterLayout>
-      {openRegister && (
-        <RegisterTimetable setOpenRegister={setOpenRegister} setLectureRoom={setLectureRoom} />
+      {openRegisterTimetable && (
+        <RegisterTimetable
+          setOpenRegisterTimetable={setOpenRegisterTimetable}
+          lectureRoom={lectureRoom}
+          setLectureRoom={setLectureRoom}
+          setTime={setTime}
+        />
       )}
+      {openRegisterScore && <RegisterScore />}
     </>
   );
 };
