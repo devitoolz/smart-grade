@@ -240,7 +240,7 @@ const Major = () => {
     // console.log(data);
 
     if (data) {
-      const temp = data.major.map(item => {
+      const temp = data?.major?.map(item => {
         // 강제로 변경상태 기록
         item.isChange = 0;
         if (item.remarks !== '') {

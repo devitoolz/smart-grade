@@ -6,7 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import { LectureDetail, Btn } from '../../styles/LectureRoomCss';
+import { LectureDetail, Btn, Caution } from '../../styles/LectureRoomCss';
 const Lecture = () => {
   ////searchBar////
 
@@ -189,13 +189,19 @@ const Lecture = () => {
               <div className="inputPurpose">강의목표들어갈자리</div>
               <div className="bookPic">교재사진</div>
               <div className="bookName">교재명</div>
+              <div className="inputBookName">교재명들어갈자리</div>
               <div className="isbn">ISBN</div>
+              <div className="inputIsbn">ISBN들어갈자리</div>
             </div>
           </LectureDetail>
 
           <Btn>
             <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
           </Btn>
+          <Caution>
+            <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
+            <p>전산실 전화번호: 053-000-0000</p>
+          </Caution>
         </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>

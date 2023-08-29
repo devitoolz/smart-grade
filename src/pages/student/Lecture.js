@@ -147,6 +147,9 @@ const Lecture = () => {
     },
   ];
 
+  //임시로 get 확인
+  // const get
+
   const data_ = [
     {
       lectureName: '치킨의 미학적 아름다움에대한 이해',
@@ -190,52 +193,6 @@ const Lecture = () => {
         >
           <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
 
-          {/* <LPTWrap>
-            <LPlanTable>
-              <colgroup>
-                <col width="25%" />
-                <col width="25%" />
-                <col width="25%" />
-                <col width="25%" />
-              </colgroup>
-              <thead>
-                <tr>
-                  <th colSpan="2">강의명</th>
-                  <td colSpan="2">강의명 들어갈자리</td>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <th>학점</th>
-                  <td>학점 들어갈자리</td>
-                  <th>교수명</th>
-                  <td>교수명 들어갈자리</td>
-                </tr>
-
-                <tr>
-                  <th colSpan="4" rowSpan="1  ">
-                    강의목표
-                  </th>
-                </tr>
-
-                <tr>
-                  <td colSpan="4">강의목표 들어갈 자리</td>
-                </tr>
-
-                <tr>
-                  <td colSpan="1" rowSpan="2">
-                    <img src="../images/강의교재.jpg" width="204px" height="98px" />
-                  </td>
-                  <td colSpan="3">교재명</td>
-                </tr>
-
-                <tr>
-                  <td colSpan="3">교재ISBN</td>
-                </tr>
-              </tbody>
-            </LPlanTable>
-          </LPTWrap> */}
           <LectureDetail>
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
@@ -248,7 +205,9 @@ const Lecture = () => {
               <div className="inputPurpose">강의목표들어갈자리</div>
               <div className="bookPic">교재사진</div>
               <div className="bookName">교재명</div>
+              <div className="inputBookName">교재명들어갈자리</div>
               <div className="isbn">ISBN</div>
+              <div className="inputIsbn">ISBN들어갈자리</div>
             </div>
           </LectureDetail>
 

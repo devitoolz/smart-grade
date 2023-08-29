@@ -101,29 +101,28 @@ export const LPlanTable = styled.table`
     }
   }
 `;
-export const Btn = styled.div`
-  display: flex;
-  justify-content: center;
-  padding: 20px 10px;
-`;
+//grid를 이용
 export const LectureDetail = styled.div`
-  margin-left: 40px;
+  margin-left: 100px;
+  margin-top: 30px;
   text-align: center;
   width: 80%;
+
   .innerContainer {
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
   }
   .lectureName {
+    grid-column: 1/2;
     border-top: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     border-right: 1px solid #a5c9f6;
-    grid-column: 1/3;
-
+    border-bottom: 1px solid #a5c9f6;
     padding: 20px 10px;
+    background: #dff6ff;
   }
   .inputLectureName {
-    grid-column: 3/5;
+    grid-column: 2/5;
     border-top: 1px solid #a5c9f6;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
@@ -133,21 +132,21 @@ export const LectureDetail = styled.div`
   .score {
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
-    border-top: 1px solid #a5c9f6;
-
+    /* border-top: 1px solid #a5c9f6; */
     padding: 20px 10px;
+    background: #dff6ff;
   }
   .inputScore {
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
-    border-top: 1px solid #a5c9f6;
+    /* border-top: 1px solid #a5c9f6; */
     padding: 20px 10px;
   }
   .professor {
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
-
     padding: 20px 10px;
+    background: #dff6ff;
   }
   .inputProfessor {
     border-right: 1px solid #a5c9f6;
@@ -156,43 +155,71 @@ export const LectureDetail = styled.div`
     padding: 20px 10px;
   }
   .purpose {
-    grid-column: 1/5;
+    grid-column: 1/2;
+    grid-row: 3/5;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
-
     padding: 20px 10px;
+    background: #dff6ff;
   }
   .inputPurpose {
-    grid-column: 1/5;
-    grid-row: 4/5;
+    grid-column: 2/5;
+    grid-row: 3/5;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
   .bookPic {
     grid-row: 5/7;
     span: 2;
-    padding: 20px 10px;
-    /* border-right: 1px solid #a5c9f6; */
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
+    padding: 20px 10px;
   }
 
   .bookName {
-    grid-column: 2/5;
+    grid-column: 2/3;
     border-right: 1px solid #a5c9f6;
-    /* border-bottom: 1px solid #a5c9f6; */
     border-left: 1px solid #a5c9f6;
+    background: #dff6ff;
+    padding: 20px 10px;
+  }
+  .inputBookName {
+    grid-column: 3/5;
+    border-right: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
   .isbn {
-    grid-column: 2/5;
+    grid-column: 2/3;
+    border-top: 1px solid #a5c9f6;
+    border-left: 1px solid #a5c9f6;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
+    background: #dff6ff;
+    padding: 20px 10px;
+  }
+  .inputIsbn {
+    grid-column: 3/5;
+    border-right: 1px solid #a5c9f6;
+    border-bottom: 1px solid #a5c9f6;
     border-top: 1px solid #a5c9f6;
     padding: 20px 10px;
+  }
+`;
+
+export const Btn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 40px 10px;
+`;
+export const Caution = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  p {
+    color: red;
+    margin-left: 20px;
   }
 `;
