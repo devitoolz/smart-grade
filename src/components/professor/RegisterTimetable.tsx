@@ -9,7 +9,9 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
   lectureRoom,
+  prevLectureRoom,
   setLectureRoom,
+  setPrevLectureRoom,
   setTime,
 }: LectureRegister) => {
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
@@ -99,12 +101,13 @@ const RegisterTimetable = ({
       if (confirm(`${week} ${startTime} ~ ${endTime} 가 맞습니까?`)) {
         setOpenRegisterTimetable(false);
         setTime(time);
+        setPrevLectureRoom(lectureRoom);
       }
     }
   };
 
   const handleCancel = () => {
-    setLectureRoom('');
+    setLectureRoom(prevLectureRoom !== '' ? prevLectureRoom : '');
     setOpenRegisterTimetable(false);
   };
 

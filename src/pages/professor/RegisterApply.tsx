@@ -19,6 +19,8 @@ const RegisterApply = () => {
   const [score, setScore] = useState<ObjectType | null>(null);
   const [time, setTime] = useState<ObjectType | null>(null);
 
+  const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>('');
+
   const navigate = useNavigate();
 
   const handleLecutreNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,9 +30,13 @@ const RegisterApply = () => {
 
   useEffect(() => {
     if (lectureRoom !== '') {
+      if (lectureRoom === prevLectureRoom) {
+        return;
+      }
       setOpenRegisterTimetable(true);
     } else {
       setTime(null);
+      setPrevLectureRoom('');
     }
   }, [lectureRoom]);
 
@@ -130,11 +136,14 @@ const RegisterApply = () => {
             <div></div>
             <div>강의 시간</div>
             <div>
-              {time ? (
+              {lectureRoom !== prevLectureRoom ? (
+                <span>강의 시간 선택 중</span>
+              ) : time ? (
                 `${time.week} ${time.startTime} ~ ${time.endTime}`
               ) : (
                 <span>(강의실 선택 필요)</span>
               )}
+              {}
             </div>
           </Row>
         </FormTable>
@@ -143,7 +152,9 @@ const RegisterApply = () => {
         <RegisterTimetable
           setOpenRegisterTimetable={setOpenRegisterTimetable}
           lectureRoom={lectureRoom}
+          prevLectureRoom={prevLectureRoom}
           setLectureRoom={setLectureRoom}
+          setPrevLectureRoom={setPrevLectureRoom}
           setTime={setTime}
         />
       )}
