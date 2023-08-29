@@ -110,6 +110,7 @@ export const LectureDetail = styled.div`
 
   .innerContainer {
     display: grid;
+
     grid-template-columns: 25% 25% 25% 25%;
   }
   .lectureName {
@@ -141,6 +142,7 @@ export const LectureDetail = styled.div`
     border-left: 1px solid #a5c9f6;
     /* border-top: 1px solid #a5c9f6; */
     padding: 20px 10px;
+    margin-left: -1px;
   }
   .professor {
     border-bottom: 1px solid #a5c9f6;
@@ -184,6 +186,7 @@ export const LectureDetail = styled.div`
     border-left: 1px solid #a5c9f6;
     background: #dff6ff;
     padding: 20px 10px;
+    margin-left: -1px;
   }
   .inputBookName {
     grid-column: 3/5;
@@ -198,6 +201,7 @@ export const LectureDetail = styled.div`
     border-bottom: 1px solid #a5c9f6;
     background: #dff6ff;
     padding: 20px 10px;
+    margin-left: -1px;
   }
   .inputIsbn {
     grid-column: 3/5;
