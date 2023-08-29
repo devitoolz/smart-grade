@@ -7,6 +7,7 @@ import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { deleteBoard } from '../../apis/fetch';
+import { ObjectType } from '../../types/components';
 
 const Notice = () => {
   const navigate = useNavigate();
@@ -16,7 +17,7 @@ const Notice = () => {
   //input value값
   const [keyword, setKeyword] = useState('');
   //input value change 함수
-  const handleChangeValue = e => setKeyword(e.target.value);
+  const handleChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => setKeyword(e.target.value);
   //SearchBar queries
   const queries = { keyword };
 
@@ -28,7 +29,7 @@ const Notice = () => {
     setDeleteModalShow(true);
   };
   // 게시클 삭제
-  const [boardPk, setBoardPk] = useState();
+  const [boardPk, setBoardPk] = useState<number>(0); // 수정
   const deleteBoardWait = async () => {
     await deleteBoard(boardPk);
     window.location.reload();
@@ -36,7 +37,7 @@ const Notice = () => {
 
   // 공지사항 = 일반공지+중요공지 같이 불러오기
   // 전체 notice Data 담는 list
-  const [noticeData, setNoticeData] = useState([]);
+  const [noticeData, setNoticeData] = useState<Array<any>>([]);
   // 일반
   const url = '/api/board';
   const { data, pending, error } = useQuerySearch(url, click);
@@ -49,16 +50,16 @@ const Notice = () => {
       ? null
       : important.data === null
       ? null
-      : setNoticeData([...important.data, ...data.list]);
+      : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
   }, [data, important.data]);
 
   //table header
   const tableHeader = [
-    { title: 'NO.', width: '1' },
-    { title: '제목', width: '4' },
-    { title: 'DATE', width: '2' },
-    { title: '관리', width: '3' },
-    { title: '조회수', width: '1' },
+    { title: 'NO.', width: 1 },
+    { title: '제목', width: 4 },
+    { title: 'DATE', width: 2 },
+    { title: '관리', width: 3 },
+    { title: '조회수', width: 1 },
   ];
 
   // JSX
@@ -102,13 +103,14 @@ const Notice = () => {
         header={tableHeader}
         data={noticeData}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {noticeData.map(item => {
           return (
-            <div key={item.iboard} style={{ background: item.importance ? 'lavenderblush' : null }}>
+            <div key={item.iboard}>
+              {/*  style={{ background: item.importance ? 'lavenderblush' : null }} */}
               <div>
                 {item.importance ? <span style={{ fontWeight: '700' }}>중요</span> : item.iboard}
               </div>
