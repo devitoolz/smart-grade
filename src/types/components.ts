@@ -28,8 +28,6 @@ export interface InputProps extends CommonInputProps {
   reset?: React.Dispatch<React.SetStateAction<string>>;
   value?: string | number;
   setValue?: React.ChangeEventHandler<HTMLInputElement>;
-  min?: number;
-  max?: number;
 }
 
 export interface DropdownProps extends CommonInputProps {
@@ -103,6 +101,10 @@ export interface RegisterTimetableProps {
   setLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
   setPrevLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
   setTime: React.Dispatch<React.SetStateAction<ObjectType | null>>;
+}
+
+export interface TimetableData {
+  [key: number]: number;
 }
 
 export interface RegisterScoreProps {

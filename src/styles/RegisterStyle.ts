@@ -42,6 +42,9 @@ const InfoFormTable = styled.div`
         background: var(--form-table-bg-color);
         border-bottom: 2px solid var(--form-table-even-border-color);
       }
+      > span {
+        color: var(--search-ph-color);
+      }
     }
     &.book-img {
       height: 354px;
@@ -51,14 +54,42 @@ const InfoFormTable = styled.div`
 `;
 
 const BookImage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 250px;
   height: 330px;
-  border: 1px dashed var(--black);
-  border-radius: 10px;
+  overflow: hidden;
+  border: 2px solid var(--search-bg-color);
+  background: var(--form-table-even-border-color);
   > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+  > div.no-book {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    color: var(--search-ph-color);
+    > svg {
+      font-size: 60px;
+    }
+  }
+`;
+
+const LectureDescription = styled.textarea`
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  background: transparent;
+  font-size: 16px;
+  padding: 15px;
+  &::placeholder {
+    color: var(--search-ph-color);
+    text-align: center;
+    line-height: 230px;
   }
 `;
 
@@ -224,6 +255,7 @@ export {
   ButtonContainer,
   InfoFormTable,
   BookImage,
+  LectureDescription,
   RegisterTimetableModal,
   RegisterScoreModal,
 };

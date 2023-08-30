@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { RegisterTimetableProps } from '../../types/components';
+import { RegisterTimetableProps, TimetableData } from '../../types/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterTimetableModal } from '../../styles/RegisterStyle';
-import { dayData, timeData } from '../../pages/professor/RegisterApply';
+import { dayData } from '../../pages/professor/RegisterApply';
 
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
@@ -20,6 +20,18 @@ const RegisterTimetable = ({
 
   // TODO: 추후 api로 가져올 예정
   const data = [5, 10, 15, 20, 3, 8, 13, 18];
+
+  const timeData: TimetableData = {
+    0: 9,
+    1: 10,
+    2: 11,
+    3: 12,
+    4: 13,
+    5: 14,
+    6: 15,
+    7: 16,
+    8: 17,
+  };
 
   const numberToString = (number: number) => {
     if (number < 10) {

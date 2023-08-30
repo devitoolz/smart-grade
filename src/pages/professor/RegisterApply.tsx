@@ -4,6 +4,7 @@ import {
   BookImage,
   ButtonContainer,
   InfoFormTable,
+  LectureDescription,
   RegisterLayout,
 } from '../../styles/RegisterStyle';
 import { useNavigate } from 'react-router-dom';
@@ -12,7 +13,9 @@ import Input from '../../components/Input';
 import RegisterTimetable from '../../components/professor/RegisterTimetable';
 import { ObjectType } from '../../types/components';
 import RegisterScore from '../../components/professor/RegisterScore';
-import { DayData, TimetableData } from '../../types/pages';
+import { DayData } from '../../types/pages';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 
 export const dayData: DayData = {
   1: '월요일',
@@ -20,18 +23,6 @@ export const dayData: DayData = {
   3: '수요일',
   4: '목요일',
   5: '금요일',
-};
-
-export const timeData: TimetableData = {
-  0: 9,
-  1: 10,
-  2: 11,
-  3: 12,
-  4: 13,
-  5: 14,
-  6: 15,
-  7: 16,
-  8: 17,
 };
 
 const RegisterApply = () => {
@@ -44,15 +35,14 @@ const RegisterApply = () => {
   const [credit, setCredit] = useState<string | number | null>(null);
   const [score, setScore] = useState<ObjectType | null>(null);
   const [time, setTime] = useState<ObjectType | null>(null);
+  const [isbn, setIsbn] = useState<string>('');
+  const [bookName, setBookName] = useState<string | null>(null);
+  const [bookImg, setBookImg] = useState<string | null>(null);
+  const [description, setDescription] = useState<string>('');
 
   const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>(null);
 
   const navigate = useNavigate();
-
-  const handleLecutreNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setLectureName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9\s]/g, ''));
-  };
 
   useEffect(() => {
     if (lectureRoom !== '') {
@@ -66,9 +56,25 @@ const RegisterApply = () => {
     }
   }, [lectureRoom]);
 
+  useEffect(() => {
+    if (isbn.length === 13) {
+      console.log('책 API 요청');
+    }
+  }, [isbn]);
+
+  const handleLecutreNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setLectureName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9\s]/g, ''));
+  };
+
   const handleStudentNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setStudentNum(value.replace(/[^0-9]/g, ''));
+  };
+
+  const handleIsbnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setIsbn(value.replace(/[^0-9]/g, ''));
   };
 
   const handleSubmit = () => {
@@ -197,26 +203,49 @@ const RegisterApply = () => {
         <InfoFormTable>
           <div className="row">
             <div>ISBN</div>
-            <div></div>
+            <div>
+              <Input
+                type="text"
+                isForm
+                placeholder="교재의 ISBN 13자리를 입력하세요."
+                maxLength={13}
+                reset={setIsbn}
+                value={isbn}
+                setValue={handleIsbnChange}
+              />
+            </div>
           </div>
           <div className="row book-img">
             <div>교재 이미지</div>
             <div>
               <BookImage>
-                <img
-                  src="https://image.aladin.co.kr/product/5056/31/cover/8968481474_2.jpg"
-                  alt="교재 이미지"
-                />
+                {bookImg ? (
+                  <img
+                    src="https://image.aladin.co.kr/product/5056/31/cover/8968481474_2.jpg"
+                    alt="교재 이미지"
+                  />
+                ) : (
+                  <div className="no-book">
+                    <FontAwesomeIcon icon={faBook} />
+                    <span>교재가 없습니다.</span>
+                  </div>
+                )}
               </BookImage>
             </div>
           </div>
           <div className="row pt-2">
             <div>교재명</div>
-            <div></div>
+            <div>{bookName ?? <span>교재가 없습니다.</span>}</div>
           </div>
           <div className="row pt-2">
             <div>강의 설명</div>
-            <div></div>
+            <div>
+              <LectureDescription
+                placeholder="강의 설명을 입력하세요."
+                value={description}
+                onChange={e => setDescription(e.target.value)}
+              />
+            </div>
           </div>
         </InfoFormTable>
       </RegisterLayout>

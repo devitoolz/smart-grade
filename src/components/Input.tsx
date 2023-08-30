@@ -14,8 +14,6 @@ const Input = ({
   reset,
   value,
   setValue,
-  min,
-  max,
 }: InputProps) => {
   return (
     <CustomInput isForm={isForm} length={length} value={value}>
@@ -27,8 +25,6 @@ const Input = ({
         value={value}
         onChange={setValue}
         autoComplete="off"
-        min={min}
-        max={max}
       />
       {!disabled && reset && <FontAwesomeIcon onClick={() => reset('')} icon={faCircleXmark} />}
     </CustomInput>
