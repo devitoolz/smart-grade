@@ -1,6 +1,5 @@
 import React from 'react';
 import { useState } from 'react';
-import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -121,10 +120,6 @@ const Students = () => {
   //상세보기 모달창 닫기
   const handleModalCancel = () => {
     setDisplay(false);
-  };
-  //상세보기 버튼 클릭시
-  const handlePageBtnClick = () => {
-    setDisplay(true);
   };
 
   //api get hook test

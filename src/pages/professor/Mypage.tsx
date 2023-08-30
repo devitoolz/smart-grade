@@ -276,7 +276,7 @@ const Mypage = () => {
           </Row>
           <Row col={2}>
             <div>등록일</div>
-            <div>{(user?.profile as ProfessorProfileData).createdAt?.split('T')[0]}</div>
+            <div>{(user?.profile as ProfessorProfileData)?.createdAt?.split('T')[0]}</div>
             <div>퇴직 여부</div>
             <div>
               {(user?.profile.delYn === 0 && '재직 중') || (user?.profile.delYn === 1 && '퇴직')}

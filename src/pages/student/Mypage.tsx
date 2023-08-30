@@ -276,11 +276,11 @@ const Mypage = () => {
           </Row>
           <Row col={2}>
             <div>학번</div>
-            <div>{(user?.profile as StudentProfileData).studentNum}</div>
+            <div>{(user?.profile as StudentProfileData)?.studentNum}</div>
             <div>졸업 여부</div>
             <div>
-              {((user?.profile as StudentProfileData).finishedYn === 1 && '재학 중') ||
-                ((user?.profile as StudentProfileData).finishedYn === 2 && '졸업')}
+              {((user?.profile as StudentProfileData)?.finishedYn === 1 && '재학 중') ||
+                ((user?.profile as StudentProfileData)?.finishedYn === 2 && '졸업')}
             </div>
           </Row>
           <Row col={2}>
