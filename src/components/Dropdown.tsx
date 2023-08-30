@@ -57,6 +57,9 @@ const Dropdown = ({
           propertyName ? propertyName.value : 'title'
         ]
       );
+    if (value === '') {
+      setSearchValue('');
+    }
   }, [value]);
 
   useEffect(() => {
@@ -82,7 +85,7 @@ const Dropdown = ({
   const handleResetClick = (e: React.MouseEvent<SVGSVGElement>) => {
     e.stopPropagation();
     setResult(data || []);
-    setValue && setValue(null);
+    setValue && setValue('');
     setSearchValue('');
     setIsOpen(false);
   };
@@ -94,7 +97,7 @@ const Dropdown = ({
     );
     find
       ? setValue && setValue(find[propertyName ? propertyName.key : 'id'])
-      : setValue && setValue(null);
+      : setValue && setValue('');
     setResult(
       data?.filter((item: ObjectType) =>
         item[propertyName ? propertyName.value : 'title'].includes(e.target.value)

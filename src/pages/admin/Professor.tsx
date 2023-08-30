@@ -72,7 +72,7 @@ const Professor = () => {
         pending={pending}
         error={error}
       >
-        {professorList.map(item => {
+        {professorList?.map(item => {
           return (
             <div key={item.iprofessor}>
               <div>{item.majorName}</div>
