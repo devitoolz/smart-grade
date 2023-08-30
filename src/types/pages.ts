@@ -9,3 +9,11 @@ export interface MenuDataType {
     submenu?: ObjectType;
   };
 }
+
+export interface TimetableData {
+  [key: number]: number;
+}
+
+export interface DayData {
+  [key: number]: string;
+}

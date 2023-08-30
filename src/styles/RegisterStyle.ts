@@ -13,6 +13,55 @@ const ButtonContainer = styled.div`
   gap: 15px;
 `;
 
+const InfoFormTable = styled.div`
+  display: grid;
+  grid-template: 46px 46px auto / 1fr 1fr;
+  width: 100%;
+  > div.row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    &.pt-2 {
+      padding-top: 2px;
+    }
+    > div {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      text-align: center;
+      height: 100%;
+      box-sizing: content-box;
+      &:nth-of-type(odd) {
+        font-weight: bold;
+        color: var(--white);
+        background: var(--primary-color);
+        border-bottom: 2px solid var(--form-table-odd-border-color);
+      }
+      &:nth-of-type(even) {
+        background: var(--form-table-bg-color);
+        border-bottom: 2px solid var(--form-table-even-border-color);
+      }
+    }
+    &.book-img {
+      height: 354px;
+      grid-row: span 3;
+    }
+  }
+`;
+
+const BookImage = styled.div`
+  width: 250px;
+  height: 330px;
+  border: 1px dashed var(--black);
+  border-radius: 10px;
+  > img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+`;
+
 const RegisterTimetableModal = styled.div`
   display: flex;
   width: 100%;
@@ -170,4 +219,11 @@ const RegisterScoreModal = styled.div<{ total: number }>`
   }
 `;
 
-export { RegisterLayout, ButtonContainer, RegisterTimetableModal, RegisterScoreModal };
+export {
+  RegisterLayout,
+  ButtonContainer,
+  InfoFormTable,
+  BookImage,
+  RegisterTimetableModal,
+  RegisterScoreModal,
+};

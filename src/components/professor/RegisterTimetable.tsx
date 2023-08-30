@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { DayData, RegisterTimetableProps, TimetableData } from '../../types/components';
+import { RegisterTimetableProps } from '../../types/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterTimetableModal } from '../../styles/RegisterStyle';
+import { dayData, timeData } from '../../pages/professor/RegisterApply';
 
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
@@ -19,26 +20,6 @@ const RegisterTimetable = ({
 
   // TODO: 추후 api로 가져올 예정
   const data = [5, 10, 15, 20, 3, 8, 13, 18];
-
-  const timeData: TimetableData = {
-    0: 9,
-    1: 10,
-    2: 11,
-    3: 12,
-    4: 13,
-    5: 14,
-    6: 15,
-    7: 16,
-    8: 17,
-  };
-
-  const dayData: DayData = {
-    0: '월요일',
-    1: '화요일',
-    2: '수요일',
-    3: '목요일',
-    4: '금요일',
-  };
 
   const numberToString = (number: number) => {
     if (number < 10) {
@@ -93,7 +74,7 @@ const RegisterTimetable = ({
     if (selectedTime.length === 0) {
       alert('최소 1시간 선택해야 합니다.');
     } else {
-      const week = dayData[selectedTime[0] % 5];
+      const week = (selectedTime[0] % 5) + 1;
       const startTime = numberToString(timeData[Math.floor(selectedTime[0] / 5)]);
       const endTime = numberToString(
         timeData[Math.floor(selectedTime[selectedTime.length - 1] / 5)] + 1
@@ -105,7 +86,7 @@ const RegisterTimetable = ({
         endTime,
       };
 
-      if (confirm(`${week} ${startTime} ~ ${endTime} 가 맞습니까?`)) {
+      if (confirm(`${dayData[week]} ${startTime} ~ ${endTime} 가 맞습니까?`)) {
         setOpenRegisterTimetable(false);
         setTime(time);
         setPrevLectureRoom(lectureRoom);

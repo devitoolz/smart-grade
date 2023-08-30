@@ -105,14 +105,6 @@ export interface RegisterTimetableProps {
   setTime: React.Dispatch<React.SetStateAction<ObjectType | null>>;
 }
 
-export interface TimetableData {
-  [key: number]: number;
-}
-
-export interface DayData {
-  [key: number]: string;
-}
-
 export interface RegisterScoreProps {
   setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
   score: ObjectType | null;

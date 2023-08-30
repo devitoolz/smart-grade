@@ -1,25 +1,51 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FormTable, Row } from '../../styles/UserStyle';
-import { ButtonContainer, RegisterLayout } from '../../styles/RegisterStyle';
+import { Button, FormTable, ImageUpload, Row } from '../../styles/UserStyle';
+import {
+  BookImage,
+  ButtonContainer,
+  InfoFormTable,
+  RegisterLayout,
+} from '../../styles/RegisterStyle';
 import { useNavigate } from 'react-router-dom';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import RegisterTimetable from '../../components/professor/RegisterTimetable';
 import { ObjectType } from '../../types/components';
 import RegisterScore from '../../components/professor/RegisterScore';
+import { DayData, TimetableData } from '../../types/pages';
+
+export const dayData: DayData = {
+  1: '월요일',
+  2: '화요일',
+  3: '수요일',
+  4: '목요일',
+  5: '금요일',
+};
+
+export const timeData: TimetableData = {
+  0: 9,
+  1: 10,
+  2: 11,
+  3: 12,
+  4: 13,
+  5: 14,
+  6: 15,
+  7: 16,
+  8: 17,
+};
 
 const RegisterApply = () => {
   const [openRegisterTimetable, setOpenRegisterTimetable] = useState<boolean>(false);
   const [openRegisterScore, setOpenRegisterScore] = useState<boolean>(false);
   const [lectureName, setLectureName] = useState<string>('');
-  const [lectureRoom, setLectureRoom] = useState<string | number | null>('');
+  const [lectureRoom, setLectureRoom] = useState<string | number | null>(null);
   const [studentNum, setStudentNum] = useState<string>('');
-  const [grade, setGrade] = useState<string | number | null>('');
-  const [credit, setCredit] = useState<string | number | null>('');
+  const [grade, setGrade] = useState<string | number | null>(null);
+  const [credit, setCredit] = useState<string | number | null>(null);
   const [score, setScore] = useState<ObjectType | null>(null);
   const [time, setTime] = useState<ObjectType | null>(null);
 
-  const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>('');
+  const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>(null);
 
   const navigate = useNavigate();
 
@@ -40,11 +66,29 @@ const RegisterApply = () => {
     }
   }, [lectureRoom]);
 
+  const handleStudentNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setStudentNum(value.replace(/[^0-9]/g, ''));
+  };
+
+  const handleSubmit = () => {
+    const payload = {
+      lectureName,
+      lectureRoom,
+      studentNum,
+      grade,
+      credit,
+      ...score,
+      ...time,
+    };
+    console.log(payload);
+  };
+
   return (
     <>
       <RegisterLayout>
         <ButtonContainer>
-          <Button>생성</Button>
+          <Button onClick={handleSubmit}>생성</Button>
           <Button negative onClick={() => navigate(-1)}>
             취소
           </Button>
@@ -83,12 +127,12 @@ const RegisterApply = () => {
             <div>수강 인원 수</div>
             <div>
               <Input
-                type="number"
+                type="text"
                 isForm
                 placeholder="수강 인원을 입력하세요."
                 reset={setStudentNum}
                 value={studentNum}
-                setValue={e => setStudentNum(e.target.value)}
+                setValue={handleStudentNumChange}
               />
             </div>
             <div>학년 제한</div>
@@ -143,14 +187,38 @@ const RegisterApply = () => {
               {lectureRoom !== prevLectureRoom ? (
                 <span>강의 시간 선택 중</span>
               ) : time ? (
-                `${time.week} ${time.startTime} ~ ${time.endTime}`
+                `${dayData[time.week]} / ${time.startTime} ~ ${time.endTime}`
               ) : (
                 <span>(강의실 선택 필요)</span>
               )}
-              {}
             </div>
           </Row>
         </FormTable>
+        <InfoFormTable>
+          <div className="row">
+            <div>ISBN</div>
+            <div></div>
+          </div>
+          <div className="row book-img">
+            <div>교재 이미지</div>
+            <div>
+              <BookImage>
+                <img
+                  src="https://image.aladin.co.kr/product/5056/31/cover/8968481474_2.jpg"
+                  alt="교재 이미지"
+                />
+              </BookImage>
+            </div>
+          </div>
+          <div className="row pt-2">
+            <div>교재명</div>
+            <div></div>
+          </div>
+          <div className="row pt-2">
+            <div>강의 설명</div>
+            <div></div>
+          </div>
+        </InfoFormTable>
       </RegisterLayout>
       {openRegisterTimetable && (
         <RegisterTimetable

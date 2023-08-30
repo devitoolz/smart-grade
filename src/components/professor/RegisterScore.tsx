@@ -6,15 +6,15 @@ import { RegisterScoreModal } from '../../styles/RegisterStyle';
 import Input from '../Input';
 
 const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreProps) => {
-  const [attendance, setAttendance] = useState<string>('0');
-  const [midterm, setMidterm] = useState<string>('0');
-  const [final, setFinal] = useState<string>('0');
+  const [attendance, setAttendance] = useState<number>(0);
+  const [midterm, setMidterm] = useState<number>(0);
+  const [final, setFinal] = useState<number>(0);
 
-  attendance === '' ? setAttendance('0') : null;
-  midterm === '' ? setMidterm('0') : null;
-  final === '' ? setFinal('0') : null;
+  isNaN(attendance) ? setAttendance(0) : null;
+  isNaN(midterm) ? setMidterm(0) : null;
+  isNaN(final) ? setFinal(0) : null;
 
-  const total = parseInt(attendance) + parseInt(midterm) + parseInt(final);
+  const total = attendance + midterm + final;
 
   useEffect(() => {
     if (score) {
@@ -25,14 +25,14 @@ const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreP
   }, [score]);
 
   const handleScoreChange = (
-    setFn: React.Dispatch<React.SetStateAction<string>>,
+    setFn: React.Dispatch<React.SetStateAction<number>>,
     value: string
   ) => {
     const newValue = value.replace(/[^0-9]/g, '');
     if (parseInt(newValue) < 0 || parseInt(newValue) > 100) {
       alert('배점은 0 이상 100이하의 숫자만 가능합니다.');
     } else {
-      setFn(newValue.startsWith('0') ? newValue.replace('0', '') : newValue);
+      setFn(newValue.startsWith('0') ? parseInt(newValue.replace('0', '')) : parseInt(newValue));
     }
   };
 
@@ -67,7 +67,7 @@ const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreP
                 <Input
                   type="text"
                   length="tiny"
-                  value={attendance || '0'}
+                  value={attendance || 0}
                   setValue={e => handleScoreChange(setAttendance, e.target.value)}
                 />
                 <span>%</span>
@@ -77,7 +77,7 @@ const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreP
                 <Input
                   type="text"
                   length="tiny"
-                  value={midterm || '0'}
+                  value={midterm || 0}
                   setValue={e => handleScoreChange(setMidterm, e.target.value)}
                 />
                 <span>%</span>
@@ -87,7 +87,7 @@ const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreP
                 <Input
                   type="text"
                   length="tiny"
-                  value={final || '0'}
+                  value={final || 0}
                   setValue={e => handleScoreChange(setFinal, e.target.value)}
                 />
                 <span>%</span>
