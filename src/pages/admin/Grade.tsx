@@ -11,6 +11,7 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
 import { useNavigate } from 'react-router-dom';
 import CommonProgressBar from '../../components/CommonProgressBar';
+import { ObjectType } from '../../types/components';
 
 const Grade = () => {
   const navigate = useNavigate();
@@ -21,9 +22,9 @@ const Grade = () => {
     { id: 3, title: '3학년' },
     { id: 4, title: '4학년' },
   ];
-  const [grade, setGrade] = useState();
+  const [grade, setGrade] = useState<string | number | null>('');
   const [studentNum, setStudentNum] = useState('');
-  const studentNumChange = e => {
+  const studentNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setStudentNum(e.target.value);
   };
 
@@ -38,8 +39,8 @@ const Grade = () => {
     { title: '등급', width: 1 },
   ];
   // 데이터통신 - 학생 상세정보 불러오기
-  const [studentDetail, setStudentDetail] = useState({});
-  const handleGetStudentInfo = async _istudent => {
+  const [studentDetail, setStudentDetail] = useState<ObjectType>({});
+  const handleGetStudentInfo = async (_istudent: number) => {
     _istudent ? setDisplay(true) : null;
     await getStudentInfo(_istudent, setStudentDetail);
   };
@@ -73,45 +74,47 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {data?.student === null || data === null ? (
+      {(data as ObjectType)?.student === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
           btnType="page"
           value="학생상세정보"
-          onClick={() => handleGetStudentInfo(data?.student?.istudent)}
+          onClick={() => handleGetStudentInfo((data as ObjectType)?.student?.istudent)}
         >
-          {data?.student?.name} {data?.student?.studentNum}
+          {(data as ObjectType)?.student?.name} {(data as ObjectType)?.student?.studentNum}
         </CommonButton>
       )}
 
       <Table
         header={tableHeader}
-        data={data?.voList || Array(10).fill('')}
+        data={(data as ObjectType)?.voList || Array(10).fill('')}
         hasPage={true}
-        maxPage={data?.page.maxPage}
+        maxPage={(data as ObjectType)?.page.maxPage}
         pending={pending}
         error={error}
       >
-        {(data?.voList || Array(10).fill('')).map((item, idx) => {
-          return (
-            <div key={idx}>
-              <div>{item.grade}</div>
-              <div>{item.semester}</div>
-              <div>{item.lectureName}</div>
-              <div>{item.professorName}</div>
-              <div>{item.lectureScore}</div>
-              <div>{item.totalScore}</div>
-              <div>{item.rating}</div>
-            </div>
-          );
-        })}
+        {((data as ObjectType)?.voList || Array(10).fill('')).map(
+          (item: ObjectType, idx: number) => {
+            return (
+              <div key={idx}>
+                <div>{item.grade}</div>
+                <div>{item.semester}</div>
+                <div>{item.lectureName}</div>
+                <div>{item.professorName}</div>
+                <div>{item.lectureScore}</div>
+                <div>{item.totalScore}</div>
+                <div>{item.rating}</div>
+              </div>
+            );
+          }
+        )}
       </Table>
 
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`${data?.student?.name} 님의 상세정보`}
+          modalTitle={`${(data as ObjectType)?.student?.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
           <StudentInfo>
@@ -125,14 +128,14 @@ const Grade = () => {
                 </div>
                 <div className="table-body-m">
                   {Array(8)
-                    .fill()
+                    .fill('')
                     .map((_, idx) => {
                       return (
                         <div key={idx}>
-                          <div>{data?.avgVo[idx]?.grade}</div>
-                          <div>{data?.avgVo[idx]?.semester}</div>
-                          <div>{data?.avgVo[idx]?.avgRating}</div>
-                          <div>{data?.avgVo[idx]?.avgScore}</div>
+                          <div>{(data as ObjectType)?.avgVo[idx]?.grade}</div>
+                          <div>{(data as ObjectType)?.avgVo[idx]?.semester}</div>
+                          <div>{(data as ObjectType)?.avgVo[idx]?.avgRating}</div>
+                          <div>{(data as ObjectType)?.avgVo[idx]?.avgScore}</div>
                         </div>
                       );
                     })}
@@ -169,7 +172,7 @@ const Grade = () => {
                 value="상세정보"
                 onClick={() => {
                   setDisplay(false);
-                  navigate(`/admin/user/students/${data.student.istudent}`);
+                  navigate(`/admin/user/students/${(data as ObjectType)?.student.istudent}`);
                 }}
               />
             </div>

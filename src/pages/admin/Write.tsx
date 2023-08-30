@@ -9,8 +9,8 @@ import { postBoard } from '../../apis/fetch';
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
-import '@toast-ui/editor/dist/toastui-editor-viewer.css';
-import { Viewer } from '@toast-ui/react-editor';
+import { NoticeWrap } from '../../styles/NoticeStyle';
+import Dropdown from '../../components/Dropdown';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Write = () => {
   //공지사항 제목
   const [title, setTitle] = useState('');
   //제목 인풋창
-  const handleTitle = e => setTitle(e.target.value);
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   //저장+취소 버튼 클릭시 모달오픈 여부
   const [saveDisplay, setSaveDisplay] = useState(false);
   const [cancelDisplay, setCancelDisplay] = useState(false);
@@ -36,15 +36,18 @@ const Write = () => {
   const cancelModalCancel = () => setCancelDisplay(false);
 
   // 공지사항 POST
-  const [boardContents, setBoardContents] = useState('');
-  const boardArea = e => setBoardContents(e.target.value);
+  const [boardContents, setBoardContents] = useState<string>('');
+  // const boardArea = e => setBoardContents(e.target.value);
   const postBoardWait = async () => {
-    const isChecked = document.getElementById('check').checked ? 1 : 0;
-    await postBoard(title, boardContents, isChecked);
+    // const $check = document.getElementById('check') as HTMLInputElement | null;
+    // const isChecked = $check?.checked ? 1 : 0;
+
+    await postBoard(title, boardContents, parseInt(checked as string));
   };
 
   // 게시판
-  const editorRef = useRef(null);
+  // const editorRef = useRef<HTMLElement | null>(null);
+  const editorRef = useRef<Editor>(null);
   // 이미지 업로드 관련
   const [imgList, setImgList] = useState([]);
   // 툴바 커스텀
@@ -54,16 +57,23 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['table', 'image', 'link'],
   ];
+  // 공지상태
+  const statusList = [
+    {
+      id: '0',
+      title: '일반공지',
+    },
+    {
+      id: '1',
+      title: '중요공지',
+    },
+  ];
+  const [checked, setChecked] = useState<string | number | null>('0');
 
-  // 게시글 확인-toast ui test
-  const test = `# markdown
-  ~~***test***~~
-  ing`;
   // 게시글 작성
   const handleBoardSave = () => {
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
-    console.log('게시글 내용');
-    console.log(markdownContent);
+    setBoardContents(markdownContent as string);
     setSaveDisplay(true);
   };
   const handleBoardCancel = () => {
@@ -96,18 +106,10 @@ const Write = () => {
           <p>취소 하시겠습니까?</p>
         </CommonModal>
       ) : null}
-      <div style={{ width: '100%', height: '100%', padding: '10px 50px 0' }}>
-        <div
-          style={{
-            height: 50,
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            borderBottom: '1px solid black',
-          }}
-        >
-          <h3 style={{ fontSize: 22 }}>게시판 글쓰기</h3>
-          <div style={{ display: 'flex' }}>
+      <NoticeWrap>
+        <div className="notice-header">
+          <h3>게시판 글쓰기</h3>
+          <div className="notice-btn">
             <CommonButton
               btnType="table"
               color="blue"
@@ -122,24 +124,31 @@ const Write = () => {
             />
           </div>
         </div>
-        <div style={{ width: 100, height: 20 }}></div>
-        <Input
-          type="text"
-          length="full"
-          placeholder="제목 (최대 50자)"
-          maxLength={50}
-          value={title}
-          setValue={handleTitle}
-        />
-        <div style={{ width: 100, height: 20 }}></div>
-        <div>
-          <span>첨부파일 </span>
+        <div className="notice-title">
+          <Dropdown data={statusList} value={checked} setValue={setChecked} />
+          <Input
+            type="text"
+            length="full"
+            placeholder="제목 (최대 50자)"
+            maxLength={50}
+            value={title}
+            setValue={handleTitle}
+          />
         </div>
-        <div style={{ width: 100, height: 20 }}></div>
-        {/* <div style={{ width: '100%', height: 560, border: '1px solid gray' }}>
-          내용을 입력하세요
-        </div> */}
-        <div style={{ padding: 20, border: '1px solid gray' }}>
+        <div className="notice-file">
+          <span>첨부파일</span>
+          <div className="file-list">
+            <div className="file-item">
+              <span>aaa.png</span>
+              <button>X</button>
+            </div>
+            <div className="file-item">
+              <span>bbb.png</span>
+              <button>X</button>
+            </div>
+          </div>
+        </div>
+        <div className="notice-content">
           <Editor
             ref={editorRef}
             placeholder="내용을 입력하세요"
@@ -157,73 +166,7 @@ const Write = () => {
             // viewer={true} // 나중에 다시 살펴보기
           />
         </div>
-      </div>
-      <div style={{ width: '100%', height: '100%', padding: '10px 50px 0' }}>
-        <Viewer initialValue={test} />
-      </div>
-      {/*
-      <Ltable>
-        <colgroup>
-          <col className="title" width={'30%'} />
-          <col className="detail" width={'70%'} />
-        </colgroup>
-        <thead>
-          <tr>
-            <th>
-              <h3>제목</h3>
-            </th>
-            <th className="inputTitle">
-              <Input
-                type="text"
-                length="full"
-                placeholder="제목 (최대 30자)"
-                maxLength={30}
-                value={title}
-                setValue={handleTitle}
-              />
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td className="statusTitle">
-              <h3>상태</h3>
-            </td>
-            <td className="importanceCheck">
-              <input type="checkbox" id="check" style={{ cursor: 'pointer' }} />
-              <label htmlFor="check">
-                <h3 style={{ cursor: 'pointer' }}>중요</h3>
-              </label>
-              <p className="colorRed">* 체크 시 제일 상단 공지로 표시됩니다.</p>
-            </td>
-          </tr>
-          <tr>
-            <td className="fileTitle">
-              <h3>첨부파일</h3>
-            </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td className="contentTitle">
-              <h3>내용</h3>
-            </td>
-            <td className="controlTextarea">
-              <TextArea length="full" onChange={boardArea} />
-            </td>
-          </tr>
-        </tbody>
-      </Ltable>
-      <Wbtns>
-        <CommonButton
-          btnType="page"
-          value="저장"
-          onClick={() => {
-            setSaveDisplay(true);
-          }}
-        />
-        <CommonButton btnType="page" value="취소" onClick={() => setCancelDisplay(true)} />
-      </Wbtns>
-       */}
+      </NoticeWrap>
     </>
   );
 };

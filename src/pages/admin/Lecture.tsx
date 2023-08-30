@@ -10,13 +10,14 @@ import Table from '../../components/Table';
 import { getStudentList } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import api from '../../apis/api';
+import { ObjectType } from '../../types/components';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
-  const pageIdx = !search.length ? 1 : search.split('?')[1].split('=')[1];
+  const pageIdx = !search.length ? 1 : parseInt(search.split('?')[1].split('=')[1]);
   const [display, setDisplay] = useState(false);
-  const [contents, setContents] = useState({});
+  const [contents, setContents] = useState<ObjectType>({});
   // 강의 승인 페이지로
   const handlePageBtnClick = () => {
     navigate(`${pathname}/approval?procedures=-2`);
@@ -25,8 +26,8 @@ const Lecture = () => {
   // 강의상태
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
   // 검색 영역
-  const [ilectureName, setLectureName] = useState();
-  const [procedures, setLectureStatus] = useState();
+  const [ilectureName, setLectureName] = useState<string | number | null>('');
+  const [procedures, setLectureStatus] = useState<string | number | null>('');
   const statusList = [
     {
       id: '-1',
@@ -55,7 +56,7 @@ const Lecture = () => {
     const getLectureName = async () => {
       try {
         const { data } = await api.get(`/api/admin/lecture-name`);
-        setLectureNameList(data.vo); 
+        setLectureNameList(data.vo);
       } catch (err) {
         console.log(err);
         alert('강의 목록을 불러올 수 없습니다');
@@ -64,7 +65,7 @@ const Lecture = () => {
     getLectureName();
   }, []);
   const [nm, setProfessorName] = useState('');
-  const professorNameChange = e => {
+  const professorNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setProfessorName(e.target.value);
   };
   const queries = { procedures, ilectureName, nm };
@@ -90,8 +91,8 @@ const Lecture = () => {
   const { data, pending, error } = useQuerySearch(url, click);
 
   // 서버통신 - 해당 과목 학생리스트 불러오기
-  const [lectureNm, setLectureNm] = useState();
-  const handlegetStudentList = async (_lectureNm, _ilecture) => {
+  const [lectureNm, setLectureNm] = useState('');
+  const handlegetStudentList = async (_lectureNm: string, _ilecture: number) => {
     setLectureNm(_lectureNm);
     const result = await getStudentList(_ilecture, pageIdx);
     Array.isArray(result.list) ? setContents(result.list) : setContents(result);
@@ -146,13 +147,13 @@ const Lecture = () => {
 
       <Table
         header={tableHeader}
-        data={data?.lectures}
+        data={(data as ObjectType)?.lectures}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.lectures.map((item, idx) => {
+        {(data as ObjectType)?.lectures.map((item: ObjectType, idx: number) => {
           return (
             <div key={idx}>
               <div>{item.semester}</div>
@@ -188,12 +189,7 @@ const Lecture = () => {
       </Table>
 
       {display ? (
-        <CommonModal
-          setDisplay={setDisplay}
-          contents={contents}
-          modalTitle={lectureNm}
-          modalSize="big"
-        >
+        <CommonModal setDisplay={setDisplay} modalTitle={lectureNm} modalSize="big">
           {Array.isArray(contents) ? (
             <TableArea>
               <div className="table">

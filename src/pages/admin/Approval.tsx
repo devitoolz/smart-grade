@@ -8,21 +8,22 @@ import { patchRejectLecture, patchApproveLecture } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
+import { ObjectType } from '../../types/components';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
-  const [contents, setContents] = useState({});
+  const [contents, setContents] = useState<ObjectType>({});
   // 승인
   const [isAccept, setIsAccept] = useState(true);
   // 승인 및 거절 선택 여부
   const [procedureState, setProcedureState] = useState(0);
-  const handleRejectLecture = _item => {
+  const handleRejectLecture = (_item: ObjectType) => {
     setContents(_item);
     setProcedureState(0);
     setDisplay(true);
     setIsAccept(false);
   };
-  const handleAcceptLecture = _item => {
+  const handleAcceptLecture = (_item: ObjectType) => {
     setContents(_item);
     setProcedureState(_item.procedures);
     setDisplay(true);
@@ -46,11 +47,11 @@ const Approval = () => {
     { title: '관리', width: 2 },
   ];
   // 강의 요청 승인 patch
-  const patchApproveLectureWait = async (_ilecture, _procedure) => {
+  const patchApproveLectureWait = async (_ilecture: number, _procedure: number) => {
     await patchApproveLecture(_ilecture, _procedure);
   };
   // 강의 개강개설 거절 patch
-  const patchRejectLectureWait = async (_ilecture, reason) => {
+  const patchRejectLectureWait = async (_ilecture: number, reason: string) => {
     await patchRejectLecture(_ilecture, reason);
   };
   // 모달 버튼 클릭이벤트
@@ -79,20 +80,20 @@ const Approval = () => {
   const [click, setClick] = useState(false);
   const [query, setQuery] = useSearchParams();
   useEffect(() => {
-    query.set('procedures', -2);
+    query.set('procedures', '-2');
     setQuery(query);
   }, [query]);
   const url = '/api/admin/lecture';
-  const { data, pending, error } = useQuerySearch(url, click, '&procedures=-2');
+  const { data, pending, error } = useQuerySearch(url, click);
 
   // textarea
   const [reason, setReason] = useState('');
-  const inputRejectReason = e => {
+  const inputRejectReason = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setReason(e.target.value);
   };
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
   // 검색기능
-  const [procedures, setLectureStatus] = useState();
+  const [procedures, setLectureStatus] = useState<string | number | null>('');
   const statusList = [
     {
       id: '-2',
@@ -128,13 +129,13 @@ const Approval = () => {
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
       <Table
         header={tableHeader}
-        data={data?.lectures}
+        data={(data as ObjectType)?.lectures}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.lectures?.map((item, idx) => {
+        {(data as ObjectType)?.lectures?.map((item: ObjectType, idx: number) => {
           return (
             <div key={idx}>
               <div>{item.lectureNm}</div>

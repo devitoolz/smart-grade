@@ -23,12 +23,12 @@ export const TableArea = styled.div`
     }
     .table_head {
       height: 45px;
-      background-color: #dff6ff;
+      background-color: var(--main-bg-color);
       div {
         height: 45px;
         line-height: 45px;
         font-weight: 700;
-        border-right: 1px solid #dae8ff;
+        border-right: 1px solid var(--table-border-color);
       }
     }
     .table_body {
@@ -114,7 +114,7 @@ export const SearchArea = styled.div`
   gap: 12px;
   height: 96px;
   margin: 72px 0;
-  background-color: #d9d9d9;
+  background-color: var(--search-bg-color);
   .search-option {
     height: 32px;
   }
@@ -206,7 +206,7 @@ export const ModalStyle = styled.div<ModalStyleProps>`
     width: ${({ modalSize }) => (modalSize === 'small' ? '400px' : '1024px')};
     /* min-width: ${({ modalSize }) => (modalSize === 'small' ? '480px' : '800px')}; */
     height: ${({ modalSize }) => (modalSize === 'small' ? '250px' : '70%')};
-    background-color: #fff;
+    background-color: var(--white);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -223,7 +223,7 @@ export const ModalStyle = styled.div<ModalStyleProps>`
       font-weight: 700;
 
       padding: 0 20px;
-      border-bottom: 1px solid #dae8ff;
+      border-bottom: 1px solid var(--table-border-color);
       button {
         font-size: 18px;
         border: none;
@@ -277,21 +277,21 @@ export const ModalStyle = styled.div<ModalStyleProps>`
 const pageBtn = `
   padding: 8px 18px;
   border-radius: 5px;
-  color: #7e7e7e;
+  color: var(--button-bar-txt-color);
   font-size: 16px;
 `;
 const tableBtn = `
   margin: 0 4px;
   padding: 4px 8px;
   border-radius: 3px;
-  color: #fff;
+  color: var(--white);
   font-size: 12px;
 `;
 const modalBtn = `
   margin: 2px 8px;
   padding: 6px 24px;
   border-radius: 5px;
-  color: #7e7e7e;
+  color: var(--button-bar-txt-color);
   font-size: 18px;
 `;
 export const CommonBtn = styled.button<CommonBtnProps>`
@@ -304,11 +304,12 @@ export const CommonBtn = styled.button<CommonBtnProps>`
       ? 'var(--primary-color)'
       : color === 'red'
       ? 'var(--negative-color)'
-      : '#dff6ff'};
+      : 'var(--main-bg-color)'};
 
   border: none;
-  color: ${({ textColor }) => (textColor === 'white' ? '#fff' : '#7e7e7e')};
-  color: ${({ btnType }) => (btnType === 'table' ? '#fff' : null)};
+  color: ${({ textColor }) =>
+    textColor === 'white' ? 'var(--white)' : 'var(--button-bar-txt-color)'};
+  color: ${({ btnType }) => (btnType === 'table' ? 'var(--white)' : null)};
   font-weight: 500;
   text-align: center;
   cursor: pointer;
@@ -330,5 +331,59 @@ export const CommonBtnArea = styled.div<CommonBtnProps>`
   & > button {
     display: table-cell;
     vertical-align: middle;
+  }
+`;
+
+/* * * * * * * * * * * * * * * */
+// professor
+
+export const DemurTable = styled.div`
+  width: 100%;
+  .table {
+    width: 100%;
+    border-top: 2px solid var(--table-outline-color);
+    text-align: center;
+    border-collapse: collapse;
+    .table-head,
+    .table-body > div {
+      display: grid;
+      grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+    }
+    .table-head {
+      height: 45px;
+      background-color: var(--main-bg-color);
+      div {
+        height: 45px;
+        line-height: 45px;
+        font-weight: 700;
+        border-right: 1px solid var(--table-border-color);
+      }
+    }
+    .table-body {
+      border-top: 2px solid var(--table-outline-color);
+      border-bottom: 2px solid var(--table-outline-color);
+      // height: 500px;
+      .table-body-item {
+        border-bottom: 1px solid var(--table-border-color);
+        div {
+          padding: 0 5px;
+          text-align: center;
+          height: 40px;
+          line-height: 40px;
+          border-right: 1px solid var(--table-border-color);
+          &:last-of-type {
+            border-right: none;
+          }
+        }
+      }
+      /* 스크롤바 */
+      overflow-y: auto;
+      /* ( 크롬, 사파리, 오페라, 엣지 ) 동작 */
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      -ms-overflow-style: none; /* 인터넷 익스플로러 */
+      scrollbar-width: none; /* 파이어폭스 */
+    }
   }
 `;
