@@ -161,8 +161,8 @@ export const LectureDetail = styled.div`
     padding: 20px 10px;
   }
   .purpose {
-    grid-column: 1/2;
     grid-row: 3/5;
+    grid-column: 1/2;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
@@ -170,14 +170,15 @@ export const LectureDetail = styled.div`
     background: #dff6ff;
   }
   .inputPurpose {
-    grid-column: 2/5;
     grid-row: 3/5;
+    grid-column: 2/5;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
 
   .bookName {
+    grid-row: 5/6;
     grid-column: 1/2;
     border-right: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
@@ -186,14 +187,15 @@ export const LectureDetail = styled.div`
     margin-left: -1px;
   }
   .inputBookName {
+    grid-row: 5/6;
     grid-column: 2/4;
     border-right: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
 
   .bookPic {
-    grid-column: 4/5;
     grid-row: 5/7;
+    grid-column: 4/5;
     span: 2;
     border-bottom: 1px solid #a5c9f6;
     border-right: 1px solid #a5c9f6;
@@ -201,6 +203,7 @@ export const LectureDetail = styled.div`
   }
 
   .isbn {
+    grid-row: 6/7;
     grid-column: 1/2;
     border-top: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
@@ -211,6 +214,7 @@ export const LectureDetail = styled.div`
     margin-left: -1px;
   }
   .inputIsbn {
+    grid-row: 6/7;
     grid-column: 2/4;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;

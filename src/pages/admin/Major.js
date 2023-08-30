@@ -361,7 +361,7 @@ const Major = () => {
         pending={pending}
         error={error}
       >
-        {isDataArr?.map(item => {
+        {isDataArr.map(item => {
           return (
             <div key={item.imajor}>
               <div>
