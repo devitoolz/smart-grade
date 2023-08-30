@@ -221,8 +221,8 @@ const LectureRoom = () => {
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName.includes('호') === false
-                  ? item.lectureRoomName.concat('호')
+                {item.lectureRoomName?.includes('호') === false
+                  ? item.lectureRoomName?.concat('호')
                   : item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
