@@ -128,7 +128,7 @@ const LectureRoom = () => {
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
         <Dropdown
           placeholder="건물명"
-          length="small"
+          length="short"
           data={buildingDataList}
           value={buildingName}
           setValue={setBuildingName}
@@ -145,23 +145,20 @@ const LectureRoom = () => {
           modalSize="small"
           modalTitle="강의실 추가"
           handleModalOk={handleModalOk}
-          handleModalCancel={handleModalCancel}
         >
           <div
             style={{
               display: 'flex',
               gap: '10px',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
               borderBottom: '1px solid #dae8ff',
               width: '100%',
               padding: '15px 20px',
             }}
           >
-            <p>장소</p>
-            <div style={{ marginLeft: '63px', zIndex: '9999' }}>
+            <p style={{ width: '40%' }}>장소</p>
+            <div>
               <Dropdown
-                length="middle"
+                length="short"
                 placeholder="건물명"
                 data={buildingDataList}
                 value={buildingNameData}
@@ -184,7 +181,7 @@ const LectureRoom = () => {
               justifyContent: 'flex-start',
               borderBottom: '1px solid #dae8ff',
               width: '100%',
-              padding: '15px 23px',
+              padding: '15px 11px',
             }}
           >
             <p>최대수용인원</p>
