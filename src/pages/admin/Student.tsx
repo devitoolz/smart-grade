@@ -99,7 +99,7 @@ const Student = () => {
         pending={pending}
         error={error}
       >
-        {studentsList.map(item => {
+        {studentsList?.map(item => {
           return (
             <div key={item.istudent}>
               <div>{item.studentNum}</div>

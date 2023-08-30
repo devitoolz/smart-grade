@@ -25,6 +25,8 @@ const CustomInput = styled.div<CustomInputProps>`
       ? '120px'
       : length === 'full'
       ? '100%'
+      : length === 'tiny'
+      ? '60px'
       : '120px'};
   ${({ isForm }) =>
     isForm
@@ -48,13 +50,13 @@ const CustomInput = styled.div<CustomInputProps>`
     }
   }
   > input {
-    ${({ isForm }) => (isForm ? `text-align: center;` : null)};
+    text-align: ${({ isForm, length }) => (isForm || length === 'tiny' ? 'center' : null)};
     border: none;
     height: 100%;
     width: 100%;
     background: transparent;
     color: var(--black);
-    font-size: ${({ isForm }) => (isForm ? '16px' : '14px')};
+    font-size: ${({ isForm, length }) => (isForm || length === 'tiny' ? '16px' : '14px')};
     &::placeholder {
       color: var(--search-ph-color);
     }

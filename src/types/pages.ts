@@ -9,3 +9,7 @@ export interface MenuDataType {
     submenu?: ObjectType;
   };
 }
+
+export interface DayData {
+  [key: number]: string;
+}

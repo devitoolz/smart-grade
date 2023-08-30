@@ -26,7 +26,7 @@ export interface InputProps extends CommonInputProps {
   maxLength?: number;
   type?: string;
   reset?: React.Dispatch<React.SetStateAction<string>>;
-  value?: string;
+  value?: string | number;
   setValue?: React.ChangeEventHandler<HTMLInputElement>;
 }
 
@@ -94,8 +94,21 @@ export interface FindPasswordProps {
   payload: LoginData;
 }
 
-interface LectureRegister {
-  setOpenRegister: React.Dispatch<React.SetStateAction<boolean>>;
+export interface RegisterTimetableProps {
+  setOpenRegisterTimetable: React.Dispatch<React.SetStateAction<boolean>>;
+  lectureRoom: string | number | null;
+  prevLectureRoom: string | number | null;
+  setLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
+  setPrevLectureRoom: React.Dispatch<React.SetStateAction<string | number | null>>;
+  setTime: React.Dispatch<React.SetStateAction<ObjectType | null>>;
 }
 
-export interface RegisterTimeTable extends LectureRegister {}
+export interface TimetableData {
+  [key: number]: number;
+}
+
+export interface RegisterScoreProps {
+  setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
+  score: ObjectType | null;
+  setScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
+}
