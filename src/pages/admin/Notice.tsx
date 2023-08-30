@@ -39,11 +39,12 @@ const Notice = () => {
   // 전체 notice Data 담는 list
   const [noticeData, setNoticeData] = useState<Array<any>>([]);
   // 일반
-  const url = '/api/board';
+  const url = '/api/board/keyword';
   const { data, pending, error } = useQuerySearch(url, click);
   // 중요공지
-  const urlImport = '/api/board/importanceList';
+  const urlImport = '/api/board';
   const important = useQuerySearch(urlImport, click);
+
   // 데이터 가공
   useEffect(() => {
     data === null
@@ -110,7 +111,6 @@ const Notice = () => {
         {noticeData.map(item => {
           return (
             <div key={item.iboard}>
-              {/*  style={{ background: item.importance ? 'lavenderblush' : null }} */}
               <div>
                 {item.importance ? <span style={{ fontWeight: '700' }}>중요</span> : item.iboard}
               </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
 import { Wbtns } from '../../styles/LectureRoomCss';
@@ -11,9 +11,12 @@ import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer } from '@toast-ui/react-editor';
 import Dropdown from '../../components/Dropdown';
 import { ObjectType } from '../../types/components';
+import { NoticeWrap } from '../../styles/NoticeStyle';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();
+
+  // 게시글 불러오기
   const { pathname } = useLocation();
   const boardnum = pathname.split('/');
   const iboard = boardnum[boardnum.length - 1];
@@ -23,8 +26,9 @@ const NoticeDetail = () => {
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
-  const [title, setTitle] = useState((data as ObjectType)?.title);
-  const [ctnt, setCtnt] = useState((data as ObjectType)?.ctnt);
+  const [title, setTitle] = useState('');
+  const [ctnt, setCtnt] = useState('');
+  const [importance, setImportance] = useState<string | number | null>('');
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
   const handleChangeCtnt = (e: React.ChangeEvent<HTMLInputElement>) => setCtnt(e.target.value);
   const handleEditBoard = () => {
@@ -32,6 +36,15 @@ const NoticeDetail = () => {
     setTitle((data as ObjectType).title);
     setCtnt((data as ObjectType).ctnt);
   };
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    console.log(data);
+    setTitle((data as ObjectType)?.title);
+    setCtnt((data as ObjectType)?.ctnt);
+    setImportance((data as ObjectType)?.importance + '');
+    // data ? document.querySelector('button')?.click() : null;
+  }, [data]);
+
   // 툴바 커스텀
   const toolbarItems = [
     ['heading', 'bold', 'italic', 'strike'],
@@ -39,50 +52,16 @@ const NoticeDetail = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['table', 'image', 'link'],
   ];
-  const editorRef = useRef(null);
-  const checkRef = useRef(null);
+  const editorRef = useRef<Editor>(null);
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
   const putBoardWait = async () => {
     setDisplay(false);
-    const $check = document.getElementById('check') as HTMLInputElement | null;
-    const importance = $check?.checked ? 1 : 0;
-
-    await putBoard(Number(iboard), ctnt, title, importance);
-    alert('처리되었습니다');
+    const markdownContent = editorRef.current?.getInstance().getMarkdown();
+    await putBoard(Number(iboard), markdownContent as string, title, Number(importance));
     navigate('/admin/home/notice');
   };
 
-  // 게시글 확인-toast ui test
-  const test = `# markdown
-  ~~***test***~~
-  ing
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis doloremque eligendi quibusdam maiores quidem officia, aliquam eveniet fugit necessitatibus voluptate cumque cupiditate magni dolorum pariatur dolorem laboriosam distinctio. Illum, atque.
-  `;
   // 중요공지 드롭다운
   const statusList = [
     { id: '0', title: '일반공지' },
@@ -92,75 +71,70 @@ const NoticeDetail = () => {
   // JSX
   return (
     <>
-      <div style={{ padding: '10px 50px 0' }}>
-        <div style={{ border: '1px solid gray', padding: '2px 10px' }}>
-          {/* 제목 */}
-          {!edit ? (
-            <h2 style={{ lineHeight: '35px' }}>제목이 들어가는 영역</h2>
-          ) : (
-            <Input
-              type="text"
-              length="full"
-              placeholder="제목 (최대 50자)"
-              maxLength={50}
-              value={title}
-              setValue={e => setTitle(e.target.value)}
-            />
-          )}
-          <div>
-            {edit && (
+      <NoticeWrap>
+        <button className="disposable-btn" onClick={() => setLoading(true)}>
+          버튼 클릭 시 글 보임 - 추후 수정 필요
+        </button>
+        <div className="notice-box">
+          <div className="notice-title">
+            {!edit ? (
               <>
-                <input
-                  ref={checkRef}
-                  type="checkbox"
-                  id="check"
-                  defaultChecked={(data as ObjectType)?.importance}
+                {importance === '1' ? (
+                  <div className="status important">중요공지</div>
+                ) : (
+                  <div className="status">일반공지</div>
+                )}
+                <h2>{title}</h2>
+              </>
+            ) : (
+              <>
+                <Dropdown
+                  length="short"
+                  placeholder="일반공지"
+                  data={statusList}
+                  value={importance}
+                  setValue={setImportance}
+                  reset={false}
                 />
-                <label htmlFor="check">중요공지사항</label>
+                <Input
+                  type="text"
+                  length="full"
+                  placeholder="제목 (최대 50자)"
+                  maxLength={50}
+                  value={title}
+                  setValue={e => setTitle(e.target.value)}
+                />
               </>
             )}
-            {edit ||
-              ((data as ObjectType)?.importance ? (
-                <label htmlFor="check" style={{ color: 'red', fontWeight: 700 }}>
-                  중요공지
-                </label>
-              ) : (
-                <label htmlFor="check">일반 게시글</label>
-              ))}
           </div>
-          {/* <Dropdown
-            length="short"
-            placeholder="일반공지"
-            data={statusList}
-            value={importance}
-            setValue={setImportance}
-            reset={false}
-          /> */}
           <span>작성일 | 2023-00-00</span>
-          <hr />
-          <div style={{ width: 100, height: 10 }}></div>
           {/* 내용 */}
-          <div style={{ height: 650, border: '1px solid red', overflowY: 'scroll' }}>
-            {!edit ? (
-              <Viewer initialValue={test} />
-            ) : (
-              <Editor
-                ref={editorRef}
-                placeholder="내용을 입력하세요"
-                initialValue={test}
-                previewStyle="vertical"
-                height="600px"
-                useCommandShortcut={false}
-                language="ko-KR"
-                toolbarItems={toolbarItems}
-                // hooks={{
-                //   addImageBlobHook: handleUploadImage,
-                // }}
-                hideModeSwitch={true}
-                initialEditType="wysiwyg"
-                // viewer={true} // 나중에 다시 살펴보기
-              />
-            )}
+          <div className="notice-view-area">
+            {loading &&
+              (!edit ? (
+                <div className="notice-viewer">
+                  <Viewer initialValue={ctnt} />
+                </div>
+              ) : (
+                <div className="notice-content">
+                  <Editor
+                    ref={editorRef}
+                    placeholder="내용을 입력하세요"
+                    initialValue={ctnt}
+                    previewStyle="vertical"
+                    height="650px"
+                    useCommandShortcut={false}
+                    language="ko-KR"
+                    toolbarItems={toolbarItems}
+                    // hooks={{
+                    //   addImageBlobHook: handleUploadImage,
+                    // }}
+                    hideModeSwitch={true}
+                    initialEditType="wysiwyg"
+                    // viewer={true} // 나중에 다시 살펴보기
+                  />
+                </div>
+              ))}
           </div>
         </div>
         <Wbtns>
@@ -188,7 +162,7 @@ const NoticeDetail = () => {
             </>
           )}
         </Wbtns>
-      </div>
+      </NoticeWrap>
       {display && (
         <CommonModal
           setDisplay={setDisplay}

@@ -3,6 +3,13 @@ import styled from '@emotion/styled';
 export const NoticeWrap = styled.div`
   padding: 0 50px;
 
+  /* NoticeDetail */
+  .notice-box {
+    padding: 6px 12px 12px;
+    border: 1px solid var(--primary-border-color);
+    border-radius: 6px;
+  }
+
   .notice-header {
     margin-bottom: 12px;
     display: flex;
@@ -25,6 +32,24 @@ export const NoticeWrap = styled.div`
     margin-bottom: 12px;
     display: flex;
     gap: 12px;
+
+    .status {
+      width: 70px;
+      height: 35px;
+      border: 1px solid var(--primary-border-color);
+      border-radius: 2px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &.important {
+        border: 1px solid #ffc6c9;
+        background-color: #ffe3e4;
+        color: #ff4e59;
+      }
+    }
+    h2 {
+      line-height: 35px;
+    }
   }
 
   .notice-file {
@@ -65,5 +90,18 @@ export const NoticeWrap = styled.div`
 
   .notice-content {
     margin-bottom: 12px;
+    border: 1px solid transparent;
+  }
+
+  .notice-view-area {
+    margin-top: 10px;
+    border-top: 1px solid transparent;
+    .notice-viewer {
+      margin-bottom: 12px;
+      padding: 10px 25px;
+      height: 650px;
+      border: 1px solid var(--primary-border-color);
+      overflow-y: scroll;
+    }
   }
 `;

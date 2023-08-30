@@ -107,8 +107,10 @@ export const putBoard = async (
   };
   try {
     await api.put(`/api/board`, putData, { headers });
+    alert('처리되었습니다');
   } catch (err) {
     console.log(err);
+    alert('에러가 발생했습니다');
     return;
   }
 };
