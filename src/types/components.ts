@@ -26,8 +26,10 @@ export interface InputProps extends CommonInputProps {
   maxLength?: number;
   type?: string;
   reset?: React.Dispatch<React.SetStateAction<string>>;
-  value?: string;
+  value?: string | number;
   setValue?: React.ChangeEventHandler<HTMLInputElement>;
+  min?: number;
+  max?: number;
 }
 
 export interface DropdownProps extends CommonInputProps {
@@ -114,7 +116,5 @@ export interface DayData {
 export interface RegisterScoreProps {
   setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
   score: ObjectType | null;
-  prevScore: ObjectType | null;
   setScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
-  setPrevScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
 }

@@ -132,18 +132,25 @@ const RegisterTimetableModal = styled.div`
   }
 `;
 
-const RegisterScoreModal = styled.div`
+const RegisterScoreModal = styled.div<{ total: number }>`
   display: flex;
   width: 100%;
   height: 100%;
   flex-direction: column;
   line-height: normal !important;
   font-size: 16px;
-  padding: 15px;
-  gap: 15px;
-  > span.notice {
+  padding: 15px 20px;
+  gap: 20px;
+  > div.notice {
+    display: flex;
+    justify-content: space-between;
     font-size: 14px;
-    color: var(--negative-color);
+    > span:first-of-type {
+      color: var(--negative-color);
+    }
+    > span:last-of-type {
+      color: ${({ total }) => (total !== 100 ? 'var(--negative-color)' : null)};
+    }
   }
   > div.score-inputs {
     display: flex;
@@ -153,7 +160,12 @@ const RegisterScoreModal = styled.div`
     > div.score {
       display: flex;
       align-items: center;
-      gap: 10px;
+      > span:first-of-type {
+        padding-right: 10px;
+      }
+      > span:last-of-type {
+        padding-left: 5px;
+      }
     }
   }
 `;
