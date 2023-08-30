@@ -131,6 +131,7 @@ export const LectureDetail = styled.div`
     padding: 20px 10px;
   }
   .score {
+    grid-column: 1/2;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     /* border-top: 1px solid #a5c9f6; */
@@ -138,6 +139,7 @@ export const LectureDetail = styled.div`
     background: #dff6ff;
   }
   .inputScore {
+    grid-column: 2/3;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     /* border-top: 1px solid #a5c9f6; */
@@ -145,12 +147,14 @@ export const LectureDetail = styled.div`
     margin-left: -1px;
   }
   .professor {
+    grid-column: 3/4;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     padding: 20px 10px;
     background: #dff6ff;
   }
   .inputProfessor {
+    grid-column: 4/5;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
@@ -172,16 +176,9 @@ export const LectureDetail = styled.div`
     border-bottom: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
-  .bookPic {
-    grid-row: 5/7;
-    span: 2;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
-  }
 
   .bookName {
-    grid-column: 2/3;
+    grid-column: 1/2;
     border-right: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     background: #dff6ff;
@@ -189,12 +186,22 @@ export const LectureDetail = styled.div`
     margin-left: -1px;
   }
   .inputBookName {
-    grid-column: 3/5;
+    grid-column: 2/4;
     border-right: 1px solid #a5c9f6;
     padding: 20px 10px;
   }
+
+  .bookPic {
+    grid-column: 4/5;
+    grid-row: 5/7;
+    span: 2;
+    border-bottom: 1px solid #a5c9f6;
+    border-right: 1px solid #a5c9f6;
+    padding: 20px 10px;
+  }
+
   .isbn {
-    grid-column: 2/3;
+    grid-column: 1/2;
     border-top: 1px solid #a5c9f6;
     border-left: 1px solid #a5c9f6;
     border-right: 1px solid #a5c9f6;
@@ -204,7 +211,7 @@ export const LectureDetail = styled.div`
     margin-left: -1px;
   }
   .inputIsbn {
-    grid-column: 3/5;
+    grid-column: 2/4;
     border-right: 1px solid #a5c9f6;
     border-bottom: 1px solid #a5c9f6;
     border-top: 1px solid #a5c9f6;

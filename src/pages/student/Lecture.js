@@ -203,9 +203,9 @@ const Lecture = () => {
               <div className="inputProfessor">교수명들어갈자리</div>
               <div className="purpose">강의목표</div>
               <div className="inputPurpose">강의목표들어갈자리</div>
-              <div className="bookPic">교재사진</div>
               <div className="bookName">교재명</div>
               <div className="inputBookName">교재명들어갈자리</div>
+              <div className="bookPic">교재사진</div>
               <div className="isbn">ISBN</div>
               <div className="inputIsbn">ISBN들어갈자리</div>
             </div>
