@@ -66,7 +66,12 @@ const RegisterTimetable = ({
       setSelectedTime(selectedTime.filter(item => item !== index).sort((a, b) => a - b));
       timeBtnRef.current?.[index].classList.toggle('selected');
     } else {
-      if (index > selectedTime[selectedTime.length - 1] + 5 || index < selectedTime[0] - 5) {
+      if (
+        index > selectedTime[selectedTime.length - 1] + 5 ||
+        index < selectedTime[0] - 5 ||
+        index > selectedTime[0] + 10 ||
+        index === selectedTime[1] - 15
+      ) {
         alert('연속된 시간이어야 합니다.');
       } else {
         timeBtnRef.current?.[index].classList.toggle('selected');
@@ -85,6 +90,8 @@ const RegisterTimetable = ({
   const handleConfirm = () => {
     if (selectedTime.length === 0) {
       alert('최소 1시간 선택해야 합니다.');
+    } else if (selectedTime[selectedTime.length - 1] - selectedTime[selectedTime.length - 2] > 5) {
+      alert('연속된 시간이어야 합니다.');
     } else {
       const week = (selectedTime[0] % 5) + 1;
       const startTime = numberToString(timeData[Math.floor(selectedTime[0] / 5)]);
@@ -171,7 +178,9 @@ const RegisterTimetable = ({
                           }}
                           key={index}
                           onClick={() => handleTimeClick(index)}
-                        ></button>
+                        >
+                          {index}
+                        </button>
                       );
                     })}
                 </div>
