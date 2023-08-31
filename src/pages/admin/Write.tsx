@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
@@ -19,7 +19,6 @@ const Write = () => {
   const [title, setTitle] = useState('');
   const [boardContents, setBoardContents] = useState<string>('');
   const [importance, setImportance] = useState<string | number | null>('0');
-  // 공지상태
   const statusList = [
     {
       id: '0',
@@ -37,16 +36,26 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['table', 'image', 'link'],
   ];
-  // 이미지 업로드 관련
+  // TODO 이미지 업로드 관련
+  let imageList: File[] = [];
   const [imgList, setImgList] = useState<Array<File>>([]);
-  const handleUploadImage = async (blob: any, callback: any) => {
-    console.log(blob);
-    setImgList([...imgList, blob]);
+  const handleUploadImage = (blob: any, callback: any) => {
+    imageList.push(blob);
+    const img = [...imageList];
+    console.log(img);
+    setImgList(img);
+    console.log(imageList);
+    console.log(imgList);
+
     const $btn = document.querySelector('.toastui-editor-close-button');
     ($btn as any)?.click();
-    // console.log(imgList);
 
-    // const imageUrl = '저장된 서버 주소' + blob.name;
+    callback(URL.createObjectURL(blob));
+  };
+  const handleDeleteImage = (_idx: number) => {
+    imgList.splice(_idx, 1);
+    console.log(imgList);
+    setImgList(imgList);
   };
 
   // 공지사항 게시글 POST
@@ -156,7 +165,7 @@ const Write = () => {
               return (
                 <div key={idx} className="file-item">
                   <span>{item?.name}</span>
-                  <button>X</button>
+                  <button onClick={() => handleDeleteImage(idx)}>X</button>
                 </div>
               );
             })}
