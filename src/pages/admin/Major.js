@@ -26,8 +26,10 @@ const Major = () => {
   ////DropDown////
   //DropDown value state
 
-  //졸업학점
+  // 변경전 졸업학점
   const [graduationScore, setGraduationScore] = useState('');
+  //변경후 졸업학점
+  const [graduationScoreNow, setGraduationScoreNow] = useState('');
 
   // 상태 데이터
   const _status = [
@@ -63,6 +65,9 @@ const Major = () => {
   //폐지버튼 클릭시 모달창 활성화
   const [disUseModalShow, setDisUseModalShow] = useState(false);
 
+  //전공명 id state
+  const [majorId, setMajorId] = useState('');
+
   // 변경할 항목 pk값 저장할 state.
   const [selectMajorID, setSelectMajorID] = useState(null);
 
@@ -74,9 +79,6 @@ const Major = () => {
   //전공리스트 state 전역관리
   const { allMajorList } = useSelector(state => state.major);
   // console.log(allMajorList);
-
-  //전공명 id state
-  const [majorId, setMajorId] = useState('');
 
   //변경버튼 state
   const [, setChangeClickShow] = useState(false);
@@ -206,7 +208,7 @@ const Major = () => {
   const disuesModalOk = async _id => {
     setDisabled(true);
     await MajorDeleteTest(_id);
-    const temp = data.major.map(item => {
+    const temp = data.vo.map(item => {
       // 강제로 변경상태 기록
       if (_id === item.imajor) {
         item.delYn = 1;
@@ -240,7 +242,7 @@ const Major = () => {
     // console.log(data);
 
     if (data) {
-      const temp = data?.major?.map(item => {
+      const temp = data?.vo?.map(item => {
         // 강제로 변경상태 기록
         item.isChange = 0;
         if (item.remarks !== '') {
@@ -355,7 +357,7 @@ const Major = () => {
       ) : null}
       <Table
         header={tableHeader}
-        data={data?.major}
+        data={data?.vo}
         hasPage={true}
         maxPage={6}
         pending={pending}
@@ -365,7 +367,6 @@ const Major = () => {
           return (
             <div key={item.imajor}>
               <div>
-                {/* {changeClickShow === true ? <Input length="long" type="text"></Input> : null} */}
                 {selectMajorID === item.imajor ? (
                   <Input
                     length="long"
