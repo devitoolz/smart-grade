@@ -55,7 +55,12 @@ export const getStudentInfo = async (_istudent: number, _setFunc: any) => {
 };
 
 // 게시판 - 게시판 글 올리기
-export const postBoard = async (_title: string, _contents: string, _isChecked: number) => {
+export const postBoard = async (
+  _title: string,
+  _contents: string,
+  _isChecked: number,
+  _pics?: Array<File>
+) => {
   const headers = { 'Content-Type': 'multipart/form-data' };
   const postData = new FormData();
   const param = {
@@ -66,6 +71,7 @@ export const postBoard = async (_title: string, _contents: string, _isChecked: n
   };
   // const pics = [];
   // postData.append("pics", fileRef.current.files[0]);
+  _pics?.forEach(item => postData.append('pics', item));
   postData.append(
     'param',
     new Blob([JSON.stringify(param)], {
@@ -73,7 +79,7 @@ export const postBoard = async (_title: string, _contents: string, _isChecked: n
     })
   );
   try {
-    const res = await api.post(`/api/board`, postData, { headers });
+    const res = await api.post(`/api/board/pics`, postData, { headers });
     const result = res.data;
     return result;
   } catch (err) {
@@ -85,7 +91,7 @@ export const postBoard = async (_title: string, _contents: string, _isChecked: n
 // 게시판 - 게시판 글 삭제
 export const deleteBoard = async (_iboard: number) => {
   try {
-    await api.delete(`/api/board/${_iboard}`);
+    await api.delete(`/api/board?iboard=${_iboard}`);
   } catch (err) {
     console.log(err);
     return;
