@@ -21,7 +21,7 @@ const Professor = () => {
   const { allMajorList } = useSelector((state: RootState) => state.major);
 
   const tableHeader = [
-    { title: '전공', width: 4 },
+    { title: '전공', width: 5 },
     { title: '이름', width: 2 },
     { title: '성별', width: 1 },
     { title: '생년월일', width: 2.5 },

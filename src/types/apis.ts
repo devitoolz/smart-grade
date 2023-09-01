@@ -59,7 +59,7 @@ export interface OTPData {
 export interface MajorData {
   imajor: number;
   majorName: string;
-  delYn: number;
+  delYn?: number;
 }
 
 export interface LoginResult {
