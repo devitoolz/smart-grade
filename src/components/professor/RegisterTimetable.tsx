@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterTimetableModal } from '../../styles/RegisterStyle';
 import { dayData } from '../../pages/professor/RegisterApply';
-import api from '../../apis/api';
 import { PulseLoader } from 'react-spinners';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
@@ -26,8 +25,6 @@ const RegisterTimetable = ({
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
   const [usedTime, setUsedTime] = useState<Array<number>>([]);
-  // const [pending, setPending] = useState(true);
-  // const [error, setError] = useState(false);
 
   const timeData: TimetableData = {
     0: 9,
@@ -156,7 +153,9 @@ const RegisterTimetable = ({
       <ModalStyle modalSize="small">
         <div className="modal-box" style={{ width: 'auto', height: 'auto' }}>
           <div className="modal-title-small">
-            <div>{lectureRoom} 강의실 시간표</div>
+            <div>
+              {(data as ObjectType)?.buildingName} {(data as ObjectType)?.lectureRoomName}호 시간표
+            </div>
             <button onClick={handleCancel}>
               <FontAwesomeIcon icon={faXmark} size="lg" />
             </button>

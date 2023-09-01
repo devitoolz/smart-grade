@@ -17,6 +17,7 @@ import UserDetail from './pages/admin/UserDetail';
 import { useDispatch } from 'react-redux';
 import majorSlice from './slices/majorSlice';
 import api, { getAuth, removeAuth } from './apis/api';
+import { MajorData } from './types/apis';
 
 const Admin = () => {
   const { pathname } = useLocation();
@@ -29,14 +30,9 @@ const Admin = () => {
     // TODO: 전공 목록 api 수정 예정, 타입 추후 추가
     const getMajorList = async () => {
       try {
-        const { data } = await api.get(`/api/major`);
-        let majorList = [];
-        for (let i = 0; i < data.page.maxPage; i++) {
-          const { data } = await api.get(`/api/major?page=${i + 1}`);
-          majorList.push(...data.major);
-        }
-        dispatch(major.setAllMajorList(majorList));
-      } catch (err) {
+        const { data } = await api.get<Array<MajorData>>(`/api/major/list`);
+        dispatch(major.setAllMajorList(data));
+      } catch {
         if (getAuth()) {
           alert('관리자만 접근할 수 있습니다.');
           navigate(-2);
@@ -46,7 +42,7 @@ const Admin = () => {
         }
       }
     };
-    // getMajorList();
+    getMajorList();
   }, []);
 
   useEffect(() => {
