@@ -1,5 +1,7 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
+// import { EffectCards } from 'swiper/modules';
 import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -83,32 +85,32 @@ const Students = () => {
   ];
 
   //테이블 임시 더미데이터
-  const _data = [
-    {
-      id: '1',
-      grade: '3',
-      major: '산업디자인',
-      StudentID: 23720004,
-      name: '도하나',
-      phoneNumber: '010 - 1234 - 5678',
-    },
-    {
-      id: '2 ',
-      content: '1',
-    },
-    {
-      id: '3 ',
-      content: '1',
-    },
-    {
-      id: '4 ',
-      content: '1',
-    },
-    {
-      id: '5 ',
-      content: '1',
-    },
-  ];
+  // const _data = [
+  //   {
+  //     id: '1',
+  //     grade: '3',
+  //     major: '산업디자인',
+  //     StudentID: 23720004,
+  //     name: '도하나',
+  //     phoneNumber: '010 - 1234 - 5678',
+  //   },
+  //   {
+  //     id: '2 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '3 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '4 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '5 ',
+  //     content: '1',
+  //   },
+  // ];
 
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
@@ -123,9 +125,23 @@ const Students = () => {
   };
 
   //api get hook test
-  const url = '';
-
+  const url = '/api/student/${studentNum}';
   const { data, pending, error } = useQuerySearch(url, click);
+
+  const getstudent = async () => {
+    try {
+      const res = await axios.get('/api/student/${studentNum}');
+      const result = res.data;
+      console.log('갈치가 천원', result);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getstudent();
+  });
   return (
     <div>
       {display === true ? (
@@ -180,21 +196,21 @@ const Students = () => {
       </SearchBar>
       <Table
         header={tableHeader}
-        data={_data}
+        data={data?.profile}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {' '}
-        {_data.map(item => {
+        {data?.profile?.map(item => {
           return (
-            <div key={item.id}>
+            <div key={item.studentNum}>
               <div>{item.grade}</div>
-              <div>{item.major}</div>
-              <div>{item.StudentID}</div>
+              <div>{item.majorName}</div>
+              <div>{item.studentNum}</div>
               <div>{item.name}</div>
-              <div>{item.phoneNumber}</div>
+              <div>{item.phone}</div>
             </div>
           );
         })}

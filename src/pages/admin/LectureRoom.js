@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -7,6 +7,7 @@ import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
 import api from '../../apis/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import axios from 'axios';
 
 const LectureRoom = () => {
   //강의실 추가시 건물명 state
@@ -123,6 +124,22 @@ const LectureRoom = () => {
     window.location.reload();
   };
 
+  //임시
+  const getLectureRoom = async () => {
+    try {
+      const res = await axios.get('/api/lectureroom');
+      const result = res.data;
+      console.log('나오는지 확인', result);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getLectureRoom();
+  }, []);
+
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -209,20 +226,20 @@ const LectureRoom = () => {
 
       <Table
         header={tableHeader}
-        data={data?.lectureRoom}
+        data={data?.lectureRoomList}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.lectureRoom?.map(item => {
+        {data?.lectureRoomList?.map(item => {
           return (
             <div key={item.ilectureRoom}>
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName.includes('호') === false
-                  ? item.lectureRoomName.concat('호')
+                {item.lectureRoomName?.includes('호') === false
+                  ? item.lectureRoomName?.concat('호')
                   : item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
