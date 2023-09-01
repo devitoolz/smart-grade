@@ -35,20 +35,12 @@ const NoticeDetail = () => {
     setEdit(true);
     setTitle((data as ObjectType).title);
     const contents = (data as ObjectType)?.ctnt;
-    contents?.replace(
-      /blob:http:\/\/localhost:3000\//g,
-      `http://192.168.0.144:5002/imgs/boardPic/${iboard}`
-    );
     setCtnt(contents);
   };
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     setTitle((data as ObjectType)?.title);
     const contents = (data as ObjectType)?.ctnt;
-    contents?.replace(
-      /blob:http:\/\/localhost:3000\//g,
-      `http://192.168.0.144:5002/imgs/boardPic/${iboard}`
-    );
     setCtnt(contents);
     setImportance((data as ObjectType)?.importance + '');
     // data ? document.querySelector('button')?.click() : null;
@@ -139,8 +131,8 @@ const NoticeDetail = () => {
                     // hooks={{
                     //   addImageBlobHook: handleUploadImage,
                     // }}
-                    hideModeSwitch={true}
-                    initialEditType="wysiwyg"
+                    // hideModeSwitch={true}
+                    // initialEditType="wysiwyg"
                     // viewer={true} // 나중에 다시 살펴보기
                   />
                 </div>

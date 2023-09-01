@@ -36,16 +36,17 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['image', 'link'],
   ];
-  // TODO 이미지 업로드 관련
-  let imageList: File[] = [];
+  // XXX 이미지 업로드 관련
   const [imgList, setImgList] = useState<Array<File>>([]);
+  const [imgBlobUrlList, setimgBlobUrlList] = useState<Array<string>>([]);
   const handleUploadImage = (blob: any, callback: any) => {
-    imageList.push(blob);
-    const img = [...imageList];
-    console.log(img);
-    setImgList(img);
-    console.log(imageList);
+    imgList.push(blob);
     console.log(imgList);
+    setImgList([...imgList]);
+
+    imgBlobUrlList.push(URL.createObjectURL(blob));
+    console.log(imgBlobUrlList);
+    setimgBlobUrlList([...imgBlobUrlList]);
 
     const $btn = document.querySelector('.toastui-editor-close-button');
     ($btn as any)?.click();
@@ -53,10 +54,25 @@ const Write = () => {
     callback(URL.createObjectURL(blob));
   };
   const handleDeleteImage = (_idx: number) => {
-    const aa = imageList.splice(_idx, 1);
-    console.log(aa);
-    console.log(imageList);
-    setImgList(imageList);
+    console.log('imgList : ', imgList);
+    const bb: Array<File> = [];
+    imgList.forEach((item, index) => {
+      if (_idx !== index) {
+        bb.push(item);
+      }
+    });
+    console.log('_idx : ', _idx);
+    console.log('deleteImage : ', bb);
+    setImgList(bb);
+
+    const imgUrl: Array<string> = [];
+    imgBlobUrlList.forEach((item, index) => {
+      if (_idx !== index) {
+        imgUrl.push(item);
+      }
+    });
+    console.log(imgUrl);
+    setimgBlobUrlList(imgUrl);
   };
 
   // 공지사항 게시글 POST
@@ -74,7 +90,13 @@ const Write = () => {
       alert('내용을 입력해주세요');
       return;
     } else {
-      setBoardContents(markdownContent as string);
+      const replaceContents = markdownContent?.replace(
+        /blob:http:\/\/localhost:3000\//g,
+        // XXX iboard 값 처리 고민
+        `http://192.168.0.144:5002/imgs/boardPic/0/`
+      );
+      setBoardContents(replaceContents as string);
+      console.log(replaceContents);
     }
     setSaveDisplay(true);
   };
@@ -188,6 +210,18 @@ const Write = () => {
             // initialEditType="wysiwyg"
             // viewer={true} // TODO :나중에 다시 살펴보기
           />
+          <div className="notice-content-img">
+            <div>
+              {imgBlobUrlList?.map((item, idx) => {
+                return (
+                  <div key={idx} className="file-item">
+                    <img src={item} alt={`미리보기 ${idx + 1}`} />
+                    <button onClick={() => handleDeleteImage(idx)}>X</button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </NoticeWrap>
     </>
