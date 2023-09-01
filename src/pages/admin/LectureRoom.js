@@ -51,7 +51,7 @@ const LectureRoom = () => {
   const { data, pending, error } = useQuerySearch(url, click);
   //searchBar dropdown
   const buildingDataList = [];
-  data?.lectureRoomList?.forEach(item => {
+  data?.lectureRoom?.forEach(item => {
     buildingDataList.push({ id: item.buildingName, title: item.buildingName });
   });
 
@@ -125,20 +125,20 @@ const LectureRoom = () => {
   };
 
   //임시
-  const getLectureRoom = async () => {
-    try {
-      const res = await axios.get('/api/lectureroom');
-      const result = res.data;
-      console.log('나오는지 확인', result);
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  // const getLectureRoom = async () => {
+  //   try {
+  //     const res = await axios.get('/api/lectureroom');
+  //     const result = res.data;
+  //     console.log('나오는지 확인', result);
+  //     return result;
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
 
-  useEffect(() => {
-    getLectureRoom();
-  }, []);
+  // useEffect(() => {
+  //   getLectureRoom();
+  // }, []);
 
   return (
     <>
@@ -147,8 +147,8 @@ const LectureRoom = () => {
           placeholder="건물명"
           length="short"
           data={buildingDataList}
-          value={buildingName}
-          setValue={setBuildingName}
+          value={buildingNameData}
+          setValue={setBuildingNameData}
           reset
           search
         />
@@ -178,8 +178,8 @@ const LectureRoom = () => {
                 length="short"
                 placeholder="건물명"
                 data={buildingDataList}
-                value={buildingNameData}
-                setValue={setBuildingNameData}
+                value={buildingName}
+                setValue={setBuildingName}
               />
             </div>
             <Input
