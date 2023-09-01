@@ -118,10 +118,10 @@ const RegisterApply = () => {
                 isForm
                 placeholder="강의실을 선택하세요."
                 data={[
-                  { id: 0, title: '테스트 1' },
-                  { id: 1, title: '테스트 2' },
+                  { id: 1, title: '테스트 1' },
+                  { id: 2, title: '테스트 2' },
                 ]}
-                propertyName={{ key: 'title', value: 'title' }}
+                propertyName={{ key: 'id', value: 'title' }}
                 value={lectureRoom}
                 setValue={setLectureRoom}
                 reset

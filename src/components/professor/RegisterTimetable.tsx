@@ -1,11 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { RegisterTimetableProps, TimetableData } from '../../types/components';
+import {
+  LectureTimetableData,
+  RegisterTimetableProps,
+  TimetableData,
+} from '../../types/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterTimetableModal } from '../../styles/RegisterStyle';
 import { dayData } from '../../pages/professor/RegisterApply';
+import api from '../../apis/api';
+import { PulseLoader } from 'react-spinners';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
@@ -17,9 +24,9 @@ const RegisterTimetable = ({
 }: RegisterTimetableProps) => {
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
-
-  // TODO: 추후 api로 가져올 예정
-  const data = [5, 10, 15, 20, 3, 8, 13, 18];
+  const [usedTime, setUsedTime] = useState<Array<number>>([]);
+  // const [pending, setPending] = useState(true);
+  // const [error, setError] = useState(false);
 
   const timeData: TimetableData = {
     0: 9,
@@ -41,14 +48,39 @@ const RegisterTimetable = ({
     }
   };
 
+  const stringToNumber = (string: string) => {
+    return parseInt(string.slice(0, 2));
+  };
+
+  const url = `/api/professor/lecture/room?ilectureRoom=${lectureRoom}`;
+
+  const { data, pending, error } = useQuerySearch(url);
+
+  useEffect(() => {
+    let temp: Array<number> = [];
+
+    data?.map((item: LectureTimetableData) => {
+      const start = stringToNumber(item.startTime);
+      const end = stringToNumber(item.endTime);
+      const startKey = parseInt(
+        Object.keys(timeData).find(key => timeData[parseInt(key)] === start) as string
+      );
+      for (let i = 0; i < end - start; i++) {
+        temp.push(5 * startKey + item.dayWeek - 1 + 5 * i);
+      }
+    });
+
+    setUsedTime(temp.sort((a, b) => a - b));
+  }, [data]);
+
   useEffect(() => {
     const disableButton = (index: number) => {
       if (
         (selectedTime.length === 3 && !selectedTime.includes(index)) ||
-        data.includes(index) ||
+        usedTime.includes(index) ||
         (selectedTime.length !== 0 && selectedTime[0] % 5 !== index % 5)
       ) {
-        if (data.includes(index)) {
+        if (usedTime.includes(index)) {
           timeBtnRef.current?.[index].classList.add('already-used');
         }
         return true;
@@ -59,7 +91,7 @@ const RegisterTimetable = ({
     timeBtnRef.current?.forEach((button, index) => {
       button.disabled = disableButton(index);
     });
-  }, [selectedTime]);
+  }, [selectedTime, usedTime]);
 
   const handleTimeClick = (index: number) => {
     if (selectedTime.includes(index)) {
@@ -94,7 +126,7 @@ const RegisterTimetable = ({
       alert('연속된 시간이어야 합니다.');
     } else {
       const week = (selectedTime[0] % 5) + 1;
-      const startTime = numberToString(timeData[Math.floor(selectedTime[0] / 5)]);
+      const startTime = numberToString(timeData[Math.floor(selectedTime[0] / 5)]); //몫
       const endTime = numberToString(
         timeData[Math.floor(selectedTime[selectedTime.length - 1] / 5)] + 1
       );
@@ -165,25 +197,36 @@ const RegisterTimetable = ({
                     );
                   })}
                 </div>
-                <div className="timetable-btns">
-                  {Array(45)
-                    .fill('')
-                    .map((_, index) => {
-                      return (
-                        <button
-                          ref={el => {
-                            if (el) {
-                              timeBtnRef.current![index] = el;
-                            }
-                          }}
-                          key={index}
-                          onClick={() => handleTimeClick(index)}
-                        >
-                          {index}
-                        </button>
-                      );
-                    })}
-                </div>
+                {!error ? (
+                  <div className="timetable-btns">
+                    {Array(45)
+                      .fill('')
+                      .map((_, index) => {
+                        return (
+                          <button
+                            ref={el => {
+                              if (el) {
+                                timeBtnRef.current![index] = el;
+                              }
+                            }}
+                            key={index}
+                            onClick={() => handleTimeClick(index)}
+                          ></button>
+                        );
+                      })}
+                    {pending && (
+                      <div className="timetable-loading">
+                        <PulseLoader color="#47b5ff" margin={6} size={12} speedMultiplier={0.7} />
+                        <span>로딩 중...</span>
+                      </div>
+                    )}
+                  </div>
+                ) : (
+                  <div className="timetable-error">
+                    <FontAwesomeIcon icon={faTriangleExclamation} />
+                    <span>데이터를 불러오지 못했습니다.</span>
+                  </div>
+                )}
               </div>
             </RegisterTimetableModal>
           </div>

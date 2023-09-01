@@ -182,6 +182,7 @@ const RegisterTimetableModal = styled.div`
     > div.timetable-btns {
       display: grid;
       grid-template: repeat(9, 60px) / repeat(5, 100px);
+      position: relative;
       > button {
         border: none;
         border-right: 1px solid var(--table-border-color);
@@ -207,6 +208,35 @@ const RegisterTimetableModal = styled.div`
         &.already-used {
           background: var(--negative-color);
         }
+      }
+      > div.timetable-loading {
+        position: absolute;
+        border: none;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--main-border-color);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        > span {
+          font-size: 16px;
+        }
+      }
+    }
+    > div.timetable-error {
+      width: 500px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      > svg {
+        font-size: 60px;
+        color: red;
+        padding-bottom: 20px;
       }
     }
   }
