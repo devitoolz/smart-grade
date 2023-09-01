@@ -36,7 +36,7 @@ const Professor = () => {
 
   const { data, pending, error } = useQuerySearch(url, click);
 
-  const professorList: Array<ObjectType> = (data as ObjectType)?.professor;
+  const professorList: Array<ObjectType> = (data as ObjectType)?.professors;
 
   return (
     <>

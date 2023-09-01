@@ -46,7 +46,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }: Tab
   }, [maxPage, listIndex]);
 
   useEffect(() => {
-    setListIndex((currentPage - 1) / 5);
+    setListIndex(Math.floor((currentPage - 1) / 5));
   }, [query]);
 
   const movePage = (num: number) => {
