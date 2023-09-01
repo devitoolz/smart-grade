@@ -46,13 +46,13 @@ const Notice = () => {
   const important = useQuerySearch(urlImport, click);
 
   // 데이터 가공
-  useEffect(() => {
-    data === null
-      ? null
-      : important.data === null
-      ? null
-      : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
-  }, [data, important.data]);
+  // useEffect(() => {
+  //   data === null
+  //     ? null
+  //     : important.data === null
+  //     ? null
+  //     : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
+  // }, [data, important.data]);
 
   //table header
   const tableHeader = [
@@ -102,13 +102,13 @@ const Notice = () => {
 
       <Table
         header={tableHeader}
-        data={noticeData}
+        data={(data as ObjectType)?.list}
         hasPage={true}
         maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {noticeData.map(item => {
+        {(data as ObjectType)?.list?.map((item: any) => {
           return (
             <div key={item.iboard}>
               <div>

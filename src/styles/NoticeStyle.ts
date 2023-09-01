@@ -89,8 +89,23 @@ export const NoticeWrap = styled.div`
   }
 
   .notice-content {
+    display: flex;
+    gap: 10px;
     margin-bottom: 12px;
     border: 1px solid transparent;
+    .notice-content-img {
+      padding: 10px;
+      border: 1px solid var(--primary-border-color);
+      border-radius: 10px;
+      & > div {
+        overflow-y: auto;
+        width: 400px;
+        height: 580px;
+        img {
+          max-width: 100%;
+        }
+      }
+    }
   }
 
   .notice-view-area {
