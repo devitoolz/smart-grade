@@ -34,7 +34,7 @@ const Write = () => {
     ['heading', 'bold', 'italic', 'strike'],
     ['hr', 'quote'],
     ['ul', 'ol', 'indent', 'outdent'],
-    ['table', 'image', 'link'],
+    ['image', 'link'],
   ];
   // TODO 이미지 업로드 관련
   let imageList: File[] = [];
@@ -53,9 +53,10 @@ const Write = () => {
     callback(URL.createObjectURL(blob));
   };
   const handleDeleteImage = (_idx: number) => {
-    imgList.splice(_idx, 1);
-    console.log(imgList);
-    setImgList(imgList);
+    const aa = imageList.splice(_idx, 1);
+    console.log(aa);
+    console.log(imageList);
+    setImgList(imageList);
   };
 
   // 공지사항 게시글 POST

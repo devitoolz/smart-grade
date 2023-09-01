@@ -46,7 +46,7 @@ export const patchApproveLecture = async (_ilecture: number, _procedure: number)
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
 export const getStudentInfo = async (_istudent: number, _setFunc: any) => {
   try {
-    const res = await api.get(`/api/admin/grade/${_istudent}`);
+    const res = await api.get(`/api/grade-mngmn/${_istudent}`);
     const result = await res.data;
     _setFunc(result);
   } catch (err) {

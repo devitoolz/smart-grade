@@ -28,7 +28,7 @@ const GradeInput = () => {
     { title: '중간', width: 2 },
     { title: '기말', width: 2 },
     { title: '입력', width: 1 },
-  ];
+  ]; // TODO 입력 영역 width 변경
   const tableData = Array(7).fill('');
 
   // 성적입력 input 창 출력
