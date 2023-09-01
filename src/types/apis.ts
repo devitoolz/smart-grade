@@ -62,6 +62,11 @@ export interface MajorData {
   delYn?: number;
 }
 
+export interface LectureRoomData {
+  ilectureRoom: number;
+  lectureRoomName: string;
+}
+
 export interface LoginResult {
   success: boolean;
   code: number;

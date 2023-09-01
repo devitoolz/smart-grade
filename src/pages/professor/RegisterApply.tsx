@@ -16,6 +16,8 @@ import RegisterScore from '../../components/professor/RegisterScore';
 import { DayData } from '../../types/pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { LectureRoomData } from '../../types/apis';
+import api from '../../apis/api';
 
 export const dayData: DayData = {
   1: '월요일',
@@ -40,9 +42,29 @@ const RegisterApply = () => {
   const [bookImg, setBookImg] = useState<string | null>(null);
   const [description, setDescription] = useState<string>('');
 
+  const [lectureRoomList, setLectureRoomList] = useState<Array<LectureRoomData> | null>(null);
   const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>(null);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const getLectureRoomList = async () => {
+      try {
+        const { data } = await api.get<Array<LectureRoomData>>(`/api/lectureroom/list`);
+        const newData = data.map(item => {
+          return {
+            ...item,
+            lectureRoomName: item.lectureRoomName.concat('호'),
+          };
+        });
+        setLectureRoomList(newData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getLectureRoomList();
+  }, []);
 
   useEffect(() => {
     if (lectureRoom !== '') {
@@ -118,11 +140,8 @@ const RegisterApply = () => {
               <Dropdown
                 isForm
                 placeholder="강의실을 선택하세요."
-                data={[
-                  { id: 1, title: '테스트 1' },
-                  { id: 2, title: '테스트 2' },
-                ]}
-                propertyName={{ key: 'id', value: 'title' }}
+                data={lectureRoomList}
+                propertyName={{ key: 'ilectureRoom', value: 'lectureRoomName' }}
                 value={lectureRoom}
                 setValue={setLectureRoom}
                 reset
