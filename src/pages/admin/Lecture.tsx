@@ -56,7 +56,7 @@ const Lecture = () => {
     const getLectureName = async () => {
       try {
         const { data } = await api.get(`/api/admin/lecture-name`);
-        setLectureNameList(data.vo);
+        setLectureNameList(data);
       } catch (err) {
         console.log(err);
         alert('강의 목록을 불러올 수 없습니다');
@@ -94,8 +94,9 @@ const Lecture = () => {
   const [lectureNm, setLectureNm] = useState('');
   const handlegetStudentList = async (_lectureNm: string, _ilecture: number) => {
     setLectureNm(_lectureNm);
-    const result = await getStudentList(_ilecture, pageIdx);
-    Array.isArray(result.list) ? setContents(result.list) : setContents(result);
+    const result = await getStudentList(_ilecture);
+    // Array.isArray(result.list) ? setContents(result.list) : setContents(result);
+    setContents(result);
     setDisplay(true);
   };
 
@@ -190,7 +191,25 @@ const Lecture = () => {
 
       {display ? (
         <CommonModal setDisplay={setDisplay} modalTitle={lectureNm} modalSize="big">
-          {Array.isArray(contents) ? (
+          <div style={{ padding: 20 }}>
+            <div>정원 = {contents.attendance}</div>
+            <div>현원 = {contents.currentPeople}</div>
+            <div>강의실 = {contents.buildingName}</div>
+            <div>호실 = {contents.lectureRoomName}</div>
+            <div>bookUrl = {contents.bookUrl}</div>
+            <div>textBook = {contents.textBook}</div>
+            <div>ctnt = {contents.ctnt}</div>
+            <div>학점 = {contents.score}</div>
+            <div>학년제한 = {contents.gradeLimit}</div>
+            <div>finalExamination = {contents.finalExamination}</div>
+            <div>midtermExamination = {contents.midtermExamination}</div>
+            <div>lectureEndDate = {contents.lectureEndDate}</div>
+            <div>lectureEndTime = {contents.lectureEndTime}</div>
+            <div>lectureStrDate = {contents.lectureStrDate}</div>
+            <div>lectureStrTime = {contents.lectureStrTime}</div>
+            <div>lectureName = {contents.lectureName}</div>
+          </div>
+          {/* {Array.isArray(contents) ? (
             <TableArea>
               <div className="table">
                 <div className="table_head">
@@ -240,7 +259,7 @@ const Lecture = () => {
               <p style={{ borderBottom: '2px solid red', display: 'inline-block' }}>폐강 사유</p>
               <div>{contents.returnCtnt}</div>
             </IsClosed>
-          )}
+          )} */}
         </CommonModal>
       ) : null}
     </>

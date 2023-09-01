@@ -15,7 +15,6 @@ const Grade = () => {
     { title: '강의명', width: 3 },
     { title: '담당교수', width: 1 },
     { title: '강의시간', width: 1 },
-    { title: '강의실', width: 1 },
     // 점수
     { title: '학점', width: 1 },
     { title: '최종성적', width: 1 },
@@ -36,7 +35,7 @@ const Grade = () => {
     { id: 3, title: '2학년 1학기' },
     { id: 4, title: '2학년 2학기' },
   ];
-  // 타입 수정 필요 !!
+  // XXX 타입 수정 필요 !!
   const [dropValue, setDropValue] = useState<any>('');
 
   // 강의 pk
@@ -78,7 +77,6 @@ const Grade = () => {
               <div>GUI웹프로그래밍{idx + 1}</div>
               <div>김교수</div>
               <div>14:00~16:00</div>
-              <div>그린관 502호</div>
               <div>3</div>
               <div>100</div>
               <div>4.5</div>

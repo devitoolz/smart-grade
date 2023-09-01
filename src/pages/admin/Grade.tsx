@@ -50,7 +50,7 @@ const Grade = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
-  const url = '/api/grade-mngmn';
+  const url = '/api/admin/grade-mngmn';
   const { data, pending, error } = useQuerySearch(url, click);
 
   return (
@@ -80,7 +80,7 @@ const Grade = () => {
         <CommonButton
           btnType="page"
           value="학생상세정보"
-          onClick={() => handleGetStudentInfo((data as ObjectType)?.student?.istudent)}
+          onClick={() => handleGetStudentInfo((data as ObjectType)?.student?.studentNum)}
         >
           {(data as ObjectType)?.student?.name} {(data as ObjectType)?.student?.studentNum}
         </CommonButton>
