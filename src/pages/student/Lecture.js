@@ -26,16 +26,16 @@ const Lecture = () => {
   //tabel header
   const tableHeader = [
     {
-      title: '학기',
+      title: '연도',
       width: '0.5',
     },
     {
-      title: '학년제한 ',
-      width: '0.7',
+      title: '학기 ',
+      width: '0.5',
     },
     {
-      title: '전공 ',
-      width: '2',
+      title: '학년 ',
+      width: '0.5',
     },
     {
       title: '강의명 ',
@@ -43,24 +43,17 @@ const Lecture = () => {
     },
     {
       title: '담당교수 ',
-      width: '1',
+      width: '0.5',
     },
     {
       title: '학점  ',
       width: '0.5',
     },
     {
-      title: '강의실   ',
+      title: '강의시간',
       width: '1.5',
     },
-    {
-      title: '강의시간    ',
-      width: '2',
-    },
-    {
-      title: '정원',
-      width: '0.5',
-    },
+
     {
       title: '상세보기',
       width: '1',
@@ -99,15 +92,13 @@ const Lecture = () => {
   const _data = [
     {
       id: '1',
+      year: 2023,
       semester: '1',
-      gradeLimit: '3',
-      major: '산업디자인',
+      grade: '3',
       LectureName: '콘크리트 구조 이해',
       professor: '도하나',
+      lectureHour: '09:00~10:00 화,목',
       score: 3,
-      lectureLoom: '백매관 303호',
-      lectureHour: '09:00~10:00',
-      maxCapacity: 30,
     },
     {
       id: '2 ',
@@ -211,7 +202,7 @@ const Lecture = () => {
         <SearchBar queries={queries} setPage={true} setClick={setClick}>
           <Dropdown
             length="short"
-            placeholder="학기"
+            placeholder="연도"
             data={semesterList}
             value={semester}
             setValue={setSemester}
@@ -247,15 +238,14 @@ const Lecture = () => {
         {_data.map(item => {
           return (
             <div key={item.id}>
+              <div>{item.year}</div>
               <div>{item.semester}</div>
-              <div>{item.gradeLimit}</div>
-              <div>{item.major}</div>
+              <div>{item.grade}</div>
               <div>{item.LectureName}</div>
               <div>{item.professor}</div>
               <div>{item.score}</div>
-              <div>{item.lectureLoom}</div>
               <div>{item.lectureHour}</div>
-              <div>{item.maxCapacity}</div>
+
               <div>
                 <CommonButton
                   btnType="table"
