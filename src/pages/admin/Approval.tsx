@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TextArea } from '../../styles/MyStyleCSS';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Table from '../../components/Table';
@@ -79,10 +79,10 @@ const Approval = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   const [query, setQuery] = useSearchParams();
-  useEffect(() => {
-    query.set('procedures', '-2');
-    setQuery(query);
-  }, [query]);
+  // useEffect(() => {
+  //   query.set('procedures', '-2');
+  //   setQuery(query);
+  // }, []);
   const url = '/api/admin/lecture';
   const { data, pending, error } = useQuerySearch(url, click);
 
@@ -93,7 +93,7 @@ const Approval = () => {
   };
   const status = ['신청 반려', '개설 승인', '개강 승인', '개강'];
   // 검색기능
-  const [procedures, setLectureStatus] = useState<string | number | null>('');
+  const [procedures, setLectureStatus] = useState<string | number | null>('-2');
   const statusList = [
     {
       id: '-2',
@@ -123,7 +123,7 @@ const Approval = () => {
           data={statusList}
           value={procedures}
           setValue={setLectureStatus}
-          reset={true}
+          reset={false}
         />
       </SearchBar>
       <CommonButton btnType="page" value="뒤로가기" onClick={handlePageBtnClick} />
