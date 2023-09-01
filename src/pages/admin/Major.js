@@ -360,7 +360,7 @@ const Major = () => {
         header={tableHeader}
         data={data?.vo}
         hasPage={true}
-        maxPage={6}
+        maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
