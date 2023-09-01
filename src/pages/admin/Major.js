@@ -73,6 +73,7 @@ const Major = () => {
 
   //변경전 전공명 state
   const [selectMajorName, setSelectMajorName] = useState('');
+
   // 변경할 항목 전공명 저장할 state.
   const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
 
