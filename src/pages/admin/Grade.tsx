@@ -50,7 +50,7 @@ const Grade = () => {
   // 쿼리
   const [click, setClick] = useState(false);
   const queries = { grade, studentNum };
-  const url = '/api/admin/grade';
+  const url = '/api/grade-mngmn';
   const { data, pending, error } = useQuerySearch(url, click);
 
   return (
@@ -90,7 +90,7 @@ const Grade = () => {
         header={tableHeader}
         data={(data as ObjectType)?.voList || Array(10).fill('')}
         hasPage={true}
-        maxPage={(data as ObjectType)?.page.maxPage}
+        maxPage={(data as ObjectType)?.paging.maxPage}
         pending={pending}
         error={error}
       >

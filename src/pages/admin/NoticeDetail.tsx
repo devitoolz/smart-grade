@@ -34,23 +34,33 @@ const NoticeDetail = () => {
   const handleEditBoard = () => {
     setEdit(true);
     setTitle((data as ObjectType).title);
-    setCtnt((data as ObjectType).ctnt);
+    const contents = (data as ObjectType)?.ctnt;
+    contents?.replace(
+      /blob:http:\/\/localhost:3000\//g,
+      `http://192.168.0.144:5002/imgs/boardPic/${iboard}`
+    );
+    setCtnt(contents);
   };
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log(data);
     setTitle((data as ObjectType)?.title);
-    setCtnt((data as ObjectType)?.ctnt);
+    const contents = (data as ObjectType)?.ctnt;
+    contents?.replace(
+      /blob:http:\/\/localhost:3000\//g,
+      `http://192.168.0.144:5002/imgs/boardPic/${iboard}`
+    );
+    setCtnt(contents);
     setImportance((data as ObjectType)?.importance + '');
     // data ? document.querySelector('button')?.click() : null;
+    console.log(data);
   }, [data]);
 
   // 툴바 커스텀
-  const toolbarItems = [
+  const toolbarCustom = [
     ['heading', 'bold', 'italic', 'strike'],
     ['hr', 'quote'],
     ['ul', 'ol', 'indent', 'outdent'],
-    ['table', 'image', 'link'],
+    ['image', 'link'],
   ];
   const editorRef = useRef<Editor>(null);
   // 모달창 오픈
@@ -125,7 +135,7 @@ const NoticeDetail = () => {
                     height="650px"
                     useCommandShortcut={false}
                     language="ko-KR"
-                    toolbarItems={toolbarItems}
+                    toolbarItems={toolbarCustom}
                     // hooks={{
                     //   addImageBlobHook: handleUploadImage,
                     // }}

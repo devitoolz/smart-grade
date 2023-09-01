@@ -1,5 +1,4 @@
-import React, { useRef, useState } from 'react';
-import { Ltable, Wbtns } from '../../styles/LectureRoomCss';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
@@ -15,49 +14,11 @@ import Dropdown from '../../components/Dropdown';
 const Write = () => {
   const navigate = useNavigate();
 
-  //공지사항 제목
-  const [title, setTitle] = useState('');
-  //제목 인풋창
-  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
-  //저장+취소 버튼 클릭시 모달오픈 여부
-  const [saveDisplay, setSaveDisplay] = useState(false);
-  const [cancelDisplay, setCancelDisplay] = useState(false);
-  //save modal 확인 버튼 클릭시
-  const saveModalOk = async () => {
-    await postBoardWait();
-    setSaveDisplay(false);
-    navigate('/admin/home/notice/');
-  };
-  //save modal 취소 버튼 클릭시
-  const saveModalCancel = () => setSaveDisplay(false);
-  //cancel modal 확인 버튼 클릭시
-  const cancelModalOk = () => navigate('/admin/home/notice/');
-  //cancel modal 취소 버튼 클릭시
-  const cancelModalCancel = () => setCancelDisplay(false);
-
-  // 공지사항 POST
-  const [boardContents, setBoardContents] = useState<string>('');
-  // const boardArea = e => setBoardContents(e.target.value);
-  const postBoardWait = async () => {
-    // const $check = document.getElementById('check') as HTMLInputElement | null;
-    // const isChecked = $check?.checked ? 1 : 0;
-
-    await postBoard(title, boardContents, parseInt(checked as string));
-  };
-
   // 게시판
-  // const editorRef = useRef<HTMLElement | null>(null);
   const editorRef = useRef<Editor>(null);
-  // 이미지 업로드 관련
-  const [imgList, setImgList] = useState([]);
-  // 툴바 커스텀
-  const toolbarItems = [
-    ['heading', 'bold', 'italic', 'strike'],
-    ['hr', 'quote'],
-    ['ul', 'ol', 'indent', 'outdent'],
-    ['table', 'image', 'link'],
-  ];
-  // 공지상태
+  const [title, setTitle] = useState('');
+  const [boardContents, setBoardContents] = useState<string>('');
+  const [importance, setImportance] = useState<string | number | null>('0');
   const statusList = [
     {
       id: '0',
@@ -68,20 +29,76 @@ const Write = () => {
       title: '중요공지',
     },
   ];
-  const [checked, setChecked] = useState<string | number | null>('0');
+  const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
+  const toolbarCustom = [
+    ['heading', 'bold', 'italic', 'strike'],
+    ['hr', 'quote'],
+    ['ul', 'ol', 'indent', 'outdent'],
+    ['image', 'link'],
+  ];
+  // TODO 이미지 업로드 관련
+  let imageList: File[] = [];
+  const [imgList, setImgList] = useState<Array<File>>([]);
+  const handleUploadImage = (blob: any, callback: any) => {
+    imageList.push(blob);
+    const img = [...imageList];
+    console.log(img);
+    setImgList(img);
+    console.log(imageList);
+    console.log(imgList);
 
-  // 게시글 작성
+    const $btn = document.querySelector('.toastui-editor-close-button');
+    ($btn as any)?.click();
+
+    callback(URL.createObjectURL(blob));
+  };
+  const handleDeleteImage = (_idx: number) => {
+    const aa = imageList.splice(_idx, 1);
+    console.log(aa);
+    console.log(imageList);
+    setImgList(imageList);
+  };
+
+  // 공지사항 게시글 POST
   const handleBoardSave = () => {
+    if (/^\s*$/.test(title)) {
+      alert('제목을 입력해주세요');
+      return;
+    } else {
+      setTitle(title.trim());
+    }
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
-    setBoardContents(markdownContent as string);
+    console.log(markdownContent);
+    console.log(imgList);
+    if (/^\s*$/.test(markdownContent as string)) {
+      alert('내용을 입력해주세요');
+      return;
+    } else {
+      setBoardContents(markdownContent as string);
+    }
     setSaveDisplay(true);
   };
   const handleBoardCancel = () => {
     setCancelDisplay(true);
     // navigate() // 이전페이지로 이동
   };
+  const postBoardWait = async () => {
+    await postBoard(title, boardContents, Number(importance as string), imgList);
+  };
 
-  // JSX
+  // 저장+취소 버튼 클릭시 모달
+  const [saveDisplay, setSaveDisplay] = useState(false);
+  const [cancelDisplay, setCancelDisplay] = useState(false);
+  const saveModalOk = async () => {
+    await postBoardWait();
+    setSaveDisplay(false);
+    navigate('/admin/home/notice');
+  };
+  const saveModalCancel = () => setSaveDisplay(false);
+  const cancelModalOk = () => navigate('/admin/home/notice');
+  const cancelModalCancel = () => setCancelDisplay(false);
+
+  // TSX
   return (
     <>
       {saveDisplay === true ? (
@@ -125,7 +142,14 @@ const Write = () => {
           </div>
         </div>
         <div className="notice-title">
-          <Dropdown data={statusList} value={checked} setValue={setChecked} />
+          <Dropdown
+            data={statusList}
+            value={importance}
+            setValue={setImportance}
+            length="short"
+            placeholder="공지상태"
+            reset={false}
+          />
           <Input
             type="text"
             length="full"
@@ -138,32 +162,31 @@ const Write = () => {
         <div className="notice-file">
           <span>첨부파일</span>
           <div className="file-list">
-            <div className="file-item">
-              <span>aaa.png</span>
-              <button>X</button>
-            </div>
-            <div className="file-item">
-              <span>bbb.png</span>
-              <button>X</button>
-            </div>
+            {imgList?.map((item, idx) => {
+              return (
+                <div key={idx} className="file-item">
+                  <span>{item?.name}</span>
+                  <button onClick={() => handleDeleteImage(idx)}>X</button>
+                </div>
+              );
+            })}
           </div>
         </div>
         <div className="notice-content">
           <Editor
             ref={editorRef}
             placeholder="내용을 입력하세요"
-            // initialValue=""
             previewStyle="vertical"
             height="600px"
             useCommandShortcut={false}
             language="ko-KR"
-            toolbarItems={toolbarItems}
-            // hooks={{
-            //   addImageBlobHook: handleUploadImage,
-            // }}
+            toolbarItems={toolbarCustom}
+            hooks={{
+              addImageBlobHook: handleUploadImage,
+            }}
             // hideModeSwitch={true}
             // initialEditType="wysiwyg"
-            // viewer={true} // 나중에 다시 살펴보기
+            // viewer={true} // TODO :나중에 다시 살펴보기
           />
         </div>
       </NoticeWrap>
