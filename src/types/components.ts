@@ -107,6 +107,12 @@ export interface TimetableData {
   [key: number]: number;
 }
 
+export interface LectureTimetableData {
+  startTime: string;
+  endTime: string;
+  dayWeek: number;
+}
+
 export interface RegisterScoreProps {
   setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
   score: ObjectType | null;

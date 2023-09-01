@@ -80,8 +80,8 @@ const Main = () => {
       ? setImg(
           user?.profile.pic.startsWith('blob')
             ? user?.profile.pic
-            : `${STUDENT_IMG_URL}/${(user?.profile as StudentProfileData).istudent}/${user?.profile
-                .pic}`
+            : `${STUDENT_IMG_URL}/${(user?.profile as StudentProfileData).studentNum}/${user
+                ?.profile.pic}`
         )
       : setImg(null);
   }, [user]);

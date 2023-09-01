@@ -64,7 +64,7 @@ const UserDetail = () => {
         ? setImg(
             `/imgs/${state}/${
               (state === 'professor' && (data.profile as ProfessorProfileData).iprofessor) ||
-              (state === 'students' && (data.profile as StudentProfileData).istudent)
+              (state === 'students' && (data.profile as StudentProfileData).studentNum)
             }/${data.profile.pic}`
           )
         : null;
