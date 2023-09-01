@@ -18,7 +18,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
   if (user && 'iprofessor' in user.profile) {
     role = 'professor';
-  } else if (user && 'istudent' in user.profile) {
+  } else if (user && 'studentNum' in user.profile) {
     role = 'student';
   }
 

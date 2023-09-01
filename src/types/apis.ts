@@ -27,7 +27,6 @@ export interface ProfessorProfileData extends ProfileData {
 }
 
 export interface StudentProfileData extends ProfileData {
-  istudent: number;
   finishedYn: number;
   score: number;
   grade: number;

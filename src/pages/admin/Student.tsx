@@ -31,12 +31,12 @@ const Student = () => {
   const tableHeader = [
     { title: '학번', width: 2 },
     { title: '학년', width: 1 },
-    { title: '전공', width: 4 },
+    { title: '전공', width: 5 },
     { title: '이름', width: 2 },
     { title: '성별', width: 1 },
     { title: '생년월일', width: 2.5 },
     { title: '전화번호', width: 3 },
-    { title: '입학년도', width: 2.5 },
+    { title: '입학년도', width: 2 },
     { title: '졸업여부', width: 2 },
     { title: '이수학점', width: 2 },
     { title: '상세보기', width: 2 },
@@ -101,7 +101,7 @@ const Student = () => {
       >
         {studentsList?.map(item => {
           return (
-            <div key={item.istudent}>
+            <div key={item.studentNum}>
               <div>{item.studentNum}</div>
               <div>{item.grade}</div>
               <div>{item.majorName}</div>
@@ -109,7 +109,7 @@ const Student = () => {
               <div>{(item.gender === 'M' && '남') || (item.gender === 'F' && '여')}</div>
               <div>{item.birthdate}</div>
               <div>{item.phone}</div>
-              <div>{item.createdAt}</div>
+              <div>{item.createdAt.slice(0, 4)}</div>
               <div>{(item.finishedYn === 1 && '재학 중') || (item.finishedYn === 2 && '졸업')}</div>
               <div>{item.score}</div>
               <div>
@@ -117,7 +117,7 @@ const Student = () => {
                   btnType="table"
                   value="상세보기"
                   color="gray"
-                  onClick={() => navigate(`${item.istudent}`, { state: 'students' })}
+                  onClick={() => navigate(`${item.studentNum}`, { state: 'students' })}
                 ></CommonButton>
               </div>
             </div>

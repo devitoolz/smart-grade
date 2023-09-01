@@ -3,6 +3,7 @@ import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
 import {
   LectureTimetableData,
+  ObjectType,
   RegisterTimetableProps,
   TimetableData,
 } from '../../types/components';
@@ -59,7 +60,7 @@ const RegisterTimetable = ({
   useEffect(() => {
     let temp: Array<number> = [];
 
-    data?.map((item: LectureTimetableData) => {
+    (data as ObjectType)?.schedule.map((item: LectureTimetableData) => {
       const start = stringToNumber(item.startTime);
       const end = stringToNumber(item.endTime);
       const startKey = parseInt(

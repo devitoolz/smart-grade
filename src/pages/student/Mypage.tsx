@@ -54,7 +54,7 @@ const Mypage = () => {
         setImg(
           user.profile.pic.startsWith('blob')
             ? user.profile.pic
-            : `${STUDENT_IMG_URL}/${(user.profile as StudentProfileData).istudent}/${
+            : `${STUDENT_IMG_URL}/${(user.profile as StudentProfileData).studentNum}/${
                 user.profile.pic
               }`
         );
@@ -139,7 +139,7 @@ const Mypage = () => {
       setAddress(user.profile.address);
       setImg(
         user.profile.pic
-          ? `${STUDENT_IMG_URL}/${(user.profile as StudentProfileData).istudent}/${
+          ? `${STUDENT_IMG_URL}/${(user.profile as StudentProfileData).studentNum}/${
               user.profile.pic
             }`
           : null

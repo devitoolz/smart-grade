@@ -58,6 +58,7 @@ const RegisterApply = () => {
 
   useEffect(() => {
     if (isbn.length === 13) {
+      // TODO: 책 api
       console.log('책 API 요청');
     }
   }, [isbn]);
@@ -221,7 +222,7 @@ const RegisterApply = () => {
               <BookImage>
                 {bookImg ? (
                   <img
-                    src="https://image.aladin.co.kr/product/5056/31/cover/8968481474_2.jpg"
+                    src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
                     alt="교재 이미지"
                   />
                 ) : (
