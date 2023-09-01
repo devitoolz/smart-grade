@@ -76,6 +76,7 @@ const NoticeDetail = () => {
       <NoticeWrap>
         <button className="disposable-btn" onClick={() => setLoading(true)}>
           버튼 클릭 시 글 보임 - 추후 수정 필요
+          {/* XXX 버튼 클릭 시 글 보임 - 추후 수정 필요 */}
         </button>
         <div className="notice-box">
           <div className="notice-title">

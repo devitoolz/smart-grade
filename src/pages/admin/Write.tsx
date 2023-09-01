@@ -37,8 +37,9 @@ const Write = () => {
     ['image', 'link'],
   ];
   // XXX 이미지 업로드 관련
+  // XXX 지우고 다시 추가하면 이전 값도 다시 추가되는 문제
   const [imgList, setImgList] = useState<Array<File>>([]);
-  const [imgBlobUrlList, setimgBlobUrlList] = useState<Array<string>>([]);
+  const [imgBlobUrlList, setImgBlobUrlList] = useState<Array<string>>([]);
   const handleUploadImage = (blob: any, callback: any) => {
     imgList.push(blob);
     console.log(imgList);
@@ -46,23 +47,24 @@ const Write = () => {
 
     imgBlobUrlList.push(URL.createObjectURL(blob));
     console.log(imgBlobUrlList);
-    setimgBlobUrlList([...imgBlobUrlList]);
+    setImgBlobUrlList([...imgBlobUrlList]);
 
     const $btn = document.querySelector('.toastui-editor-close-button');
     ($btn as any)?.click();
 
-    callback(URL.createObjectURL(blob));
+    // callback(URL.createObjectURL(blob));
   };
   const handleDeleteImage = (_idx: number) => {
-    console.log('imgList : ', imgList);
+    console.log('_idx : ', _idx);
+
     const bb: Array<File> = [];
     imgList.forEach((item, index) => {
       if (_idx !== index) {
         bb.push(item);
       }
     });
-    console.log('_idx : ', _idx);
-    console.log('deleteImage : ', bb);
+    console.log('imgList : ', imgList);
+    console.log('deleteImageResult : ', bb);
     setImgList(bb);
 
     const imgUrl: Array<string> = [];
@@ -71,8 +73,9 @@ const Write = () => {
         imgUrl.push(item);
       }
     });
-    console.log(imgUrl);
-    setimgBlobUrlList(imgUrl);
+    console.log('imgBlobUrlList : ', imgBlobUrlList);
+    console.log('deleteImageResultURL : ', imgUrl);
+    setImgBlobUrlList(imgUrl);
   };
 
   // 공지사항 게시글 POST
@@ -163,63 +166,73 @@ const Write = () => {
             />
           </div>
         </div>
-        <div className="notice-title">
-          <Dropdown
-            data={statusList}
-            value={importance}
-            setValue={setImportance}
-            length="short"
-            placeholder="공지상태"
-            reset={false}
-          />
-          <Input
-            type="text"
-            length="full"
-            placeholder="제목 (최대 50자)"
-            maxLength={50}
-            value={title}
-            setValue={handleTitle}
-          />
-        </div>
-        <div className="notice-file">
-          <span>첨부파일</span>
-          <div className="file-list">
-            {imgList?.map((item, idx) => {
-              return (
-                <div key={idx} className="file-item">
-                  <span>{item?.name}</span>
-                  <button onClick={() => handleDeleteImage(idx)}>X</button>
-                </div>
-              );
-            })}
+        <div className="notice-container-box">
+          <div>
+            <div className="notice-title">
+              <Dropdown
+                data={statusList}
+                value={importance}
+                setValue={setImportance}
+                length="short"
+                placeholder="공지상태"
+                reset={false}
+              />
+              <Input
+                type="text"
+                length="full"
+                placeholder="제목 (최대 50자)"
+                maxLength={50}
+                value={title}
+                setValue={handleTitle}
+              />
+            </div>
+            <div className="notice-content">
+              <Editor
+                ref={editorRef}
+                placeholder="내용을 입력하세요"
+                previewStyle="vertical"
+                height="650px"
+                useCommandShortcut={false}
+                language="ko-KR"
+                toolbarItems={toolbarCustom}
+                hooks={{
+                  addImageBlobHook: handleUploadImage,
+                }}
+                // hideModeSwitch={true}
+                // initialEditType="wysiwyg"
+                // viewer={true} // TODO :나중에 다시 살펴보기
+              />
+            </div>
           </div>
-        </div>
-        <div className="notice-content">
-          <Editor
-            ref={editorRef}
-            placeholder="내용을 입력하세요"
-            previewStyle="vertical"
-            height="600px"
-            useCommandShortcut={false}
-            language="ko-KR"
-            toolbarItems={toolbarCustom}
-            hooks={{
-              addImageBlobHook: handleUploadImage,
-            }}
-            // hideModeSwitch={true}
-            // initialEditType="wysiwyg"
-            // viewer={true} // TODO :나중에 다시 살펴보기
-          />
-          <div className="notice-content-img">
+
+          <div className="notice-image-area">
             <div>
-              {imgBlobUrlList?.map((item, idx) => {
-                return (
-                  <div key={idx} className="file-item">
-                    <img src={item} alt={`미리보기 ${idx + 1}`} />
-                    <button onClick={() => handleDeleteImage(idx)}>X</button>
-                  </div>
-                );
-              })}
+              <div className="notice-upload">
+                <div>첨부파일</div>
+                <div className="file-list">
+                  {imgList?.map((item, idx) => {
+                    return (
+                      <div key={idx} className="file-item">
+                        <span>{item?.name}</span>
+                        <button onClick={() => handleDeleteImage(idx)}>X</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="notice-prev-show">
+                <div>
+                  {imgBlobUrlList?.map((item, idx) => {
+                    return (
+                      <div key={idx} className="file-prev-item">
+                        <img src={item} alt={`미리보기 ${idx + 1}`} />
+                        <button onClick={() => handleDeleteImage(idx)}>X</button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
           </div>
         </div>

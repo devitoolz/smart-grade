@@ -27,7 +27,70 @@ export const NoticeWrap = styled.div`
       }
     }
   }
+  .notice-container-box {
+    display: flex;
+    gap: 10px;
 
+    & > div:first-of-type {
+      width: 70%;
+    }
+    .notice-image-area {
+      width: 30%;
+      height: 700px;
+      padding: 10px;
+      border: 1px solid var(--primary-border-color);
+      border-radius: 6px;
+      overflow-y: auto;
+      & > div {
+        overflow: hidden;
+      }
+
+      .notice-upload {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid var(--primary-border-color);
+
+        .file-item {
+          display: inline-block;
+          padding: 5px 10px;
+          margin-top: 6px;
+          margin-right: 4px;
+          border: 1px solid var(--main-border-color);
+          border-radius: 20px;
+          &:last-of-type {
+            margin-right: 0;
+          }
+          button {
+            font-size: 8px;
+            margin-left: 3px;
+            cursor: pointer;
+          }
+        }
+      }
+
+      .notice-prev-show {
+        overflow: hidden;
+
+        .file-prev-item {
+          margin-bottom: 6px;
+          padding: 0 2px;
+          position: relative;
+
+          img {
+            max-width: 100%;
+          }
+
+          button {
+            position: absolute;
+            top: 4px;
+            left: 6px;
+            font-size: 12px;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
   .notice-title {
     margin-bottom: 12px;
     display: flex;
@@ -89,23 +152,10 @@ export const NoticeWrap = styled.div`
   }
 
   .notice-content {
-    display: flex;
     gap: 10px;
     margin-bottom: 12px;
     border: 1px solid transparent;
-    .notice-content-img {
-      padding: 10px;
-      border: 1px solid var(--primary-border-color);
-      border-radius: 10px;
-      & > div {
-        overflow-y: auto;
-        width: 400px;
-        height: 580px;
-        img {
-          max-width: 100%;
-        }
-      }
-    }
+    position: relative;
   }
 
   .notice-view-area {
