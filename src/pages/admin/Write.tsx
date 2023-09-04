@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
@@ -36,8 +36,7 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['image', 'link'],
   ];
-  // XXX 이미지 업로드 관련
-  // XXX 지우고 다시 추가하면 이전 값도 다시 추가되는 문제
+  // XXX 이미지 업로드 관련 ~ 지우고 다시 추가하면 이전 값도 다시 추가되는 문제
   const [imgList, setImgList] = useState<Array<File>>([]);
   const [imgBlobUrlList, setImgBlobUrlList] = useState<Array<string>>([]);
   const handleUploadImage = (blob: any, callback: any) => {
@@ -93,19 +92,12 @@ const Write = () => {
       alert('내용을 입력해주세요');
       return;
     } else {
-      const replaceContents = markdownContent?.replace(
-        /blob:http:\/\/localhost:3000\//g,
-        // XXX iboard 값 처리 고민
-        `http://192.168.0.144:5002/imgs/boardPic/0/`
-      );
-      setBoardContents(replaceContents as string);
-      console.log(replaceContents);
+      setBoardContents(markdownContent as string);
     }
     setSaveDisplay(true);
   };
   const handleBoardCancel = () => {
     setCancelDisplay(true);
-    // navigate() // 이전페이지로 이동
   };
   const postBoardWait = async () => {
     await postBoard(title, boardContents, Number(importance as string), imgList);
@@ -198,8 +190,8 @@ const Write = () => {
                 hooks={{
                   addImageBlobHook: handleUploadImage,
                 }}
-                // hideModeSwitch={true}
-                // initialEditType="wysiwyg"
+                hideModeSwitch={true}
+                initialEditType="wysiwyg"
                 // viewer={true} // TODO :나중에 다시 살펴보기
               />
             </div>
@@ -223,14 +215,18 @@ const Write = () => {
 
               <div className="notice-prev-show">
                 <div>
-                  {imgBlobUrlList?.map((item, idx) => {
-                    return (
-                      <div key={idx} className="file-prev-item">
-                        <img src={item} alt={`미리보기 ${idx + 1}`} />
-                        <button onClick={() => handleDeleteImage(idx)}>X</button>
-                      </div>
-                    );
-                  })}
+                  {imgBlobUrlList.length === 0 ? (
+                    <span>이미지 미리보기</span>
+                  ) : (
+                    imgBlobUrlList?.map((item, idx) => {
+                      return (
+                        <div key={idx} className="file-prev-item">
+                          <img src={item} alt={`미리보기 ${idx + 1}`} />
+                          <button onClick={() => handleDeleteImage(idx)}>X</button>
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
               </div>
             </div>

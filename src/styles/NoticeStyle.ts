@@ -4,6 +4,52 @@ export const NoticeWrap = styled.div`
   padding: 0 50px;
 
   /* NoticeDetail */
+  .notice-detail-wrap {
+    display: flex;
+    gap: 12px;
+    border: 1px solid var(--primary-border-color);
+    border-radius: 6px;
+    .notice-box {
+      width: 70%;
+      padding: 6px 12px 12px;
+      border: 1px solid transparent;
+      border-radius: 6px;
+    }
+    .notice-pics {
+      width: 30%;
+      padding: 6px 12px 24px;
+
+      & > div {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        border: 1px solid var(--primary-border-color);
+        border-radius: 6px;
+        overflow-y: auto;
+
+        .pics-title {
+          font-size: 16px;
+          padding: 6px 12px;
+          border-bottom: 1px solid var(--primary-border-color);
+        }
+        .no-pics {
+          width: 100%;
+          height: 100%;
+          background-color: var(--primary-border-color);
+          font-size: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .pics-item {
+          padding: 6px 12px;
+          img {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
   .notice-box {
     padding: 6px 12px 12px;
     border: 1px solid var(--primary-border-color);
