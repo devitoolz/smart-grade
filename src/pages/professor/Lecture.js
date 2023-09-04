@@ -42,7 +42,7 @@ const Lecture = () => {
 
     {
       title: '강의실  ',
-      width: '2',
+      width: '1.5',
     },
     {
       title: '학점    ',
@@ -50,12 +50,12 @@ const Lecture = () => {
     },
     {
       title: '강의시간   ',
-      width: '2',
+      width: '1.5',
     },
 
     {
       title: '정원',
-      width: '0.5',
+      width: '1',
     },
     {
       title: '상세보기',
@@ -102,7 +102,7 @@ const Lecture = () => {
       lectureRoom: '백매관 303호',
       score: 3,
       lectureHour: '09:00~10:00 수,목',
-      maxCapacity: 30,
+      maxCapacity: '25 / 30',
     },
     {
       id: '2 ',
@@ -178,17 +178,25 @@ const Lecture = () => {
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
               <div className="inputLectureName">강의명들어갈자리</div>
+              <div className="grade">학년</div>
+              <div className="inputGrade">학년들어갈자리</div>
+              <div className="professor">정원</div>
+              <div className="inputProfessor">정원들어갈자리</div>
               <div className="score">학점</div>
               <div className="inputScore">학점들어갈자리</div>
-              <div className="professor">교수명</div>
-              <div className="inputProfessor">교수명들어갈자리</div>
-              <div className="purpose">강의목표</div>
-              <div className="inputPurpose">강의목표들어갈자리</div>
+              <div className="lectureHour">강의시간</div>
+              <div className="inputLectureHour">09:00~10:00 수,목 </div>
               <div className="bookName">교재명</div>
               <div className="inputBookName">교재명들어갈자리</div>
               <div className="bookPic">교재사진</div>
-              <div className="isbn">ISBN</div>
-              <div className="inputIsbn">ISBN들어갈자리</div>
+              <div className="inputBookPic">
+                <div></div>
+              </div>
+              <div className="purpose">강의목표</div>
+              <div className="inputPurpose">
+                강의목표들어갈자리Below you will find the CSS and HTML required to generate the
+                current l value for flex-direction.
+              </div>
             </div>
           </LectureDetail>
 

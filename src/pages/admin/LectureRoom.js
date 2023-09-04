@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -7,7 +7,6 @@ import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
 import api from '../../apis/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import axios from 'axios';
 
 const LectureRoom = () => {
   //강의실 추가시 건물명 state

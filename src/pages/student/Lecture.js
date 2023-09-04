@@ -178,10 +178,7 @@ const Lecture = () => {
           <LectureDetail>
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
-              <div className="inputLectureName">
-                강의명들어갈자리
-                <div></div>
-              </div>
+              <div className="inputLectureName">강의명들어갈자리</div>
               <div className="grade">학년</div>
               <div className="inputGrade">학년들어갈자리</div>
               <div className="professor">교수명</div>
@@ -189,13 +186,20 @@ const Lecture = () => {
               <div className="score">학점</div>
               <div className="inputScore">학점들어갈자리</div>
               <div className="lectureHour">강의시간</div>
-              <div className="inputLectureHour">강의시간 들어갈자리</div>
-              <div className="purpose">강의목표</div>
-              <div className="inputPurpose">강의목표들어갈자리</div>
+              <div className="inputLectureHour">09:00~10:00 수,목 </div>
               <div className="bookName">교재명</div>
               <div className="inputBookName">교재명들어갈자리</div>
               <div className="bookPic">교재사진</div>
-
+              <div className="inputBookPic">
+                <div></div>
+              </div>
+              <div className="purpose">강의목표</div>
+              <div className="inputPurpose">
+                강의목표들어갈자리Below you will find the CSS and HTML required to generate the
+                current layout you built. The CSS has been optimized to omit any properties which
+                have the default values. For example, flex-direction: row; would not be included
+                since that is the default value for flex-direction.
+              </div>
             </div>
           </LectureDetail>
 
