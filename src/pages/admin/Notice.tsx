@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
@@ -53,6 +53,12 @@ const Notice = () => {
   //     ? null
   //     : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
   // }, [data, important.data]);
+  const param = useLocation();
+  useEffect(() => {
+    console.log(param);
+
+    console.log(data);
+  }, [data]);
 
   //table header
   const tableHeader = [

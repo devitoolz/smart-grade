@@ -14,13 +14,13 @@ const Grade = () => {
     { title: '학기', width: 1 },
     { title: '강의명', width: 3 },
     { title: '담당교수', width: 1 },
-    { title: '강의시간', width: 1 },
+    { title: '강의시간', width: 1.5 },
     // 점수
     { title: '학점', width: 1 },
     { title: '최종성적', width: 1 },
     { title: '평점', width: 1 },
     { title: '등급', width: 1 },
-    { title: '비고', width: 2 },
+    { title: '비고', width: 1.5 },
   ];
   // 임시데이터
   const data = Array(7).fill('');
@@ -40,8 +40,6 @@ const Grade = () => {
 
   // 강의 pk
   const [ilecture, setIlecture] = useState<number | null>(null);
-  // 강의정보 모달창
-  const [showLectureInfo, setShowLectureInfo] = useState(false);
   // 이의신청 모달창
   const [demur, setDemur] = useState(false);
   const handleApplyDemurOk = async () => {
@@ -91,23 +89,11 @@ const Grade = () => {
                     setDemur(true);
                   }}
                 />
-                <CommonButton
-                  value="강의정보"
-                  btnType="table"
-                  color="blue"
-                  onClick={() => {
-                    setIlecture(idx);
-                    setShowLectureInfo(true);
-                  }}
-                />
               </div>
             </div>
           );
         })}
       </Table>
-      {showLectureInfo && (
-        <LectureInfo setShowLectureInfo={setShowLectureInfo} ilecture={ilecture} />
-      )}
       {demur && (
         <CommonModal
           setDisplay={setDemur}

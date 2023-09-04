@@ -95,23 +95,9 @@ const Lecture = () => {
   const handlegetStudentList = async (_lectureNm: string, _ilecture: number) => {
     setLectureNm(_lectureNm);
     const result = await getStudentList(_ilecture);
-    // Array.isArray(result.list) ? setContents(result.list) : setContents(result);
     setContents(result);
     setDisplay(true);
   };
-
-  // 모달 - 해당강의 학생리스트+성적 확인
-  const modalHeader = [
-    { title: 'No', width: 1 },
-    { title: '이름', width: 2 },
-    { title: '학과', width: 3 },
-    { title: '출석', width: 1 },
-    { title: '중간', width: 1 },
-    { title: '기말', width: 1 },
-    { title: '총점', width: 1 },
-    { title: '평균', width: 1 },
-    { title: '등급', width: 1 },
-  ];
 
   // JSX
   return (
@@ -154,7 +140,7 @@ const Lecture = () => {
         pending={pending}
         error={error}
       >
-        {(data as ObjectType)?.lectures.map((item: ObjectType, idx: number) => {
+        {(data as ObjectType)?.lectures?.map((item: ObjectType, idx: number) => {
           return (
             <div key={idx}>
               <div>{item.semester}</div>
@@ -164,7 +150,7 @@ const Lecture = () => {
               <div>{item.nm}</div>
               <div>{item.score}</div>
               <div>
-                {item.buildingNm} {item.lectureRoomNm}
+                {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
                 {item.strDate}~{item.endDate}
@@ -209,57 +195,6 @@ const Lecture = () => {
             <div>lectureStrTime = {contents.lectureStrTime}</div>
             <div>lectureName = {contents.lectureName}</div>
           </div>
-          {/* {Array.isArray(contents) ? (
-            <TableArea>
-              <div className="table">
-                <div className="table_head">
-                  {modalHeader.map((item, idx) => {
-                    return <div key={idx}>{item.title}</div>;
-                  })}
-                </div>
-                <div className="table_body">
-                  {contents?.map((item, idx) => {
-                    return (
-                      <div className="table_body_item" key={item.istudent}>
-                        <div>{idx + 1}</div>
-                        <div>{item.nm}</div>
-                        <div>{item.majorNm}</div>
-                        <div>{item.attendance}</div>
-                        <div>{item.minEx}</div>
-                        <div>{item.finEx}</div>
-                        <div>{item.totalScore}</div>
-                        <div>{item.avg}</div>
-                        <div>{item.gread}</div>
-                      </div>
-                    );
-                  })}
-                  {contents?.length <= 11 &&
-                    Array(11 - (contents.length ?? 0))
-                      .fill('')
-                      .map((_, idx) => (
-                        <div key={idx} className="table_body_item">
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                          <div></div>
-                        </div>
-                      ))}
-                </div>
-              </div>
-            </TableArea>
-          ) : (
-            <IsClosed>
-              <p style={{ background: 'grey', marginBottom: 30 }}>
-                폐강된 강의입니다 ({contents.returnDate} 폐강)
-              </p>
-              <p style={{ borderBottom: '2px solid red', display: 'inline-block' }}>폐강 사유</p>
-              <div>{contents.returnCtnt}</div>
-            </IsClosed>
-          )} */}
         </CommonModal>
       ) : null}
     </>
