@@ -53,14 +53,27 @@ const Notice = () => {
   //     ? null
   //     : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
   // }, [data, important.data]);
-  const param = useLocation();
+  const { search } = useLocation();
   useEffect(() => {
-    console.log(param);
+    const match = search.search(/\?keyword=([^&]+)/);
+    // 일반+중요 공지
+    const noticeList = () => {
+      data === null
+        ? null
+        : important.data === null
+        ? null
+        : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
+    };
+    // 검색결과
+    const noticeSearch = () => {
+      data !== null ? setNoticeData([...(data as ObjectType).list]) : null;
+    };
+    match === 0 ? noticeSearch() : noticeList();
+    console.log(noticeData);
 
     console.log(data);
-  }, [data]);
+  }, [data, important.data]);
 
-  //table header
   const tableHeader = [
     { title: 'NO.', width: 1 },
     { title: '제목', width: 4 },
@@ -108,13 +121,13 @@ const Notice = () => {
 
       <Table
         header={tableHeader}
-        data={(data as ObjectType)?.list}
+        data={noticeData}
         hasPage={true}
         maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {(data as ObjectType)?.list?.map((item: any) => {
+        {noticeData?.map((item: any) => {
           return (
             <div key={item.iboard}>
               <div>

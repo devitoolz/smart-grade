@@ -42,7 +42,18 @@ export const NoticeWrap = styled.div`
           align-items: center;
         }
         .pics-item {
+          position: relative;
           padding: 6px 12px;
+          .hide {
+            display: none;
+            visibility: hidden;
+            opacity: 0;
+          }
+          .pics-delete {
+            position: absolute;
+            top: 6px;
+            left: 12px;
+          }
           img {
             width: 100%;
           }

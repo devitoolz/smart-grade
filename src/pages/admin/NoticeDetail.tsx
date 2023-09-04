@@ -38,11 +38,16 @@ const NoticeDetail = () => {
   const [ctnt, setCtnt] = useState('');
   const [pisc, setPisc] = useState([]);
   const [importance, setImportance] = useState<string | number | null>('');
+  const [delActivate, setDelActivate] = useState(false);
   const handleEditBoard = () => {
     const $temp = document.querySelector('.disposable-btn');
     ($temp as any)?.click();
     setEdit(true);
+    setDelActivate(true);
     settingBoard();
+  };
+  const handleDeletePics = (idx: number) => {
+    alert(idx + '번 이미지 삭제 예정');
   };
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -165,6 +170,12 @@ const NoticeDetail = () => {
                   pisc?.map((item, idx) => {
                     return (
                       <div className="pics-item" key={idx}>
+                        <button
+                          className={delActivate ? 'pics-delete' : 'hide'}
+                          onClick={() => handleDeletePics(idx)}
+                        >
+                          X
+                        </button>
                         <img src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}`} />
                       </div>
                     );
@@ -194,7 +205,10 @@ const NoticeDetail = () => {
                 btnType="page"
                 color="red"
                 textColor="white"
-                onClick={() => setEdit(false)}
+                onClick={() => {
+                  setEdit(false);
+                  setDelActivate(false);
+                }}
               />
             </>
           )}
