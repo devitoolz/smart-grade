@@ -120,7 +120,7 @@ const RegisterApply = () => {
       attendance: score?.attendance,
       midtermExamination: score?.midterm,
       finalExamination: score?.final,
-      lectureMaxPeople: studentNum,
+      lectureMaxPeople: parseInt(studentNum),
       gradeLimit: grade,
       ctnt: description,
     };
@@ -167,7 +167,7 @@ const RegisterApply = () => {
           </ButtonContainer>
         </TopLayout>
         <FormTable>
-          <Row col={2}>
+          <Row>
             <div>강의명</div>
             <div>
               <Input
@@ -179,6 +179,8 @@ const RegisterApply = () => {
                 setValue={handleLecutreNameChange}
               />
             </div>
+          </Row>
+          <Row col={2}>
             <div>강의실</div>
             <div>
               <Dropdown
@@ -192,8 +194,18 @@ const RegisterApply = () => {
                 search
               />
             </div>
-          </Row>
-          <Row col={2}>
+            <div style={{ boxShadow: '0 -2px 0 0 var(--form-table-odd-border-color)' }}>
+              강의 시간
+            </div>
+            <div>
+              {lectureRoom !== prevLectureRoom ? (
+                <span>강의 시간 선택 중</span>
+              ) : time ? (
+                `${dayData[time.week]} / ${time.startTime} ~ ${time.endTime}`
+              ) : (
+                <span>(강의실 선택 필요)</span>
+              )}
+            </div>
             <div>수강 인원 수</div>
             <div>
               <Input
@@ -227,8 +239,6 @@ const RegisterApply = () => {
                 reset
               />
             </div>
-          </Row>
-          <Row col={2}>
             <div>학점</div>
             <div>
               <Dropdown
@@ -254,33 +264,15 @@ const RegisterApply = () => {
               )}
             </div>
           </Row>
-          <Row col={2}>
-            <div>강의 기간</div>
-            <div></div>
-            <div>강의 시간</div>
-            <div>
-              {lectureRoom !== prevLectureRoom ? (
-                <span>강의 시간 선택 중</span>
-              ) : time ? (
-                `${dayData[time.week]} / ${time.startTime} ~ ${time.endTime}`
-              ) : (
-                <span>(강의실 선택 필요)</span>
-              )}
-            </div>
-          </Row>
         </FormTable>
         <InfoFormTable>
           <div className="row">
-            <div>ISBN</div>
+            <div>강의 설명</div>
             <div>
-              <Input
-                type="text"
-                isForm
-                placeholder="교재의 ISBN 13자리를 입력하세요."
-                maxLength={13}
-                reset={setIsbn}
-                value={isbn}
-                setValue={handleIsbnChange}
+              <LectureDescription
+                placeholder="강의 설명을 입력하세요."
+                value={description}
+                onChange={e => setDescription(e.target.value)}
               />
             </div>
           </div>
@@ -303,18 +295,22 @@ const RegisterApply = () => {
             </div>
           </div>
           <div className="row pt-2">
-            <div>교재명</div>
-            <div>{bookName ?? <span>교재가 없습니다.</span>}</div>
-          </div>
-          <div className="row pt-2">
-            <div>강의 설명</div>
+            <div>ISBN</div>
             <div>
-              <LectureDescription
-                placeholder="강의 설명을 입력하세요."
-                value={description}
-                onChange={e => setDescription(e.target.value)}
+              <Input
+                type="text"
+                isForm
+                placeholder="교재의 ISBN 13자리를 입력하세요."
+                maxLength={13}
+                reset={setIsbn}
+                value={isbn}
+                setValue={handleIsbnChange}
               />
             </div>
+          </div>
+          <div className="row pt-2">
+            <div>교재명</div>
+            <div>{bookName ?? <span>교재가 없습니다.</span>}</div>
           </div>
         </InfoFormTable>
       </RegisterLayout>

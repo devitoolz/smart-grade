@@ -15,7 +15,7 @@ const ButtonContainer = styled.div`
 
 const InfoFormTable = styled.div`
   display: grid;
-  grid-template: 46px 46px auto / 1fr 1fr;
+  grid-template: auto 46px 46px / 1fr 1fr;
   width: 100%;
   > div.row {
     display: grid;
