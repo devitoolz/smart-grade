@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FormTable, ImageUpload, Row } from '../../styles/UserStyle';
+import { Button, FormTable, NoticeContainer, Row, TopLayout } from '../../styles/UserStyle';
 import {
   BookImage,
   ButtonContainer,
@@ -43,6 +43,7 @@ const RegisterApply = () => {
   const [description, setDescription] = useState<string>('');
 
   const [lectureRoomList, setLectureRoomList] = useState<Array<LectureRoomData> | null>(null);
+  const [maxCapacity, setMaxCapacity] = useState<number | undefined>(undefined);
   const [prevLectureRoom, setPrevLectureRoom] = useState<string | number | null>(null);
 
   const navigate = useNavigate();
@@ -67,14 +68,18 @@ const RegisterApply = () => {
   }, []);
 
   useEffect(() => {
-    if (lectureRoom !== '') {
+    if (lectureRoom) {
       if (lectureRoom === prevLectureRoom) {
         return;
       }
       setOpenRegisterTimetable(true);
+      const capacity = lectureRoomList?.find(item => item.ilectureRoom === lectureRoom)
+        ?.maxCapacity;
+      setMaxCapacity(capacity);
     } else {
       setTime(null);
-      setPrevLectureRoom('');
+      setPrevLectureRoom(null);
+      setMaxCapacity(undefined);
     }
   }, [lectureRoom]);
 
@@ -91,8 +96,12 @@ const RegisterApply = () => {
   };
 
   const handleStudentNumChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setStudentNum(value.replace(/[^0-9]/g, ''));
+    const newValue = e.target.value.replace(/[^0-9]/g, '');
+    if (maxCapacity && parseInt(newValue) > maxCapacity) {
+      alert(`최대 수강 인원은 ${maxCapacity}명입니다.`);
+    } else {
+      setStudentNum(newValue);
+    }
   };
 
   const handleIsbnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -100,28 +109,63 @@ const RegisterApply = () => {
     setIsbn(value.replace(/[^0-9]/g, ''));
   };
 
-  const handleSubmit = () => {
-    const payload = {
+  const handleSubmit = async () => {
+    const requiredPayload: ObjectType = {
       lectureName,
-      lectureRoom,
-      studentNum,
-      grade,
-      credit,
-      ...score,
-      ...time,
+      score: credit,
+      ilectureRoom: lectureRoom,
+      lectureStrTime: time?.startTime,
+      lectureEndTime: time?.endTime,
+      dayWeek: time?.week,
+      attendance: score?.attendance,
+      midtermExamination: score?.midterm,
+      finalExamination: score?.final,
+      lectureMaxPeople: studentNum,
+      gradeLimit: grade,
+      ctnt: description,
     };
-    console.log(payload);
+
+    const bookPayload = {
+      textBook: bookName,
+      bookUrl: bookImg,
+    };
+
+    for (let key in requiredPayload) {
+      if (!requiredPayload[key]) {
+        alert('입력되지 않은 정보가 있습니다.');
+        return;
+      }
+    }
+
+    if (parseInt(studentNum) < 10) {
+      alert('수강 인원 수는 최소 10명 이상입니다.');
+      return;
+    }
+
+    const payload = { ...requiredPayload, ...bookPayload };
+
+    try {
+      await api.post(`/api/professor/lecture/apply`, payload);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
     <>
       <RegisterLayout>
-        <ButtonContainer>
-          <Button onClick={handleSubmit}>생성</Button>
-          <Button negative onClick={() => navigate(-1)}>
-            취소
-          </Button>
-        </ButtonContainer>
+        <TopLayout>
+          <NoticeContainer>
+            <span>* 교재를 제외한 내용은 비어있을 수 없습니다.</span>
+            <span>* 수강 인원 수는 최소 10명 이상입니다.</span>
+          </NoticeContainer>
+          <ButtonContainer>
+            <Button onClick={handleSubmit}>생성</Button>
+            <Button negative onClick={() => navigate(-1)}>
+              취소
+            </Button>
+          </ButtonContainer>
+        </TopLayout>
         <FormTable>
           <Row col={2}>
             <div>강의명</div>
@@ -155,10 +199,15 @@ const RegisterApply = () => {
               <Input
                 type="text"
                 isForm
-                placeholder="수강 인원을 입력하세요."
+                placeholder={
+                  lectureRoom
+                    ? `수강 인원을 입력하세요. (최대 ${maxCapacity}명)`
+                    : '(강의실 선택 필요)'
+                }
                 reset={setStudentNum}
                 value={studentNum}
                 setValue={handleStudentNumChange}
+                disabled={lectureRoom === null}
               />
             </div>
             <div>학년 제한</div>
