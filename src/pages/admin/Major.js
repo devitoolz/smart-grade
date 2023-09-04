@@ -26,6 +26,20 @@ const Major = () => {
   ////DropDown////
   //DropDown value state
 
+  //전공명 id state
+  const [majorId, setMajorId] = useState('');
+  // 변경할 항목 pk값 저장할 state.
+  const [selectMajorID, setSelectMajorID] = useState(null);
+
+  //변경전 전공명 state
+  const [selectMajorName, setSelectMajorName] = useState('');
+  // 선택한(변경할) 항목 전공명 저장할 state.
+  const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
+
+  //전공리스트 state 전역관리
+  const { allMajorList } = useSelector(state => state.major);
+  // console.log(allMajorList);
+
   // 변경전 졸업학점
   const [graduationScore, setGraduationScore] = useState('');
   //변경후 졸업학점
@@ -44,17 +58,12 @@ const Major = () => {
   ];
   //searchBar 운영,폐지 key, value 이름
   const propertyName = { key: 'id', value: 'title' };
-  //table header
-  const tableHeader = [
-    { title: '전공 명', width: 2 },
-    { title: '졸업학점', width: 1 },
-    { title: '폐지여부', width: 1 },
-    { title: '관리', width: 1.5 },
-    { title: '비고', width: 2 },
-  ];
 
-  //전공추가 시 전공명
+  // 모달창 전공추가 시 전공명 state
   const [newMajorName, setNewMajorName] = useState('');
+
+  // 모달창 졸업학점 추가 시 졸업학점 state
+  const [newGraduationScore, setNewGraduationScore] = useState('');
 
   //모달창 활성화
   const [showModal, setShowModal] = useState(false);
@@ -65,27 +74,20 @@ const Major = () => {
   //폐지버튼 클릭시 모달창 활성화
   const [disUseModalShow, setDisUseModalShow] = useState(false);
 
-  //전공명 id state
-  const [majorId, setMajorId] = useState('');
-
-  // 변경할 항목 pk값 저장할 state.
-  const [selectMajorID, setSelectMajorID] = useState(null);
-
-  //변경전 전공명 state
-  const [selectMajorName, setSelectMajorName] = useState('');
-
-  // 변경할 항목 전공명 저장할 state.
-  const [selectMajorNameNow, setSelectMajorNameNow] = useState('');
-
-  //전공리스트 state 전역관리
-  const { allMajorList } = useSelector(state => state.major);
-  // console.log(allMajorList);
-
   //변경버튼 state
   const [, setChangeClickShow] = useState(false);
 
   //disable 버튼 state
   const [, setDisabled] = useState(false);
+
+  //table header
+  const tableHeader = [
+    { title: '전공 명', width: 2 },
+    { title: '졸업학점', width: 1 },
+    { title: '폐지여부', width: 1 },
+    { title: '관리', width: 1.5 },
+    { title: '비고', width: 2 },
+  ];
 
   //api get hook test
   const url = '/api/major';
@@ -97,58 +99,72 @@ const Major = () => {
   };
 
   //변경버튼 클릭시 pk값, majorName 담는것
-  const changeModalOpen = async (_imajor, _imajorName) => {
+  const changeModalOpen = async (_imajor, _imajorName, _graduationScore) => {
     if (selectMajorID === _imajor) {
       // 전공명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
 
-      //전공명을 변경하지 않은 경우 체크
-      if (selectMajorNameNow === tempStr) {
-        alert('전공명을 변경해 주세요.');
+      // 학점 공란일때 처리 필요합니다.
+      const tempScore = parseInt(graduationScore);
+
+      //전공명 또는 졸업학점을 변경하지않은 경우 체크
+      if (selectMajorNameNow === tempStr && graduationScoreNow === graduationScore) {
+        alert('변경된 정보를 입력해주세요');
         return;
       }
-      // 서버로 변경된 전공명을 전달한다.
-      const headers = { 'Content-Type': 'application/json' };
-      const patchDatas = {
-        imajor: _imajor,
-        majorName: `${tempStr}`,
-      };
 
-      try {
-        await api.patch(`/api/major`, patchDatas, { headers });
-        //변경 전 전공명 state
-        setSelectMajorNameNow(tempStr);
-        // console.log('전공명 서버 수정 완료 : ', result);
-      } catch (err) {
-        console.log('전공명 서버 수정 실패 : ', err);
+      if (tempStr === '') {
+        alert('전공명을 입력해 주세요.');
+        return;
       }
 
-      // 여기서 화면을 갱신한다.
-      const temp = isDataArr.map(item => {
-        if (item.imajor === selectMajorID) {
-          if (item.majorName !== tempStr) {
-            item.isChange = 1;
-            item.originName = '구 ' + item.majorName;
-            item.majorName = tempStr;
-          }
-        }
-        return item;
-      });
-      // console.log(temp);
-      setDataArr(temp);
-      setSelectMajorID(null);
-      setSelectMajorName('');
+      // 참조하기
+      // const newValue = tempScore.replace(/[^0-9]/g, '');
+      // if (parseInt(newValue) < 0 || parseInt(newValue) > 100) {
+      //   alert('배점은 0 이상 100이하의 숫자만 가능합니다.');
+      //   return;
+      // }
+
+      if (tempScore === 0) {
+        alert('이수학점은 0점 이상 입력해주세요.');
+        return;
+      }
+
+      if (!tempScore) {
+        alert('이수학점을 입력해 주세요.');
+        return;
+      }
+
+      // //전공명을 변경하지 않은 경우 체크
+      // if (selectMajorNameNow === tempStr) {
+      //   alert('전공명을 변경해 주세요.');
+      //   return;
+      // }
+      // //졸업학점을 변경하지않은 경우 체크
+      // if (graduationScoreNow === graduationScore) {
+      //   alert('졸업학점을 변경해 주세요.');
+      //   return;
+      // }
+      setChangeModalShow(true);
     } else {
       // 다르므로
       setSelectMajorID(_imajor);
       setSelectMajorName(_imajorName);
       setSelectMajorNameNow(_imajorName);
+      setGraduationScore(_graduationScore);
+      setGraduationScoreNow(_graduationScore);
     }
   };
 
   // 변경버튼 클릭시 전공명 변경 실행할 함수
   const handleChangeName = e => {
     setSelectMajorName(e.target.value);
+  };
+
+  // 변경버튼 클릭시 전공명 변경 실행할 함수
+  const handleChangeScore = e => {
+    // console.log("바뀌어요")
+    setGraduationScore(e.target.value);
   };
 
   //폐지버튼 클릭시 모달창 오픈
@@ -192,9 +208,47 @@ const Major = () => {
   // console.log(data?.major);
 
   //변경 버튼 클릭시
-  const changeClickShowOpen = () => {
-    alert('항목을 입력하셔야 합니다.');
-    setChangeClickShow(true);
+  const changeClickShowOpen = async () => {
+    const tempStr = selectMajorName.trim();
+    const tempScore = parseInt(graduationScore);
+    // alert('항목을 입력하셔야 합니다.');
+    const headers = { 'Content-Type': 'application/json' };
+    const patchDatas = {
+      imajor: selectMajorID,
+      majorName: `${tempStr}`,
+      graduationScore: tempScore,
+    };
+    try {
+      await api.patch(`/api/major`, patchDatas, { headers });
+
+      //변경 전 전공명 state
+      setSelectMajorNameNow(tempStr);
+      // console.log('전공명 서버 수정 완료 : ', result);
+
+      // 여기서 화면을 갱신한다.
+      const temp = isDataArr.map(item => {
+        if (item.imajor === selectMajorID) {
+          if (item.majorName !== tempStr) {
+            item.isChange = 1;
+            item.originName = '구 ' + item.majorName;
+            item.majorName = tempStr;
+            item.graduationScore = tempScore;
+          }
+        }
+        return item;
+      });
+      // console.log(temp);
+      setDataArr(temp);
+      setSelectMajorID(null);
+      setSelectMajorName('');
+      setGraduationScore('');
+
+      setChangeModalShow(false);
+    } catch (err) {
+      console.log('전공명 서버 수정 실패 : ', err);
+    }
+
+    // setChangeClickShow(false);
   };
 
   //전공명 변경 모달 취소버튼 클릭시
@@ -202,7 +256,7 @@ const Major = () => {
     // 초기화
     setSelectMajorID(null);
     setSelectMajorName('');
-    setShowModal(false);
+    // setShowModal(false);
   };
 
   //폐지모달창 확인 클릭시
@@ -262,11 +316,11 @@ const Major = () => {
         <CommonModal
           setDisplay={setChangeModalShow}
           modalSize="small"
-          modalTitle="전공명 변경"
+          modalTitle="전공명/졸업학점 변경"
           handleModalOk={changeClickShowOpen}
           handleModalCancel={chnageClickCloseWin}
         >
-          <p>해당 전공명을 변경하시겠습니까?</p>
+          <p>해당 내용으로 변경하시겠습니까?</p>
         </CommonModal>
       ) : null}
       {disUseModalShow === true ? (
@@ -274,10 +328,10 @@ const Major = () => {
           setDisplay={setDisUseModalShow}
           modalSize="small"
           modalTitle="전공 폐지"
-          handleModalOk={() => disuesModalOk(majorId)}
+          handleModalOk={() => disuesModalOk(majorId)} //확인 버튼 클릭시 majorId넣은 함수 실행
           handleModalCancel={() => setShowModal(false)}
         >
-          <p>해당 전공을 폐지 하겠습니까?</p>
+          <p>해당 전공을 폐지 하시겠습니까?</p>
         </CommonModal>
       ) : null}
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -349,8 +403,10 @@ const Major = () => {
               <Input
                 type="number"
                 length="short"
-                value={graduationScore}
-                setValue={e => setGraduationScore(e.target.value)}
+                value={newGraduationScore}
+                setValue={e => setNewGraduationScore(e.target.value)}
+                maxLength={3}
+                reset={setNewGraduationScore}
               />
             </div>
           </div>
@@ -379,14 +435,25 @@ const Major = () => {
                   item.majorName
                 )}
               </div>
-              <div>{item.graduationScore}</div>
+              <div>
+                {selectMajorID === item.imajor ? (
+                  <Input
+                    tlength="short"
+                    type="number"
+                    value={graduationScore}
+                    setValue={handleChangeScore}
+                  />
+                ) : (
+                  item.graduationScore
+                )}
+              </div>
               <div>{item.delYn === 0 ? null : '폐지'}</div>
               <div>
                 <CommonButton
                   btnType="table"
                   color={item.delYn ? 'gray' : 'blue'}
                   value={selectMajorID === item.imajor ? '확인' : '변경'}
-                  onClick={() => changeModalOpen(item.imajor, item.majorName)}
+                  onClick={() => changeModalOpen(item.imajor, item.majorName, item.graduationScore)}
                   disabled={item.delYn}
                 />
                 <CommonButton
@@ -398,7 +465,7 @@ const Major = () => {
                 />
               </div>
               <div>
-                {item.isChange === 0 ? null : <span>{item.originName.replace('구', '(구)')}</span>}
+                {item.isChange === 0 ? null : <span>{item.originName?.replace('구', '(구)')}</span>}
               </div>
             </div>
           );

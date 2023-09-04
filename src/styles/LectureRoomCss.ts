@@ -86,7 +86,7 @@ export const LPlanTable = styled.table`
   tr {
     th {
       background-color: #dff6ff;
-      border-top: 1.5px solid #a5c9f6;
+      border-top: 1.5px solid #61bfff;
       border-bottom: 1.5px solid #a5c9f6;
       border-right: 1.5px solid #a5c9f6;
       border-left: 1.5px solid #a5c9f6;
@@ -104,7 +104,7 @@ export const LPlanTable = styled.table`
 //grid를 이용
 export const LectureDetail = styled.div`
   margin-left: 100px;
-  margin-top: 30px;
+  margin-top: 15px;
   text-align: center;
   width: 80%;
 
@@ -115,111 +115,135 @@ export const LectureDetail = styled.div`
   }
   .lectureName {
     grid-column: 1/2;
-    border-top: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    border-top: 2px solid var(--form-table-odd-border-color);
+    /* border-left: 2px solid var(--form-table-odd-border-color); */
+    /* border-right: 2px solid var(--form-table-odd-border-color); */
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    color: var(--white);
+    background: #47b5ff;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
   }
   .inputLectureName {
     grid-column: 2/5;
-    border-top: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    /* border-right: 1px solid #a5c9f6; */
-    padding: 20px 10px;
+    border-top: 2px solid var(--form-table-even-border-color);
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    /* border-right: 2px solid var(--form-table-odd-border-color);; */
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
   }
-  .score {
+  .grade {
     grid-column: 1/2;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    /* border-top: 1px solid #a5c9f6; */
-    padding: 20px 10px;
-    background: #dff6ff;
+    border-bottom: 2px solid #61bfff;
+    border-left: 2px solid #61bfff;
+    /* border-top: 2px solid #61bfff; */
+    padding: 10px 10px;
+    background: #47b5ff;
+    color: #fff;
   }
-  .inputScore {
+  .inputGrade {
     grid-column: 2/3;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    /* border-top: 1px solid #a5c9f6; */
-    padding: 20px 10px;
-    margin-left: -1px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+
+    padding: 10px 10px;
+    margin-left: -2px;
+    background: var(--form-table-bg-color);
   }
   .professor {
     grid-column: 3/4;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    border-bottom: 2px solid #61bfff;
+    border-left: 2px solid #61bfff;
+    padding: 10px 10px;
+    background: #47b5ff;
+    color: #fff;
   }
   .inputProfessor {
     grid-column: 4/5;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    /* border-right: 2px solid --form-table-even-border-color; */
+    border-bottom: 2px solid --form-table-even-border-color;
+    /* border-left: 2px solid --form-table-even-border-color; */
+
+    background: var(--form-table-bg-color);
+  }
+  .score {
+    grid-row: 3/4;
+    grid-column: 1/2;
+    border-bottom: 2px solid #61bfff;
+    border-left: 2px solid #61bfff;
+    border-right: 2px solid #61bfff;
+    /* border-top: 2px solid #61bfff; */
+    padding: 10px 10px;
+    background: #47b5ff;
+    color: #fff;
+  }
+  .inputScore {
+    grid-row: 3/4;
+    grid-column: 2/3;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    margin-left: 2px;
+
+    background: var(--form-table-bg-color);
+  }
+  .lectureHour {
+    grid-row: 3/4;
+    grid-column: 3/4;
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid #61bfff;
+    /* border-right: 2px solid #61bfff; */
+    background: #47b5ff;
+    color: #fff;
+  }
+  .inputLectureHour {
+    grid-column: 4/5;
+    text-align: center;
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    background: var(--form-table-bg-color);
   }
   .purpose {
-    grid-row: 3/5;
+    grid-row: 4/5;
     grid-column: 1/2;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    /* border-right: 2px solid #61bfff; */
+    border-bottom: 2px solid #61bfff;
+    /* border-left: 2px solid #61bfff; */
+    padding: 10px 10px;
+    background: #47b5ff;
+    color: #fff;
   }
   .inputPurpose {
-    grid-row: 3/5;
+    grid-row: 4/5;
     grid-column: 2/5;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
   }
 
   .bookName {
     grid-row: 5/6;
     grid-column: 1/2;
-    border-right: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    background: #dff6ff;
-    padding: 20px 10px;
-    margin-left: -1px;
+    border-right: 2px solid #61bfff;
+    border-left: 2px solid #61bfff;
+    background: #47b5ff;
+    padding: 10px 10px;
+    margin-left: -2px;
+    color: #fff;
   }
   .inputBookName {
     grid-row: 5/6;
     grid-column: 2/4;
-    border-right: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
   }
 
   .bookPic {
     grid-row: 5/7;
     grid-column: 4/5;
-    span: 2;
-    border-bottom: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    padding: 20px 10px;
-  }
-
-  .isbn {
-    grid-row: 6/7;
-    grid-column: 1/2;
-    border-top: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    background: #dff6ff;
-    padding: 20px 10px;
-    margin-left: -1px;
-  }
-  .inputIsbn {
-    grid-row: 6/7;
-    grid-column: 2/4;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-top: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
   }
 `;
 
@@ -235,6 +259,6 @@ export const Caution = styled.div`
   justify-content: flex-end;
   p {
     color: red;
-    margin-left: 20px;
+    margin-left: 10px;
   }
 `;
