@@ -106,7 +106,7 @@ export const putBoard = async (
   _title: string,
   _importance: number,
   _ipic: Array<number>,
-  _putPic: Array<ObjectType>
+  _putPic: Array<File>
 ) => {
   const headers = { 'Content-Type': 'multipart/form-data' };
   const putData = new FormData();
@@ -124,7 +124,7 @@ export const putBoard = async (
       type: 'application/json',
     })
   );
-  _putPic?.forEach(item => putData.append('pics', item.pic));
+  _putPic?.forEach(item => putData.append('pics', item));
   try {
     await api.put(`/api/board`, putData, { headers });
     alert('처리되었습니다');

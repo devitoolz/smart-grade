@@ -59,6 +59,13 @@ export const NoticeWrap = styled.div`
           }
         }
       }
+      .pics-list-prev {
+        height: 690px;
+        overflow-y: auto;
+        & > div {
+          overflow-y: hidden;
+        }
+      }
     }
   }
   .notice-box {
