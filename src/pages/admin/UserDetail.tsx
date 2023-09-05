@@ -124,7 +124,7 @@ const UserDetail = () => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ''));
+    setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z\s]/g, ''));
   };
 
   return (
