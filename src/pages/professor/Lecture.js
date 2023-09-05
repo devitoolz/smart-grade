@@ -6,7 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import { LectureDetail, Btn, Caution } from '../../styles/LectureRoomCss';
+import { LectureDetail, Btn, Caution, ModalWrap } from '../../styles/LectureRoomCss';
 const Lecture = () => {
   ////searchBar////
 
@@ -67,11 +67,31 @@ const Lecture = () => {
   const semesterList = [
     {
       id: 1,
-      title: '1학기',
+      title: '2017',
     },
     {
       id: 2,
-      title: '2학기',
+      title: '2018',
+    },
+    {
+      id: 3,
+      title: '2019',
+    },
+    {
+      id: 4,
+      title: '2020',
+    },
+    {
+      id: 4,
+      title: '2021',
+    },
+    {
+      id: 4,
+      title: '2022',
+    },
+    {
+      id: 4,
+      title: '2023하드',
     },
   ];
 
@@ -165,49 +185,63 @@ const Lecture = () => {
   return (
     <div>
       {display === true ? (
-        <CommonModal
-          setDisplay={setDisplay}
-          modalSize="big"
-          modalTitle="강의 상세정보"
-          handleModalOk={handleModalOk}
-          handleModalCancel={handleModalCancel}
-        >
-          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+        <ModalWrap>
+          <CommonModal
+            setDisplay={setDisplay}
+            modalSize="big"
+            modalTitle="강의 상세정보"
+            handleModalOk={handleModalOk}
+            handleModalCancel={handleModalCancel}
+          >
+            <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+            <Caution>
+              <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
+              <p className="callNum">전산실 전화번호: 053-000-0000</p>
+            </Caution>
+            <LectureDetail>
+              <div className="innerContainer">
+                <div className="lectureName">강의명</div>
+                <div className="inputLectureName">강의명들어갈자리</div>
+                <div className="grade">학년</div>
+                <div className="inputGrade">학년들어갈자리</div>
+                <div className="semester">학기</div>
+                <div className="inputSemester">학기들어갈자리</div>
+                <div className="score">학점</div>
+                <div className="inputScore">학점들어갈자리</div>
+                <div className="lectureHour">강의시간</div>
+                <div className="inputLectureHour">09:00~10:00 수,목 </div>
+                <div className="capacity">정원</div>
+                <div className="inputCapacity">현재인원/최대인원</div>
+                <div className="bookName">교재명</div>
+                <div className="inputBookName">교재명들어갈자리</div>
+                <div className="LectureInfo">강의설명</div>
+                <div className="inputLectureInfo">
+                  최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
+                  기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
+                  응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
+                  클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
+                  실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한
+                  연구 분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을
+                  쌓는데 기여할 것이다.
+                </div>
 
-          <LectureDetail>
-            <div className="innerContainer">
-              <div className="lectureName">강의명</div>
-              <div className="inputLectureName">강의명들어갈자리</div>
-              <div className="grade">학년</div>
-              <div className="inputGrade">학년들어갈자리</div>
-              <div className="professor">정원</div>
-              <div className="inputProfessor">정원들어갈자리</div>
-              <div className="score">학점</div>
-              <div className="inputScore">학점들어갈자리</div>
-              <div className="lectureHour">강의시간</div>
-              <div className="inputLectureHour">09:00~10:00 수,목 </div>
-              <div className="bookName">교재명</div>
-              <div className="inputBookName">교재명들어갈자리</div>
-              <div className="bookPic">교재사진</div>
-              <div className="inputBookPic">
-                <div></div>
+                <div className="bookPic">교재사진</div>
+                <div className="inputBookPic">
+                  <div>
+                    <img
+                      src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
+                      alt="교재 이미지"
+                    />
+                  </div>
+                </div>
               </div>
-              <div className="purpose">강의목표</div>
-              <div className="inputPurpose">
-                강의목표들어갈자리Below you will find the CSS and HTML required to generate the
-                current l value for flex-direction.
-              </div>
-            </div>
-          </LectureDetail>
+            </LectureDetail>
 
-          <Btn>
-            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-          </Btn>
-          <Caution>
-            <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
-            <p>전산실 전화번호: 053-000-0000</p>
-          </Caution>
-        </CommonModal>
+            <Btn>
+              <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+            </Btn>
+          </CommonModal>
+        </ModalWrap>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>
         <SearchBar queries={queries} setPage={true} setClick={setClick}>

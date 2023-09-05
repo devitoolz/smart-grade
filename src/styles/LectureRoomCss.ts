@@ -6,8 +6,23 @@ export const Wbtns = styled.div`
   justify-content: center;
 `;
 
-//grid를 이용
+//주의사항
+export const Caution = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  p {
+    color: red;
+    margin-left: 10px;
+  }
+  .callNum {
+    margin-left: 20px;
+  }
+`;
+
+//grid를 이용한 Table
 export const LectureDetail = styled.div`
+  overflow-y: scroll;
   margin-left: 60px;
   margin-top: 15px;
   text-align: center;
@@ -53,7 +68,8 @@ export const LectureDetail = styled.div`
 
     background: var(--form-table-bg-color);
   }
-  .professor {
+
+  .semester {
     grid-row: 2/3;
     grid-column: 3/4;
     border-bottom: 2px solid var(--form-table-odd-border-color);
@@ -62,7 +78,7 @@ export const LectureDetail = styled.div`
     background: var(--primary-color);
     color: #fff;
   }
-  .inputProfessor {
+  .inputSemester {
     grid-row: 2/3;
     grid-column: 4/5;
     border-bottom: 2px solid var(--form-table-even-border-color);
@@ -104,18 +120,57 @@ export const LectureDetail = styled.div`
     background: var(--form-table-bg-color);
   }
 
-  .bookName {
-    grid-row: 4/6;
+  .capacity {
+    grid-row: 4/5;
     grid-column: 1/2;
-    border-right: 2px solid var(--form-table-odd-border-color);
-    border-left: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    background: var(--primary-color);
+    color: #fff;
+  }
+
+  .inputCapacity {
+    grid-row: 4/5;
+    grid-column: 2/3;
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    background: var(--form-table-bg-color);
+  }
+
+  .bookName {
+    grid-row: 4/5;
+    grid-column: 3/4;
+    /* border-right: 2px solid var(--form-table-odd-border-color); */
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    /* border-left: 2px solid var(--form-table-odd-border-color); */
     background: var(--primary-color);
     padding: 10px 10px;
 
     color: #fff;
   }
   .inputBookName {
-    grid-row: 4/6;
+    grid-row: 4/5;
+    grid-column: 4/5;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
+  }
+
+  .LectureInfo {
+    grid-row: 5/6;
+    grid-column: 1/2;
+    /* border-right: 2px solid var(--form-table-odd-border-color); */
+    /* border-top: 2px solid var(--form-table-odd-border-color); */
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    /* border-left: 2px solid var(--form-table-odd-border-color); */
+    padding: 10px 10px;
+    background: var(--primary-color);
+    color: #fff;
+  }
+  .inputLectureInfo {
+    grid-row: 5/6;
     grid-column: 2/3;
     border-bottom: 2px solid var(--form-table-even-border-color);
     padding: 10px 10px;
@@ -123,7 +178,7 @@ export const LectureDetail = styled.div`
   }
 
   .bookPic {
-    grid-row: 4/6;
+    grid-row: 5/6;
     grid-column: 3/4;
     padding: 10px 10px;
     border-bottom: 2px solid var(--form-table-odd-border-color);
@@ -132,7 +187,7 @@ export const LectureDetail = styled.div`
   }
   .inputBookPic {
     display: flex;
-    grid-row: 4/6;
+    grid-row: 5/6;
     grid-column: 4/5;
     border-bottom: 2px solid var(--form-table-even-border-color);
     padding: 10px 10px;
@@ -142,36 +197,18 @@ export const LectureDetail = styled.div`
     /* justify-content: space-around; */
     justify-content: center;
     div {
-      width: 8vw;
-      height: 9vw;
-      border-top: 2px solid var(--search-bg-color);
-      border-right: 2px solid var(--search-bg-color);
-      border-bottom: 2px solid var(--search-bg-color);
-      border-left: 2px solid var(--search-bg-color);
+      width: 207px;
+      height: 260px;
+      
+      border: 2px solid var(--search-bg-color);
       background: var(--form-table-even-border-color);
+      img {
+        object-fit: cover;
+        width: 100%;
+      }
     }
   }
-
-  .purpose {
-    grid-row: 6/8;
-    grid-column: 1/2;
-    /* border-right: 2px solid var(--form-table-odd-border-color); */
-    border-top: 2px solid var(--form-table-odd-border-color);
-    border-bottom: 2px solid var(--form-table-odd-border-color);
-    /* border-left: 2px solid var(--form-table-odd-border-color); */
-    padding: 10px 10px;
-    background: var(--primary-color);
-    color: #fff;
-  }
-  .inputPurpose {
-    grid-row: 6/8;
-    grid-column: 2/5;
-    border-bottom: 2px solid var(--form-table-even-border-color);
-    padding: 10px 10px;
-    background: var(--form-table-bg-color);
-  }
 `;
-
 
 export const Btn = styled.div`
   display: flex;
@@ -179,12 +216,8 @@ export const Btn = styled.div`
   align-items: flex-end;
   padding: 40px 10px;
 `;
-export const Caution = styled.div`
+
+export const ModalWrap = styled.div`
+  height: '86%';
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  p {
-    color: red;
-    margin-left: 10px;
-  }
 `;

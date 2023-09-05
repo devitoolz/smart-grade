@@ -16,7 +16,7 @@ const Major = () => {
   // searchBar 전공명 state
   const [majorName, setMajorName] = useState('');
   //searchBar 전공명 상태 state
-  const [delYn, setDelYn] = useState(null);
+  const [delYn, setDelYn] = useState('');
   //검색 시 사용할 쿼리스트링목록
   const queries = { majorName, delYn };
 
@@ -56,8 +56,6 @@ const Major = () => {
       title: '폐지',
     },
   ];
-  //searchBar 운영,폐지 key, value 이름
-  const propertyName = { key: 'id', value: 'title' };
 
   // 모달창 전공추가 시 전공명 state
   const [newMajorName, setNewMajorName] = useState('');
@@ -65,7 +63,7 @@ const Major = () => {
   // 모달창 졸업학점 추가 시 졸업학점 state
   const [newGraduationScore, setNewGraduationScore] = useState('');
 
-  //모달창 활성화
+  // 전공추가 모달창 활성화
   const [showModal, setShowModal] = useState(false);
 
   //변경버튼 클릭시 모달창 활성화
@@ -109,12 +107,12 @@ const Major = () => {
 
       //전공명 또는 졸업학점을 변경하지않은 경우 체크
       if (selectMajorNameNow === tempStr && graduationScoreNow === graduationScore) {
-        alert('변경된 정보를 입력해주세요');
+        alert('변경된 정보를 입력하세요');
         return;
       }
 
       if (tempStr === '') {
-        alert('전공명을 입력해 주세요.');
+        alert('전공명을 입력하세요.');
         return;
       }
 
@@ -125,13 +123,14 @@ const Major = () => {
       //   return;
       // }
 
-      if (tempScore === 0) {
-        alert('이수학점은 0점 이상 입력해주세요.');
+      //졸업학점기준 최소 110학점이상 135학점 이하 입력 가능
+      if (parseInt(tempScore) < 110 || parseInt(tempScore) > 135) {
+        alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
         return;
       }
 
       if (!tempScore) {
-        alert('이수학점을 입력해 주세요.');
+        alert('졸업학점을 입력하세요.');
         return;
       }
 
@@ -256,6 +255,7 @@ const Major = () => {
     // 초기화
     setSelectMajorID(null);
     setSelectMajorName('');
+
     // setShowModal(false);
   };
 
@@ -340,7 +340,7 @@ const Major = () => {
           data={_status}
           value={delYn}
           setValue={setDelYn}
-          propertyName={propertyName}
+          propertyName={{ key: 'id', value: 'title' }}
           reset
           search
         />
