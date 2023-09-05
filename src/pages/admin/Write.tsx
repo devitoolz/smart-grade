@@ -39,48 +39,25 @@ const Write = () => {
   // XXX 이미지 업로드 관련 ~ 지우고 다시 추가하면 이전 값도 다시 추가되는 문제
   const [imgList, setImgList] = useState<Array<File>>([]);
   const [imgBlobUrlList, setImgBlobUrlList] = useState<Array<string>>([]);
-  const handleUploadImage = (blob: any, callback: any) => {
-    imgList.push(blob);
-    console.log(imgList);
-    setImgList([...imgList]);
-
-    imgBlobUrlList.push(URL.createObjectURL(blob));
-    console.log(imgBlobUrlList);
-    setImgBlobUrlList([...imgBlobUrlList]);
+  const handleUploadImage = (blob: any) => {
+    // 이전 상태를 가져와서 새 상태를 설정
+    setImgList((prev: Array<File>) => [...prev, blob]);
+    setImgBlobUrlList((prev: Array<string>) => [...prev, URL.createObjectURL(blob)]);
 
     const $btn = document.querySelector('.toastui-editor-close-button');
     ($btn as any)?.click();
-
-    // callback(URL.createObjectURL(blob));
   };
   const handleDeleteImage = (_idx: number) => {
-    console.log('_idx : ', _idx);
-
-    const bb: Array<File> = [];
-    imgList.forEach((item, index) => {
-      if (_idx !== index) {
-        bb.push(item);
-      }
-    });
-    console.log('imgList : ', imgList);
-    console.log('deleteImageResult : ', bb);
-    setImgList(bb);
-
-    const imgUrl: Array<string> = [];
-    imgBlobUrlList.forEach((item, index) => {
-      if (_idx !== index) {
-        imgUrl.push(item);
-      }
-    });
-    console.log('imgBlobUrlList : ', imgBlobUrlList);
-    console.log('deleteImageResultURL : ', imgUrl);
+    const tempList: Array<File> = imgList.filter((_, index) => index !== _idx);
+    setImgList(tempList);
+    const imgUrl: Array<string> = imgBlobUrlList.filter((_, index) => index !== _idx);
     setImgBlobUrlList(imgUrl);
   };
 
   // 공지사항 게시글 POST
   const handleBoardSave = () => {
     if (/^\s*$/.test(title)) {
-      alert('제목을 입력해주세요');
+      alert('제목을 입력하세요');
       return;
     } else {
       setTitle(title.trim());
@@ -89,7 +66,7 @@ const Write = () => {
     console.log(markdownContent);
     console.log(imgList);
     if (/^\s*$/.test(markdownContent as string)) {
-      alert('내용을 입력해주세요');
+      alert('내용을 입력하세요');
       return;
     } else {
       setBoardContents(markdownContent as string);
