@@ -38,7 +38,6 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['image', 'link'],
   ];
-  // XXX 이미지 업로드 관련 ~ 지우고 다시 추가하면 이전 값도 다시 추가되는 문제
   const [imgList, setImgList] = useState<Array<File>>([]);
   const [imgBlobUrlList, setImgBlobUrlList] = useState<Array<string>>([]);
   const handleUploadImage = (blob: any) => {

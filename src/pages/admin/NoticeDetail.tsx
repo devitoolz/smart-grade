@@ -162,30 +162,35 @@ const NoticeDetail = () => {
                   ))}
               </div>
             </div>
-            {loading && (
-              <div className="notice-pics">
-                <div>
-                  <div className="pics-title">이미지</div>
-                  {pisc?.length === 0 ? (
-                    <div className="no-pics">이미지가 없습니다</div>
-                  ) : (
-                    pisc?.map((item, idx) => {
-                      return (
-                        <div className="pics-item" key={idx}>
-                          <button
-                            className={delActivate ? 'pics-delete' : 'hide'}
-                            onClick={() => handleDeletePics(idx)}
-                          >
-                            X
-                          </button>
-                          <img src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}`} />
-                        </div>
-                      );
-                    })
-                  )}
+            {loading &&
+              (edit ? (
+                <>이미지 추가하기</>
+              ) : (
+                <div className="notice-pics">
+                  <div>
+                    <div className="pics-title">이미지</div>
+                    {pisc?.length === 0 ? (
+                      <div className="no-pics">이미지가 없습니다</div>
+                    ) : (
+                      pisc?.map((item, idx) => {
+                        return (
+                          <div className="pics-item" key={idx}>
+                            <button
+                              className={delActivate ? 'pics-delete' : 'hide'}
+                              onClick={() => handleDeletePics(idx)}
+                            >
+                              X
+                            </button>
+                            <img
+                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}`}
+                            />
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
                 </div>
-              </div>
-            )}
+              ))}
           </div>
           <Wbtns>
             {!edit ? (

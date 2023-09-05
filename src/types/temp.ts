@@ -12,7 +12,7 @@ export interface CommonModalProps {
 // 교수
 export interface GradeDemurProps {
   setDemur: React.Dispatch<React.SetStateAction<boolean>>;
-  studentId: number | null;
+  lectureId: number | null;
 }
 
 /* * * * * * * * * * */
