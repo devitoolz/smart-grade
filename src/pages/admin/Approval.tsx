@@ -143,7 +143,7 @@ const Approval = () => {
               <div>{item.score}</div>
               <div>{item.nm}</div>
               <div>
-                {item.buildingNm} {item.lectureRoomNm}
+                {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
                 {item.strTime}~{item.endTime}

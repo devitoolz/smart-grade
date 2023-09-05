@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
@@ -53,8 +53,27 @@ const Notice = () => {
   //     ? null
   //     : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
   // }, [data, important.data]);
+  const { search } = useLocation();
+  useEffect(() => {
+    const match = search.search(/\?keyword=([^&]+)/);
+    // 일반+중요 공지
+    const noticeList = () => {
+      data === null
+        ? null
+        : important.data === null
+        ? null
+        : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]); // 수정
+    };
+    // 검색결과
+    const noticeSearch = () => {
+      data !== null ? setNoticeData([...(data as ObjectType).list]) : null;
+    };
+    match === 0 ? noticeSearch() : noticeList();
+    console.log(noticeData);
 
-  //table header
+    console.log(data);
+  }, [data, important.data]);
+
   const tableHeader = [
     { title: 'NO.', width: 1 },
     { title: '제목', width: 4 },
@@ -102,13 +121,13 @@ const Notice = () => {
 
       <Table
         header={tableHeader}
-        data={(data as ObjectType)?.list}
+        data={noticeData}
         hasPage={true}
         maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {(data as ObjectType)?.list?.map((item: any) => {
+        {noticeData?.map((item: any) => {
           return (
             <div key={item.iboard}>
               <div>

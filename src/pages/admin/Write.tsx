@@ -1,15 +1,17 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
-import { useNavigate } from 'react-router-dom';
+import Dropdown from '../../components/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
 import { postBoard } from '../../apis/fetch';
 // toast ui
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { NoticeWrap } from '../../styles/NoticeStyle';
-import Dropdown from '../../components/Dropdown';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -36,49 +38,27 @@ const Write = () => {
     ['ul', 'ol', 'indent', 'outdent'],
     ['image', 'link'],
   ];
-  // XXX 이미지 업로드 관련
   const [imgList, setImgList] = useState<Array<File>>([]);
-  const [imgBlobUrlList, setimgBlobUrlList] = useState<Array<string>>([]);
-  const handleUploadImage = (blob: any, callback: any) => {
-    imgList.push(blob);
-    console.log(imgList);
-    setImgList([...imgList]);
-
-    imgBlobUrlList.push(URL.createObjectURL(blob));
-    console.log(imgBlobUrlList);
-    setimgBlobUrlList([...imgBlobUrlList]);
+  const [imgBlobUrlList, setImgBlobUrlList] = useState<Array<string>>([]);
+  const handleUploadImage = (blob: any) => {
+    // 이전 상태를 가져와서 새 상태를 설정
+    setImgList((prev: Array<File>) => [...prev, blob]);
+    setImgBlobUrlList((prev: Array<string>) => [...prev, URL.createObjectURL(blob)]);
 
     const $btn = document.querySelector('.toastui-editor-close-button');
     ($btn as any)?.click();
-
-    callback(URL.createObjectURL(blob));
   };
   const handleDeleteImage = (_idx: number) => {
-    console.log('imgList : ', imgList);
-    const bb: Array<File> = [];
-    imgList.forEach((item, index) => {
-      if (_idx !== index) {
-        bb.push(item);
-      }
-    });
-    console.log('_idx : ', _idx);
-    console.log('deleteImage : ', bb);
-    setImgList(bb);
-
-    const imgUrl: Array<string> = [];
-    imgBlobUrlList.forEach((item, index) => {
-      if (_idx !== index) {
-        imgUrl.push(item);
-      }
-    });
-    console.log(imgUrl);
-    setimgBlobUrlList(imgUrl);
+    const tempList: Array<File> = imgList.filter((_, index) => index !== _idx);
+    setImgList(tempList);
+    const imgUrl: Array<string> = imgBlobUrlList.filter((_, index) => index !== _idx);
+    setImgBlobUrlList(imgUrl);
   };
 
   // 공지사항 게시글 POST
   const handleBoardSave = () => {
     if (/^\s*$/.test(title)) {
-      alert('제목을 입력해주세요');
+      alert('제목을 입력하세요');
       return;
     } else {
       setTitle(title.trim());
@@ -87,22 +67,15 @@ const Write = () => {
     console.log(markdownContent);
     console.log(imgList);
     if (/^\s*$/.test(markdownContent as string)) {
-      alert('내용을 입력해주세요');
+      alert('내용을 입력하세요');
       return;
     } else {
-      const replaceContents = markdownContent?.replace(
-        /blob:http:\/\/localhost:3000\//g,
-        // XXX iboard 값 처리 고민
-        `http://192.168.0.144:5002/imgs/boardPic/0/`
-      );
-      setBoardContents(replaceContents as string);
-      console.log(replaceContents);
+      setBoardContents(markdownContent as string);
     }
     setSaveDisplay(true);
   };
   const handleBoardCancel = () => {
     setCancelDisplay(true);
-    // navigate() // 이전페이지로 이동
   };
   const postBoardWait = async () => {
     await postBoard(title, boardContents, Number(importance as string), imgList);
@@ -163,63 +136,82 @@ const Write = () => {
             />
           </div>
         </div>
-        <div className="notice-title">
-          <Dropdown
-            data={statusList}
-            value={importance}
-            setValue={setImportance}
-            length="short"
-            placeholder="공지상태"
-            reset={false}
-          />
-          <Input
-            type="text"
-            length="full"
-            placeholder="제목 (최대 50자)"
-            maxLength={50}
-            value={title}
-            setValue={handleTitle}
-          />
-        </div>
-        <div className="notice-file">
-          <span>첨부파일</span>
-          <div className="file-list">
-            {imgList?.map((item, idx) => {
-              return (
-                <div key={idx} className="file-item">
-                  <span>{item?.name}</span>
-                  <button onClick={() => handleDeleteImage(idx)}>X</button>
-                </div>
-              );
-            })}
+        <div className="notice-container-box">
+          <div>
+            <div className="notice-title">
+              <Dropdown
+                data={statusList}
+                value={importance}
+                setValue={setImportance}
+                length="short"
+                placeholder="공지상태"
+                reset={false}
+              />
+              <Input
+                type="text"
+                length="full"
+                placeholder="제목 (최대 50자)"
+                maxLength={50}
+                value={title}
+                setValue={handleTitle}
+              />
+            </div>
+            <div className="notice-content">
+              <Editor
+                ref={editorRef}
+                placeholder="내용을 입력하세요"
+                previewStyle="vertical"
+                height="650px"
+                useCommandShortcut={false}
+                language="ko-KR"
+                toolbarItems={toolbarCustom}
+                hooks={{
+                  addImageBlobHook: handleUploadImage,
+                }}
+                hideModeSwitch={true}
+                initialEditType="wysiwyg"
+                // viewer={true} // TODO :나중에 다시 살펴보기
+              />
+            </div>
           </div>
-        </div>
-        <div className="notice-content">
-          <Editor
-            ref={editorRef}
-            placeholder="내용을 입력하세요"
-            previewStyle="vertical"
-            height="600px"
-            useCommandShortcut={false}
-            language="ko-KR"
-            toolbarItems={toolbarCustom}
-            hooks={{
-              addImageBlobHook: handleUploadImage,
-            }}
-            // hideModeSwitch={true}
-            // initialEditType="wysiwyg"
-            // viewer={true} // TODO :나중에 다시 살펴보기
-          />
-          <div className="notice-content-img">
+
+          <div className="notice-image-area">
             <div>
-              {imgBlobUrlList?.map((item, idx) => {
-                return (
-                  <div key={idx} className="file-item">
-                    <img src={item} alt={`미리보기 ${idx + 1}`} />
-                    <button onClick={() => handleDeleteImage(idx)}>X</button>
-                  </div>
-                );
-              })}
+              <div className="notice-upload">
+                <div>첨부파일</div>
+                <div className="file-list">
+                  {imgList?.map((item, idx) => {
+                    return (
+                      <div key={idx} className="file-item">
+                        <span>{item?.name}</span>
+                        {/* XXX X 버튼 모양 바꾸기 */}
+                        <button onClick={() => handleDeleteImage(idx)}>
+                          <FontAwesomeIcon icon={faXmark} size="lg" />
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="notice-prev-show">
+                <div>
+                  {imgBlobUrlList.length === 0 ? (
+                    <span>이미지 미리보기</span>
+                  ) : (
+                    imgBlobUrlList?.map((item, idx) => {
+                      return (
+                        <div key={idx} className="file-prev-item">
+                          <img src={item} alt={`미리보기 ${idx + 1}`} />
+                          <button onClick={() => handleDeleteImage(idx)}>
+                            <FontAwesomeIcon icon={faX} size="lg" />
+                          </button>
+                        </div>
+                      );
+                    })
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </div>

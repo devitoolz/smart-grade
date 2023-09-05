@@ -161,7 +161,7 @@ const Grade = () => {
               </Row>
               <Row col={2}>
                 <div>입학년도</div>
-                <div>{studentDetail.createdAt}</div>
+                <div>{studentDetail?.createdAt?.split('T')[0]}</div>
                 <div>전화번호</div>
                 <div>{studentDetail.phone}</div>
               </Row>
@@ -172,7 +172,7 @@ const Grade = () => {
                 value="상세정보"
                 onClick={() => {
                   setDisplay(false);
-                  navigate(`/admin/user/students/${(data as ObjectType)?.student.istudent}`);
+                  navigate(`/admin/user/students/${(data as ObjectType)?.student.studentNum}`);
                 }}
               />
             </div>

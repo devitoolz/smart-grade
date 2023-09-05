@@ -348,7 +348,7 @@ export const DemurTable = styled.div`
     .table-head,
     .table-body > div {
       display: grid;
-      grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
+      grid-template-columns: 1fr 1fr 2fr 1fr 1fr 1fr;
     }
     .table-head {
       height: 45px;

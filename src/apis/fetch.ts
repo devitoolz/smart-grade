@@ -111,14 +111,16 @@ export const putBoard = async (
     ctnt: _ctnt,
     title: _title,
     importance: _importance,
+    iadmin: 1,
   };
   try {
     await api.put(`/api/board`, putData, { headers });
     alert('처리되었습니다');
+    return true;
   } catch (err) {
     console.log(err);
-    alert('에러가 발생했습니다');
-    return;
+    alert('게시글 작성을 실패했습니다');
+    return false;
   }
 };
 
