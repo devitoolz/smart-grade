@@ -29,7 +29,7 @@ const Major = () => {
   //전공명 id state
   const [majorId, setMajorId] = useState('');
   // 변경할 항목 pk값 저장할 state.
-  const [selectMajorID, setSelectMajorID] = useState(null);
+  const [selectMajorID, setSelectMajorID] = useState('');
 
   //변경전 전공명 state
   const [selectMajorName, setSelectMajorName] = useState('');
@@ -179,12 +179,12 @@ const Major = () => {
   };
 
   //api post test
-  const MajorPostTest = async (newMajorName, graduationScore) => {
+  const MajorPostTest = async (newMajorName, newGraduationScore) => {
     const headers = { 'Content-Type': 'application/json' };
 
     try {
       await api.post(
-        `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(graduationScore)}`,
+        `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(newGraduationScore)}`,
         { headers }
       );
       handleModalCancel();
@@ -274,8 +274,8 @@ const Major = () => {
   };
 
   const handleModalOk = () => {
-    if (newMajorName != '' && graduationScore != '') {
-      MajorPostTest(newMajorName, graduationScore);
+    if (newMajorName != '' && newGraduationScore != '') {
+      MajorPostTest(newMajorName, newGraduationScore);
     } else {
       alert('내용을 입력해 주세요.');
       setNewMajorName('');
@@ -401,7 +401,7 @@ const Major = () => {
             <p>졸업학점</p>
             <div style={{ marginLeft: '40px' }}>
               <Input
-                type="number"
+                type="text"
                 length="short"
                 value={newGraduationScore}
                 setValue={e => setNewGraduationScore(e.target.value)}
