@@ -1,225 +1,212 @@
 import styled from '@emotion/styled';
 
-// export const CommonButton = styled.div`
-//   margin: 35px 0;
-// `;
-
-//notice page
-export const Ltable = styled.table`
-  width: 100%;
-  border-collapse: collapse;
-  background: #fff;
-  th {
-    background-color: #dff6ff;
-    border-top: 1.5px solid #1363df;
-    border-right: 1.5px solid #dae8ff;
-    border-bottom: 1.5px solid #dae8ff;
-    padding: 10px 0;
-  }
-
-  td {
-    border-bottom: 1.5px solid #dae8ff;
-  }
-  .inputTitle {
-    padding: 11.5px 30px;
-    background: #fff;
-  }
-  .statusTitle {
-    background: #dff6ff;
-    text-align: center;
-  }
-  .importanceCheck {
-    display: flex;
-    gap: 15px;
-    width: 100%;
-    padding: 15px 32px;
-    .colorRed {
-      color: red;
-    }
-  }
-  .fileTitle {
-    background: #dff6ff;
-    padding: 20px 0;
-    text-align: center;
-  }
-  .contentTitle {
-    background: #dff6ff;
-    text-align: center;
-  }
-  .importantCheck {
-    display: flex;
-    padding-left: 33px;
-    input[type='checkbox'] {
-      transform: scale(1.5);
-      cursor: pointer;
-    }
-    p {
-      padding-left: 30px;
-      color: red;
-    }
-  }
-  .controlTextarea {
-    padding: 20px 28px;
-    textarea {
-    }
-  }
-`;
-
+//noticeDetail page
 export const Wbtns = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-//
-export const LPTWrap = styled.div`
+//주의사항
+export const Caution = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-// 학생 강의 상세정보
-export const LPlanTable = styled.table`
-  width: 80%;
-  border: 1.5px solid dae8ff; /* justify-content: center; */
-  border-collapse: collapse;
-  text-align: center;
-  height: 100%;
-  tr {
-    th {
-      background-color: #dff6ff;
-      border-top: 1.5px solid #a5c9f6;
-      border-bottom: 1.5px solid #a5c9f6;
-      border-right: 1.5px solid #a5c9f6;
-      border-left: 1.5px solid #a5c9f6;
-    }
-
-    td {
-      border-top: 1.5px solid #a5c9f6;
-      border-right: 1.5px solid #a5c9f6;
-      border-left: 1.5px solid #a5c9f6;
-      border-bottom: 1.5px solid #a5c9f6;
-      padding: 10px 10px;
-    }
+  flex-direction: column;
+  justify-content: flex-end;
+  p {
+    color: red;
+    margin-left: 10px;
+  }
+  .callNum {
+    margin-left: 20px;
   }
 `;
-//grid를 이용
+
+//grid를 이용한 Table
 export const LectureDetail = styled.div`
-  margin-left: 100px;
-  margin-top: 30px;
+  overflow-y: scroll;
+  margin-left: 60px;
+  margin-top: 15px;
   text-align: center;
-  width: 80%;
+  width: 90%;
 
   .innerContainer {
     display: grid;
 
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 20% 30% 20% 30%;
   }
   .lectureName {
     grid-column: 1/2;
-    border-top: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    grid-row: 1/2;
+    border-top: 2px solid var(--form-table-odd-border-color);
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    color: var(--white);
+    background: var(--primary-color);
+    border-bottom: 2px solid var(--form-table-odd-border-color);
   }
   .inputLectureName {
     grid-column: 2/5;
-    border-top: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    /* border-right: 1px solid #a5c9f6; */
-    padding: 20px 10px;
+    grid-row: 1/2;
+    border-top: 2px solid var(--form-table-even-border-color);
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
+  }
+  .grade {
+    grid-row: 2/3;
+    grid-column: 1/2;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    border-left: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    background: var(--primary-color);
+    color: #fff;
+  }
+  .inputGrade {
+    grid-row: 2/3;
+    grid-column: 2/3;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+
+    background: var(--form-table-bg-color);
+  }
+
+  .semester {
+    grid-row: 2/3;
+    grid-column: 3/4;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    border-left: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    background: var(--primary-color);
+    color: #fff;
+  }
+  .inputSemester {
+    grid-row: 2/3;
+    grid-column: 4/5;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    background: var(--form-table-bg-color);
   }
   .score {
+    grid-row: 3/4;
     grid-column: 1/2;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    /* border-top: 1px solid #a5c9f6; */
-    padding: 20px 10px;
-    background: #dff6ff;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    border-left: 2px solid var(--form-table-odd-border-color);
+    border-right: 2px solid var(--form-table-odd-border-color);
+    padding: 10px 10px;
+    background: var(--primary-color);
+    color: #fff;
   }
   .inputScore {
+    grid-row: 3/4;
     grid-column: 2/3;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    /* border-top: 1px solid #a5c9f6; */
-    padding: 20px 10px;
-    margin-left: -1px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    margin-left: 2px;
+    background: var(--form-table-bg-color);
   }
-  .professor {
+  .lectureHour {
+    grid-row: 3/4;
     grid-column: 3/4;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    background: var(--primary-color);
+    color: #fff;
   }
-  .inputProfessor {
+  .inputLectureHour {
     grid-column: 4/5;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    grid-row: 3/4;
+    text-align: center;
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    background: var(--form-table-bg-color);
   }
-  .purpose {
-    grid-row: 3/5;
+
+  .capacity {
+    grid-row: 4/5;
     grid-column: 1/2;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    padding: 20px 10px;
-    background: #dff6ff;
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    background: var(--primary-color);
+    color: #fff;
   }
-  .inputPurpose {
-    grid-row: 3/5;
-    grid-column: 2/5;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    padding: 20px 10px;
+
+  .inputCapacity {
+    grid-row: 4/5;
+    grid-column: 2/3;
+    padding: 10px 10px;
+    text-align: center;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    background: var(--form-table-bg-color);
   }
 
   .bookName {
-    grid-row: 5/6;
-    grid-column: 1/2;
-    border-right: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    background: #dff6ff;
-    padding: 20px 10px;
-    margin-left: -1px;
+    grid-row: 4/5;
+    grid-column: 3/4;
+    /* border-right: 2px solid var(--form-table-odd-border-color); */
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    /* border-left: 2px solid var(--form-table-odd-border-color); */
+    background: var(--primary-color);
+    padding: 10px 10px;
+
+    color: #fff;
   }
   .inputBookName {
+    grid-row: 4/5;
+    grid-column: 4/5;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
+  }
+
+  .LectureInfo {
     grid-row: 5/6;
-    grid-column: 2/4;
-    border-right: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    grid-column: 1/2;
+    /* border-right: 2px solid var(--form-table-odd-border-color); */
+    /* border-top: 2px solid var(--form-table-odd-border-color); */
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    /* border-left: 2px solid var(--form-table-odd-border-color); */
+    padding: 10px 10px;
+    background: var(--primary-color);
+    color: #fff;
+  }
+  .inputLectureInfo {
+    grid-row: 5/6;
+    grid-column: 2/3;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
   }
 
   .bookPic {
-    grid-row: 5/7;
+    grid-row: 5/6;
+    grid-column: 3/4;
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--form-table-odd-border-color);
+    background: var(--primary-color);
+    color: white;
+  }
+  .inputBookPic {
+    display: flex;
+    grid-row: 5/6;
     grid-column: 4/5;
-    span: 2;
-    border-bottom: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    padding: 20px 10px;
-  }
-
-  .isbn {
-    grid-row: 6/7;
-    grid-column: 1/2;
-    border-top: 1px solid #a5c9f6;
-    border-left: 1px solid #a5c9f6;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    background: #dff6ff;
-    padding: 20px 10px;
-    margin-left: -1px;
-  }
-  .inputIsbn {
-    grid-row: 6/7;
-    grid-column: 2/4;
-    border-right: 1px solid #a5c9f6;
-    border-bottom: 1px solid #a5c9f6;
-    border-top: 1px solid #a5c9f6;
-    padding: 20px 10px;
+    border-bottom: 2px solid var(--form-table-even-border-color);
+    padding: 10px 10px;
+    background: var(--form-table-bg-color);
+    width: 100%;
+    height: 100%;
+    /* justify-content: space-around; */
+    justify-content: center;
+    div {
+      width: 207px;
+      height: 260px;
+      
+      border: 2px solid var(--search-bg-color);
+      background: var(--form-table-even-border-color);
+      img {
+        object-fit: cover;
+        width: 100%;
+      }
+    }
   }
 `;
 
@@ -229,12 +216,8 @@ export const Btn = styled.div`
   align-items: flex-end;
   padding: 40px 10px;
 `;
-export const Caution = styled.div`
+
+export const ModalWrap = styled.div`
+  height: '86%';
   display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  p {
-    color: red;
-    margin-left: 20px;
-  }
 `;

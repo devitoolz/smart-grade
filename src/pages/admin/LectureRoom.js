@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -7,9 +7,10 @@ import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
 import api from '../../apis/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import axios from 'axios';
 
 const LectureRoom = () => {
+  //강의실 pk값
+  const [ilectureRoom, setIlectureRoom] = useState('');
   //강의실 추가시 건물명 state
   const [buildingName, setBuildingName] = useState('');
 
@@ -23,11 +24,11 @@ const LectureRoom = () => {
 
   // 검색 버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
-  const [buildingNameData, setBuildingNameData] = useState('');
-  //검색 시 사용할 쿼리스트링(건물명)
-  const queries = { buildingName };
-
   //searchBar dropdown buildingName state
+  const [buildingNameData, setBuildingNameData] = useState('');
+  //searchBar 운영,폐지 key, value 이름
+  //검색 시 사용할 쿼리스트링(건물명)
+  const queries = { buildingNameData };
 
   ////Table////
   //table header
@@ -51,7 +52,7 @@ const LectureRoom = () => {
   const { data, pending, error } = useQuerySearch(url, click);
   //searchBar dropdown
   const buildingDataList = [];
-  data?.lectureRoomList?.forEach(item => {
+  data?.lectureRoom?.forEach(item => {
     buildingDataList.push({ id: item.buildingName, title: item.buildingName });
   });
 
@@ -124,22 +125,6 @@ const LectureRoom = () => {
     window.location.reload();
   };
 
-  //임시
-  const getLectureRoom = async () => {
-    try {
-      const res = await axios.get('/api/lectureroom');
-      const result = res.data;
-      console.log('나오는지 확인', result);
-      return result;
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  useEffect(() => {
-    getLectureRoom();
-  }, []);
-
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -147,10 +132,10 @@ const LectureRoom = () => {
           placeholder="건물명"
           length="short"
           data={buildingDataList}
-          value={buildingName}
-          setValue={setBuildingName}
+          value={buildingNameData}
+          setValue={setBuildingNameData}
           reset
-          search
+          search={true}
         />
       </SearchBar>
       <CommonButton btnType="page" value="강의실 추가" onClick={modalOpen} />
@@ -178,8 +163,9 @@ const LectureRoom = () => {
                 length="short"
                 placeholder="건물명"
                 data={buildingDataList}
-                value={buildingNameData}
-                setValue={setBuildingNameData}
+                value={buildingName}
+                setValue={setBuildingName}
+                reset
               />
             </div>
             <Input
@@ -238,9 +224,7 @@ const LectureRoom = () => {
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName?.includes('호') === false
-                  ? item.lectureRoomName?.concat('호')
-                  : item.lectureRoomName}
+                {item.lectureRoomName?.concat('호')}
               </div>
               <div>{item.maxCapacity}</div>
               <div>
