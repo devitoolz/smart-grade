@@ -137,7 +137,7 @@ const RegisterTimetableModal = styled.div`
   }
   > div.timetable-header {
     display: grid;
-    height: 45px;
+    height: 50px;
     grid-template-columns: 120px repeat(5, 100px);
     border-top: 2px solid var(--table-outline-color);
     border-bottom: 2px solid var(--table-outline-color);

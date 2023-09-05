@@ -85,8 +85,8 @@ export interface TableProps {
   children: React.ReactNode;
   hasPage?: boolean;
   maxPage?: number;
-  pending: boolean;
-  error: boolean;
+  pending?: boolean;
+  error?: boolean;
 }
 
 export interface FindPasswordProps {
@@ -117,4 +117,14 @@ export interface RegisterScoreProps {
   setOpenRegisterScore: React.Dispatch<React.SetStateAction<boolean>>;
   score: ObjectType | null;
   setScore: React.Dispatch<React.SetStateAction<ObjectType> | null>;
+}
+
+export interface ExcelDataProps {
+  excelDataHeader: Array<TableHeaderType>;
+  excelData: Array<ObjectType>;
+  setExcelData: React.Dispatch<React.SetStateAction<Array<ObjectType> | null>>;
+  excelDataHasError: boolean;
+  setExcelDataHasError: React.Dispatch<React.SetStateAction<boolean>>;
+  viewData: Array<string>;
+  postData: Array<string>;
 }

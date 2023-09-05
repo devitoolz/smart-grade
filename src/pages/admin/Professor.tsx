@@ -14,13 +14,16 @@ import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
 import { saveAs } from 'file-saver';
 import { Workbook } from 'exceljs';
 import { read, utils } from 'xlsx';
+import ExcelData from '../../components/ExcelData';
 
 const Professor = () => {
   const navigate = useNavigate();
   const [click, setClick] = useState<boolean>(false);
-
   const [imajor, setImajor] = useState<string | number | null>(null);
   const [name, setName] = useState<string>('');
+
+  const [excelData, setExcelData] = useState<Array<ObjectType> | null>(null);
+  const [excelDataHasError, setExcelDataHasError] = useState<boolean>(false);
 
   const { allMajorList } = useSelector((state: RootState) => state.major);
 
@@ -43,6 +46,15 @@ const Professor = () => {
   const professorList: Array<ObjectType> = (data as ObjectType)?.professors;
 
   const headerWidths = [12, 6, 19, 30, 21];
+  const excelDataHeader = [
+    { title: '이름', width: 2 },
+    { title: '성별', width: 1 },
+    { title: '생년월일', width: 2.5 },
+    { title: '전공', width: 5 },
+    { title: '휴대전화', width: 3 },
+  ];
+  const viewData = ['nm', 'gender', 'birthdate', 'majorName', 'phone'];
+  const postData = ['nm', 'gender', 'birthdate', 'imajor', 'phone'];
 
   const handleDownloadExcel = async () => {
     try {
@@ -84,10 +96,6 @@ const Professor = () => {
         type: 'list',
         allowBlank: false,
         formulae: ['"남,여"'],
-        showErrorMessage: true,
-        errorStyle: 'error',
-        errorTitle: '에러',
-        error: '성별을 선택해주세요.',
       });
 
       // @ts-ignore
@@ -95,14 +103,9 @@ const Professor = () => {
         type: 'list',
         allowBlank: false,
         formulae: [`"${allMajorList.map(item => item.majorName).join(',')}"`],
-        showErrorMessage: true,
-        errorStyle: 'error',
-        errorTitle: '에러',
-        error: '전공을 선택해주세요.',
       });
 
-      // 파일 생성
-      const fileData = await wb.xlsx.writeBuffer(); //writeBuffer는 프로미스를 반환하므로 async-await을 사용해야 한다.
+      const fileData = await wb.xlsx.writeBuffer();
       const blob = new Blob([fileData], {
         type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       });
@@ -128,8 +131,15 @@ const Professor = () => {
         const rawData = fileInformation.Sheets[sheetName];
         const result: Array<ObjectType> = utils.sheet_to_json(rawData);
 
-        const newResult = result.map(item => {
+        if (result.length === 0) {
+          alert('생성할 계정이 없습니다.');
+          e.target.value = '';
+          return;
+        }
+
+        const newResult = result.map((item, index) => {
           return {
+            index,
             nm: item['이름'],
             gender: (item['성별'] === '남' && 'M') || (item['성별'] === '여' && 'F'),
             birthdate: item['생년월일(YYYYMMDD)']
@@ -139,37 +149,57 @@ const Professor = () => {
               .concat(item['휴대전화(010, - 제외 8자리)'])
               .replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'),
             imajor: allMajorList.find(major => major.majorName === item['전공'])?.imajor,
+            majorName: item['전공'],
           };
         });
 
-        let nameHasError: any = [];
+        let nameHasError: Array<ObjectType> = [];
 
         newResult.forEach(item => {
+          if (!/^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/.test(item.nm)) {
+            nameHasError.push({ index: item.index, nm: item.nm, error: '이름 오류' });
+          }
           if (!/(\d{4})-(\d{2})-(\d{2})/.test(item.birthdate)) {
-            nameHasError.push({ name: item.nm, error: '생년월일 오류' });
+            nameHasError.push({ index: item.index, nm: item.nm, error: '생년월일 오류' });
           }
           if (!/(\d{3})-(\d{4})-(\d{4})/.test(item.phone)) {
-            nameHasError.push({ name: item.nm, error: '휴대전화 오류' });
-          }
-          if (!/^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/.test(item.nm)) {
-            nameHasError.push({ name: item.nm, error: '이름 오류' });
+            nameHasError.push({ index: item.index, nm: item.nm, error: '휴대전화 오류' });
           }
         });
 
-        console.log(newResult);
-
         if (nameHasError.length !== 0) {
-          console.log(nameHasError);
-          let errMsg = '';
-          nameHasError.forEach((item: any) => {
-            console.log(item);
-            errMsg += `${item.name} : ${item.error}\n`;
+          setExcelDataHasError(true);
+
+          const output = Object.values(
+            nameHasError.reduce((res, obj) => {
+              if (!res[obj.nm]) {
+                res[obj.nm] = { ...obj, error: [] };
+              }
+              res[obj.nm].error.push(obj.error);
+              return res;
+            }, {})
+          );
+
+          output.forEach(item => {
+            item.error = item.error.join(', ');
           });
-          alert(errMsg);
+
+          const newOutput = newResult.map(result => {
+            for (let i in output) {
+              if (output[i].index === result.index) {
+                return { ...result, ...output[i] };
+              }
+            }
+            return result;
+          });
+
+          setExcelData(newOutput);
+          e.target.value = '';
           return;
         }
 
-        alert(`교수 계정 ${newResult.length}개가 생성 되었습니다.`);
+        setExcelData(newResult);
+        e.target.value = '';
       };
     }
   };
@@ -234,6 +264,17 @@ const Professor = () => {
           );
         })}
       </Table>
+      {excelData && (
+        <ExcelData
+          excelDataHeader={excelDataHeader}
+          excelData={excelData}
+          setExcelData={setExcelData}
+          excelDataHasError={excelDataHasError}
+          setExcelDataHasError={setExcelDataHasError}
+          viewData={viewData}
+          postData={postData}
+        />
+      )}
     </>
   );
 };
