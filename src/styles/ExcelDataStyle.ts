@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { ExcelDataStyleProps } from '../types/styles';
 
 const ExcelDataLayout = styled.div<ExcelDataStyleProps>`
+  margin: 10px 0;
   width: 100%;
   height: 338px;
   overflow: hidden;
@@ -71,4 +72,16 @@ const ExcelDataLayout = styled.div<ExcelDataStyleProps>`
   }
 `;
 
-export { ExcelDataLayout };
+const PendingLayout = styled.div`
+  position: absolute;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(2px);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+`;
+
+export { ExcelDataLayout, PendingLayout };

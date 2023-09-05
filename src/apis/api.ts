@@ -18,7 +18,7 @@ const api = axios.create({
 const removeAuth = () => {
   removeCookie('accessToken');
   removeCookie('refreshToken');
-  // location.href = '/';
+  location.href = '/';
 };
 
 const getAuth = () => {
@@ -53,8 +53,8 @@ const Interceptor = ({ children }: { children: ReactNode }) => {
 
         if (!response || response.status === 500) {
           removeAuth();
-          // alert('서버와의 연결이 원활하지 않습니다.');
-          // navigate('/');
+          alert('서버와의 연결이 원활하지 않습니다.');
+          navigate('/');
         } else if (response.status === 401 && refreshToken) {
           try {
             // TODO: data 타입 지정

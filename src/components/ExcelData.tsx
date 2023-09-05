@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ExcelDataProps, ObjectType } from '../types/components';
-import { ExcelDataLayout } from '../styles/ExcelDataStyle';
+import { ExcelDataLayout, PendingLayout } from '../styles/ExcelDataStyle';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import CommonButton from './CommonButton';
 import api from '../apis/api';
+import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 
 const ExcelData = ({
   excelDataHeader,
@@ -16,9 +17,13 @@ const ExcelData = ({
   viewData,
   postData,
 }: ExcelDataProps) => {
+  const [progress, setProgress] = useState(0);
+
+  const percent = Math.ceil((progress / excelData.length) * 100);
+
   const template = excelDataHeader?.map(item => item.width + 'fr').join(' ');
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const payloadList = excelData.map(data => {
       let payload: ObjectType = {};
       postData.forEach(key => {
@@ -33,10 +38,23 @@ const ExcelData = ({
       alert('양식을 형식에 맞게 수정 후 다시 시도해주세요.');
       return;
     }
+
+    for (const payload of payloadList) {
+      try {
+        await api.post('/api/admin/professor', payload);
+        setProgress(prevState => prevState + 1);
+      } catch {
+        alert('오류가 발생하였습니다.');
+        return;
+      }
+    }
+
+    handleCancel();
   };
 
   const handleCancel = () => {
     setExcelData(null);
+    setProgress(0);
     setExcelDataHasError(false);
   };
 
@@ -50,6 +68,21 @@ const ExcelData = ({
           </button>
         </div>
         <div className="modal-contents">
+          {progress ? (
+            <PendingLayout>
+              <CircularProgressBar
+                // colorCircle="#F8F8F8"
+                colorSlice="#1363df"
+                // fill="#F8F8F8"
+                fontSize="10px"
+                percent={percent}
+                // textPosition="1.5rem"
+                size={200}
+                stroke={4}
+                strokeBottom={1}
+              />
+            </PendingLayout>
+          ) : null}
           <ExcelDataLayout template={template}>
             <div className="excel-table-header">
               {excelDataHeader?.map(item => <div key={item.title}>{item.title}</div>)}
