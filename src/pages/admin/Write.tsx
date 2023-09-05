@@ -1,15 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
-import { useNavigate } from 'react-router-dom';
+import Dropdown from '../../components/Dropdown';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
 import { postBoard } from '../../apis/fetch';
 // toast ui
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import '@toast-ui/editor/dist/i18n/ko-kr';
 import { NoticeWrap } from '../../styles/NoticeStyle';
-import Dropdown from '../../components/Dropdown';
 
 const Write = () => {
   const navigate = useNavigate();
@@ -183,7 +185,10 @@ const Write = () => {
                     return (
                       <div key={idx} className="file-item">
                         <span>{item?.name}</span>
-                        <button onClick={() => handleDeleteImage(idx)}>X</button>
+                        {/* XXX X 버튼 모양 바꾸기 */}
+                        <button onClick={() => handleDeleteImage(idx)}>
+                          <FontAwesomeIcon icon={faXmark} size="lg" />
+                        </button>
                       </div>
                     );
                   })}
@@ -199,7 +204,9 @@ const Write = () => {
                       return (
                         <div key={idx} className="file-prev-item">
                           <img src={item} alt={`미리보기 ${idx + 1}`} />
-                          <button onClick={() => handleDeleteImage(idx)}>X</button>
+                          <button onClick={() => handleDeleteImage(idx)}>
+                            <FontAwesomeIcon icon={faX} size="lg" />
+                          </button>
                         </div>
                       );
                     })
