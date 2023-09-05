@@ -30,6 +30,7 @@ const NoticeDetail = () => {
     setCtnt(contents);
     const picList = (data as ObjectType)?.pisc;
     setPisc(picList);
+    setPutPisc(picList);
     setImportance((data as ObjectType)?.importance + '');
   };
   const makeTimer = () => {
@@ -42,7 +43,8 @@ const NoticeDetail = () => {
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState('');
   const [ctnt, setCtnt] = useState('');
-  const [pisc, setPisc] = useState([]);
+  const [pisc, setPisc] = useState<any>([]);
+  const [putPic, setPutPisc] = useState<any>([]);
   const [importance, setImportance] = useState<string | number | null>('');
   const [delActivate, setDelActivate] = useState(false);
   const handleEditBoard = () => {
@@ -52,8 +54,14 @@ const NoticeDetail = () => {
     setDelActivate(true);
     settingBoard();
   };
-  const handleDeletePics = (idx: number) => {
-    alert(idx + '번 이미지 삭제 예정');
+  const [deletePicList, setDeletePicList] = useState<Array<number>>([]);
+  const handleDeletePics = (ipic: number) => {
+    alert(ipic + '번 이미지 삭제 예정');
+    const check = confirm('해당 이미지를 삭제하시겠습니까?');
+    check ? setDeletePicList((prev: Array<number>) => [...prev, ipic]) : null;
+    const picList: Array<any> = pisc.filter((item: any) => item.ipic !== ipic);
+    setPisc(picList);
+    console.log(picList);
   };
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -74,6 +82,7 @@ const NoticeDetail = () => {
   const editorRef = useRef<Editor>(null);
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
+  // 게시글 수정
   const putBoardWait = async () => {
     setDisplay(false);
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
@@ -81,7 +90,9 @@ const NoticeDetail = () => {
       Number(iboard),
       markdownContent as string,
       title,
-      Number(importance)
+      Number(importance),
+      deletePicList,
+      putPic
     );
     success ? navigate('/admin/home/notice') : null;
   };
@@ -162,35 +173,33 @@ const NoticeDetail = () => {
                   ))}
               </div>
             </div>
-            {loading &&
-              (edit ? (
-                <>이미지 추가하기</>
-              ) : (
-                <div className="notice-pics">
-                  <div>
-                    <div className="pics-title">이미지</div>
-                    {pisc?.length === 0 ? (
-                      <div className="no-pics">이미지가 없습니다</div>
-                    ) : (
-                      pisc?.map((item, idx) => {
-                        return (
-                          <div className="pics-item" key={idx}>
-                            <button
-                              className={delActivate ? 'pics-delete' : 'hide'}
-                              onClick={() => handleDeletePics(idx)}
-                            >
-                              X
-                            </button>
-                            <img
-                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}`}
-                            />
-                          </div>
-                        );
-                      })
-                    )}
-                  </div>
+            {loading && (
+              <div className="notice-pics">
+                <div>
+                  <div className="pics-title">이미지</div>
+                  {pisc?.length === 0 ? (
+                    <div className="no-pics">이미지가 없습니다</div>
+                  ) : (
+                    pisc?.map((item: any, idx: any) => {
+                      return (
+                        <div className="pics-item" key={idx}>
+                          <button
+                            id="delete-check"
+                            className={delActivate ? 'pics-delete' : 'hide'}
+                            onClick={() => handleDeletePics(item.ipic)}
+                          >
+                            X
+                          </button>
+                          <img
+                            src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item.pic}`}
+                          />
+                        </div>
+                      );
+                    })
+                  )}
                 </div>
-              ))}
+              </div>
+            )}
           </div>
           <Wbtns>
             {!edit ? (
