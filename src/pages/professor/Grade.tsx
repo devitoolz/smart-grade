@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
+import api from '../../apis/api';
 
 const Grade = () => {
   const navigate = useNavigate();
   const tableHeader = [
-    { title: '년도', width: 1 },
-    { title: '학기', width: 1 },
+    { title: '인원', width: 1 },
+    { title: '학년제한', width: 1 },
     { title: '강의명', width: 3 },
     { title: '강의시간', width: 2 },
     { title: '강의실', width: 1 },
@@ -18,7 +19,21 @@ const Grade = () => {
     { title: '비고', width: 2 },
   ];
   // 임시데이터
-  const data = Array(5).fill('');
+  // const data = Array(5).fill('');
+  const [data, setData] = useState([]);
+  const url = `/api/professor/lecture-List?iprofessor=100008&openingProcedures=3`;
+  const getLectureList = async () => {
+    try {
+      const { data } = await api.get(url);
+      setData(data.lectureList);
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getLectureList();
+  }, []);
 
   // 이의신청 모달
   const [demur, setDemur] = useState<boolean>(false);
@@ -40,18 +55,18 @@ const Grade = () => {
         </ul>
       </div>
       <Table header={tableHeader} data={data} hasPage={true} pending={false} error={false}>
-        {data.map((_, idx) => {
+        {data?.map((_, idx) => {
           return (
             <div key={idx}>
-              <div>2018</div>
-              <div>1</div>
-              <div>웹프로그래밍{idx + 1}</div>
+              <div>lectureMaxPeople</div>
+              <div>gradeLimit</div>
+              <div>lectureName</div>
               <div>14:00~16:00 (금)</div>
               <div>그린관 502호</div>
-              <div>3</div>
+              <div>score</div>
               <div>
                 <CommonButton
-                  value="이의신청목록 확인"
+                  value="이의확인"
                   btnType="table"
                   color="gray"
                   onClick={() => {
