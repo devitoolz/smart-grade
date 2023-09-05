@@ -83,7 +83,7 @@ const CreateUser = () => {
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z]/g, ''));
+    setName(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z\s]/g, ''));
   };
 
   const handleBirthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -171,7 +171,7 @@ const CreateUser = () => {
             <Dropdown
               isForm={true}
               placeholder="전공을 선택하세요."
-              data={allMajorList.filter(item => item.delYn === 0)}
+              data={allMajorList}
               propertyName={{ key: 'imajor', value: 'majorName' }}
               value={major}
               setValue={setMajor}

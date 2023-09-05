@@ -236,6 +236,7 @@ export const ModalStyle = styled.div<ModalStyleProps>`
       border-bottom-color: ${({ modalSize }) => (modalSize === 'big' ? 'transparent' : '')};
     }
     .modal-contents {
+      position: relative;
       overflow: hidden;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;

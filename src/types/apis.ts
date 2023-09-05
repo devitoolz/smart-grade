@@ -65,6 +65,7 @@ export interface MajorData {
 export interface LectureRoomData {
   ilectureRoom: number;
   lectureRoomName: string;
+  maxCapacity: number;
 }
 
 export interface LoginResult {

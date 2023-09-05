@@ -40,3 +40,7 @@ export interface UserStyleProps {
   negative?: boolean;
   find?: boolean;
 }
+
+export interface ExcelDataStyleProps {
+  template: string;
+}
