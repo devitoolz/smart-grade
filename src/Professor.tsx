@@ -28,6 +28,7 @@ const Professor = () => {
     const getProfile = async () => {
       try {
         const { data } = await api.get<UserProfile>(`/api/professor`);
+        data.profile.secretKey = JSON.parse(data.profile.secretKey);
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {

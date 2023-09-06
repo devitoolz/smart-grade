@@ -21,7 +21,7 @@ const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
       try {
         const { data } = await api.get<OTPData>(`/api/otp`);
         setQRUrl(data.barcodeUrl.replace('www.google', 'chart.googleapis'));
-        dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: 'true' } }));
+        dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: true } }));
       } catch {
         alert('OTP 발급 중 오류가 발생했습니다.');
       }
@@ -39,12 +39,12 @@ const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 400 }}>
+      <div className="modal-box" style={{ height: 'auto' }}>
         <div className="modal-title-small">
           <div>OTP 등록</div>
         </div>
         <div className="modal-contents">
-          <img style={{ padding: 10 }} src={QRUrl} alt="QR Code" />
+          <img style={{ padding: 15 }} src={QRUrl} alt="QR Code" />
         </div>
         <div className="modal-footer">
           <CommonButton value="확인" onClick={handleOk} btnType="modal" />

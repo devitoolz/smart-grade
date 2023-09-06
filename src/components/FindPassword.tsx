@@ -42,7 +42,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
       return;
     }
     try {
-      await axios.put(`/api/forgetPassword?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
+      await axios.put(`/api/forget-password?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
       setActiveIndex(prevActiveIndex => prevActiveIndex + 1);
       swiperRef.current?.swiper.slideNext();
     } catch {
@@ -69,7 +69,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
     };
 
     try {
-      await axios.put(`/api/changPassword`, data);
+      await axios.put(`/api/chang-password`, data);
       alert('비밀번호가 변경되었습니다.');
       setOpenFindPw(false);
     } catch {
@@ -79,7 +79,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 300 }}>
+      <div className="modal-box">
         <div className="modal-title-small">
           <div>
             {roleTxt} 비밀번호 {(activeIndex === 0 && '찾기') || (activeIndex === 1 && '변경')}

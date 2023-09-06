@@ -46,13 +46,13 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
     try {
       await api.put(
-        `/api/${role}/changPassword`,
+        `/api/${role}/chang-password`,
         (role === 'professor' && professorPayload) || (role === 'student' && studentPayload)
       );
       alert('비밀번호가 변경되었습니다.');
       setOpenChangePassword(false);
 
-      if (user?.profile.secretKey !== 'true') {
+      if (!user?.profile.secretKey) {
         setOpenOTPRegister(true);
       }
     } catch (err) {
@@ -64,12 +64,12 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box">
+      <div className="modal-box" style={{ height: 310 }}>
         <div className="modal-title-small">
           <div>비밀번호 변경</div>
         </div>
         <div className="modal-contents">
-          {user?.profile.secretKey !== 'true' && (
+          {!user?.profile.secretKey && (
             <NoticeContainer>
               <span
                 style={{ fontSize: 14, lineHeight: 'normal', paddingTop: 0, paddingBottom: 15 }}
@@ -110,7 +110,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
         </div>
         <div className="modal-footer">
           <CommonButton value="확인" onClick={handleChangePw} btnType="modal" />
-          {user?.profile.secretKey === 'true' && (
+          {user?.profile.secretKey && (
             <CommonButton
               value="취소"
               onClick={() => setOpenChangePassword(false)}

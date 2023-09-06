@@ -24,22 +24,32 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
   };
 
   const handleOTPAuth = async () => {
+    if (OTP === '') {
+      alert('OTP를 입력하세요.');
+      return;
+    }
+
     try {
       // TODO: data 타입 지정
       const { data } = await axios.post(`/api/otp-valid`, authPayload);
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
-        navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
+
+        navigate(`${payload.role.toLowerCase().replace('role_', '')}`);
       }
     } catch {
       alert('인증에 실패하였습니다.');
     }
   };
 
+  const handleCancel = () => {
+    setOpenOTP(false);
+  };
+
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 230, width: 350 }}>
+      <div className="modal-box" style={{ height: 200, width: 300 }}>
         <div className="modal-title-small">
           <div>OTP 인증</div>
         </div>
@@ -55,7 +65,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
         </div>
         <div className="modal-footer">
           <CommonButton value="인증" onClick={handleOTPAuth} btnType="modal" />
-          <CommonButton value="취소" onClick={() => setOpenOTP(false)} btnType="modal" />
+          <CommonButton value="취소" onClick={handleCancel} btnType="modal" />
         </div>
       </div>
     </ModalStyle>
