@@ -28,6 +28,10 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }: Tab
 
   const [pageList, setPageList] = useState<Array<number>>([1]);
 
+  if (maxPage) {
+    maxPage === -1 ? (maxPage = 1) : (maxPage += 1);
+  }
+
   useEffect(() => {
     if (maxPage) {
       const maxListIndex = Math.ceil(maxPage / 5) - 1;
