@@ -11,6 +11,7 @@ import { getStudentList } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import api from '../../apis/api';
 import { ObjectType } from '../../types/components';
+import { FormTable, Row } from '../../styles/UserStyle';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
@@ -194,6 +195,18 @@ const Lecture = () => {
             <div>lectureStrDate = {contents.lectureStrDate}</div>
             <div>lectureStrTime = {contents.lectureStrTime}</div>
             <div>lectureName = {contents.lectureName}</div>
+            <FormTable>
+              <Row col={2}>
+                <div>휴대전화</div>
+                <div>0000000000000</div>
+                <div>E-mail</div>
+                <div>smartgrade@green.ac.kr</div>
+              </Row>
+              <Row>
+                <div>주소</div>
+                <div>green green</div>
+              </Row>
+            </FormTable>
           </div>
         </CommonModal>
       ) : null}
