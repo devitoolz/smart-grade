@@ -279,7 +279,7 @@ const PasswordForm = styled.form<UserStyleProps>`
   grid-template-rows: ${({ find }) => (find ? '1fr 1fr' : '1fr 1fr 1fr')};
   font-size: 16px;
   gap: 15px;
-  row-gap: ${({ find }) => (find ? '30px' : null)};
+  row-gap: ${({ find }) => (find ? '20px' : null)};
   > label {
     display: flex;
     align-items: center;

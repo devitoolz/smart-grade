@@ -24,6 +24,11 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
   };
 
   const handleOTPAuth = async () => {
+    if (OTP === '') {
+      alert('OTP를 입력하세요.');
+      return;
+    }
+
     try {
       // TODO: data 타입 지정
       const { data } = await axios.post(`/api/otp-valid`, authPayload);
@@ -39,7 +44,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 230, width: 350 }}>
+      <div className="modal-box" style={{ height: 200, width: 300 }}>
         <div className="modal-title-small">
           <div>OTP 인증</div>
         </div>

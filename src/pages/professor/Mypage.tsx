@@ -96,7 +96,7 @@ const Mypage = () => {
         await api.delete(`/api/professor`);
       }
 
-      formData.append('dto', JSON.stringify(payload));
+      formData.append('param', JSON.stringify(payload));
 
       await api.put(`/api/professor`, formData, {
         headers: {

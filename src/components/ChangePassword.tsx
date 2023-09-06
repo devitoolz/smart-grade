@@ -46,7 +46,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
     try {
       await api.put(
-        `/api/${role}/changPassword`,
+        `/api/${role}/chang-password`,
         (role === 'professor' && professorPayload) || (role === 'student' && studentPayload)
       );
       alert('비밀번호가 변경되었습니다.');
@@ -64,7 +64,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box">
+      <div className="modal-box" style={{ height: 310 }}>
         <div className="modal-title-small">
           <div>비밀번호 변경</div>
         </div>

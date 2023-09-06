@@ -39,12 +39,12 @@ const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 400 }}>
+      <div className="modal-box" style={{ height: 'auto' }}>
         <div className="modal-title-small">
           <div>OTP 등록</div>
         </div>
         <div className="modal-contents">
-          <img style={{ padding: 10 }} src={QRUrl} alt="QR Code" />
+          <img style={{ padding: 15 }} src={QRUrl} alt="QR Code" />
         </div>
         <div className="modal-footer">
           <CommonButton value="확인" onClick={handleOk} btnType="modal" />
