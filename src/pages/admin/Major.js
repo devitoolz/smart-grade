@@ -181,12 +181,12 @@ const Major = () => {
   //api post test
   const MajorPostTest = async (newMajorName, newGraduationScore) => {
     const headers = { 'Content-Type': 'application/json' };
-
+    const postData = {
+      newMajorName,
+      newGraduationScore,
+    };
     try {
-      await api.post(
-        `/api/major?majorName=${newMajorName}&graduationScore=${parseInt(newGraduationScore)}`,
-        { headers }
-      );
+      await api.post(`/api/major`, postData, { headers });
       handleModalCancel();
       alert('등록되었습니다.');
     } catch (err) {
@@ -279,7 +279,7 @@ const Major = () => {
     } else {
       alert('내용을 입력해 주세요.');
       setNewMajorName('');
-      setGraduationScore('');
+      setNewGraduationScore('');
     }
   };
 

@@ -57,18 +57,14 @@ const LectureRoom = () => {
   });
 
   //api post test
-  const postBuildinglist = async (lectureRoomName, buildingName, maxCapacity) => {
+  const postBuildinglist = async (ilectureRoom, lectureRoomName, buildingName, maxCapacity) => {
     const headers = { 'Content-Type': 'application/json' };
-    const postData = {
-      lectureRoomName,
-      buildingName,
-      maxCapacity,
-    };
     try {
-      await api.post('/api/lectureroom', postData, { headers });
-      // const result = res.data;
-      // console.log('잘 나오나', result);
-      alert('등록되었습니다.');
+      await api.post(
+        `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+        { headers }
+      );
+      console.log('나와랏!');
     } catch (err) {
       console.log(err);
     }
@@ -93,7 +89,7 @@ const LectureRoom = () => {
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-      setBuildingNameData('');
+      setBuildingName('');
       setLectureRoomName('');
       setMaxCapacity('');
     }
