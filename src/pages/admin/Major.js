@@ -160,7 +160,7 @@ const Major = () => {
     setSelectMajorName(e.target.value);
   };
 
-  // 변경버튼 클릭시 전공명 변경 실행할 함수
+  // 변경버튼 클릭시 졸업학점 변경 실행할 함수
   const handleChangeScore = e => {
     // console.log("바뀌어요")
     setGraduationScore(e.target.value);
@@ -221,16 +221,19 @@ const Major = () => {
       await api.patch(`/api/major`, patchDatas, { headers });
 
       //변경 전 전공명 state
-      setSelectMajorNameNow(tempStr);
+      // setSelectMajorNameNow(tempStr);
       // console.log('전공명 서버 수정 완료 : ', result);
 
       // 여기서 화면을 갱신한다.
       const temp = isDataArr.map(item => {
         if (item.imajor === selectMajorID) {
           if (item.majorName !== tempStr) {
-            item.isChange = 1;
+            // item.isChange = 1;
             item.originName = '구 ' + item.majorName;
             item.majorName = tempStr;
+            // item.graduationScore = tempScore;
+          }
+          if (item.graduationScore !== tempScore) {
             item.graduationScore = tempScore;
           }
         }
@@ -238,7 +241,7 @@ const Major = () => {
       });
       // console.log(temp);
       setDataArr(temp);
-      setSelectMajorID(null);
+      setSelectMajorID('');
       setSelectMajorName('');
       setGraduationScore('');
 
