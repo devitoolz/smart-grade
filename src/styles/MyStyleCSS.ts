@@ -237,7 +237,7 @@ export const ModalStyle = styled.div<ModalStyleProps>`
     }
     .modal-contents {
       position: relative;
-      overflow: hidden;
+      overflow: auto;
       padding: ${({ modalSize }) => (modalSize === 'big' ? '0 0 10px' : null)};
       width: 100%;
       height: ${({ modalSize }) => (modalSize === 'big' ? '90%' : '100%')};
