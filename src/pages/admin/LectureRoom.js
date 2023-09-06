@@ -60,10 +60,16 @@ const LectureRoom = () => {
   const postBuildinglist = async (ilectureRoom, lectureRoomName, buildingName, maxCapacity) => {
     const headers = { 'Content-Type': 'application/json' };
     try {
+      // await api.post(
+      //   `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+      //   { headers }
+      // );
+
       await api.post(
         `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
         { headers }
       );
+
       console.log('나와랏!');
     } catch (err) {
       console.log(err);
@@ -220,7 +226,9 @@ const LectureRoom = () => {
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName?.concat('호')}
+                {item.lectureRoomName?.includes('호') === false
+                  ? item.lectureRoomName?.concat('호')
+                  : item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
               <div>

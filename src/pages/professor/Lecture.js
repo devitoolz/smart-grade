@@ -179,8 +179,9 @@ const Lecture = () => {
   };
 
   //api get hook test
-  const url = '';
+  const url = ``;
 
+ 
   const { data, pending, error } = useQuerySearch(url, click);
   return (
     <div>

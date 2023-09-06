@@ -124,6 +124,7 @@ const Major = () => {
       // }
 
       //졸업학점기준 최소 110학점이상 135학점 이하 입력 가능
+      // const newValue = tempScore.replace(/[^0-9]/g, '');
       if (parseInt(tempScore) < 110 || parseInt(tempScore) > 135) {
         alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
         return;
@@ -182,8 +183,8 @@ const Major = () => {
   const MajorPostTest = async (newMajorName, newGraduationScore) => {
     const headers = { 'Content-Type': 'application/json' };
     const postData = {
-      newMajorName,
-      newGraduationScore,
+      majorName: newMajorName,
+      graduationScore: newGraduationScore,
     };
     try {
       await api.post(`/api/major`, postData, { headers });
@@ -193,6 +194,7 @@ const Major = () => {
       console.log(err);
     }
   };
+
   //api delete test
   const MajorDeleteTest = async _id => {
     try {

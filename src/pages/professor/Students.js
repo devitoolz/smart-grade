@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import api from '../../apis/api';
 // import { EffectCards } from 'swiper/modules';
 import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
@@ -126,11 +127,15 @@ const Students = () => {
 
   //api get hook test
   const url = '/api/student/${studentNum}';
+  //바꾼거
+  // const url = `/api/student/lecture-list?page=${page}&size=10&sort=finishedYn=${degree}`;
+
   const { data, pending, error } = useQuerySearch(url, click);
 
   const getstudent = async () => {
     try {
-      const res = await axios.get('/api/student/${studentNum}');
+      const res = await api.get('/api/student/${studentNum}');
+      // const res= await api.get(`/api/student/lecture-list?page=${page}&size=10&sort=finishedYn=${degree}`);
       const result = res.data;
       console.log('갈치가 천원', result);
       return result;

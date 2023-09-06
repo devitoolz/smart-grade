@@ -64,11 +64,11 @@ const Lecture = () => {
   const semesterList = [
     {
       id: 1,
-      title: '1학기',
+      title: '2022',
     },
     {
       id: 2,
-      title: '2학기',
+      title: '2023',
     },
   ];
 
