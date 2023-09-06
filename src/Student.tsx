@@ -24,7 +24,7 @@ const Student = () => {
   useEffect(() => {
     const getProfile = async () => {
       try {
-        const { data } = await api.get<UserProfile>(`/api/student/profile`);
+        const { data } = await api.get<UserProfile>(`/api/student/detail`);
         data.profile.secretKey = JSON.parse(data.profile.secretKey);
         dispatch(main.setUser({ ...data }));
       } catch {
