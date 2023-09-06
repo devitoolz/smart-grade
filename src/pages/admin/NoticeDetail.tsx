@@ -42,7 +42,7 @@ const NoticeDetail = () => {
   const [edit, setEdit] = useState(false);
   const [title, setTitle] = useState('');
   const [ctnt, setCtnt] = useState('');
-  const [pisc, setPisc] = useState([]);
+  const [pisc, setPisc] = useState<any>([]);
   const [importance, setImportance] = useState<string | number | null>('');
   const [delActivate, setDelActivate] = useState(false);
   const handleEditBoard = () => {
@@ -52,8 +52,33 @@ const NoticeDetail = () => {
     setDelActivate(true);
     settingBoard();
   };
-  const handleDeletePics = (idx: number) => {
-    alert(idx + '번 이미지 삭제 예정');
+  const [addNewPic, setAddNewPic] = useState<Array<File>>([]);
+  const [showNewPic, setShowNewPic] = useState<Array<string>>([]);
+  const handleUploadImageNew = (blob: any) => {
+    // 이전 상태를 가져와서 새 상태를 설정
+    setAddNewPic((prev: Array<File>) => [...prev, blob]);
+    setShowNewPic((prev: Array<string>) => [...prev, URL.createObjectURL(blob)]);
+
+    const $btn = document.querySelector('.toastui-editor-close-button');
+    ($btn as any)?.click();
+  };
+  const handleDeleteImageNew = (_idx: number) => {
+    const check = confirm('해당 이미지를 삭제하시겠습니까?');
+    if (check) {
+      const tempList: Array<File> = addNewPic.filter((_, index) => index !== _idx);
+      setAddNewPic(tempList);
+      const imgUrl: Array<string> = showNewPic.filter((_, index) => index !== _idx);
+      setShowNewPic(imgUrl);
+    }
+  };
+  const [deletePicList, setDeletePicList] = useState<Array<number>>([]);
+  const handleDeletePics = (ipic: number) => {
+    const check = confirm('해당 이미지를 삭제하시겠습니까?');
+    if (check) {
+      setDeletePicList((prev: Array<number>) => [...prev, ipic]);
+      const picList: Array<any> = pisc.filter((item: any) => item.ipic !== ipic);
+      setPisc(picList);
+    }
   };
   const [loading, setLoading] = useState(false);
   useEffect(() => {
@@ -74,6 +99,7 @@ const NoticeDetail = () => {
   const editorRef = useRef<Editor>(null);
   // 모달창 오픈
   const [display, setDisplay] = useState(false);
+  // 게시글 수정 PUT 통신
   const putBoardWait = async () => {
     setDisplay(false);
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
@@ -81,7 +107,9 @@ const NoticeDetail = () => {
       Number(iboard),
       markdownContent as string,
       title,
-      Number(importance)
+      Number(importance),
+      deletePicList,
+      addNewPic
     );
     success ? navigate('/admin/home/notice') : null;
   };
@@ -151,46 +179,65 @@ const NoticeDetail = () => {
                         useCommandShortcut={false}
                         language="ko-KR"
                         toolbarItems={toolbarCustom}
-                        // hooks={{
-                        //   addImageBlobHook: handleUploadImage,
-                        // }}
+                        hooks={{
+                          addImageBlobHook: handleUploadImageNew,
+                        }}
                         hideModeSwitch={true}
                         initialEditType="wysiwyg"
-                        // viewer={true} // 나중에 다시 살펴보기
                       />
                     </div>
                   ))}
               </div>
             </div>
-            {loading &&
-              (edit ? (
-                <>이미지 추가하기</>
-              ) : (
-                <div className="notice-pics">
-                  <div>
-                    <div className="pics-title">이미지</div>
-                    {pisc?.length === 0 ? (
-                      <div className="no-pics">이미지가 없습니다</div>
-                    ) : (
-                      pisc?.map((item, idx) => {
+            {loading && (
+              <div className="notice-pics">
+                <div>
+                  <div className="pics-title">이미지</div>
+                  {/* {pisc?.length === 0 ? (
+                    <div className="no-pics">이미지가 없습니다</div>
+                  ) : ( */}
+                  <div className="pics-list-prev">
+                    <div>
+                      {pisc?.map((item: any, idx: any) => {
                         return (
                           <div className="pics-item" key={idx}>
                             <button
+                              id="delete-check"
                               className={delActivate ? 'pics-delete' : 'hide'}
-                              onClick={() => handleDeletePics(idx)}
+                              onClick={() => handleDeletePics(item.ipic)}
                             >
                               X
                             </button>
                             <img
-                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}`}
+                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item.pic}`}
                             />
                           </div>
                         );
-                      })
-                    )}
+                      })}
+                      {showNewPic.length !== 0 ? (
+                        showNewPic?.map((item: any, idx: number) => {
+                          return (
+                            <div className="pics-item" key={idx}>
+                              <button
+                                id="delete-check"
+                                className={delActivate ? 'pics-delete' : 'hide'}
+                                onClick={() => handleDeleteImageNew(idx)}
+                              >
+                                X
+                              </button>
+                              <img src={item} alt={`미리보기 ${idx + 1}`} />
+                            </div>
+                          );
+                        })
+                      ) : (
+                        <></>
+                      )}
+                    </div>
                   </div>
+                  {/* )} */}
                 </div>
-              ))}
+              </div>
+            )}
           </div>
           <Wbtns>
             {!edit ? (

@@ -1,3 +1,4 @@
+import { ObjectType } from '../types/components';
 import api from './api';
 
 // 통합 강의 관리 - 해당 강의 수강 학생 리스트 출력
@@ -103,16 +104,27 @@ export const putBoard = async (
   _iboard: number,
   _ctnt: string,
   _title: string,
-  _importance: number
+  _importance: number,
+  _ipic: Array<number>,
+  _putPic: Array<File>
 ) => {
-  const headers = { 'Content-Type': 'application/json' };
-  const putData = {
+  const headers = { 'Content-Type': 'multipart/form-data' };
+  const putData = new FormData();
+  const param = {
     iboard: _iboard,
     ctnt: _ctnt,
     title: _title,
     importance: _importance,
     iadmin: 1,
+    ipic: _ipic,
   };
+  putData.append(
+    'param',
+    new Blob([JSON.stringify(param)], {
+      type: 'application/json',
+    })
+  );
+  _putPic?.forEach(item => putData.append('pics', item));
   try {
     await api.put(`/api/board`, putData, { headers });
     alert('처리되었습니다');
