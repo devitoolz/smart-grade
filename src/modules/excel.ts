@@ -96,7 +96,7 @@ const handleUploadExcel = (
       const rawData = file.Sheets[sheetName];
       const result: Array<ObjectType> = utils.sheet_to_json(rawData);
 
-      const roleData = file.Sheets[file.SheetNames[1]]['B1'].v;
+      const roleData = file.Sheets[file.SheetNames[1]]?.['B1'].v;
 
       if (!roleData || roleData !== role) {
         alert('올바른 양식을 업로드 해주세요.');

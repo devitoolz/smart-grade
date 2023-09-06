@@ -109,7 +109,7 @@ const Mypage = () => {
       );
       setDisabled(true);
 
-      if (user?.profile.secretKey !== 'true') {
+      if (!user?.profile.secretKey) {
         alert('프로필이 업데이트 되었습니다. OTP 등록을 위해 비밀번호 변경을 해 주세요.');
         setOpenChangePassword(true);
       } else {
@@ -186,7 +186,7 @@ const Mypage = () => {
                 취소
               </Button>
             )}
-            {user?.profile.secretKey === 'true' && (
+            {user?.profile.secretKey && (
               <Button onClick={() => setOpenChangePassword(true)}>비밀번호 변경</Button>
             )}
           </ButtonContainer>
@@ -285,9 +285,9 @@ const Mypage = () => {
           </Row>
           <Row col={2}>
             <div>학년</div>
-            <div></div>
-            <div>이수학점</div>
-            <div></div>
+            <div>{(user?.profile as StudentProfileData).grade}</div>
+            <div>이수 학점</div>
+            <div>{(user?.profile as StudentProfileData).score}</div>
           </Row>
           <Row col={2}>
             <div>

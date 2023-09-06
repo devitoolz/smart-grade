@@ -12,7 +12,7 @@ const otpNotFound = () => {
   const role = pathname.split('/').filter(Boolean)[0];
 
   useEffect(() => {
-    if (user && user.profile.secretKey !== 'true' && pathname !== `/${role}/mypage`) {
+    if (user && !user.profile.secretKey && pathname !== `/${role}/mypage`) {
       alert('OTP 등록을 하지 않으면 접근할 수 없습니다.');
       navigate(`/${role}/mypage`);
       return;

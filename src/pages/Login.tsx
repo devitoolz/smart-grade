@@ -74,7 +74,7 @@ const Login = () => {
         data.accessToken && setCookie('accessToken', data.accessToken);
         data.refreshToken && setCookie('refreshToken', data.refreshToken);
         if (payload.role === 'ROLE_ADMIN') {
-          navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
+          navigate(`${payload.role.toLowerCase().replace('role_', '')}`);
         } else {
           alert('최초 로그인입니다. 마이 페이지로 이동하여 정보 수정 후 OTP 등록을 진행해주세요.');
           navigate(`${payload.role.toLowerCase().replace('role_', '')}/mypage`);

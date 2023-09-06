@@ -52,7 +52,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
       alert('비밀번호가 변경되었습니다.');
       setOpenChangePassword(false);
 
-      if (user?.profile.secretKey !== 'true') {
+      if (!user?.profile.secretKey) {
         setOpenOTPRegister(true);
       }
     } catch (err) {
@@ -69,7 +69,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
           <div>비밀번호 변경</div>
         </div>
         <div className="modal-contents">
-          {user?.profile.secretKey !== 'true' && (
+          {!user?.profile.secretKey && (
             <NoticeContainer>
               <span
                 style={{ fontSize: 14, lineHeight: 'normal', paddingTop: 0, paddingBottom: 15 }}
@@ -110,7 +110,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
         </div>
         <div className="modal-footer">
           <CommonButton value="확인" onClick={handleChangePw} btnType="modal" />
-          {user?.profile.secretKey === 'true' && (
+          {user?.profile.secretKey && (
             <CommonButton
               value="취소"
               onClick={() => setOpenChangePassword(false)}

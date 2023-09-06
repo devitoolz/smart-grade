@@ -25,6 +25,7 @@ const Student = () => {
     const getProfile = async () => {
       try {
         const { data } = await api.get<UserProfile>(`/api/student/profile`);
+        data.profile.secretKey = JSON.parse(data.profile.secretKey);
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {
@@ -36,7 +37,7 @@ const Student = () => {
         }
       }
     };
-    // getProfile();
+    getProfile();
   }, []);
 
   useEffect(() => {

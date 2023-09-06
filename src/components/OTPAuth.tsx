@@ -35,11 +35,16 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
-        navigate(`/${payload.role.toLowerCase().replace('role_', '')}`);
+
+        navigate(`${payload.role.toLowerCase().replace('role_', '')}`);
       }
     } catch {
       alert('인증에 실패하였습니다.');
     }
+  };
+
+  const handleCancel = () => {
+    setOpenOTP(false);
   };
 
   return (
@@ -60,7 +65,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
         </div>
         <div className="modal-footer">
           <CommonButton value="인증" onClick={handleOTPAuth} btnType="modal" />
-          <CommonButton value="취소" onClick={() => setOpenOTP(false)} btnType="modal" />
+          <CommonButton value="취소" onClick={handleCancel} btnType="modal" />
         </div>
       </div>
     </ModalStyle>

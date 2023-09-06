@@ -21,7 +21,7 @@ const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
       try {
         const { data } = await api.get<OTPData>(`/api/otp`);
         setQRUrl(data.barcodeUrl.replace('www.google', 'chart.googleapis'));
-        dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: 'true' } }));
+        dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: true } }));
       } catch {
         alert('OTP 발급 중 오류가 발생했습니다.');
       }
