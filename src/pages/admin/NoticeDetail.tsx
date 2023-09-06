@@ -193,48 +193,48 @@ const NoticeDetail = () => {
               <div className="notice-pics">
                 <div>
                   <div className="pics-title">이미지</div>
-                  {pisc?.length === 0 ? (
+                  {/* {pisc?.length === 0 ? (
                     <div className="no-pics">이미지가 없습니다</div>
-                  ) : (
-                    <div className="pics-list-prev">
-                      <div>
-                        {pisc?.map((item: any, idx: any) => {
+                  ) : ( */}
+                  <div className="pics-list-prev">
+                    <div>
+                      {pisc?.map((item: any, idx: any) => {
+                        return (
+                          <div className="pics-item" key={idx}>
+                            <button
+                              id="delete-check"
+                              className={delActivate ? 'pics-delete' : 'hide'}
+                              onClick={() => handleDeletePics(item.ipic)}
+                            >
+                              X
+                            </button>
+                            <img
+                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item.pic}`}
+                            />
+                          </div>
+                        );
+                      })}
+                      {showNewPic.length !== 0 ? (
+                        showNewPic?.map((item: any, idx: number) => {
                           return (
                             <div className="pics-item" key={idx}>
                               <button
                                 id="delete-check"
                                 className={delActivate ? 'pics-delete' : 'hide'}
-                                onClick={() => handleDeletePics(item.ipic)}
+                                onClick={() => handleDeleteImageNew(idx)}
                               >
                                 X
                               </button>
-                              <img
-                                src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item.pic}`}
-                              />
+                              <img src={item} alt={`미리보기 ${idx + 1}`} />
                             </div>
                           );
-                        })}
-                        {showNewPic.length !== 0 ? (
-                          showNewPic?.map((item: any, idx: number) => {
-                            return (
-                              <div className="pics-item" key={idx}>
-                                <button
-                                  id="delete-check"
-                                  className={delActivate ? 'pics-delete' : 'hide'}
-                                  onClick={() => handleDeleteImageNew(idx)}
-                                >
-                                  X
-                                </button>
-                                <img src={item} alt={`미리보기 ${idx + 1}`} />
-                              </div>
-                            );
-                          })
-                        ) : (
-                          <></>
-                        )}
-                      </div>
+                        })
+                      ) : (
+                        <></>
+                      )}
                     </div>
-                  )}
+                  </div>
+                  {/* )} */}
                 </div>
               </div>
             )}
