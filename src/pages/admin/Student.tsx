@@ -10,6 +10,9 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonButton from '../../components/CommonButton';
 import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
+import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
+import { handleDownloadExcel, handleUploadExcel } from '../../modules/excel';
+import ExcelData from '../../components/ExcelData';
 
 const Student = () => {
   const navigate = useNavigate();
@@ -25,6 +28,9 @@ const Student = () => {
   const [imajor, setImajor] = useState<string | number | null>(null);
   const [studentNum, setStudentNum] = useState<string>('');
   const [nm, setNm] = useState<string>('');
+
+  const [excelData, setExcelData] = useState<Array<ObjectType> | null>(null);
+  const [excelDataHasError, setExcelDataHasError] = useState<boolean>(false);
 
   const { allMajorList } = useSelector((state: RootState) => state.major);
 
@@ -48,6 +54,17 @@ const Student = () => {
   const { data, pending, error } = useQuerySearch(url, click);
 
   const studentsList: Array<ObjectType> = (data as ObjectType)?.students;
+
+  const headerWidths = [12, 6, 22, 30, 26];
+  const excelDataHeader = [
+    { title: '이름', width: 2 },
+    { title: '성별', width: 1 },
+    { title: '생년월일', width: 2.5 },
+    { title: '전공', width: 5 },
+    { title: '휴대전화', width: 3 },
+  ];
+  const viewData = ['nm', 'gender', 'birthdate', 'majorName', 'phone'];
+  const postData = ['nm', 'gender', 'birthdate', 'imajor', 'phone'];
 
   return (
     <>
@@ -87,10 +104,27 @@ const Student = () => {
           setValue={e => setNm(e.target.value)}
         />
       </SearchBar>
-      <ButtonBar
-        value="계정 생성"
-        onClick={() => navigate('/admin/user/create', { state: 'students' })}
-      />
+      <ButtonBarLayout>
+        <Button
+          onClick={() =>
+            handleDownloadExcel('student', '학생 계정 등록', headerWidths, allMajorList)
+          }
+        >
+          양식 다운로드
+        </Button>
+        <label htmlFor="file">일괄 계정 생성 (엑셀)</label>
+        <input
+          id="file"
+          type="file"
+          accept=".xlsx, .xls"
+          onChange={e =>
+            handleUploadExcel(e, 'student', allMajorList, setExcelDataHasError, setExcelData)
+          }
+        />
+        <Button onClick={() => navigate('/admin/user/create', { state: 'professor' })}>
+          계정 생성
+        </Button>
+      </ButtonBarLayout>
       <Table
         header={tableHeader}
         data={studentsList}
@@ -124,6 +158,17 @@ const Student = () => {
           );
         })}
       </Table>
+      {excelData && (
+        <ExcelData
+          excelDataHeader={excelDataHeader}
+          excelData={excelData}
+          setExcelData={setExcelData}
+          excelDataHasError={excelDataHasError}
+          setExcelDataHasError={setExcelDataHasError}
+          viewData={viewData}
+          postData={postData}
+        />
+      )}
     </>
   );
 };
