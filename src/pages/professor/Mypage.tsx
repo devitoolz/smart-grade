@@ -34,7 +34,6 @@ const Mypage = () => {
   const [email, setEmail] = useState<string>('');
   const [address, setAddress] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null);
-  const [removeImg, setRemoveImg] = useState<boolean>(false);
 
   const [openChangePassword, setOpenChangePassword] = useState<boolean>(false);
   const [openOTPRegister, setOpenOTPRegister] = useState<boolean>(false);
@@ -87,15 +86,13 @@ const Mypage = () => {
         address,
       };
 
-      if (imgFile && user?.profile.pic) {
-        await api.delete(`/api/professor`);
-        formData.append('pic', imgFile);
-      } else if (imgFile && !user?.profile.pic) {
-        formData.append('pic', imgFile);
-      } else if (removeImg) {
-        await api.delete(`/api/professor`);
-      }
+      // if (imgFile && user?.profile.pic) {
+      //   formData.append('pic', imgFile);
+      // } else if (imgFile && !user?.profile.pic) {
+      //   formData.append('pic', imgFile);
+      // }
 
+      if (imgFile) formData.append('pic', imgFile);
       formData.append('param', JSON.stringify(payload));
 
       await api.put(`/api/professor`, formData, {
@@ -129,7 +126,6 @@ const Mypage = () => {
   const handleRemoveImage = () => {
     setImgFile(null);
     setImg(null);
-    setRemoveImg(true);
   };
 
   const handleCancel = () => {
@@ -145,7 +141,6 @@ const Mypage = () => {
           : null
       );
     }
-    setRemoveImg(false);
     setDisabled(true);
   };
 
