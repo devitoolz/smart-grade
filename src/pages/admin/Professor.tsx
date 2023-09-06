@@ -45,7 +45,7 @@ const Professor = () => {
 
   const professorList: Array<ObjectType> = (data as ObjectType)?.professors;
 
-  const headerWidths = [12, 6, 19, 30, 21];
+  const headerWidths = [12, 6, 22, 30, 26];
   const excelDataHeader = [
     { title: '이름', width: 2 },
     { title: '성별', width: 1 },
@@ -59,7 +59,12 @@ const Professor = () => {
   const handleDownloadExcel = async () => {
     try {
       const wb = new Workbook();
-      const ws = wb.addWorksheet('교수 계정');
+      const ws = wb.addWorksheet('교수 계정 등록');
+      const ws2 = wb.addWorksheet('전공', { state: 'hidden' });
+
+      allMajorList.forEach((item, index) => {
+        ws2.getCell('A' + (1 + index)).value = item.majorName;
+      });
 
       const headerRow = ws.addRow([
         '이름',
@@ -91,18 +96,18 @@ const Professor = () => {
         ws.getColumn(colNum).width = headerWidths[colNum - 1];
       });
 
-      // @ts-ignore
-      ws.dataValidations.add('B2:B99999', {
+      //@ts-ignore
+      ws.dataValidations.add('B2:B9999', {
         type: 'list',
-        allowBlank: false,
+        allowBlank: true,
         formulae: ['"남,여"'],
       });
 
       // @ts-ignore
-      ws.dataValidations.add('D2:D99999', {
+      ws.dataValidations.add('D2:D9999', {
         type: 'list',
-        allowBlank: false,
-        formulae: [`"${allMajorList.map(item => item.majorName).join(',')}"`],
+        allowBlank: true,
+        formulae: [`전공!$A$1:$A$${allMajorList.length}`],
       });
 
       const fileData = await wb.xlsx.writeBuffer();
@@ -159,8 +164,14 @@ const Professor = () => {
           if (!/^[ㄱ-ㅎ가-힣a-zA-Z\s]+$/.test(item.nm)) {
             nameHasError.push({ index: item.index, nm: item.nm, error: '이름 오류' });
           }
+          if (!['남', '여'].includes(item.gender as string)) {
+            nameHasError.push({ index: item.index, nm: item.nm, error: '성별 오류' });
+          }
           if (!/(\d{4})-(\d{2})-(\d{2})/.test(item.birthdate)) {
             nameHasError.push({ index: item.index, nm: item.nm, error: '생년월일 오류' });
+          }
+          if (!allMajorList.find(major => major.majorName === item.majorName)) {
+            nameHasError.push({ index: item.index, nm: item.nm, error: '전공 오류' });
           }
           if (!/(\d{3})-(\d{4})-(\d{4})/.test(item.phone)) {
             nameHasError.push({ index: item.index, nm: item.nm, error: '휴대전화 오류' });
