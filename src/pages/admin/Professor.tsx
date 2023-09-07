@@ -100,7 +100,7 @@ const Professor = () => {
         header={tableHeader}
         data={professorList}
         hasPage={true}
-        maxPage={(data as ObjectType)?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page.maxPage}
         pending={pending}
         error={error}
       >

@@ -65,7 +65,14 @@ const Register = () => {
         />
       </SearchBar>
       <ButtonBar value="개설 신청" onClick={() => navigate('apply')} />
-      <Table header={tableHeader} data={lectureList} pending={pending} error={error}>
+      <Table
+        header={tableHeader}
+        data={lectureList}
+        hasPage={true}
+        maxPage={(data as ObjectType)?.page.maxPage}
+        pending={pending}
+        error={error}
+      >
         {lectureList?.map(item => {
           return (
             <div key={item.ilecture}>
