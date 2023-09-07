@@ -12,6 +12,10 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import api from '../../apis/api';
 import { ObjectType } from '../../types/components';
 import { FormTable, Row } from '../../styles/UserStyle';
+import { dayData } from '../../pages/professor/RegisterApply';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
+import { BookImage, InfoFormTable } from '../../styles/RegisterStyle';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
@@ -74,6 +78,7 @@ const Lecture = () => {
 
   // table header
   const tableHeader = [
+    { title: '연도', width: 1 },
     { title: '학기', width: 1 },
     { title: '학년제한', width: 1 },
     { title: '전공', width: 2 },
@@ -81,8 +86,7 @@ const Lecture = () => {
     { title: '담당교수', width: 1.2 },
     { title: '학점', width: 1 },
     { title: '강의실', width: 1.8 },
-    { title: '강의 기간', width: 3 },
-    { title: '강의 시간', width: 1.5 },
+    { title: '강의 시간', width: 2 },
     { title: '정원', width: 1 },
     { title: '상태', width: 1 },
     { title: '상세보기', width: 1.5 },
@@ -144,6 +148,7 @@ const Lecture = () => {
         {(data as ObjectType)?.lectures?.map((item: ObjectType, idx: number) => {
           return (
             <div key={idx}>
+              <div>{item.year}</div>
               <div>{item.semester}</div>
               <div>{item.gradeLimit}</div>
               <div>{item.majorName}</div>
@@ -154,10 +159,7 @@ const Lecture = () => {
                 {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
-                {item.strDate}~{item.endDate}
-              </div>
-              <div>
-                {item.strTime}~{item.endTime}
+                {item.strTime}~{item.endTime} ({dayData[item.dayWeek].charAt(0)})
               </div>
               <div>
                 {item.currentPeople}/{item.maxPeople}
@@ -177,37 +179,89 @@ const Lecture = () => {
       </Table>
 
       {display ? (
-        <CommonModal setDisplay={setDisplay} modalTitle={lectureNm} modalSize="big">
-          <div style={{ padding: 20 }}>
-            <div>정원 = {contents.attendance}</div>
-            <div>현원 = {contents.currentPeople}</div>
-            <div>강의실 = {contents.buildingName}</div>
-            <div>호실 = {contents.lectureRoomName}</div>
-            <div>bookUrl = {contents.bookUrl}</div>
-            <div>textBook = {contents.textBook}</div>
-            <div>ctnt = {contents.ctnt}</div>
-            <div>학점 = {contents.score}</div>
-            <div>학년제한 = {contents.gradeLimit}</div>
-            <div>finalExamination = {contents.finalExamination}</div>
-            <div>midtermExamination = {contents.midtermExamination}</div>
-            <div>lectureEndDate = {contents.lectureEndDate}</div>
-            <div>lectureEndTime = {contents.lectureEndTime}</div>
-            <div>lectureStrDate = {contents.lectureStrDate}</div>
-            <div>lectureStrTime = {contents.lectureStrTime}</div>
-            <div>lectureName = {contents.lectureName}</div>
-            <FormTable>
-              <Row col={2}>
-                <div>휴대전화</div>
-                <div>0000000000000</div>
-                <div>E-mail</div>
-                <div>smartgrade@green.ac.kr</div>
-              </Row>
-              <Row>
-                <div>주소</div>
-                <div>green green</div>
-              </Row>
-            </FormTable>
-          </div>
+        <CommonModal
+          setDisplay={setDisplay}
+          modalTitle={lectureNm}
+          modalSize={contents?.returnCtnt ? 'small' : 'big'}
+          hiddenFooter={true}
+        >
+          {contents?.returnCtnt ? (
+            <div>
+              <p>
+                이 강의는 <mark>폐강</mark>된 강의입니다
+              </p>
+              <p>폐강사유 = {contents.returnCtnt}</p>
+              <p>폐강일시 = {contents.returnDate.split('T')[0]}</p>
+            </div>
+          ) : (
+            <div style={{ padding: '0px 20px' }}>
+              <FormTable style={{ paddingTop: 0 }}>
+                <Row>
+                  <div>강의명</div>
+                  <div>{lectureNm}</div>
+                </Row>
+                <Row col={2}>
+                  <div>강의실</div>
+                  <div>
+                    {contents.buildingName} {contents.lectureRoomName}호
+                  </div>
+                  <div>강의시간</div>
+                  <div>
+                    {contents.lectureStrTime}~{contents.lectureEndTime} (
+                    {dayData[contents.dayWeek].charAt(0)})
+                  </div>
+                </Row>
+                <Row col={2}>
+                  <div>수강 인원 수</div>
+                  <div>
+                    {contents.currentPeople}/{contents.attendance}
+                  </div>
+                  <div>학년 제한</div>
+                  <div>{contents.gradeLimit}</div>
+                </Row>
+                <Row col={2}>
+                  <div>학점</div>
+                  <div>{contents.score}</div>
+                  <div>배점</div>
+                  <div>
+                    출석{100 - contents.midtermExamination - contents.finalExamination}% 중간
+                    {contents.midtermExamination}% 기말{contents.finalExamination}%
+                  </div>
+                </Row>
+                <InfoFormTable style={{ gridTemplate: '4fr 1fr 0/1fr 1fr' }}>
+                  <div className="row">
+                    <div>강의 설명</div>
+                    <div>{contents.ctnt}</div>
+                  </div>
+                  <div className="row book-img">
+                    <div>교재 이미지</div>
+                    <div>
+                      <BookImage>
+                        {/^http/.test(contents.bookUrl) ? (
+                          <img src={contents?.bookUrl} alt="교재 이미지" />
+                        ) : (
+                          <div className="no-book">
+                            <FontAwesomeIcon icon={faBook} />
+                            <span>교재 이미지가 없습니다.</span>
+                          </div>
+                        )}
+                      </BookImage>
+                    </div>
+                  </div>
+                  <div className="row pt-2">
+                    <div>교재명</div>
+                    <div>
+                      {/^(null|undefined|)$/.test(contents.textBook) ? (
+                        <span>교재가 없습니다</span>
+                      ) : (
+                        <div>{contents.textBook}</div>
+                      )}
+                    </div>
+                  </div>
+                </InfoFormTable>
+              </FormTable>
+            </div>
+          )}
         </CommonModal>
       ) : null}
     </>

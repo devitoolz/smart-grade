@@ -5,6 +5,7 @@ export interface CommonModalProps {
   modalSize: 'small' | 'big';
   modalTitle: string;
   children?: React.ReactNode;
+  hiddenFooter?: boolean;
   handleModalOk?: Function;
   handleModalCancel?: Function;
 }
