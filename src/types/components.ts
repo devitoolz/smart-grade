@@ -120,6 +120,7 @@ export interface RegisterScoreProps {
 }
 
 export interface ExcelDataProps {
+  role: string;
   excelDataHeader: Array<TableHeaderType>;
   excelData: Array<ObjectType>;
   setExcelData: React.Dispatch<React.SetStateAction<Array<ObjectType> | null>>;

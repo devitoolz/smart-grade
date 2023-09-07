@@ -128,6 +128,7 @@ const Professor = () => {
       </Table>
       {excelData && (
         <ExcelData
+          role="professor"
           excelDataHeader={excelDataHeader}
           excelData={excelData}
           setExcelData={setExcelData}

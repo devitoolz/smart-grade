@@ -73,7 +73,7 @@ const CreateUser = () => {
     };
 
     try {
-      await api.post(`/api/admin/${state}`, payload);
+      await api.post(`/api/admin/${state}`, [payload]);
       navigate(-1);
     } catch {
       alert('오류가 발생하였습니다.');
