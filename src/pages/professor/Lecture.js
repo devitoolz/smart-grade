@@ -6,7 +6,12 @@ import Dropdown from '../../components/Dropdown';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import { LectureDetail, Btn, Caution, ModalWrap } from '../../styles/LectureRoomCss';
+import {
+  ModalWrap,
+  ProfessorCaution,
+  ProfessorLectureDetail,
+  ProfessorLectureBtn,
+} from '../../styles/LectureRoomCss';
 const Lecture = () => {
   ////searchBar////
 
@@ -179,9 +184,8 @@ const Lecture = () => {
   };
 
   //api get hook test
-  const url = ``;
+  const url = `/api/professor/lecture-list?`;
 
- 
   const { data, pending, error } = useQuerySearch(url, click);
   return (
     <div>
@@ -195,11 +199,11 @@ const Lecture = () => {
             handleModalCancel={handleModalCancel}
           >
             <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
-            <Caution>
+            <ProfessorCaution>
               <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
               <p className="callNum">전산실 전화번호: 053-000-0000</p>
-            </Caution>
-            <LectureDetail>
+            </ProfessorCaution>
+            <ProfessorLectureDetail>
               <div className="innerContainer">
                 <div className="lectureName">강의명</div>
                 <div className="inputLectureName">강의명들어갈자리</div>
@@ -236,11 +240,11 @@ const Lecture = () => {
                   </div>
                 </div>
               </div>
-            </LectureDetail>
+            </ProfessorLectureDetail>
 
-            <Btn>
+            <ProfessorLectureBtn>
               <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-            </Btn>
+            </ProfessorLectureBtn>
           </CommonModal>
         </ModalWrap>
       ) : null}

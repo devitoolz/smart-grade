@@ -11,19 +11,16 @@ import { useSelector } from 'react-redux';
 import api from '../../apis/api';
 
 const Major = () => {
-  ////SearchBar////
-
-  // searchBar 전공명 state
-  const [majorName, setMajorName] = useState('');
+  //searchBar
+  const [majorName, setMajorName] = useState(''); //전공명 state
   //searchBar 전공명 상태 state
-  const [delYn, setDelYn] = useState('');
-  //검색 시 사용할 쿼리스트링목록
-  const queries = { majorName, delYn };
+  const [delYn, setDelYn] = useState(''); // 전공명 상태 state
 
-  //searchBar 검색버튼 클릭시 state 변경 함수
-  const [click, setClick] = useState(false);
+  const queries = { majorName, delYn }; //검색 시 사용할 쿼리스트링목록
 
-  ////DropDown////
+  const [click, setClick] = useState(false); // 검색버튼 클릭시 state 변경 함수
+
+  //DropDown//
   //DropDown value state
 
   //전공명 id state
@@ -66,14 +63,11 @@ const Major = () => {
   // 전공추가 모달창 활성화
   const [showModal, setShowModal] = useState(false);
 
-  //변경버튼 클릭시 모달창 활성화
+  //변경할 내용(전공,졸업학점) 작성 후 확인 버튼 클릭시 모달창 활성화
   const [changeModalShow, setChangeModalShow] = useState(false);
 
   //폐지버튼 클릭시 모달창 활성화
   const [disUseModalShow, setDisUseModalShow] = useState(false);
-
-  //변경버튼 state
-  const [, setChangeClickShow] = useState(false);
 
   //disable 버튼 state
   const [, setDisabled] = useState(false);
@@ -88,11 +82,11 @@ const Major = () => {
   ];
 
   //api get hook test
-  const url = '/api/major';
+  const url = '/api/admin/major';
   const { data, pending, error } = useQuerySearch(url, click);
 
-  //버튼 onClick시 모달창 열기
-  const modalOpen = () => {
+  //버튼 onClick시 전공, 졸업학점 추가 모달창 열기
+  const plusModalOpen = () => {
     setShowModal(true);
   };
 
@@ -117,15 +111,16 @@ const Major = () => {
       }
 
       // 참조하기
-      // const newValue = tempScore.replace(/[^0-9]/g, '');
+      // const numberValue = tempScore.replace(/[^0-9]/g, '');
       // if (parseInt(newValue) < 0 || parseInt(newValue) > 100) {
       //   alert('배점은 0 이상 100이하의 숫자만 가능합니다.');
       //   return;
       // }
 
       //졸업학점기준 최소 110학점이상 135학점 이하 입력 가능
-      // const newValue = tempScore.replace(/[^0-9]/g, '');
-      if (parseInt(tempScore) < 110 || parseInt(tempScore) > 135) {
+      // const numberValue = tempScore.replace(/\d{3}/g);
+
+      if (tempScore < 110 || tempScore > 135) {
         alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
         return;
       }
@@ -157,21 +152,17 @@ const Major = () => {
   };
 
   // 변경버튼 클릭시 전공명 변경 실행할 함수
-  const handleChangeName = e => {
-    setSelectMajorName(e.target.value);
-  };
+  // const handleChangeName = e => {
+  //   setSelectMajorName(e.target.value);
+  // };
 
   // 변경버튼 클릭시 졸업학점 변경 실행할 함수
-  const handleChangeScore = e => {
-    // console.log("바뀌어요")
-    setGraduationScore(e.target.value);
-  };
 
   //폐지버튼 클릭시 모달창 오픈
   const disUseModalOpen = _majorId => {
     if (selectMajorID === _majorId) {
       // 초기화
-      setSelectMajorID(null);
+      setSelectMajorID('');
       setSelectMajorName('');
     } else {
       setDisUseModalShow(true);
@@ -184,10 +175,10 @@ const Major = () => {
     const headers = { 'Content-Type': 'application/json' };
     const postData = {
       majorName: newMajorName,
-      graduationScore: newGraduationScore,
+      graduationScore: parseInt(newGraduationScore),
     };
     try {
-      await api.post(`/api/major`, postData, { headers });
+      await api.post(`/api/admin/major`, postData, { headers });
       handleModalCancel();
       alert('등록되었습니다.');
     } catch (err) {
@@ -198,7 +189,7 @@ const Major = () => {
   //api delete test
   const MajorDeleteTest = async _id => {
     try {
-      const res = await api.delete(`/api/major?imajor=${_id}`);
+      const res = await api.delete(`/api/admin/major?imajor=${_id}`);
       const result = res.data;
       return result;
     } catch (err) {
@@ -220,7 +211,7 @@ const Major = () => {
       graduationScore: tempScore,
     };
     try {
-      await api.patch(`/api/major`, patchDatas, { headers });
+      await api.patch(`/api/admin/major`, patchDatas, { headers });
 
       //변경 전 전공명 state
       // setSelectMajorNameNow(tempStr);
@@ -251,8 +242,6 @@ const Major = () => {
     } catch (err) {
       console.log('전공명 서버 수정 실패 : ', err);
     }
-
-    // setChangeClickShow(false);
   };
 
   //전공명 변경 모달 취소버튼 클릭시
@@ -278,15 +267,36 @@ const Major = () => {
     setDataArr(temp);
   };
 
+  //전공추가 모달 창  확인버튼 누를 시
   const handleModalOk = () => {
     if (newMajorName != '' && newGraduationScore != '') {
-      MajorPostTest(newMajorName, newGraduationScore);
+      MajorPostTest(newMajorName, parseInt(newGraduationScore));
+      setNewGraduationScore(); //post 후 화면에 전공추가 내용 바로 적용
+      setNewMajorName('');
+      setNewGraduationScore('');
     } else {
       alert('내용을 입력해 주세요.');
+
       setNewMajorName('');
       setNewGraduationScore('');
     }
   };
+
+  // const handleModalOk = () => {
+  //   if (newMajorName != '' && newGraduationScore != '') {
+  //     alert('정보를 입력해 주세요.');
+  //     return;
+  //   }
+
+  //   const graduationScoreValue = parseInt(newGraduationScore);
+
+  //   if (graduationScoreValue < 110 || graduationScoreValue > 135) {
+  //     alert('졸업학점은 110에서 135 사이여야 합니다.');
+  //     return;
+  //   }
+
+  //   MajorPostTest(newMajorName, graduationScoreValue);
+  // };
 
   //commonModal close state
   const handleModalCancel = () => {
@@ -360,7 +370,7 @@ const Major = () => {
           search
         />
       </SearchBar>
-      <CommonButton btnType="page" value="전공추가" onClick={modalOpen} />
+      <CommonButton btnType="page" value="전공추가" onClick={plusModalOpen} />
       {showModal === true ? (
         <CommonModal
           setDisplay={setShowModal}
@@ -387,7 +397,13 @@ const Major = () => {
                 type="text"
                 placeholder="전공명"
                 value={newMajorName}
-                setValue={e => setNewMajorName(e.target.value)}
+                setValue={e => {
+                  const inputText = e.target.value;
+                  const regex = /^[가-힣a-zA-Z\s]*$/; // 한글, 영어, 공백만 허용하는 정규 표현식
+                  if (regex.test(inputText)) {
+                    setNewMajorName(inputText);
+                  }
+                }}
                 reset={setNewMajorName}
               />
             </div>
@@ -409,7 +425,13 @@ const Major = () => {
                 type="text"
                 length="short"
                 value={newGraduationScore}
-                setValue={e => setNewGraduationScore(e.target.value)}
+                setValue={e => {
+                  const value = e.target.value;
+                  // 정규 표현식으로 3자리 숫자만 입력가능
+                  if (/^\d{0,3}$/.test(value)) {
+                    setNewGraduationScore(value);
+                  }
+                }}
                 maxLength={3}
                 reset={setNewGraduationScore}
               />
@@ -434,7 +456,17 @@ const Major = () => {
                     length="long"
                     type="text"
                     value={selectMajorName}
-                    setValue={handleChangeName}
+                    setValue={e => {
+                      const inputValue = e.target.value;
+                      const regex = /^[가-힣]*$/; // 한글만 허용하는 정규 표현식
+                      if (regex.test(inputValue)) {
+                        const cursorStart = e.target.selectionStart; // 커서 시작 위치
+                        const cursorEnd = e.target.selectionEnd; // 커서 끝 위치
+                        setSelectMajorName(inputValue);
+                        // 커서 위치를 설정
+                        e.target.setSelectionRange(cursorStart, cursorEnd);
+                      }
+                    }}
                   />
                 ) : (
                   item.majorName
@@ -444,9 +476,16 @@ const Major = () => {
                 {selectMajorID === item.imajor ? (
                   <Input
                     tlength="short"
-                    type="number"
+                    type="text"
+                    maxLength={3}
                     value={graduationScore}
-                    setValue={handleChangeScore}
+                    setValue={e => {
+                      const value = e.target.value;
+                      // 정규 표현식으로  3자리 숫자만 허용
+                      if (/^\d{0,3}$/.test(value)) {
+                        setGraduationScore(value);
+                      }
+                    }}
                   />
                 ) : (
                   item.graduationScore
