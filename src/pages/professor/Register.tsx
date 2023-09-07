@@ -9,12 +9,15 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import CommonButton from '../../components/CommonButton';
 import { dayData } from './RegisterApply';
+import RegisterDetail from '../../components/professor/RegisterDetail';
 
 const Register = () => {
   const navigate = useNavigate();
 
   const [status, setStatus] = useState<string | number | null>(null);
   const [lectureName, setLectureName] = useState<string>('');
+  const [lectureData, setLectureData] = useState<ObjectType | null>(null);
+
   const [click, setClick] = useState<boolean>(false);
 
   const tableHeader = [
@@ -28,7 +31,10 @@ const Register = () => {
     { title: '상세보기', width: 1.5 },
   ];
 
-  const queries = { status, lectureName };
+  const openingProcedures = status;
+  const LectureName = lectureName;
+
+  const queries = { openingProcedures, LectureName };
   const url = '/api/professor/lecture/list';
 
   const { data, pending, error } = useQuerySearch(url, click);
@@ -45,7 +51,6 @@ const Register = () => {
             { id: 1, title: '개설 대기' },
             { id: 2, title: '개설 승인' },
           ]}
-          // propertyName={{ key: 'imajor', value: 'majorName' }}
           value={status}
           setValue={setStatus}
           reset
@@ -64,16 +69,13 @@ const Register = () => {
         {lectureList?.map(item => {
           return (
             <div key={item.ilecture}>
-              {/* <div>{item.openingProceudres}</div> */}
-              <div>개설 대기</div>
+              <div>{item.openingProcedures}</div>
               <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
-              {/* <div>{item.lectureRoomName}</div> */}
-              <div>백매관 501호</div>
-              {/* <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime} ~ ${
+              <div>{`${item.buildingName} ${item.lectureRoomName}호`}</div>
+              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime} ~ ${
                 item.lectureEndTime
-              }`}</div> */}
-              <div>수요일 12:00 ~ 13:00</div>
+              }`}</div>
               <div>{item.score}</div>
               <div>{item.lectureMaxPeople}</div>
               <div>
@@ -81,13 +83,14 @@ const Register = () => {
                   btnType="table"
                   value="상세보기"
                   color="gray"
-                  onClick={() => alert('클릭')}
+                  onClick={() => setLectureData(item)}
                 ></CommonButton>
               </div>
             </div>
           );
         })}
       </Table>
+      {lectureData && <RegisterDetail lectureData={lectureData} setLectureData={setLectureData} />}
     </>
   );
 };

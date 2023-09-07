@@ -20,7 +20,6 @@ const useQuerySearch = (url: string, click?: boolean) => {
   });
 
   let result = newQueryList.join('&').replace(/,/gi, '=');
-  console.log(result);
   result ? (result = '?' + result) : result;
 
   const fetch = async () => {

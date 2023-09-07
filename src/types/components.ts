@@ -129,3 +129,8 @@ export interface ExcelDataProps {
   viewData: Array<string>;
   postData: Array<string>;
 }
+
+export interface RegisterDetailProps {
+  lectureData: ObjectType | null;
+  setLectureData: React.Dispatch<React.SetStateAction<ObjectType | null>>;
+}

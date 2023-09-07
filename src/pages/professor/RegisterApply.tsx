@@ -84,9 +84,25 @@ const RegisterApply = () => {
   }, [lectureRoom]);
 
   useEffect(() => {
+    const getBookInfo = async (isbn: string) => {
+      try {
+        const { data } = await api.get<ObjectType>(`/api/professor/find-book?isbn=${isbn}`);
+        if (!(data.title && data.image)) {
+          setIsbn('');
+          throw '책을 찾을 수 없습니다. ISBN을 확인해주세요.';
+        }
+        setBookName(data.title);
+        setBookImg(data.image);
+      } catch (err) {
+        alert(err);
+      }
+    };
+
     if (isbn.length === 13) {
-      // TODO: 책 api
-      console.log('책 API 요청');
+      getBookInfo(isbn);
+    } else {
+      setBookName(null);
+      setBookImg(null);
     }
   }, [isbn]);
 
@@ -146,6 +162,7 @@ const RegisterApply = () => {
 
     try {
       await api.post(`/api/professor/lecture/apply`, payload);
+      navigate(-1);
     } catch (err) {
       console.log(err);
     }
@@ -281,10 +298,7 @@ const RegisterApply = () => {
             <div>
               <BookImage>
                 {bookImg ? (
-                  <img
-                    src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
-                    alt="교재 이미지"
-                  />
+                  <img src={bookImg} alt="교재 이미지" />
                 ) : (
                   <div className="no-book">
                     <FontAwesomeIcon icon={faBook} />
@@ -310,7 +324,17 @@ const RegisterApply = () => {
           </div>
           <div className="row pt-2">
             <div>교재명</div>
-            <div>{bookName ?? <span>교재가 없습니다.</span>}</div>
+            <div
+              style={{
+                overflow: 'hidden',
+              }}
+            >
+              {bookName ? (
+                <div className="ellipsis">{bookName}</div>
+              ) : (
+                <span>교재가 없습니다.</span>
+              )}
+            </div>
           </div>
         </InfoFormTable>
       </RegisterLayout>
