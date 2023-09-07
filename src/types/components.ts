@@ -134,3 +134,8 @@ export interface RegisterDetailProps {
   lectureData: ObjectType | null;
   setLectureData: React.Dispatch<React.SetStateAction<ObjectType | null>>;
 }
+
+export interface ChangeEmailProps {
+  setOpenChangeEmail: React.Dispatch<React.SetStateAction<boolean>>;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+}
