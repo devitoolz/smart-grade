@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import { NoDatas } from '../../styles/MyStyleCSS';
 import Dropdown from '../../components/Dropdown';
-import LectureInfo from '../../components/student/LectureInfo';
 import CommonModal from '../../components/CommonModal';
+import { dayData } from '../../pages/professor/RegisterApply';
 import api from '../../apis/api';
 
 const Grade = () => {
-  // 강의명, 담당 교수, 학점, 성적(출석, 중간, 기말), 최종 성적(A+~F), 평점(4.5~0)+이의신청
   const tableHeader = [
     { title: '학년/년도', width: 1 },
     { title: '학기', width: 1 },
@@ -56,7 +55,7 @@ const Grade = () => {
   // const data = Array(7).fill('');
   const [data, setData] = useState([]);
   // XXX api 연동 - 추후 별도 파일 분리
-  const url = '/api/student?studentNum=23300001';
+  const url = '/api/student';
   const getLectureList = async () => {
     try {
       const { data } = await api.get(url);
@@ -68,12 +67,10 @@ const Grade = () => {
   useEffect(() => {
     getLectureList();
   }, []);
-  const objectionUrl = `/api/student/objection?studentNum=23300001&ilectureStudent=${ilectureStudent}`;
+  const objectionUrl = `/api/student/objection?&ilectureStudent=${ilectureStudent}`;
   const putObjection = async () => {
     const headers = { 'Content-Type': 'application/json' };
-    const putData = {
-      objection: 1,
-    };
+    const putData = { objection: 1 };
     try {
       await api.put(objectionUrl, putData, { headers });
     } catch (err) {
@@ -97,30 +94,44 @@ const Grade = () => {
       </SearchBar>
       <NoDatas />
       <Table header={tableHeader} hasPage={true} data={data} pending={false} error={false}>
-        {data.map((item: any, idx) => {
+        {data?.map((item: any, idx) => {
           return (
             <div key={idx}>
               <div>{item.year}</div>
-              <div>{item.isemester}</div>
+              <div>2</div>
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
-              <div>14:00~16:00</div>
-              <div>{item.score}</div>
-              <div>{item.totalScore}</div>
-              <div>{item.grade}</div>
-              <div>{item.rating}</div>
               <div>
-                <CommonButton
-                  value="이의신청"
-                  btnType="table"
-                  color="gray"
-                  onClick={() => {
-                    console.log('필요 데이터 : 학번, ilectureStudent');
-                    console.log(item.ilectureStudent);
-                    setIlectureStudent(item.ilectureStudent);
-                    setDemur(true);
-                  }}
-                />
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)} (
+                {dayData[item.dayWeek].charAt(0)})
+              </div>
+              <div>{item.score}</div>
+              <div>{item.finishedYn === 0 ? '-' : item.totalScore}</div>
+              <div>{item.finishedYn === 0 ? '-' : item.grade}</div>
+              <div>{item.finishedYn === 0 ? '-' : item.rating}</div>
+              <div>
+                {item.objection === 0 ? (
+                  <CommonButton
+                    value="이의신청"
+                    btnType="table"
+                    color="blue"
+                    onClick={() => {
+                      console.log('필요 데이터 : 학번, ilectureStudent');
+                      console.log(item.ilectureStudent);
+                      setIlectureStudent(item.ilectureStudent);
+                      setDemur(true);
+                    }}
+                  />
+                ) : (
+                  <>
+                    <CommonButton
+                      value={item.objection === 1 ? '진행중' : '처리완료'}
+                      btnType="table"
+                      color="gray"
+                      disabled={true}
+                    />
+                  </>
+                )}
               </div>
             </div>
           );
@@ -134,7 +145,7 @@ const Grade = () => {
           handleModalOk={handleApplyDemurOk}
           handleModalCancel={handleApplyDemurCancel}
         >
-          <span>강의 번호 : {ilectureStudent}</span>
+          {/* <span>강의 번호 : {ilectureStudent}</span> */}
           이의신청을 하겠습니까?
         </CommonModal>
       )}
