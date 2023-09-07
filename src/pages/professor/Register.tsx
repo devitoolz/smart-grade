@@ -76,7 +76,10 @@ const Register = () => {
         {lectureList?.map(item => {
           return (
             <div key={item.ilecture}>
-              <div>{item.openingProcedures}</div>
+              <div>
+                {(item.openingProcedures === 1 && '개설 대기') ||
+                  (item.openingProcedures === 2 && '개설 승인')}
+              </div>
               <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
               <div>{`${item.buildingName} ${item.lectureRoomName}호`}</div>

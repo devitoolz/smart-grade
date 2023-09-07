@@ -209,6 +209,13 @@ const LoginFooter = styled.div`
   }
 `;
 
+const SendOTP = styled.span`
+  cursor: pointer;
+  font-size: 14px;
+  padding-top: 10px;
+  color: var(--button-bar-txt-color);
+`;
+
 export {
   LoginLayout,
   LoginHeader,
@@ -221,4 +228,5 @@ export {
   FindAccountForm,
   LoginBtn,
   LoginFooter,
+  SendOTP,
 };
