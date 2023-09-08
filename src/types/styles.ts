@@ -44,3 +44,7 @@ export interface UserStyleProps {
 export interface ExcelDataStyleProps {
   template: string;
 }
+
+export interface ButtonBarLayoutProps {
+  between?: boolean;
+}
