@@ -185,14 +185,14 @@ const LectureRoom = () => {
               length="short"
               maxLength={3}
               value={lectureRoomName}
-              setValue={e => {
+              setValue={() => {
                 // 입력값이 숫자인지 확인하는 정규표현식
                 const isNumeric = /^[0-9]*$/;
-
+                setBuildingNameData(isNumeric);
                 // 입력값이 숫자인 경우에만 setValue 함수 호출
-                if (isNumeric.test(e.target.value)) {
-                  setBuildingNameData(e.target.value);
-                }
+                // if (isNumeric.test(e.target.value)) {
+                //   setBuildingNameData(e.target.value);
+                // }
               }}
             />
             <p>호</p>

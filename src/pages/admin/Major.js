@@ -458,7 +458,7 @@ const Major = () => {
                     value={selectMajorName}
                     setValue={e => {
                       const inputValue = e.target.value;
-                      const regex = /^[가-힣]*$/; // 한글만 허용하는 정규 표현식
+                      const regex = /^[가-힣a-zA-Z]*$/;
                       if (regex.test(inputValue)) {
                         const cursorStart = e.target.selectionStart; // 커서 시작 위치
                         const cursorEnd = e.target.selectionEnd; // 커서 끝 위치
