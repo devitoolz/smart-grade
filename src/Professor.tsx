@@ -14,6 +14,7 @@ import Grade from './pages/professor/Grade';
 import GradeInput from './pages/professor/GradeInput';
 import { UserProfile } from './types/apis';
 import RegisterApply from './pages/professor/RegisterApply';
+import { checkValidEmail } from './modules/regex';
 
 const Professor = () => {
   otpNotFound();
@@ -29,6 +30,9 @@ const Professor = () => {
       try {
         const { data } = await api.get<UserProfile>(`/api/professor`);
         data.profile.secretKey = JSON.parse(data.profile.secretKey);
+        if (data.profile.email && !checkValidEmail(data.profile.email)) {
+          data.profile.email = '';
+        }
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {

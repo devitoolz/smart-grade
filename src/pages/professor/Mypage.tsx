@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faPencil, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { checkValidEmail, checkValidPhone } from '../../modules/regex';
+import { checkValidPhone } from '../../modules/regex';
 import api from '../../apis/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';
@@ -71,11 +71,6 @@ const Mypage = () => {
 
     if (!checkValidPhone(phone)) {
       alert('올바르지 않은 전화번호입니다.');
-      return;
-    }
-
-    if (!checkValidEmail(email)) {
-      alert('올바르지 않은 이메일입니다.');
       return;
     }
 
@@ -290,7 +285,11 @@ const Mypage = () => {
               {!disabled && <FontAwesomeIcon icon={faPencil} />}
             </div>
             <div onClick={disabled ? undefined : () => setOpenChangeEmail(true)}>
-              {user?.profile.email ?? email ?? (
+              {user?.profile.email ? (
+                user?.profile.email
+              ) : email ? (
+                email
+              ) : (
                 <span>{disabled ? '(정보 수정 필요)' : 'E-mail을 등록하세요.'}</span>
               )}
             </div>
