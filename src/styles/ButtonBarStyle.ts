@@ -1,21 +1,22 @@
 import styled from '@emotion/styled';
+import { ButtonBarLayoutProps } from '../types/styles';
 
-const ButtonBarLayout = styled.div`
+const ButtonBarLayout = styled.div<ButtonBarLayoutProps>`
   width: 100%;
   padding: 30px 20px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: ${({ between }) => (between ? 'space-between' : 'flex-end')};
   gap: 10px;
-  > div:first-of-type {
-    align-self: flex-start;
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
   }
-  > div:last-of-type {
-  }
-  > input[type='file'] {
+  input[type='file'] {
     display: none;
   }
-  > label {
+  label {
     display: flex;
     justify-content: center;
     align-items: center;

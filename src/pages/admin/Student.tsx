@@ -3,7 +3,6 @@ import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import { useSelector } from 'react-redux';
-import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
 import { useNavigate } from 'react-router-dom';
 import useQuerySearch from '../../hooks/useSearchFetch';
@@ -11,7 +10,7 @@ import CommonButton from '../../components/CommonButton';
 import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
 import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
-import { handleDownloadExcel, handleUploadExcel } from '../../modules/excel';
+import { handleDownloadExcel, handleExportExcel, handleUploadExcel } from '../../modules/excel';
 import ExcelData from '../../components/ExcelData';
 
 const Student = () => {
@@ -104,26 +103,31 @@ const Student = () => {
           setValue={e => setNm(e.target.value)}
         />
       </SearchBar>
-      <ButtonBarLayout>
-        <Button
-          onClick={() =>
-            handleDownloadExcel('student', '학생 계정 등록', headerWidths, allMajorList)
-          }
-        >
-          양식 다운로드
-        </Button>
-        <label htmlFor="file">일괄 계정 생성 (엑셀)</label>
-        <input
-          id="file"
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={e =>
-            handleUploadExcel(e, 'student', allMajorList, setExcelDataHasError, setExcelData)
-          }
-        />
-        <Button onClick={() => navigate('/admin/user/create', { state: 'students' })}>
-          계정 생성
-        </Button>
+      <ButtonBarLayout between>
+        <div>
+          <Button onClick={() => handleExportExcel('student')}>엑셀 내보내기</Button>
+          <Button
+            onClick={() =>
+              handleDownloadExcel('student', '학생 계정 등록', headerWidths, allMajorList)
+            }
+          >
+            양식 다운로드
+          </Button>
+        </div>
+        <div>
+          <label htmlFor="file">일괄 계정 생성 (엑셀)</label>
+          <input
+            id="file"
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={e =>
+              handleUploadExcel(e, 'student', allMajorList, setExcelDataHasError, setExcelData)
+            }
+          />
+          <Button onClick={() => navigate('/admin/user/create', { state: 'students' })}>
+            계정 생성
+          </Button>
+        </div>
       </ButtonBarLayout>
       <Table
         header={tableHeader}

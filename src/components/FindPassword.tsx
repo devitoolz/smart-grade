@@ -69,7 +69,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
     };
 
     try {
-      await axios.put(`/api/chang-password`, data);
+      await axios.put(`/api/change-password`, data);
       alert('비밀번호가 변경되었습니다.');
       setOpenFindPw(false);
     } catch {

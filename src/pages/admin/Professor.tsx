@@ -11,7 +11,7 @@ import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
 import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
 import ExcelData from '../../components/ExcelData';
-import { handleDownloadExcel, handleUploadExcel } from '../../modules/excel';
+import { handleDownloadExcel, handleExportExcel, handleUploadExcel } from '../../modules/excel';
 
 const Professor = () => {
   const navigate = useNavigate();
@@ -75,26 +75,31 @@ const Professor = () => {
           setValue={e => setName(e.target.value)}
         />
       </SearchBar>
-      <ButtonBarLayout>
-        <Button
-          onClick={() =>
-            handleDownloadExcel('professor', '교수 계정 등록', headerWidths, allMajorList)
-          }
-        >
-          양식 다운로드
-        </Button>
-        <label htmlFor="file">일괄 계정 생성 (엑셀)</label>
-        <input
-          id="file"
-          type="file"
-          accept=".xlsx, .xls"
-          onChange={e =>
-            handleUploadExcel(e, 'professor', allMajorList, setExcelDataHasError, setExcelData)
-          }
-        />
-        <Button onClick={() => navigate('/admin/user/create', { state: 'professor' })}>
-          계정 생성
-        </Button>
+      <ButtonBarLayout between>
+        <div>
+          <Button onClick={() => handleExportExcel('professor')}>엑셀 내보내기</Button>
+          <Button
+            onClick={() =>
+              handleDownloadExcel('professor', '교수 계정 등록', headerWidths, allMajorList)
+            }
+          >
+            양식 다운로드
+          </Button>
+        </div>
+        <div>
+          <label htmlFor="file">일괄 계정 생성 (엑셀)</label>
+          <input
+            id="file"
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={e =>
+              handleUploadExcel(e, 'professor', allMajorList, setExcelDataHasError, setExcelData)
+            }
+          />
+          <Button onClick={() => navigate('/admin/user/create', { state: 'professor' })}>
+            계정 생성
+          </Button>
+        </div>
       </ButtonBarLayout>
       <Table
         header={tableHeader}

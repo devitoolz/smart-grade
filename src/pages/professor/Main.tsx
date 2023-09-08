@@ -17,6 +17,7 @@ import footerLogo from '../../images/footer_logo.png';
 import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import {
+  faBell,
   faBookOpen,
   faFileSignature,
   faGraduationCap,
@@ -49,6 +50,10 @@ const Main = () => {
     home: {
       icon: faHouse,
       title: '홈',
+    },
+    notice: {
+      icon: faBell,
+      title: '공지사항',
     },
     mypage: {
       icon: faUser,
