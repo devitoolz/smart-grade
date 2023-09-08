@@ -19,13 +19,14 @@ const useQuerySearch = (url: string, click?: boolean) => {
     return query.split('=');
   });
 
-  const result = newQueryList.join('&').replace(/,/gi, '=');
+  let result = newQueryList.join('&').replace(/,/gi, '=');
+  result ? (result = '?' + result) : result;
 
   const fetch = async () => {
     setIsPending(true);
     setIsError(false);
     try {
-      const { data } = await api.get<ObjectType | Array<any>>(`${url}?${result}`);
+      const { data } = await api.get<ObjectType | Array<any>>(`${url}${result}`);
       setData(data);
       setIsPending(false);
     } catch (err) {

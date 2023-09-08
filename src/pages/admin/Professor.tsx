@@ -100,7 +100,7 @@ const Professor = () => {
         header={tableHeader}
         data={professorList}
         hasPage={true}
-        maxPage={(data as ObjectType)?.page?.maxPage}
+        maxPage={(data as ObjectType)?.page.maxPage}
         pending={pending}
         error={error}
       >
@@ -128,6 +128,7 @@ const Professor = () => {
       </Table>
       {excelData && (
         <ExcelData
+          role="professor"
           excelDataHeader={excelDataHeader}
           excelData={excelData}
           setExcelData={setExcelData}

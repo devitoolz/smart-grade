@@ -286,6 +286,18 @@ const PasswordForm = styled.form<UserStyleProps>`
   }
 `;
 
+const EmailForm = styled.form`
+  display: flex;
+  padding: 15px 30px 30px;
+  font-size: 16px;
+  gap: 15px;
+  > label {
+    display: flex;
+    align-items: center;
+    padding-right: 15px;
+  }
+`;
+
 export {
   UserLayout,
   TopLayout,
@@ -301,4 +313,5 @@ export {
   FormTable,
   Row,
   PasswordForm,
+  EmailForm,
 };

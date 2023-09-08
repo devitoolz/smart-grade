@@ -9,6 +9,7 @@ import api from '../apis/api';
 import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 
 const ExcelData = ({
+  role,
   excelDataHeader,
   excelData,
   setExcelData,
@@ -17,9 +18,9 @@ const ExcelData = ({
   viewData,
   postData,
 }: ExcelDataProps) => {
-  const [progress, setProgress] = useState(0);
+  // const [progress, setProgress] = useState(0);
 
-  const percent = Math.ceil((progress / excelData.length) * 100);
+  // const percent = Math.ceil((progress / excelData.length) * 100);
 
   const template = excelDataHeader?.map(item => item.width + 'fr').join(' ');
 
@@ -39,14 +40,11 @@ const ExcelData = ({
       return;
     }
 
-    for (const payload of payloadList) {
-      try {
-        await api.post('/api/admin/professor', payload);
-        setProgress(prevState => prevState + 1);
-      } catch {
-        alert('오류가 발생하였습니다.');
-        return;
-      }
+    try {
+      await api.post(`/api/admin/${role}`, payloadList);
+      // setProgress(prevState => prevState + 1);
+    } catch {
+      alert('오류가 발생하였습니다.');
     }
 
     handleCancel();
@@ -54,7 +52,7 @@ const ExcelData = ({
 
   const handleCancel = () => {
     setExcelData(null);
-    setProgress(0);
+    // setProgress(0);
     setExcelDataHasError(false);
   };
 
@@ -68,7 +66,7 @@ const ExcelData = ({
           </button>
         </div>
         <div className="modal-contents">
-          {progress ? (
+          {/* {progress ? (
             <PendingLayout>
               <CircularProgressBar
                 // colorCircle="#F8F8F8"
@@ -82,7 +80,7 @@ const ExcelData = ({
                 strokeBottom={1}
               />
             </PendingLayout>
-          ) : null}
+          ) : null} */}
           <ExcelDataLayout template={template}>
             <div className="excel-table-header">
               {excelDataHeader?.map(item => <div key={item.title}>{item.title}</div>)}
@@ -114,7 +112,9 @@ const ExcelData = ({
                   .fill('')
                   .map((_, index) => (
                     <div key={index} className="excel-table-content">
-                      {excelData?.map((_, index) => <div key={index}></div>)}
+                      {excelDataHeader.map((_, index) => (
+                        <div key={index}></div>
+                      ))}
                     </div>
                   ))}
             </div>

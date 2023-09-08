@@ -4,6 +4,8 @@ import CommonButton from '../CommonButton';
 import { RegisterScoreProps } from '../../types/components';
 import { RegisterScoreModal } from '../../styles/RegisterStyle';
 import Input from '../Input';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreProps) => {
   const [attendance, setAttendance] = useState<number>(0);
@@ -54,6 +56,9 @@ const RegisterScore = ({ setOpenRegisterScore, score, setScore }: RegisterScoreP
       <div className="modal-box" style={{ height: 'auto', width: 'auto' }}>
         <div className="modal-title-small">
           <div>배점 등록</div>
+          <button onClick={handleCancel}>
+            <FontAwesomeIcon icon={faXmark} size="lg" />
+          </button>
         </div>
         <div className="modal-contents">
           <RegisterScoreModal total={total}>

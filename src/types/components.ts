@@ -120,6 +120,7 @@ export interface RegisterScoreProps {
 }
 
 export interface ExcelDataProps {
+  role: string;
   excelDataHeader: Array<TableHeaderType>;
   excelData: Array<ObjectType>;
   setExcelData: React.Dispatch<React.SetStateAction<Array<ObjectType> | null>>;
@@ -127,4 +128,14 @@ export interface ExcelDataProps {
   setExcelDataHasError: React.Dispatch<React.SetStateAction<boolean>>;
   viewData: Array<string>;
   postData: Array<string>;
+}
+
+export interface RegisterDetailProps {
+  lectureData: ObjectType | null;
+  setLectureData: React.Dispatch<React.SetStateAction<ObjectType | null>>;
+}
+
+export interface ChangeEmailProps {
+  setOpenChangeEmail: React.Dispatch<React.SetStateAction<boolean>>;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
 }

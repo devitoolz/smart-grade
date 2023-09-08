@@ -7,6 +7,7 @@ import CommonButton from './CommonButton';
 import Input from './Input';
 import { OTPAuthProps } from '../types/components';
 import { OTPAuthData } from '../types/apis';
+import { SendOTP } from '../styles/LoginStyle';
 
 const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
   const [OTP, setOTP] = useState<string>('');
@@ -43,13 +44,22 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
     }
   };
 
+  const handleResendQR = async () => {
+    try {
+      await axios.post(`/api/send-email`, payload);
+      alert('등록한 이메일로 QR 코드 URL이 발송 되었습니다.');
+    } catch {
+      alert('이메일 발송에 실패하였습니다.');
+    }
+  };
+
   const handleCancel = () => {
     setOpenOTP(false);
   };
 
   return (
     <ModalStyle modalSize="small">
-      <div className="modal-box" style={{ height: 200, width: 300 }}>
+      <div className="modal-box" style={{ height: 210, width: 300 }}>
         <div className="modal-title-small">
           <div>OTP 인증</div>
         </div>
@@ -62,6 +72,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
             value={OTP}
             setValue={handleOTPChange}
           />
+          <SendOTP onClick={handleResendQR}>QR 재등록</SendOTP>
         </div>
         <div className="modal-footer">
           <CommonButton value="인증" onClick={handleOTPAuth} btnType="modal" />

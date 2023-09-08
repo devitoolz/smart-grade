@@ -121,7 +121,7 @@ const Student = () => {
             handleUploadExcel(e, 'student', allMajorList, setExcelDataHasError, setExcelData)
           }
         />
-        <Button onClick={() => navigate('/admin/user/create', { state: 'professor' })}>
+        <Button onClick={() => navigate('/admin/user/create', { state: 'students' })}>
           계정 생성
         </Button>
       </ButtonBarLayout>
@@ -160,6 +160,7 @@ const Student = () => {
       </Table>
       {excelData && (
         <ExcelData
+          role="students"
           excelDataHeader={excelDataHeader}
           excelData={excelData}
           setExcelData={setExcelData}

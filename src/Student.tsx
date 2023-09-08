@@ -11,6 +11,7 @@ import Grade from './pages/student/Grade';
 import Register from './pages/student/Register';
 import Lecture from './pages/student/Lecture';
 import { UserProfile } from './types/apis';
+import { checkValidEmail } from './modules/regex';
 
 const Student = () => {
   otpNotFound();
@@ -26,6 +27,9 @@ const Student = () => {
       try {
         const { data } = await api.get<UserProfile>(`/api/student/detail`);
         data.profile.secretKey = JSON.parse(data.profile.secretKey);
+        if (data.profile.email && !checkValidEmail(data.profile.email)) {
+          data.profile.email = '';
+        }
         dispatch(main.setUser({ ...data }));
       } catch {
         if (getAuth()) {

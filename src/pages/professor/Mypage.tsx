@@ -18,13 +18,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faPencil, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { checkValidEmail, checkValidPhone } from '../../modules/regex';
+import { checkValidPhone } from '../../modules/regex';
 import api from '../../apis/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';
 import { PROFESSOR_IMG_URL } from './Main';
 import { RootState } from '../../store';
 import { LectureData, ProfessorProfileData } from '../../types/apis';
+import ChangeEmail from '../../components/ChangeEmail';
 
 const Mypage = () => {
   const [lectureList, setLectureList] = useState<Array<LectureData> | null>(null);
@@ -35,6 +36,7 @@ const Mypage = () => {
   const [address, setAddress] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null);
 
+  const [openChangeEmail, setOpenChangeEmail] = useState<boolean>(false);
   const [openChangePassword, setOpenChangePassword] = useState<boolean>(false);
   const [openOTPRegister, setOpenOTPRegister] = useState<boolean>(false);
 
@@ -72,11 +74,6 @@ const Mypage = () => {
       return;
     }
 
-    if (!checkValidEmail(email)) {
-      alert('올바르지 않은 이메일입니다.');
-      return;
-    }
-
     try {
       const formData = new FormData();
 
@@ -85,12 +82,6 @@ const Mypage = () => {
         email,
         address,
       };
-
-      // if (imgFile && user?.profile.pic) {
-      //   formData.append('pic', imgFile);
-      // } else if (imgFile && !user?.profile.pic) {
-      //   formData.append('pic', imgFile);
-      // }
 
       if (imgFile) formData.append('pic', imgFile);
       formData.append('param', JSON.stringify(payload));
@@ -152,11 +143,6 @@ const Mypage = () => {
         .replace(/^(\d{0,3})(\d{0,4})(\d{0,4})$/g, '$1-$2-$3')
         .replace(/(-{1,2})$/g, '')
     );
-  };
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setEmail(value.replace(/[^ㄱ-ㅎ가-힣a-zA-Z0-9-_.@]/g, ''));
   };
 
   const handleAddressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -298,18 +284,14 @@ const Mypage = () => {
               E-mail
               {!disabled && <FontAwesomeIcon icon={faPencil} />}
             </div>
-            <div>
-              <Input
-                type="text"
-                isForm={true}
-                placeholder={
-                  disabled && !user?.profile.email ? '(정보 수정 필요)' : 'smartgrade@green.ac.kr'
-                }
-                reset={setEmail}
-                value={email || ''}
-                setValue={handleEmailChange}
-                disabled={disabled}
-              />
+            <div onClick={disabled ? undefined : () => setOpenChangeEmail(true)}>
+              {user?.profile.email ? (
+                user?.profile.email
+              ) : email ? (
+                email
+              ) : (
+                <span>{disabled ? '(정보 수정 필요)' : 'E-mail을 등록하세요.'}</span>
+              )}
             </div>
           </Row>
           <Row>
@@ -340,6 +322,9 @@ const Mypage = () => {
         />
       )}
       {openOTPRegister && <OTPRegister setOpenOTPRegister={setOpenOTPRegister} />}
+      {openChangeEmail && (
+        <ChangeEmail setOpenChangeEmail={setOpenChangeEmail} setEmail={setEmail} />
+      )}
     </>
   );
 };

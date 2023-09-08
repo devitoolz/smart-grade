@@ -25,6 +25,7 @@ const InfoFormTable = styled.div`
     }
     > div {
       position: relative;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -41,6 +42,12 @@ const InfoFormTable = styled.div`
       &:nth-of-type(even) {
         background: var(--form-table-bg-color);
         border-bottom: 2px solid var(--form-table-even-border-color);
+      }
+      > div.ellipsis {
+        padding: 0 10px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
       > span {
         color: var(--search-ph-color);
