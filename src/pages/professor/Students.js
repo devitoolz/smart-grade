@@ -1,9 +1,8 @@
-import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import api from '../../apis/api';
-// import { EffectCards } from 'swiper/modules';
-import CommonModal from '../../components/CommonModal';
+import CommonButton from '../../components/CommonButton';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
@@ -11,8 +10,14 @@ import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 
 const Students = () => {
-  ////searchBar////
+  //페이지 이동
+  const navigate = useNavigate();
+  //페이지 이동 함수
+  const pagemove = () => {
+    navigate('/professor/students/detail');
+  };
 
+  ////searchBar////
   //학년 state
   const [grade, setGrade] = useState('');
   //전공 state
@@ -30,24 +35,40 @@ const Students = () => {
   //tabel header
   const tableHeader = [
     {
+      title: '연도',
+      width: '0.5',
+    },
+    {
+      title: '학기 ',
+      width: '0.5',
+    },
+    {
       title: '학년',
       width: '0.5',
     },
     {
-      title: '전공 ',
-      width: '2',
+      title: '강의명 ',
+      width: '1.5',
     },
     {
-      title: '학번',
-      width: '2',
+      title: '학점',
+      width: '0.5',
     },
     {
-      title: '이름 ',
+      title: '강의시간 ',
       width: '1',
     },
     {
-      title: '전화번호',
-      width: '2',
+      title: '강의실',
+      width: '1',
+    },
+    {
+      title: '정원 ',
+      width: '0.5',
+    },
+    {
+      title: '학생목록',
+      width: '1',
     },
   ];
   //학기 임시 더미데이터
@@ -113,24 +134,12 @@ const Students = () => {
   //   },
   // ];
 
-  //상세보기 모달창 활성화
-  const [display, setDisplay] = useState(false);
-  //상세보기 모달창 열기
-  const handleModalOk = () => {
-    setDisplay(true);
-  };
-
-  //상세보기 모달창 닫기
-  const handleModalCancel = () => {
-    setDisplay(false);
-  };
-
   //api get hook test
-  const url = ``;
+  const url = `/api/professor/lecture-list`;
   //바꾼거
   // const url = `/api/student/lecture-list?page=${page}&size=10&sort=finishedYn=${degree}`;
 
-  const { data, pending, error } = useQuerySearch(url, click);
+  const { data, pending, error } = useQuerySearch(url);
 
   // const getstudent = async () => {
   //   try {
@@ -150,77 +159,63 @@ const Students = () => {
 
   return (
     <div>
-      {display === true ? (
-        <CommonModal
-          setDisplay={setDisplay}
-          modalSize="small"
-          modalTitle="개설 승인"
-          handleModalOk={handleModalOk}
-          handleModalCancel={handleModalCancel}
-        >
-          <p>모달 작은 창 버전</p>
-          <p>내용추가</p>
-        </CommonModal>
-      ) : null}
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown
-          length="short"
-          placeholder="학년"
-          data={gradeList}
-          propertyName={{ key: 'id', value: 'title' }}
-          value={grade}
-          setValue={setGrade}
-          reset
-          search
-        />
-        <Dropdown
-          length="long"
-          placeholder="전공"
-          data={majorList}
-          propertyName={{ key: 'id', value: 'title' }}
-          value={major}
-          setValue={setMajor}
-          reset
-          search
-        />
-        <Input
-          length="long"
-          type="number"
-          placeholder="학번"
-          value={studentID}
-          setValue={e => setStudentID(e.target.value)}
-          reset={setStudentID}
-        />
-        <Input
-          length="short"
-          type="text"
-          placeholder="이름"
-          value={studentName}
-          setValue={e => setStudentName(e.target.value)}
-          reset={setStudentName}
-        />
-      </SearchBar>
+      <div style={{ marginBottom: '94.41px' }}>
+        <SearchBar queries={queries} setPage={true} setClick={setClick}>
+          <Dropdown
+            length="short"
+            placeholder="학년"
+            data={data?.lectureList.gradeLimit}
+            propertyName={{ key: 'id', value: 'title' }}
+            value={grade}
+            setValue={setGrade}
+            reset
+            search
+          />
+          <Dropdown
+            length="long"
+            placeholder="강의명"
+            data={data?.lectureList.lectureName}
+            propertyName={{ key: 'id', value: 'title' }}
+            value={major}
+            setValue={setMajor}
+            reset
+            search
+          />
+        </SearchBar>
+      </div>
       <Table
         header={tableHeader}
-        data={data?.profile}
+        data={data?.lectureList}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {' '}
-        {data?.profile?.map(item => {
+        {data?.lectureList?.map(item => {
           return (
-            <div key={item.studentNum}>
-              <div>{item.grade}</div>
-              <div>{item.majorName}</div>
-              <div>{item.studentNum}</div>
-              <div>{item.name}</div>
-              <div>{item.phone}</div>
+            <div key={item.ilecture}>
+              <div>{item.year}</div>
+              <div>{item.isemester}</div>
+              <div>{item.gradeLimit}</div>
+              <div>{item.lectureName}</div>
+              <div>
+                {item.lectureStrTime}~{item.lectureEndTime}
+                {item.dayWeek}
+              </div>
+              <div>
+                {item.buildingName}
+                {item.lectureRoomName}
+              </div>
+              <div>{item.lectureMaxPeople}</div>
+              <div>{item.score}</div>
+              <div>
+                <CommonButton btnType="table" color="gray" value="상세보기" onClick={pagemove} />
+              </div>
             </div>
           );
         })}
       </Table>
+      <CommonButton btnType="table" color="gray" value="상세보기" onClick={pagemove} />
     </div>
   );
 };

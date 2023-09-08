@@ -15,6 +15,7 @@ import GradeInput from './pages/professor/GradeInput';
 import { UserProfile } from './types/apis';
 import RegisterApply from './pages/professor/RegisterApply';
 import { checkValidEmail } from './modules/regex';
+import StudentsDetail from './pages/professor/StudentsDetail';
 
 const Professor = () => {
   otpNotFound();
@@ -64,6 +65,7 @@ const Professor = () => {
         <Route path="register" element={<Register />} />
         <Route path="register/apply" element={<RegisterApply />} />
         <Route path="students" element={<Students />} />
+        <Route path="students/detail" element={<StudentsDetail />} />
       </Route>
       <Route path="*" element={<Navigate to="/notfound" state={{ user: 'professor' }} />} />
     </Routes>

@@ -1,5 +1,6 @@
-import React from 'react';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
@@ -23,6 +24,8 @@ const Lecture = () => {
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
+  //책 사진
+  const [bookPic] = useState('');
   //tabel header
   const tableHeader = [
     {
@@ -205,10 +208,18 @@ const Lecture = () => {
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
                 <div>
-                  <img
-                    src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
-                    alt="교재 이미지"
-                  />
+                  {/*  */}
+                  {bookPic === false ? (
+                    <img
+                      src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
+                      alt="교재 이미지"
+                    />
+                  ) : (
+                    <div className="icon">
+                      <FontAwesomeIcon icon={faBook} className="fa-4x" />
+                      <p>교재가 없습니다.</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
