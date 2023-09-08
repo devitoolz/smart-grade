@@ -4,9 +4,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
-import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import api from '../../apis/api';
+import { getGradeList, putStudentGrade } from '../../apis/professorGrade';
 
 const GradeInput = () => {
   const navigate = useNavigate();
@@ -23,27 +23,15 @@ const GradeInput = () => {
     { title: '기말', width: 1 },
     { title: '입력', width: 1.2 },
   ];
-  // const tableData = Array(7).fill('');
   const [tableData, setTableData] = useState<Array<any>>([]);
   const [maxPage, setMaxPage] = useState();
-  // hooks
-  // const [click] = useState(false);
-  const url = `/api/professor/grade?ilecture=${ilecture}`;
-  // XXX api 연동 - 별도 파일 분리
-  // const { data, pending, error } = useQuerySearch(url, click);
-  // useEffect(() => {
-  //   console.log(data);
-  //   setTableData((data as ObjectType)?.lectureList);
-  // }, [data]);
-  //
-  const getGradeList = async () => {
-    const { data } = await api.get(url);
-    console.log(data);
+  const getGradeListWait = async () => {
+    const data = await getGradeList(Number(ilecture));
     setTableData((data as ObjectType)?.lectureList);
     setMaxPage((data as ObjectType)?.page?.maxPage);
   };
   useEffect(() => {
-    getGradeList();
+    getGradeListWait();
   }, []);
 
   // 성적입력 input 창 출력
@@ -51,29 +39,27 @@ const GradeInput = () => {
   const [attendance, setAttendance] = useState('');
   const [middleEx, setMiddleEx] = useState('');
   const [finalEx, setFinalEx] = useState('');
-  const putStudentGrade = async (ilectureStudent: number) => {
-    const url = `/api/professor/grade?ilectureStudent=${ilectureStudent}&ilecture=${ilecture}`;
-    const putData = {
-      attendance: attendance,
-      midtermExamination: middleEx,
-      finalExamination: finalEx,
-    };
-    try {
-      await api.put(url, putData);
-      alert('성적 입력이 완료되었습니다');
-      setStudentId(null);
-
-      const { data } = await api.get(url);
-      setTableData(data?.lectureList);
-    } catch (err) {
-      console.log(err);
-      alert('성적 입력에 실패했습니다');
+  const putStudentGradeWait = async (ilectureStudent: number) => {
+    const attendancePoint = Number(attendance);
+    const middleExPoint = Number(middleEx);
+    const finalExPoint = Number(finalEx);
+    if (attendancePoint + middleExPoint + finalExPoint === 0) {
+      alert('성적을 입력해주세요');
+    } else {
+      const result = await putStudentGrade(
+        ilectureStudent,
+        Number(ilecture),
+        attendancePoint,
+        middleExPoint,
+        finalExPoint
+      );
+      if (result) {
+        setStudentId(null);
+        const url = `/api/professor/grade?ilectureStudent=${ilectureStudent}&ilecture=${ilecture}`;
+        const { data } = await api.get(url);
+        setTableData(data?.lectureList);
+      }
     }
-  };
-  const putStudentGradeWait = async (_studentId: number) => {
-    Number(attendance) + Number(middleEx) + Number(finalEx) !== 0
-      ? await putStudentGrade(_studentId)
-      : alert('성적을 입력해주세요');
   };
   const handleResetInput = () => {
     setAttendance('');

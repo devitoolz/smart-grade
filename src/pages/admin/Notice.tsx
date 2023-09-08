@@ -6,7 +6,7 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
-import { deleteBoard } from '../../apis/fetch';
+import { deleteBoard } from '../../apis/board';
 import { ObjectType } from '../../types/components';
 
 const Notice = () => {

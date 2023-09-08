@@ -7,6 +7,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import { dayData } from '../../pages/professor/RegisterApply';
 import api from '../../apis/api';
+import { getLectureList, putObjection } from '../../apis/studentGrade';
 
 const Grade = () => {
   const tableHeader = [
@@ -42,8 +43,7 @@ const Grade = () => {
   const [demur, setDemur] = useState(false);
   const handleApplyDemurOk = async () => {
     console.log(ilectureStudent);
-    putObjection();
-    alert('처리되었습니다');
+    putObjectionWait();
     setDemur(false);
   };
   const handleApplyDemurCancel = () => {
@@ -52,32 +52,17 @@ const Grade = () => {
   };
 
   // 임시데이터
-  // const data = Array(7).fill('');
   const [data, setData] = useState([]);
-  // XXX api 연동 - 추후 별도 파일 분리
-  const url = '/api/student';
-  const getLectureList = async () => {
-    try {
-      const { data } = await api.get(url);
-      setData(data);
-    } catch (err) {
-      console.log(err);
-    }
+  const getLectureListWait = async () => {
+    await getLectureList(setData);
   };
   useEffect(() => {
-    getLectureList();
+    getLectureListWait();
   }, []);
-  const objectionUrl = `/api/student/objection?&ilectureStudent=${ilectureStudent}`;
-  const putObjection = async () => {
-    const headers = { 'Content-Type': 'application/json' };
-    const putData = { objection: 1 };
-    try {
-      await api.put(objectionUrl, putData, { headers });
-    } catch (err) {
-      console.log(err);
-    }
+  const putObjectionWait = async () => {
+    const objectionUrl = `/api/student/objection?&ilectureStudent=${ilectureStudent}`;
+    await putObjection(objectionUrl, setData);
   };
-  // api 연동 - 추후 별도 파일 분리
 
   return (
     <>
@@ -116,8 +101,6 @@ const Grade = () => {
                     btnType="table"
                     color="blue"
                     onClick={() => {
-                      console.log('필요 데이터 : 학번, ilectureStudent');
-                      console.log(item.ilectureStudent);
                       setIlectureStudent(item.ilectureStudent);
                       setDemur(true);
                     }}
