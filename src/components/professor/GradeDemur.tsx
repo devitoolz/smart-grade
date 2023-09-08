@@ -4,6 +4,7 @@ import { GradeDemurProps } from '../../types/temp';
 import { DemurTable } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
 import api from '../../apis/api';
+import { getObjectionList, putObjection } from '../../apis/professorGrade';
 
 const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
   const tableHeader = [
@@ -14,33 +15,17 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
     { title: '등급', width: 1 },
     { title: '처리', width: 1 },
   ];
-  // const tableBody = Array(10).fill('');
   const [tableBody, setTableBody] = useState([]);
-  const url = `/api/professor/objection?ilecture=${lectureId}&objection=1`;
-  const getLectureList = async () => {
-    try {
-      const { data } = await api.get(url);
-      setTableBody(data);
-      console.log(data);
-    } catch (err) {
-      console.log(err);
-    }
+  const getObjectionListWait = async () => {
+    await getObjectionList(lectureId, setTableBody);
   };
   useEffect(() => {
-    getLectureList();
+    getObjectionListWait();
   }, []);
-  // XXX api 연동 - 파일 분리
-  const putObjection = async (ilectureStudent: number) => {
+  const putObjectionWait = async (ilectureStudent: number) => {
     const objectionUrl = `/api/professor/grade/objection?ilecture=${lectureId}&ilectureStudent=${ilectureStudent}&newObjection=2`;
-    try {
-      const result = await api.put(objectionUrl);
-      console.log(result);
-      alert('성공');
-      setDemur(false);
-    } catch (err) {
-      console.log(err);
-      alert('실패');
-    }
+    const result = await putObjection(objectionUrl);
+    result ? setDemur(false) : null;
   };
 
   return (
@@ -67,7 +52,7 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
                         value="처리하기"
                         btnType="table"
                         color="blue"
-                        onClick={() => putObjection(item.ilectureStudent)}
+                        onClick={() => putObjectionWait(item.ilectureStudent)}
                       />
                     </div>
                   </div>

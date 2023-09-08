@@ -170,7 +170,6 @@ const Write = () => {
                 }}
                 hideModeSwitch={true}
                 initialEditType="wysiwyg"
-                // viewer={true} // TODO :나중에 다시 살펴보기
               />
             </div>
           </div>
@@ -184,7 +183,6 @@ const Write = () => {
                     return (
                       <div key={idx} className="file-item">
                         <span>{item?.name}</span>
-                        {/* XXX X 버튼 모양 바꾸기 */}
                         <button onClick={() => handleDeleteImage(idx)}>
                           <FontAwesomeIcon icon={faXmark} size="lg" />
                         </button>

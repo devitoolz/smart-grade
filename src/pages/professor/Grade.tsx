@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
-import SearchBar from '../../components/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
-import api from '../../apis/api';
 import { dayData } from '../../pages/professor/RegisterApply';
+import { getLectureList } from '../../apis/professorGrade';
 
 const Grade = () => {
   const navigate = useNavigate();
@@ -21,21 +20,13 @@ const Grade = () => {
     { title: '인원', width: 1 },
     { title: '비고', width: 2 },
   ];
-  // 임시데이터
-  // const data = Array(5).fill('');
   const [data, setData] = useState([]);
-  const url = `/api/professor/lecture-list?openingProcedures=3`;
-  const getLectureList = async () => {
-    try {
-      const { data } = await api.get(url);
-      setData(data.lectureList);
-      console.log(data.lectureList);
-    } catch (err) {
-      console.log(err);
-    }
+  const getLectureListWait = async () => {
+    const result = await getLectureList();
+    setData(result.lectureList);
   };
   useEffect(() => {
-    getLectureList();
+    getLectureListWait();
   }, []);
 
   // 이의신청 모달
