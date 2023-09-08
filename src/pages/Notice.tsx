@@ -8,15 +8,20 @@ import useQuerySearch from '../hooks/useSearchFetch';
 import CommonModal from '../components/CommonModal';
 import { deleteBoard } from '../apis/board';
 import { ObjectType } from '../types/components';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../store';
-import { NoDatas } from '../styles/MyStyleCSS';
+import mainSlice from '../slices/mainSlice';
 
 const Notice = () => {
   const navigate = useNavigate();
 
   // 관리자모드 확인
-  const { user } = useSelector((state: RootState) => state.main);
+  const location = useLocation();
+  const [adminMode, setAdminMode] = useState<boolean>(false);
+  useEffect(() => {
+    const adminCheck = location.pathname.split('/').includes('admin');
+    adminCheck ? setAdminMode(true) : null;
+  }, []);
 
   const [click, setClick] = useState(false);
   const [keyword, setKeyword] = useState('');
@@ -68,7 +73,7 @@ const Notice = () => {
   }, [data, important.data]);
 
   // XXX 수정수정
-  const tableHeader = !user
+  const tableHeader = adminMode
     ? [
         { title: 'NO.', width: 1 },
         { title: '제목', width: 4 },
@@ -102,9 +107,9 @@ const Notice = () => {
         btnType="page"
         value="글쓰기"
         onClick={() => {
-          user
-            ? alert('글쓰기 기능은 관리자만 사용할 수 있습니다')
-            : navigate(`/admin/home/notice/write`);
+          adminMode
+            ? navigate(`/admin/home/notice/write`)
+            : alert('글쓰기 기능은 관리자만 사용할 수 있습니다');
         }}
       />
 
@@ -143,7 +148,7 @@ const Notice = () => {
                 </span>
               </div>
               <div>{item.createdAt.split('T')[0]}</div>
-              {!user && (
+              {adminMode && (
                 <div>
                   <CommonButton
                     btnType="table"

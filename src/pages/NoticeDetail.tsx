@@ -13,19 +13,17 @@ import Dropdown from '../components/Dropdown';
 import { ObjectType } from '../types/components';
 import { NoticeLoading, NoticeWrap } from '../styles/NoticeStyle';
 import { FadeLoader } from 'react-spinners';
-import { useSelector } from 'react-redux';
-import { RootState } from '../store';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();
 
   // 관리자모드 확인
-  const { user } = useSelector((state: RootState) => state.main);
+  const location = useLocation();
   const [adminMode, setAdminMode] = useState<boolean>(false);
   useEffect(() => {
-    console.log(user?.profile);
-    user?.profile ? setAdminMode(false) : setAdminMode(true);
-  }, [user]);
+    const adminCheck = location.pathname.split('/').includes('admin');
+    adminCheck ? setAdminMode(true) : null;
+  }, []);
 
   // 게시글 불러오기
   const { pathname } = useLocation();

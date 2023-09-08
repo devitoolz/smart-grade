@@ -12,6 +12,8 @@ import Register from './pages/student/Register';
 import Lecture from './pages/student/Lecture';
 import { UserProfile } from './types/apis';
 import { checkValidEmail } from './modules/regex';
+import Notice from './pages/Notice';
+import NoticeDetail from './pages/NoticeDetail';
 
 const Student = () => {
   otpNotFound();
@@ -54,6 +56,8 @@ const Student = () => {
     <Routes>
       <Route element={<Main />}>
         <Route path="home" element={<Dashboard />} />
+        <Route path="notice" element={<Notice />} />
+        <Route path="notice/:id" element={<NoticeDetail />} />
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Lecture />} />
         <Route path="grade" element={<Grade />} />
