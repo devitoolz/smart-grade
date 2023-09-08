@@ -2,11 +2,9 @@ import { useState, useEffect } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
-import { NoDatas } from '../../styles/MyStyleCSS';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import { dayData } from '../../pages/professor/RegisterApply';
-import api from '../../apis/api';
 import { getLectureList, putObjection } from '../../apis/studentGrade';
 
 const Grade = () => {
@@ -77,7 +75,15 @@ const Grade = () => {
           reset={true}
         />
       </SearchBar>
-      <NoDatas />
+
+      <CommonButton
+        btnType="page"
+        value="엑셀 다운로드"
+        onClick={() => {
+          alert('학생 성적 엑셀파일 다운로드(예정)');
+        }}
+      />
+
       <Table header={tableHeader} hasPage={true} data={data} pending={false} error={false}>
         {data?.map((item: any, idx) => {
           return (
@@ -128,7 +134,6 @@ const Grade = () => {
           handleModalOk={handleApplyDemurOk}
           handleModalCancel={handleApplyDemurCancel}
         >
-          {/* <span>강의 번호 : {ilectureStudent}</span> */}
           이의신청을 하겠습니까?
         </CommonModal>
       )}
