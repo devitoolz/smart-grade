@@ -1,7 +1,8 @@
+import React from 'react';
 import api from './api';
 
 // 학생 성적리스트 불러오기
-export const getLectureList = async (setData: any) => {
+export const getLectureList = async (setData: React.Dispatch<React.SetStateAction<any>>) => {
   try {
     const { data } = await api.get('/api/student');
     setData(data);
@@ -14,11 +15,16 @@ export const getLectureList = async (setData: any) => {
 };
 
 // 학생 이의신청하기
-export const putObjection = async (objectionUrl: string) => {
+export const putObjection = async (
+  objectionUrl: string,
+  setData: React.Dispatch<React.SetStateAction<any>>
+) => {
   const headers = { 'Content-Type': 'application/json' };
   const putData = { objection: 1 };
   try {
     await api.put(objectionUrl, putData, { headers });
+    const { data } = await api.get('/api/student');
+    setData(data);
     alert('처리되었습니다');
     return true;
   } catch (err) {
