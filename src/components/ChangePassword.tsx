@@ -41,7 +41,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
     const studentPayload = {
       studentPassword: newPw,
-      currentStudentPassword: currentPw,
+      currentPassword: currentPw,
     };
 
     try {

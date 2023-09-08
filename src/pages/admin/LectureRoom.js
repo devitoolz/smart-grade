@@ -12,8 +12,8 @@ const LectureRoom = () => {
   //강의실 pk값
   const [ilectureRoom, setIlectureRoom] = useState('');
   //강의실 추가시 건물명 state
-  const [buildingName, setBuildingName] = useState('');
 
+  const [buildingNameData, setBuildingNameData] = useState('');
   //강의실 추가시 호실명 state
   const [lectureRoomName, setLectureRoomName] = useState('');
 
@@ -25,10 +25,8 @@ const LectureRoom = () => {
   // 검색 버튼 클릭 state 변경 함수
   const [click, setClick] = useState(false);
   //searchBar dropdown buildingName state
-  const [buildingNameData, setBuildingNameData] = useState('');
+  const [buildingName, setBuildingName] = useState('');
   //searchBar 운영,폐지 key, value 이름
-  //검색 시 사용할 쿼리스트링(건물명)
-  const queries = { buildingNameData };
 
   ////Table////
   //table header
@@ -47,8 +45,11 @@ const LectureRoom = () => {
     setShowModal(true);
   };
 
+  //검색 시 사용할 쿼리스트링(건물명)
+  const queries = { buildingName };
+
   //api get hook test
-  const url = '/api/lectureroom';
+  const url = '/api/admin/lectureroom';
   const { data, pending, error } = useQuerySearch(url, click);
   //searchBar dropdown
   const buildingDataList = [];
@@ -60,11 +61,15 @@ const LectureRoom = () => {
   const postBuildinglist = async (ilectureRoom, lectureRoomName, buildingName, maxCapacity) => {
     const headers = { 'Content-Type': 'application/json' };
     try {
+      // await api.post(
+      //   `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+      //   { headers }
+      // );
+
       await api.post(
-        `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+        `/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
         { headers }
       );
-      console.log('나와랏!');
     } catch (err) {
       console.log(err);
     }
@@ -79,26 +84,36 @@ const LectureRoom = () => {
     //하지만 function은 써줘야 함.
 
     if (
+      ilectureRoom !== '' &&
+      ilectureRoom !== null &&
       buildingName !== '' &&
+      buildingName !== null &&
       lectureRoomName !== null &&
       lectureRoomName !== '' &&
       maxCapacity !== null &&
       maxCapacity !== ''
     ) {
-      await postBuildinglist(lectureRoomName, buildingName, maxCapacity);
+      await postBuildinglist(ilectureRoom, lectureRoomName, buildingNameData, maxCapacity);
+      setIlectureRoom();
+      setLectureRoomName();
+      setBuildingName();
+      setMaxCapacity();
+      console.log(setIlectureRoom);
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-      setBuildingName('');
+
+      setIlectureRoom('');
+      setBuildingNameData('');
       setLectureRoomName('');
       setMaxCapacity('');
     }
   };
 
-  //commonModal close state
+  //강의실추가 모달창 취소 버튼 클릭시
   const handleModalCancel = () => {
     //setDisplay(false);
-
+    setBuildingNameData('');
     setLectureRoomName('');
     setMaxCapacity('');
   };
@@ -106,8 +121,8 @@ const LectureRoom = () => {
   //api delete test
   const LectureRoomDeleteTest = async _id => {
     try {
-      await api.delete(`/api/lectureroom?ilectureRoom=${_id}`);
-      //await getBuildingTestLoad();
+      await api.delete(`/api/admin/lectureroom?ilectureRoom=${_id}`);
+      //await getBuildingTestLoad()s;
     } catch (err) {
       console.log(err);
     }
@@ -128,8 +143,8 @@ const LectureRoom = () => {
           placeholder="건물명"
           length="short"
           data={buildingDataList}
-          value={buildingNameData}
-          setValue={setBuildingNameData}
+          value={buildingName}
+          setValue={setBuildingName}
           reset
           search={true}
         />
@@ -143,6 +158,7 @@ const LectureRoom = () => {
           modalSize="small"
           modalTitle="강의실 추가"
           handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
         >
           <div
             style={{
@@ -159,16 +175,25 @@ const LectureRoom = () => {
                 length="short"
                 placeholder="건물명"
                 data={buildingDataList}
-                value={buildingName}
-                setValue={setBuildingName}
+                value={buildingNameData}
+                setValue={setBuildingNameData}
                 reset
               />
             </div>
             <Input
-              type="number"
+              type="text"
               length="short"
+              maxLength={3}
               value={lectureRoomName}
-              setValue={e => setLectureRoomName(e.target.value)}
+              setValue={() => {
+                // 입력값이 숫자인지 확인하는 정규표현식
+                const isNumeric = /^[0-9]*$/;
+                setBuildingNameData(isNumeric);
+                // 입력값이 숫자인 경우에만 setValue 함수 호출
+                // if (isNumeric.test(e.target.value)) {
+                //   setBuildingNameData(e.target.value);
+                // }
+              }}
             />
             <p>호</p>
           </div>
@@ -185,10 +210,16 @@ const LectureRoom = () => {
           >
             <p>최대수용인원</p>
             <Input
-              type="number"
+              type="text"
               length="middle"
+              maxLength={2}
               value={maxCapacity}
-              setValue={e => setMaxCapacity(e.target.value)}
+              setValue={e => {
+                // 입력값이 숫자 또는 빈 문자열인 경우에만 setValue 함수 호출
+                if (/^[0-9]*$/.test(e.target.value) || e.target.value === '') {
+                  setBuildingNameData(e.target.value);
+                }
+              }}
             />
           </div>
         </CommonModal>
@@ -220,7 +251,9 @@ const LectureRoom = () => {
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName?.concat('호')}
+                {item.lectureRoomName?.includes('호') === false
+                  ? item.lectureRoomName?.concat('호')
+                  : item.lectureRoomName}
               </div>
               <div>{item.maxCapacity}</div>
               <div>

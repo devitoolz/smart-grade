@@ -7,7 +7,7 @@ import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
-import { LectureDetail, Btn } from '../../styles/LectureRoomCss';
+import { StudentLectureDetail, StudentLectureBtn } from '../../styles/LectureRoomCss';
 
 const Lecture = () => {
   ////searchBar////
@@ -64,11 +64,11 @@ const Lecture = () => {
   const semesterList = [
     {
       id: 1,
-      title: '1학기',
+      title: '2022',
     },
     {
       id: 2,
-      title: '2학기',
+      title: '2023',
     },
   ];
 
@@ -175,37 +175,48 @@ const Lecture = () => {
         >
           <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
 
-          <LectureDetail>
+          <StudentLectureDetail>
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
-              <div className="inputLectureName">강의명들어갈자리</div>
+              <div className="inputLectureName">사람들의 퇴근법</div>
               <div className="grade">학년</div>
-              <div className="inputGrade">학년들어갈자리</div>
-              <div className="professor">교수명</div>
-              <div className="inputProfessor">교수명들어갈자리</div>
+              <div className="inputGrade">2</div>
+              <div className="semester">학기</div>
+              <div className="inputSemester">2</div>
               <div className="score">학점</div>
-              <div className="inputScore">학점들어갈자리</div>
+              <div className="inputScore">3</div>
               <div className="lectureHour">강의시간</div>
               <div className="inputLectureHour">09:00~10:00 수,목 </div>
+              <div className="professorName">교수명</div>
+              <div className="inputProfessorName">박상렬</div>
               <div className="bookName">교재명</div>
-              <div className="inputBookName">교재명들어갈자리</div>
+              <div className="inputBookName">집을 가는 다양한 방법</div>
+              <div className="LectureInfo">강의설명</div>
+              <div className="inputLectureInfo">
+                최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
+                기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
+                응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
+                클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
+                실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한 연구
+                분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을 쌓는데
+                기여할 것이다.
+              </div>
+
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
-                <div></div>
-              </div>
-              <div className="purpose">강의목표</div>
-              <div className="inputPurpose">
-                강의목표들어갈자리Below you will find the CSS and HTML required to generate the
-                current layout you built. The CSS has been optimized to omit any properties which
-                have the default values. For example, flex-direction: row; would not be included
-                since that is the default value for flex-direction.
+                <div>
+                  <img
+                    src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
+                    alt="교재 이미지"
+                  />
+                </div>
               </div>
             </div>
-          </LectureDetail>
+          </StudentLectureDetail>
 
-          <Btn>
+          <StudentLectureBtn>
             <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-          </Btn>
+          </StudentLectureBtn>
         </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>
