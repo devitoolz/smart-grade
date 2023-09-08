@@ -48,3 +48,7 @@ export interface ExcelDataStyleProps {
 export interface ButtonBarLayoutProps {
   between?: boolean;
 }
+
+export interface TableLayoutProps {
+  dashboard?: boolean;
+}

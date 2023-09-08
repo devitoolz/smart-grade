@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { TableStyleProps } from '../types/styles';
+import { TableLayoutProps, TableStyleProps } from '../types/styles';
 
-const TableLayout = styled.div`
+const TableLayout = styled.div<TableLayoutProps>`
   width: 100%;
   height: 470px;
+  height: ${({ dashboard }) => (dashboard ? 'auto' : '470px')};
   overflow: auto;
 `;
 
