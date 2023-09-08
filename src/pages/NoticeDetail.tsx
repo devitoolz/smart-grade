@@ -1,21 +1,31 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useRef, useState } from 'react';
-import { Wbtns } from '../../styles/LectureRoomCss';
-import CommonButton from '../../components/CommonButton';
-import useQuerySearch from '../../hooks/useSearchFetch';
-import Input from '../../components/Input';
-import CommonModal from '../../components/CommonModal';
-import { putBoard } from '../../apis/board';
+import { Wbtns } from '../styles/LectureRoomCss';
+import CommonButton from '../components/CommonButton';
+import useQuerySearch from '../hooks/useSearchFetch';
+import Input from '../components/Input';
+import CommonModal from '../components/CommonModal';
+import { putBoard } from '../apis/board';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer } from '@toast-ui/react-editor';
-import Dropdown from '../../components/Dropdown';
-import { ObjectType } from '../../types/components';
-import { NoticeLoading, NoticeWrap } from '../../styles/NoticeStyle';
+import Dropdown from '../components/Dropdown';
+import { ObjectType } from '../types/components';
+import { NoticeLoading, NoticeWrap } from '../styles/NoticeStyle';
 import { FadeLoader } from 'react-spinners';
+import { useSelector } from 'react-redux';
+import { RootState } from '../store';
 
 const NoticeDetail = () => {
   const navigate = useNavigate();
+
+  // 관리자모드 확인
+  const { user } = useSelector((state: RootState) => state.main);
+  const [adminMode, setAdminMode] = useState<boolean>(false);
+  useEffect(() => {
+    console.log(user?.profile);
+    user?.profile ? setAdminMode(false) : setAdminMode(true);
+  }, [user]);
 
   // 게시글 불러오기
   const { pathname } = useLocation();
@@ -37,6 +47,12 @@ const NoticeDetail = () => {
       setLoading(true);
     }, 500);
   };
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    settingBoard();
+    // toast Editor View 값 강제 출력 : API 수정 필요
+    data ? makeTimer() : null;
+  }, [data]);
 
   // 게시글 수정
   const [edit, setEdit] = useState(false);
@@ -80,15 +96,6 @@ const NoticeDetail = () => {
       setPisc(picList);
     }
   };
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    settingBoard();
-    // http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item}
-
-    // toast Editor View 값 강제 출력 : API 수정 필요
-    data ? makeTimer() : null;
-  }, [data]);
-
   // 툴바 커스텀
   const toolbarCustom = [
     ['heading', 'bold', 'italic', 'strike'],
@@ -97,7 +104,6 @@ const NoticeDetail = () => {
     ['image', 'link'],
   ];
   const editorRef = useRef<Editor>(null);
-  // 모달창 오픈
   const [display, setDisplay] = useState(false);
   // 게시글 수정 PUT 통신
   const putBoardWait = async () => {
@@ -239,34 +245,40 @@ const NoticeDetail = () => {
               </div>
             )}
           </div>
-          <Wbtns>
-            {!edit ? (
-              <>
-                <CommonButton value="수정하기" btnType="page" onClick={() => handleEditBoard()} />
-                <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(-1)} />
-              </>
-            ) : (
-              <>
-                <CommonButton
-                  value="수정완료"
-                  btnType="page"
-                  color="blue"
-                  textColor="white"
-                  onClick={() => setDisplay(true)}
-                />
-                <CommonButton
-                  value="취소하기"
-                  btnType="page"
-                  color="red"
-                  textColor="white"
-                  onClick={() => {
-                    setEdit(false);
-                    setDelActivate(false);
-                  }}
-                />
-              </>
-            )}
-          </Wbtns>
+          {adminMode ? (
+            <Wbtns>
+              {!edit ? (
+                <>
+                  <CommonButton value="수정하기" btnType="page" onClick={() => handleEditBoard()} />
+                  <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(-1)} />
+                </>
+              ) : (
+                <>
+                  <CommonButton
+                    value="수정완료"
+                    btnType="page"
+                    color="blue"
+                    textColor="white"
+                    onClick={() => setDisplay(true)}
+                  />
+                  <CommonButton
+                    value="취소하기"
+                    btnType="page"
+                    color="red"
+                    textColor="white"
+                    onClick={() => {
+                      setEdit(false);
+                      setDelActivate(false);
+                    }}
+                  />
+                </>
+              )}
+            </Wbtns>
+          ) : (
+            <Wbtns>
+              <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(-1)} />
+            </Wbtns>
+          )}
         </NoticeWrap>
       ) : (
         <NoticeLoading>

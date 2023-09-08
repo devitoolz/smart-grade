@@ -15,6 +15,8 @@ import GradeInput from './pages/professor/GradeInput';
 import { UserProfile } from './types/apis';
 import RegisterApply from './pages/professor/RegisterApply';
 import { checkValidEmail } from './modules/regex';
+import Notice from './pages/Notice';
+import NoticeDetail from './pages/NoticeDetail';
 
 const Professor = () => {
   otpNotFound();
@@ -57,6 +59,8 @@ const Professor = () => {
     <Routes>
       <Route element={<Main />}>
         <Route path="home" element={<Dashboard />} />
+        <Route path="notice" element={<Notice />} />
+        <Route path="notice/:id" element={<NoticeDetail />} />
         <Route path="mypage" element={<Mypage />} />
         <Route path="lecture" element={<Lecture />} />
         <Route path="grade" element={<Grade />} />
