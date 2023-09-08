@@ -1,41 +1,33 @@
 import React, { useState } from 'react';
-import SearchBar from '../../components/SearchBar';
-import ButtonBar from '../../components/ButtonBar';
-import Table from '../../components/Table';
-import { useNavigate } from 'react-router-dom';
-import Input from '../../components/Input';
-import Dropdown from '../../components/Dropdown';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
-import CommonButton from '../../components/CommonButton';
-import { dayData } from './RegisterApply';
 import RegisterDetail from '../../components/RegisterDetail';
-
+import CommonButton from '../../components/CommonButton';
+import Table from '../../components/Table';
+import SearchBar from '../../components/SearchBar';
+import Input from '../../components/Input';
+import { dayData } from '../professor/RegisterApply';
 const Register = () => {
-  const navigate = useNavigate();
-
-  const [status, setStatus] = useState<string | number | null>(null);
   const [lectureName, setLectureName] = useState<string>('');
   const [lectureData, setLectureData] = useState<ObjectType | null>(null);
 
   const [click, setClick] = useState<boolean>(false);
 
   const tableHeader = [
-    { title: '상태', width: 1.5 },
-    { title: '학년', width: 1 },
     { title: '강의명', width: 5 },
+    { title: '담당 교수', width: 2 },
     { title: '강의실', width: 2 },
     { title: '강의 시간', width: 2.5 },
     { title: '학점', width: 1 },
     { title: '정원', width: 1 },
     { title: '상세보기', width: 1.5 },
+    { title: '수강 신청', width: 1.5 },
   ];
 
-  const openingProcedures = status;
   const LectureName = lectureName;
 
-  const queries = { openingProcedures, LectureName };
-  const url = '/api/professor/lecture/list';
+  const queries = { LectureName };
+  const url = '/api/student/lecturelist';
 
   const { data, pending, error } = useQuerySearch(url, click);
 
@@ -44,17 +36,6 @@ const Register = () => {
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <Dropdown
-          length="short"
-          placeholder="상태"
-          data={[
-            { id: 1, title: '개설 대기' },
-            { id: 2, title: '개설 승인' },
-          ]}
-          value={status}
-          setValue={setStatus}
-          reset
-        />
         <Input
           length="long"
           type="text"
@@ -64,7 +45,7 @@ const Register = () => {
           setValue={e => setLectureName(e.target.value)}
         />
       </SearchBar>
-      <ButtonBar value="개설 신청" onClick={() => navigate('apply')} />
+      <div style={{ height: 95 }} />
       <Table
         header={tableHeader}
         data={lectureList}
@@ -76,16 +57,13 @@ const Register = () => {
         {lectureList?.map(item => {
           return (
             <div key={item.ilecture}>
-              <div>
-                {(item.openingProcedures === 1 && '개설 대기') ||
-                  (item.openingProcedures === 2 && '개설 승인')}
-              </div>
-              <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
+              <div>{item.professorName}</div>
               <div>{`${item.buildingName} ${item.lectureRoomName}호`}</div>
-              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime} ~ ${
-                item.lectureEndTime
-              }`}</div>
+              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime.slice(
+                0,
+                -3
+              )} ~ ${item.lectureEndTime.slice(0, -3)}`}</div>
               <div>{item.score}</div>
               <div>{item.lectureMaxPeople}</div>
               <div>
@@ -95,6 +73,14 @@ const Register = () => {
                   color="gray"
                   onClick={() => setLectureData(item)}
                 ></CommonButton>
+              </div>
+              <div>
+                <CommonButton
+                  value="수강 신청"
+                  btnType="table"
+                  color="blue"
+                  onClick={() => alert('dd')}
+                />
               </div>
             </div>
           );
