@@ -6,7 +6,7 @@ import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faX } from '@fortawesome/free-solid-svg-icons';
-import { postBoard } from '../../apis/fetch';
+import { postBoard } from '../../apis/board';
 // toast ui
 import { Editor } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';

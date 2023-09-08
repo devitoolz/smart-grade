@@ -6,7 +6,7 @@ import CommonButton from '../../components/CommonButton';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import Input from '../../components/Input';
 import CommonModal from '../../components/CommonModal';
-import { putBoard } from '../../apis/fetch';
+import { putBoard } from '../../apis/board';
 import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 import { Editor, Viewer } from '@toast-ui/react-editor';
 import Dropdown from '../../components/Dropdown';
