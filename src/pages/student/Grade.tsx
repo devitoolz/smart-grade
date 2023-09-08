@@ -61,7 +61,7 @@ const Grade = () => {
   }, []);
   const putObjectionWait = async () => {
     const objectionUrl = `/api/student/objection?&ilectureStudent=${ilectureStudent}`;
-    await putObjection(objectionUrl);
+    await putObjection(objectionUrl, setData);
   };
 
   return (
@@ -101,8 +101,6 @@ const Grade = () => {
                     btnType="table"
                     color="blue"
                     onClick={() => {
-                      console.log('필요 데이터 : 학번, ilectureStudent');
-                      console.log(item.ilectureStudent);
                       setIlectureStudent(item.ilectureStudent);
                       setDemur(true);
                     }}
