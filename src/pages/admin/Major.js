@@ -397,13 +397,7 @@ const Major = () => {
                 type="text"
                 placeholder="전공명"
                 value={newMajorName}
-                setValue={e => {
-                  const inputText = e.target.value;
-                  const regex = /^[가-힣a-zA-Z\s]*$/; // 한글, 영어, 공백만 허용하는 정규 표현식
-                  if (regex.test(inputText)) {
-                    setNewMajorName(inputText);
-                  }
-                }}
+                setValue={e => setNewMajorName(e.target.value)}
                 reset={setNewMajorName}
               />
             </div>
@@ -425,11 +419,22 @@ const Major = () => {
                 type="text"
                 length="short"
                 value={newGraduationScore}
+                // setValue={e => {
+                //   const value = e.target.value;
+                //   if (/^\d{0,3}$/.test(value)) {
+                //     const score = parseInt(value);
+                //     if (score >= 110 && score <= 135) {
+                //       setNewGraduationScore(value);
+                //     }
+                //   }
+                // }}
                 setValue={e => {
                   const value = e.target.value;
-                  // 정규 표현식으로 3자리 숫자만 입력가능
+                  // 정규 표현식으로  3자리 숫자만 허용
                   if (/^\d{0,3}$/.test(value)) {
                     setNewGraduationScore(value);
+                  } else {
+                    setNewGraduationScore('');
                   }
                 }}
                 maxLength={3}
@@ -456,16 +461,21 @@ const Major = () => {
                     length="long"
                     type="text"
                     value={selectMajorName}
+                    // setValue={e => setSelectMajorName(e.target.value)}
                     setValue={e => {
                       const inputValue = e.target.value;
-                      const regex = /^[가-힣a-zA-Z]*$/;
-                      if (regex.test(inputValue)) {
-                        const cursorStart = e.target.selectionStart; // 커서 시작 위치
-                        const cursorEnd = e.target.selectionEnd; // 커서 끝 위치
-                        setSelectMajorName(inputValue);
-                        // 커서 위치를 설정
-                        e.target.setSelectionRange(cursorStart, cursorEnd);
-                      }
+                      let nowT = inputValue; //.replace(/[\s!@#$%^&*()_+{}\[\]:;<>,.?~\\-]/g, '');
+                      nowT = nowT.replace(/[\s!@#$%^&*()_+{}[\]:;<>,.?~\\-]/g, '');
+
+                      // const regex = /^[가-힣a-zA-Z]*$/;
+                      // if (regex.test(inputValue)) {
+                      //   const cursorStart = e.target.selectionStart; // 커서 시작 위치
+                      //   const cursorEnd = e.target.selectionEnd; // 커서 끝 위치
+                      //   // 커서 위치를 설정
+                      //   // e.target.setSelectionRange(cursorStart, cursorEnd);
+                      //   setSelectMajorName(inputValue);
+                      // }
+                      setSelectMajorName(nowT);
                     }}
                   />
                 ) : (
@@ -479,11 +489,14 @@ const Major = () => {
                     type="text"
                     maxLength={3}
                     value={graduationScore}
+                    // setValue={e => setGraduationScore(e.target.value)}
                     setValue={e => {
                       const value = e.target.value;
                       // 정규 표현식으로  3자리 숫자만 허용
                       if (/^\d{0,3}$/.test(value)) {
                         setGraduationScore(value);
+                      } else {
+                        setGraduationScore('');
                       }
                     }}
                   />
