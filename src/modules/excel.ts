@@ -3,6 +3,29 @@ import { ObjectType } from '../types/components';
 import { saveAs } from 'file-saver';
 import React from 'react';
 import { read, utils } from 'xlsx';
+import api from '../apis/api';
+
+const handleExportExcel = async (role: 'professor' | 'student') => {
+  try {
+    const { data, headers } = await api.get(`/api/admin/${role}-file`);
+    const url = window.URL.createObjectURL(new Blob([data]));
+    const link = document.createElement('a');
+    const contentDisposition: string = headers['content-disposition'];
+    let fileName = 'unknown';
+    if (contentDisposition) {
+      const [fileNameMatch] = contentDisposition.split(';').filter(str => str.includes('filename'));
+      if (fileNameMatch) [, fileName] = fileNameMatch.split('=');
+    }
+    link.href = url;
+    link.setAttribute('download', `${fileName}`);
+    link.style.cssText = 'display:none';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  } catch {
+    alert('내보내기에 실패하였습니다.');
+  }
+};
 
 const handleDownloadExcel = async (
   role: 'professor' | 'student',
@@ -182,4 +205,4 @@ const handleUploadExcel = (
   }
 };
 
-export { handleDownloadExcel, handleUploadExcel };
+export { handleExportExcel, handleDownloadExcel, handleUploadExcel };

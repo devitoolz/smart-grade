@@ -10,7 +10,7 @@ import CommonButton from '../../components/CommonButton';
 import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
 import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
-import { handleDownloadExcel, handleUploadExcel } from '../../modules/excel';
+import { handleDownloadExcel, handleExportExcel, handleUploadExcel } from '../../modules/excel';
 import ExcelData from '../../components/ExcelData';
 
 const Student = () => {
@@ -105,7 +105,7 @@ const Student = () => {
       </SearchBar>
       <ButtonBarLayout between>
         <div>
-          {/* <Button onClick={() => handleExportExcel('student')}>엑셀 내보내기</Button> */}
+          <Button onClick={() => handleExportExcel('student')}>엑셀 내보내기</Button>
           <Button
             onClick={() =>
               handleDownloadExcel('student', '학생 계정 등록', headerWidths, allMajorList)

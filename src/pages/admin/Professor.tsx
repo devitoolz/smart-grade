@@ -11,7 +11,7 @@ import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
 import { Button, ButtonBarLayout } from '../../styles/ButtonBarStyle';
 import ExcelData from '../../components/ExcelData';
-import { handleDownloadExcel, handleUploadExcel } from '../../modules/excel';
+import { handleDownloadExcel, handleExportExcel, handleUploadExcel } from '../../modules/excel';
 
 const Professor = () => {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ const Professor = () => {
       </SearchBar>
       <ButtonBarLayout between>
         <div>
-          {/* <Button onClick={() => handleExportExcel('professor')}>엑셀 내보내기</Button> */}
+          <Button onClick={() => handleExportExcel('professor')}>엑셀 내보내기</Button>
           <Button
             onClick={() =>
               handleDownloadExcel('professor', '교수 계정 등록', headerWidths, allMajorList)
