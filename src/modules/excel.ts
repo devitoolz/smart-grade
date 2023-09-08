@@ -7,18 +7,20 @@ import api from '../apis/api';
 
 const handleExportExcel = async (role: 'professor' | 'student') => {
   try {
-    const { data, headers } = await api.get(`/api/admin/${role}-file`);
-    const url = window.URL.createObjectURL(new Blob([data]));
+    const { data, headers } = await api.get(`/api/admin/${role}-file`, { responseType: 'blob' });
+    const url = URL.createObjectURL(new Blob([data]));
     const link = document.createElement('a');
-    const contentDisposition: string = headers['content-disposition'];
+    const contentDisposition = headers['content-disposition'];
     let fileName = 'unknown';
+
     if (contentDisposition) {
-      const [fileNameMatch] = contentDisposition.split(';').filter(str => str.includes('filename'));
-      if (fileNameMatch) [, fileName] = fileNameMatch.split('=');
+      fileName = decodeURI(
+        contentDisposition.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/)[1].replace(/['"]/g, '')
+      );
     }
     link.href = url;
-    link.setAttribute('download', `${fileName}`);
-    link.style.cssText = 'display:none';
+    link.style.display = 'none';
+    link.download = fileName;
     document.body.appendChild(link);
     link.click();
     link.remove();
