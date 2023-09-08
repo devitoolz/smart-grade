@@ -340,6 +340,7 @@ export const CommonBtnArea = styled.div<CommonBtnProps>`
 
 export const DemurTable = styled.div`
   width: 100%;
+  padding-top: 20px;
   .table {
     width: 100%;
     border-top: 2px solid var(--table-outline-color);

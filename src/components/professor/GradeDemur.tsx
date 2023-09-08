@@ -3,7 +3,6 @@ import CommonModal from '../CommonModal';
 import { GradeDemurProps } from '../../types/temp';
 import { DemurTable } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import { useLocation } from 'react-router-dom';
 import api from '../../apis/api';
 
 const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
@@ -30,17 +29,23 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
   useEffect(() => {
     getLectureList();
   }, []);
+  // XXX api 연동 - 파일 분리
+  const putObjection = async (ilectureStudent: number) => {
+    const objectionUrl = `/api/professor/grade/objection?ilecture=${lectureId}&ilectureStudent=${ilectureStudent}&newObjection=2`;
+    try {
+      const result = await api.put(objectionUrl);
+      console.log(result);
+      alert('성공');
+      setDemur(false);
+    } catch (err) {
+      console.log(err);
+      alert('실패');
+    }
+  };
 
   return (
     <>
       <CommonModal setDisplay={setDemur} modalSize="big" modalTitle="이의 신청 목록">
-        <mark>
-          <q>
-            <span>강의 {lectureId}번 : </span>
-            <span>해당 과목의 이의신청 내역 확인 가능</span>
-          </q>
-        </mark>
-        <button onClick={() => alert('click')}>click</button>
         <DemurTable>
           <div className="table">
             <div className="table-head">
@@ -50,19 +55,11 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
             </div>
             <div className="table-body">
               {tableBody?.map((item: any) => {
-                {
-                  /**
-              grade: "A+"
-              studentName: "Allard"
-              studentNum: 23300001
-              totalScore: 100
-              */
-                }
                 return (
                   <div className="table-body-item" key={item.studentNum}>
                     <div>{item.studentNum}</div>
                     <div>{item.studentName}</div>
-                    <div>학생 소속 학과</div>
+                    <div>{item.majorName}</div>
                     <div>{item.totalScore}</div>
                     <div>{item.grade}</div>
                     <div>
@@ -70,12 +67,30 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
                         value="처리하기"
                         btnType="table"
                         color="blue"
-                        onClick={() => alert(item.studentNum)}
+                        onClick={() => putObjection(item.ilectureStudent)}
                       />
                     </div>
                   </div>
                 );
               })}
+              {tableBody?.length < 10 ? (
+                <>
+                  {Array(10 - tableBody?.length)
+                    .fill('')
+                    .map((_, idx) => (
+                      <div className="table-body-item" key={idx}>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                      </div>
+                    ))}
+                </>
+              ) : (
+                'null'
+              )}
             </div>
           </div>
         </DemurTable>

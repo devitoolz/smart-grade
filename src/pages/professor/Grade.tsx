@@ -6,14 +6,17 @@ import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
 import api from '../../apis/api';
+import { dayData } from '../../pages/professor/RegisterApply';
 
 const Grade = () => {
   const navigate = useNavigate();
   const tableHeader = [
+    { title: '연도', width: 1 },
+    { title: '학기', width: 1 },
     { title: '학년제한', width: 1 },
-    { title: '강의명', width: 3 },
-    { title: '강의시간', width: 2 },
-    { title: '강의실', width: 1 },
+    { title: '강의명', width: 2.5 },
+    { title: '강의시간', width: 1.5 },
+    { title: '강의실', width: 1.2 },
     { title: '학점', width: 1 },
     { title: '인원', width: 1 },
     { title: '비고', width: 2 },
@@ -21,7 +24,7 @@ const Grade = () => {
   // 임시데이터
   // const data = Array(5).fill('');
   const [data, setData] = useState([]);
-  const url = `/api/professor/lecture-List?iprofessor=100008&openingProcedures=3`;
+  const url = `/api/professor/lecture-list?openingProcedures=3`;
   const getLectureList = async () => {
     try {
       const { data } = await api.get(url);
@@ -58,12 +61,20 @@ const Grade = () => {
         {data?.map((item: any, idx) => {
           return (
             <div key={idx}>
+              <div>{item.year}</div>
+              <div>{item.isemester}</div>
               <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
-              <div>14:00~16:00 (금)</div>
-              <div>그린관 502호</div>
+              <div>
+                {item.lectureStrTime}~{item.lectureEndTime} ({dayData[item.dayWeek].charAt(0)})
+              </div>
+              <div>
+                {item.buildingName} {item.lectureRoomName}호
+              </div>
               <div>{item.score}</div>
-              <div>{item.lectureMaxPeople}</div>
+              <div>
+                {item.studentCount}/{item.lectureMaxPeople}
+              </div>
               <div>
                 <CommonButton
                   value="이의확인"

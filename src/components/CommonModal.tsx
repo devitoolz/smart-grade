@@ -10,6 +10,7 @@ const CommonModal = ({
   modalSize,
   modalTitle,
   children,
+  hiddenFooter,
   handleModalOk,
   handleModalCancel,
 }: CommonModalProps) => {
@@ -36,26 +37,28 @@ const CommonModal = ({
 
           <div className="modal-contents">{children}</div>
 
-          <div className="modal-footer">
-            <CommonButton
-              value="확인"
-              onClick={() => {
-                handleModalOk?.();
-                setDisplay(false);
-              }}
-              btnType="modal"
-              disabled={modalSize === 'big' ? true : false}
-            />
-            <CommonButton
-              value="취소"
-              onClick={() => {
-                handleModalCancel?.();
-                setDisplay(false);
-              }}
-              btnType="modal"
-              disabled={modalSize === 'big' ? true : false}
-            />
-          </div>
+          {!hiddenFooter ? (
+            <div className="modal-footer">
+              <CommonButton
+                value="확인"
+                onClick={() => {
+                  handleModalOk?.();
+                  setDisplay(false);
+                }}
+                btnType="modal"
+                disabled={modalSize === 'big' ? true : false}
+              />
+              <CommonButton
+                value="취소"
+                onClick={() => {
+                  handleModalCancel?.();
+                  setDisplay(false);
+                }}
+                btnType="modal"
+                disabled={modalSize === 'big' ? true : false}
+              />
+            </div>
+          ) : null}
         </div>
       </ModalStyle>
     </>

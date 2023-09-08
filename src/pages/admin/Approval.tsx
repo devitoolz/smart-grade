@@ -9,6 +9,7 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import { ObjectType } from '../../types/components';
+import { dayData } from '../professor/RegisterApply';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);
@@ -146,7 +147,7 @@ const Approval = () => {
                 {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
-                {item.strTime}~{item.endTime}
+                {item.strTime}~{item.endTime} ({dayData[item.dayWeek].charAt(0)})
               </div>
               <div>
                 {item.currentPeople}/{item.maxPeople}

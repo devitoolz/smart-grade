@@ -90,7 +90,7 @@ const Grade = () => {
         header={tableHeader}
         data={(data as ObjectType)?.voList || Array(10).fill('')}
         hasPage={true}
-        maxPage={(data as ObjectType)?.paging.maxPage}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
@@ -166,16 +166,6 @@ const Grade = () => {
                 <div>{studentDetail.phone}</div>
               </Row>
             </FormTable>
-            <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-              <CommonButton
-                btnType="modal"
-                value="상세정보"
-                onClick={() => {
-                  setDisplay(false);
-                  navigate(`/admin/user/students/${(data as ObjectType)?.student.studentNum}`);
-                }}
-              />
-            </div>
           </StudentInfo>
         </CommonModal>
       )}
