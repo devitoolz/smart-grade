@@ -6,7 +6,7 @@ import { FormTable, Row } from '../styles/UserStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterDetailProps } from '../types/components';
-import { dayData } from '../pages/professor/RegisterApply';
+import { dayData } from '../modules/timetable';
 
 const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) => {
   const handleCancel = () => {

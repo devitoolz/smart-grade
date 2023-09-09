@@ -13,19 +13,11 @@ import Input from '../../components/Input';
 import RegisterTimetable from '../../components/professor/RegisterTimetable';
 import { ObjectType } from '../../types/components';
 import RegisterScore from '../../components/professor/RegisterScore';
-import { DayData } from '../../types/pages';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { LectureRoomData } from '../../types/apis';
 import api from '../../apis/api';
-
-export const dayData: DayData = {
-  1: '월요일',
-  2: '화요일',
-  3: '수요일',
-  4: '목요일',
-  5: '금요일',
-};
+import { dayData } from '../../modules/timetable';
 
 const RegisterApply = () => {
   const [openRegisterTimetable, setOpenRegisterTimetable] = useState<boolean>(false);

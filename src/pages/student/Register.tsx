@@ -6,7 +6,8 @@ import CommonButton from '../../components/CommonButton';
 import Table from '../../components/Table';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
-import { dayData } from '../professor/RegisterApply';
+import { dayData } from '../../modules/timetable';
+
 const Register = () => {
   const [lectureName, setLectureName] = useState<string>('');
   const [lectureData, setLectureData] = useState<ObjectType | null>(null);

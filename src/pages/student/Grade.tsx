@@ -5,9 +5,9 @@ import SearchBar from '../../components/SearchBar';
 import { NoDatas } from '../../styles/MyStyleCSS';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
-import { dayData } from '../../pages/professor/RegisterApply';
 import api from '../../apis/api';
 import { getLectureList, putObjection } from '../../apis/studentGrade';
+import { dayData } from '../../modules/timetable';
 
 const Grade = () => {
   const tableHeader = [

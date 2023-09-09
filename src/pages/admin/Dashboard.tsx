@@ -1,6 +1,6 @@
 import React from 'react';
 import { ResponsiveLine } from '@nivo/line';
-import { DashboardLayout } from '../../styles/DashboardStyle';
+import { DashboardContent, DashboardLayout } from '../../styles/DashboardStyle';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
@@ -76,7 +76,7 @@ const Dashboard = () => {
 
   return (
     <DashboardLayout>
-      <div className="chart">
+      <DashboardContent className="chart">
         <div className="title">
           <span>연도별 입학생 추이</span>
         </div>
@@ -130,10 +130,10 @@ const Dashboard = () => {
           useMesh={true}
           legends={[]}
         />
-      </div>
-      <div>
+      </DashboardContent>
+      <DashboardContent>
         <div className="title">
-          <span>최근 교수 계정</span>
+          <span>신규 교수 계정</span>
           <button onClick={() => navigate('/admin/user/professor')}>상세보기</button>
         </div>
         <div>
@@ -156,10 +156,10 @@ const Dashboard = () => {
             })}
           </Table>
         </div>
-      </div>
-      <div>
+      </DashboardContent>
+      <DashboardContent>
         <div className="title">
-          <span>최근 학생 계정</span>
+          <span>신규 학생 계정</span>
           <button onClick={() => navigate('/admin/user/students')}>상세보기</button>
         </div>
         <div>
@@ -181,7 +181,7 @@ const Dashboard = () => {
             })}
           </Table>
         </div>
-      </div>
+      </DashboardContent>
     </DashboardLayout>
   );
 };

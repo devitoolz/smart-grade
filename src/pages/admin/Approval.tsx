@@ -9,7 +9,7 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import { ObjectType } from '../../types/components';
-import { dayData } from '../professor/RegisterApply';
+import { dayData } from '../../modules/timetable';
 
 const Approval = () => {
   const [display, setDisplay] = useState(false);

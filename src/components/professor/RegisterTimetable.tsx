@@ -1,18 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ModalStyle } from '../../styles/MyStyleCSS';
 import CommonButton from '../CommonButton';
-import {
-  LectureTimetableData,
-  ObjectType,
-  RegisterTimetableProps,
-  TimetableData,
-} from '../../types/components';
+import { LectureTimetableData, ObjectType, RegisterTimetableProps } from '../../types/components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { RegisterTimetableModal } from '../../styles/RegisterStyle';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { PulseLoader } from 'react-spinners';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import { dayData, numberToString, stringToNumber, timeData } from '../../modules/timetable';
 
 const RegisterTimetable = ({
   setOpenRegisterTimetable,
@@ -25,30 +20,6 @@ const RegisterTimetable = ({
   const [selectedTime, setSelectedTime] = useState<Array<number>>([]);
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
   const [usedTime, setUsedTime] = useState<Array<number>>([]);
-
-  const timeData: TimetableData = {
-    0: 9,
-    1: 10,
-    2: 11,
-    3: 12,
-    4: 13,
-    5: 14,
-    6: 15,
-    7: 16,
-    8: 17,
-  };
-
-  const numberToString = (number: number) => {
-    if (number < 10) {
-      return `0${number}:00`;
-    } else {
-      return `${number}:00`;
-    }
-  };
-
-  const stringToNumber = (string: string) => {
-    return parseInt(string.slice(0, 2));
-  };
 
   const url = `/api/professor/lecture/room?ilectureRoom=${lectureRoom}`;
 

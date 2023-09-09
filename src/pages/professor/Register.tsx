@@ -8,8 +8,8 @@ import Dropdown from '../../components/Dropdown';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import CommonButton from '../../components/CommonButton';
-import { dayData } from './RegisterApply';
 import RegisterDetail from '../../components/RegisterDetail';
+import { dayData } from '../../modules/timetable';
 
 const Register = () => {
   const navigate = useNavigate();
