@@ -3,7 +3,7 @@ import { DashboardContent, DashboardLayout, DashboardTimetable } from '../../sty
 import { PulseLoader } from 'react-spinners';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
-import { numberToString, stringToNumber, timeData } from '../../modules/timetable';
+import { colorData, numberToString, stringToNumber, timeData } from '../../modules/timetable';
 import { useNavigate } from 'react-router-dom';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
@@ -25,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
     let temp: ObjectType = {};
 
-    timetable.data?.map((item: LectureTimetableData) => {
+    timetable.data?.map((item: LectureTimetableData, idx: number) => {
       const start = stringToNumber(item.startTime);
       const end = stringToNumber(item.endTime);
       const startKey = parseInt(
@@ -33,12 +33,14 @@ const Dashboard = () => {
       );
       for (let i = 0; i < end - start; i++) {
         const index = 5 * startKey + item.dayWeek - 1 + 5 * i;
-        temp[index] = item.lectureName;
+        temp[index] = { lectureName: item.lectureName, idx };
       }
     });
 
     setTime(temp);
   }, [timetable.data]);
+
+  console.log(time);
 
   const importantNotice = useQuerySearch('/api/board');
   const importantNoticeList: Array<ObjectType> = importantNotice.data as Array<ObjectType>;
@@ -80,7 +82,11 @@ const Dashboard = () => {
                   {Array(45)
                     .fill('')
                     .map((_, index) => {
-                      return <div key={index}>{time?.[index]}</div>;
+                      return (
+                        <div key={index} style={{ background: colorData[time?.[index]?.idx % 9] }}>
+                          {time?.[index]?.lectureName}
+                        </div>
+                      );
                     })}
                   {timetable.pending && (
                     <div className="timetable-loading">

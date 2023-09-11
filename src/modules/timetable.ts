@@ -21,6 +21,18 @@ const timeData: TimetableData = {
   8: 17,
 };
 
+const colorData = [
+  '#ffadad',
+  '#ffd6a5',
+  '#fdffb6',
+  '#caffbf',
+  '#9bf6ff',
+  '#a0c4ff',
+  '#bdb2ff',
+  '#ffc6ff',
+  '#fffffc',
+];
+
 const numberToString = (number: number) => {
   if (number < 10) {
     return `0${number}:00`;
@@ -33,4 +45,4 @@ const stringToNumber = (string: string) => {
   return parseInt(string.slice(0, 2));
 };
 
-export { dayData, timeData, numberToString, stringToNumber };
+export { dayData, timeData, colorData, numberToString, stringToNumber };
