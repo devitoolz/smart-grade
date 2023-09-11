@@ -19,7 +19,16 @@ import {
 import { PulseLoader } from 'react-spinners';
 import { TableProps } from '../types/components';
 
-const Table = ({ header, data, children, hasPage, maxPage, pending, error }: TableProps) => {
+const Table = ({
+  header,
+  data,
+  children,
+  hasPage,
+  maxPage,
+  pending,
+  error,
+  dashboard,
+}: TableProps) => {
   const width = header?.map(item => item.width + 'fr').join(' ');
 
   const [query, setQuery] = useSearchParams();
@@ -71,7 +80,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }: Tab
   };
 
   return (
-    <TableLayout>
+    <TableLayout dashboard={dashboard}>
       <TableContainer>
         {header ? (
           <TableHead template={width}>
@@ -86,7 +95,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }: Tab
               <PulseLoader color="#47b5ff" margin={6} size={12} speedMultiplier={0.7} />
               <span>로딩 중...</span>
             </div>
-            {Array(10)
+            {Array(dashboard ? 9 : 10)
               .fill('')
               .map((_, index) => (
                 <div key={index}>
@@ -102,7 +111,7 @@ const Table = ({ header, data, children, hasPage, maxPage, pending, error }: Tab
           <>
             <TableBody template={width}>
               {children}
-              {Array(10 - data.length)
+              {Array((dashboard ? 9 : 10) - data.length)
                 .fill('')
                 .map((_, index) => (
                   <div key={index}>

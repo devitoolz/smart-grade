@@ -262,7 +262,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={data.}
+            data={data.LectureList.year}
             value={semester}
             setValue={setSemester}
             reset
