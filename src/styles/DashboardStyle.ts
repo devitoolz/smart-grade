@@ -5,7 +5,7 @@ const DashboardLayout = styled.div`
   height: 100%;
   padding: 20px;
   display: grid;
-  grid-template: 445.5px auto / auto 1fr;
+  grid-template: auto auto / auto 1fr;
   gap: 20px;
   &.admin {
     grid-template: auto auto / 1fr 1fr;
@@ -86,7 +86,7 @@ const DashboardTimetable = styled.div`
       display: grid;
       width: 120px;
       font-size: 16px;
-      grid-template-rows: repeat(9, 81.16px);
+      grid-template-rows: repeat(9, 80.4px);
       border-right: 2px solid var(--table-outline-color);
       > div {
         display: flex;
@@ -106,7 +106,7 @@ const DashboardTimetable = styled.div`
     > div.timetable-lectures {
       display: grid;
       width: calc(100% - 120px);
-      grid-template: repeat(9, 81.16px) / repeat(5, 100px);
+      grid-template: repeat(9, 80.4px) / repeat(5, 100px);
       position: relative;
       > div {
         display: flex;

@@ -87,7 +87,7 @@ export interface TableProps {
   maxPage?: number;
   pending?: boolean;
   error?: boolean;
-  dashboard?: boolean;
+  dashboard?: number;
 }
 
 export interface FindPasswordProps {

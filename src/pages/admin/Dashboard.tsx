@@ -142,7 +142,7 @@ const Dashboard = () => {
             data={professorList}
             pending={professor.pending}
             error={professor.error}
-            dashboard
+            dashboard={9}
           >
             {professorList?.map(item => {
               return (
@@ -168,7 +168,7 @@ const Dashboard = () => {
             data={studentList}
             pending={student.pending}
             error={student.error}
-            dashboard
+            dashboard={9}
           >
             {studentList?.map(item => {
               return (

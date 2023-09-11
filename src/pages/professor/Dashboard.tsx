@@ -21,11 +21,11 @@ const Dashboard = () => {
   ];
 
   const objectionTableHeader = [
-    { title: '전공', width: 1 },
-    { title: '학번', width: 1 },
-    { title: '이름', width: 1 },
-    { title: '강의명', width: 1 },
-    { title: '이의 신청일', width: 1 },
+    { title: '전공', width: 4 },
+    { title: '학번', width: 2 },
+    { title: '이름', width: 2 },
+    { title: '강의명', width: 4 },
+    { title: '이의 신청일', width: 2 },
   ];
 
   const timetable = useQuerySearch('/api/professor/schedule');
@@ -50,7 +50,7 @@ const Dashboard = () => {
 
   const importantNotice = useQuerySearch('/api/board');
   const importantNoticeList: Array<ObjectType> = importantNotice.data as Array<ObjectType>;
-  const notice = useQuerySearch('/api/board/keyword?size=9');
+  const notice = useQuerySearch('/api/board/keyword?size=8');
   const noticeList: Array<ObjectType> = (notice.data as ObjectType)?.list;
 
   const totalNoticeList = importantNoticeList &&
@@ -132,40 +132,43 @@ const Dashboard = () => {
             data={totalNoticeList}
             pending={importantNotice.pending || notice.pending}
             error={importantNotice.error || notice.error}
-            dashboard
+            dashboard={8}
           >
-            {totalNoticeList?.map(item => {
-              return (
-                <div key={item.iboard}>
-                  <div>
-                    {item.importance ? (
-                      <span style={{ fontWeight: '700' }}>중요</span>
-                    ) : (
-                      item.iboard
-                    )}
-                  </div>
-                  <div onClick={() => navigate(`/professor/notice/${item.iboard}`)}>
-                    {item.title}
-                  </div>
-                  <div>{item.createdAt.split('T')[0]}</div>
-                  <div>{item.boardView}</div>
+            {totalNoticeList?.map(item => (
+              <div key={item.iboard}>
+                <div>
+                  {item.importance ? <span style={{ fontWeight: '700' }}>중요</span> : item.iboard}
                 </div>
-              );
-            })}
+                <div onClick={() => navigate(`/professor/notice/${item.iboard}`)}>{item.title}</div>
+                <div>{item.createdAt.split('T')[0]}</div>
+                <div>{item.boardView}</div>
+              </div>
+            ))}
           </Table>
         </div>
       </DashboardContent>
       <DashboardContent>
-        <div className="title">이의 신청</div>
+        <div className="title">
+          <span>이의 신청</span>
+          <button onClick={() => navigate('/professor/grade')}>더보기</button>
+        </div>
         <div>
           <Table
             header={objectionTableHeader}
             data={objectionList}
             pending={objection.pending}
             error={objection.error}
-            dashboard
+            dashboard={8}
           >
-            {/* {objectionList.map(item => {})} */}
+            {objectionList?.map((item, index) => (
+              <div key={index}>
+                <div>{item.majorName}</div>
+                <div>{item.studentNum}</div>
+                <div>{item.studentName}</div>
+                <div>{item.lectureName}</div>
+                <div>{item.correctionAt}</div>
+              </div>
+            ))}
           </Table>
         </div>
       </DashboardContent>
