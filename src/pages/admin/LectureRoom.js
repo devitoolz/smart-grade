@@ -43,7 +43,7 @@ const LectureRoom = () => {
   const [showModal, setShowModal] = useState(false);
 
   //강의실추가 버튼 클릭시 함수실행
-  const modalOpen = () => {
+  const PlueModalOpen = () => {
     setShowModal(true);
   };
 
@@ -102,7 +102,11 @@ const LectureRoom = () => {
       maxCapacity !== ''
     ) {
       await postBuildinglist(lectureRoomName, buildingNameData, maxCapacity);
-
+      console.log('되나?', setIlectureRoom);
+      setIlectureRoom();
+      setLectureRoomName();
+      setBuildingName();
+      setMaxCapacity();
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
@@ -153,7 +157,7 @@ const LectureRoom = () => {
           search={true}
         />
       </SearchBar>
-      <CommonButton btnType="page" value="강의실 추가" onClick={modalOpen} />
+      <CommonButton btnType="page" value="강의실 추가" onClick={PlueModalOpen} />
 
       {/* modal이 활성화되면 modal을 띄워라 아니면 null  */}
       {showModal === true ? (

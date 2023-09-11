@@ -1,5 +1,6 @@
-import React from 'react';
 import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBook } from '@fortawesome/free-solid-svg-icons';
 import CommonButton from '../../components/CommonButton';
 import CommonModal from '../../components/CommonModal';
 import Dropdown from '../../components/Dropdown';
@@ -7,7 +8,6 @@ import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import {
-  ModalWrap,
   ProfessorCaution,
   ProfessorLectureDetail,
   ProfessorLectureBtn,
@@ -19,7 +19,8 @@ const Lecture = () => {
   const [semester, setSemester] = useState('');
   //강의명 state
   const [lectureName, setLectureName] = useState('');
-
+  //책 사진
+  const [bookPic] = useState('');
   //검색 시 사용할 쿼리스트링
   const queries = { semester, lectureName };
 
@@ -199,70 +200,75 @@ const Lecture = () => {
   return (
     <div>
       {display === true ? (
-        <ModalWrap>
-          <CommonModal
-            setDisplay={setDisplay}
-            modalSize="big"
-            modalTitle="강의 상세정보"
-            handleModalOk={handleModalOk}
-            handleModalCancel={handleModalCancel}
-          >
-            <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
-            <ProfessorCaution>
-              <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
-              <p className="callNum">전산실 전화번호: 053-000-0000</p>
-            </ProfessorCaution>
-            <ProfessorLectureDetail>
-              <div className="innerContainer">
-                <div className="lectureName">강의명</div>
-                <div className="inputLectureName">강의명들어갈자리</div>
-                <div className="grade">학년</div>
-                <div className="inputGrade">학년들어갈자리</div>
-                <div className="semester">학기</div>
-                <div className="inputSemester">학기들어갈자리</div>
-                <div className="score">학점</div>
-                <div className="inputScore">학점들어갈자리</div>
-                <div className="lectureHour">강의시간</div>
-                <div className="inputLectureHour">09:00~10:00 수,목 </div>
-                <div className="capacity">정원</div>
-                <div className="inputCapacity">현재인원/최대인원</div>
-                <div className="bookName">교재명</div>
-                <div className="inputBookName">교재명들어갈자리</div>
-                <div className="LectureInfo">강의설명</div>
-                <div className="inputLectureInfo">
-                  최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
-                  기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
-                  응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
-                  클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
-                  실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한
-                  연구 분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을
-                  쌓는데 기여할 것이다.
-                </div>
+        <CommonModal
+          setDisplay={setDisplay}
+          modalSize="big"
+          modalTitle="강의 상세정보"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
+          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+          <ProfessorCaution>
+            <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
+            <p className="callNum">전산실 전화번호: 053-000-0000</p>
+          </ProfessorCaution>
+          <ProfessorLectureDetail>
+            <div className="innerContainer">
+              <div className="lectureName">강의명</div>
+              <div className="inputLectureName">강의명들어갈자리</div>
+              <div className="grade">학년</div>
+              <div className="inputGrade">학년들어갈자리</div>
+              <div className="semester">학기</div>
+              <div className="inputSemester">학기들어갈자리</div>
+              <div className="score">학점</div>
+              <div className="inputScore">학점들어갈자리</div>
+              <div className="lectureHour">강의시간</div>
+              <div className="inputLectureHour">09:00~10:00 수,목 </div>
+              <div className="capacity">정원</div>
+              <div className="inputCapacity">현재인원/최대인원</div>
+              <div className="bookName">교재명</div>
+              <div className="inputBookName">교재명들어갈자리</div>
+              <div className="LectureInfo">강의설명</div>
+              <div className="inputLectureInfo">
+                최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
+                기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
+                응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
+                클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
+                실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한 연구
+                분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을 쌓는데
+                기여할 것이다.
+              </div>
 
-                <div className="bookPic">교재사진</div>
-                <div className="inputBookPic">
-                  <div>
+              <div className="bookPic">교재사진</div>
+              <div className="inputBookPic">
+                <div>
+                  {bookPic === false ? (
                     <img
                       src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
                       alt="교재 이미지"
                     />
-                  </div>
+                  ) : (
+                    <div className="icon">
+                      <FontAwesomeIcon icon={faBook} className="fa-4x" />
+                      <p>교재가 없습니다.</p>
+                    </div>
+                  )}
                 </div>
               </div>
-            </ProfessorLectureDetail>
+            </div>
+          </ProfessorLectureDetail>
 
-            <ProfessorLectureBtn>
-              <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-            </ProfessorLectureBtn>
-          </CommonModal>
-        </ModalWrap>
+          <ProfessorLectureBtn>
+            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+          </ProfessorLectureBtn>
+        </CommonModal>
       ) : null}
       <div style={{ marginBottom: '94.41px' }}>
         <SearchBar queries={queries} setPage={true} setClick={setClick}>
           <Dropdown
             length="short"
             placeholder="연도"
-            data={data.LectureList.year}
+            data={data?.lectureList?.year}
             value={semester}
             setValue={setSemester}
             reset
@@ -285,7 +291,6 @@ const Lecture = () => {
         pending={pending}
         error={error}
       >
-        {' '}
         {data?.lectureList?.map(item => {
           return (
             <div key={item.ilecture}>

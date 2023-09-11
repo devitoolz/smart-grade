@@ -13,15 +13,18 @@ export const ProfessorCaution = styled.div`
   justify-content: flex-end;
   p {
     color: red;
-    margin-left: 10px;
+    line-height: 21px;
+    margin-left: 58px;
   }
+
   .callNum {
-    margin-left: 20px;
+    margin-left: 67px;
   }
 `;
 
 //grid를 이용한 Table
 export const ProfessorLectureDetail = styled.div`
+  font-size: 16px;
   overflow-y: scroll;
   margin-left: 60px;
   margin-top: 15px;
@@ -79,6 +82,7 @@ export const ProfessorLectureDetail = styled.div`
     color: #fff;
   }
   .inputSemester {
+    padding-top: 10px;
     grid-row: 2/3;
     grid-column: 4/5;
     border-bottom: 2px solid var(--form-table-even-border-color);
@@ -159,6 +163,9 @@ export const ProfessorLectureDetail = styled.div`
   }
 
   .LectureInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 5/6;
     grid-column: 1/2;
     /* border-right: 2px solid var(--form-table-odd-border-color); */
@@ -178,6 +185,9 @@ export const ProfessorLectureDetail = styled.div`
   }
 
   .bookPic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 5/6;
     grid-column: 3/4;
     padding: 10px 10px;
@@ -187,24 +197,40 @@ export const ProfessorLectureDetail = styled.div`
   }
   .inputBookPic {
     display: flex;
+    align-items: center;
+    justify-content: center;
     grid-row: 5/6;
     grid-column: 4/5;
-    border-bottom: 2px solid var(--form-table-even-border-color);
+    /* border-bottom: 2px solid var(--form-table-even-border-color); */
     padding: 10px 10px;
     background: var(--form-table-bg-color);
     width: 100%;
     height: 100%;
     /* justify-content: space-around; */
-    justify-content: center;
     div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       width: 207px;
       height: 260px;
-
-      border: 2px solid var(--search-bg-color);
+      border: 1px solid var(--search-bg-color);
       background: var(--form-table-even-border-color);
+
       img {
         object-fit: cover;
         width: 100%;
+      }
+      .icon {
+        display: flex;
+        gap: 10px;
+        svg {
+          font-size: 60px;
+          color: var(--search-ph-color);
+        }
+        p {
+          color: var(--search-ph-color);
+        }
       }
     }
   }
@@ -217,14 +243,10 @@ export const ProfessorLectureBtn = styled.div`
   padding: 40px 10px;
 `;
 
-export const ModalWrap = styled.div`
-  height: '86%';
-  display: flex;
-`;
-
 //학생 lecture//
 
 export const StudentLectureDetail = styled.div`
+  font-size: 16px;
   overflow-y: scroll;
   margin-left: 60px;
   margin-top: 15px;
@@ -282,6 +304,7 @@ export const StudentLectureDetail = styled.div`
     color: #fff;
   }
   .inputSemester {
+    padding-top: 10px;
     grid-row: 2/3;
     grid-column: 4/5;
     border-bottom: 2px solid var(--form-table-even-border-color);
@@ -362,6 +385,9 @@ export const StudentLectureDetail = styled.div`
   }
 
   .LectureInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 5/6;
     grid-column: 1/2;
     /* border-right: 2px solid var(--form-table-odd-border-color); */
@@ -381,6 +407,9 @@ export const StudentLectureDetail = styled.div`
   }
 
   .bookPic {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     grid-row: 5/6;
     grid-column: 3/4;
     padding: 10px 10px;
@@ -392,22 +421,34 @@ export const StudentLectureDetail = styled.div`
     display: flex;
     grid-row: 5/6;
     grid-column: 4/5;
-    border-bottom: 2px solid var(--form-table-even-border-color);
+    /* border-bottom: 2px solid var(--form-table-even-border-color); */
     padding: 10px 10px;
     background: var(--form-table-bg-color);
     width: 100%;
     height: 100%;
-    /* justify-content: space-around; */
+    align-items: center;
     justify-content: center;
     div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 207px;
       height: 260px;
-
-      border: 2px solid var(--search-bg-color);
+      border: 1px solid var(--search-bg-color);
       background: var(--form-table-even-border-color);
       img {
         object-fit: cover;
         width: 100%;
+      }
+      .icon {
+        display: flex;
+        gap: 10px;
+        svg {
+          color: var(--search-ph-color);
+        }
+        p {
+          color: var(--search-ph-color);
+        }
       }
     }
   }
