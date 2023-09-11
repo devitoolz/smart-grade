@@ -4,15 +4,15 @@ import CommonButton from '../../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { getLectureList } from '../../apis/professorGrade';
+import { dayData } from '../../modules/timetable';
 
 const Grade = () => {
   const navigate = useNavigate();
   const tableHeader = [
     { title: '연도', width: 1 },
     { title: '학기', width: 1 },
-    { title: '학년제한', width: 1 },
+    { title: '학년', width: 1 },
     { title: '강의명', width: 2.5 },
     { title: '강의시간', width: 1.5 },
     { title: '강의실', width: 1.2 },

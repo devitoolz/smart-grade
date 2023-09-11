@@ -1,4 +1,4 @@
-import api from "./api";
+import api from './api';
 
 // 게시판 - 게시판 글 올리기
 export const postBoard = async (

@@ -291,7 +291,6 @@ const Lecture = () => {
         pending={pending}
         error={error}
       >
-        {' '}
         {data?.lectureList?.map(item => {
           return (
             <div key={item.ilecture}>

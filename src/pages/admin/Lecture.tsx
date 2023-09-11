@@ -12,10 +12,10 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import api from '../../apis/api';
 import { ObjectType } from '../../types/components';
 import { FormTable, Row } from '../../styles/UserStyle';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import { BookImage, InfoFormTable } from '../../styles/RegisterStyle';
+import { dayData } from '../../modules/timetable';
 
 const Lecture = () => {
   const { pathname, search } = useLocation();
