@@ -25,6 +25,9 @@ const Lecture = () => {
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
+  // 선택된 상세보기 객체
+  const [selectItem, setSelectItem] = useState(null);
+
   //책 사진
   const [bookPic] = useState('');
   //tabel header
@@ -161,10 +164,12 @@ const Lecture = () => {
     setDisplay(false);
   };
   //상세보기 버튼 클릭시
-  const handlePageBtnClick = _idx => {
+  const handlePageBtnClick = _item => {
+    console.log(_item);
+    setSelectItem(_item);
     setDisplay(true);
-    setIndex(_idx);
-    console.log('aaaaaaaaaa');
+    // setIndex(_idx);
+    // console.log('aaaaaaaaaa');
   };
   //api get hook test
   const url = '/api/student/lecture-list';
@@ -173,7 +178,16 @@ const Lecture = () => {
   const [index, setIndex] = useState();
   useEffect(() => {
     console.log(data);
+
+    // const parseData = data?.lectureList.map(item => {
+    //   item.weekWord = weekStr[item.dayWeek];
+    //   return item;
+    // });
+    // console.log('새로 만든 데이터 ', parseData);
+    // setContents(parseData);
+
     setContents(data?.lectureList);
+
     console.log(data?.lectureList);
     console.log(contents);
   }, [data]);
@@ -240,7 +254,8 @@ const Lecture = () => {
                   btnType="table"
                   color="gray"
                   value="상세보기"
-                  onClick={() => handlePageBtnClick(idx)}
+                  // onClick={() => handlePageBtnClick(idx)}
+                  onClick={() => handlePageBtnClick(item)}
                 />
               </div>
             </div>
@@ -261,24 +276,39 @@ const Lecture = () => {
           <StudentLectureDetail>
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
-              <div className="inputLectureName">{contents[index]?.lectureName}</div>
+              <div className="inputLectureName">{selectItem.lectureName}</div>
               <div className="grade">학년</div>
-              <div className="inputGrade">{contents[index]?.grade}</div>
+              <div className="inputGrade">{selectItem.grade}</div>
               <div className="semester">학기</div>
-              <div className="inputSemester">{contents[index]?.isemester}</div>
+              <div className="inputSemester">{selectItem.isemester}</div>
               <div className="score">학점</div>
-              <div className="inputScore">{contents[index]?.score}</div>
+              <div className="inputScore">{selectItem.score}</div>
               <div className="lectureHour">강의시간</div>
               <div className="inputLectureHour">
-                {contents[index]?.lectureStrTime}~{contents[index]?.lectureEndTime}
-                {''} {contents[index]?.dayWeek}
+                {selectItem.lectureStrTime.substr(0, 5)}~{selectItem.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[selectItem.dayWeek].charAt(0)}
               </div>
               <div className="professorName">교수명</div>
-              <div className="inputProfessorName">{contents[index]?.professorName}</div>
+              <div className="inputProfessorName">{selectItem.professorName}</div>
               <div className="bookName">교재명</div>
               <div className="inputBookName"></div>
               <div className="LectureInfo">강의설명</div>
-              <div className="inputLectureInfo"></div>
+              <div className="inputLectureInfo">
+                <div
+                  style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '280px',
+                    overflowX: 'hidden',
+                    overflowY: 'auto',
+                  }}
+                >
+                  {
+                    // '안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.'
+                  }
+                </div>
+              </div>
 
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
