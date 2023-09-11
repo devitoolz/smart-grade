@@ -14,7 +14,7 @@ const StudentsDetail = () => {
   const [studentID, setStudentID] = useState('');
   const [studentName, setStudentName] = useState('');
   const queries = { majorName };
-  const url = `/api/student/detail`;
+  const url = `/api/professor/grade/list`;
   const [click, setClick] = useState(false);
   const { data, pending, error } = useQuerySearch(url, click);
 
@@ -40,8 +40,12 @@ const StudentsDetail = () => {
       width: '0.5',
     },
     {
+      title: '성별',
+      width: '0.5',
+    },
+    {
       title: '전화번호',
-      width: '1.5',
+      width: '1.0',
     },
   ];
   return (
@@ -85,22 +89,23 @@ const StudentsDetail = () => {
         />
       </SearchBar>
 
-      <CommonButton btnType="page" value="상세보기" onClick={pagemove} />
+      <CommonButton btnType="page" value="뒤로가기" onClick={pagemove} />
       <Table
         header={tableHeader}
-        data={data?.profile}
+        data={data?.lecturelist}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.profile?.map(item => {
+        {data?.lecturelist?.map(item => {
           return (
-            <div key={item.studentNum}>
+            <div key={item.ilectureStudent}>
               <div>{item.grade}</div>
               <div>{item.majorName}</div>
               <div>{item.studentNum}</div>
-              <div>{item.name}</div>
+              <div>{item.studentName}</div>
+              <div>{item.gender === 'M' ? '남' : '여'}</div>
               <div>{item.phone}</div>
             </div>
           );

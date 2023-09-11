@@ -22,7 +22,7 @@ export const ProfessorCaution = styled.div`
   }
 `;
 
-//grid를 이용한 Table
+//grid를 이용한 Table professor
 export const ProfessorLectureDetail = styled.div`
   font-size: 16px;
   overflow-y: scroll;
@@ -163,6 +163,7 @@ export const ProfessorLectureDetail = styled.div`
   }
 
   .LectureInfo {
+    overfow-y: scroll;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -399,6 +400,7 @@ export const StudentLectureDetail = styled.div`
     color: #fff;
   }
   .inputLectureInfo {
+    overfow-y: scroll;
     grid-row: 5/6;
     grid-column: 2/3;
     border-bottom: 2px solid var(--form-table-even-border-color);
@@ -419,6 +421,7 @@ export const StudentLectureDetail = styled.div`
   }
   .inputBookPic {
     display: flex;
+
     grid-row: 5/6;
     grid-column: 4/5;
     /* border-bottom: 2px solid var(--form-table-even-border-color); */

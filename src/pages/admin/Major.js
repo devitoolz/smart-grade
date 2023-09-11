@@ -96,9 +96,6 @@ const Major = () => {
       // 전공명 앞뒤 공백 제거하기
       const tempStr = selectMajorName.trim();
 
-      // 학점 공란일때 처리 필요합니다.
-      const tempScore = parseInt(graduationScore);
-
       //전공명 또는 졸업학점을 변경하지않은 경우 체크
       if (selectMajorNameNow === tempStr && graduationScoreNow === graduationScore) {
         alert('변경된 정보를 입력하세요');
@@ -118,14 +115,14 @@ const Major = () => {
       // }
 
       //졸업학점기준 최소 110학점이상 135학점 이하 입력 가능
-      // const numberValue = tempScore.replace(/\d{3}/g);
+      // const numberValue = graduationScore.replace(/\d{3}/g);
 
-      if (tempScore < 110 || tempScore > 135) {
+      if (graduationScore < 110 || graduationScore > 135) {
         alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
         return;
       }
 
-      if (!tempScore) {
+      if (!graduationScore) {
         alert('졸업학점을 입력하세요.');
         return;
       }
@@ -202,13 +199,11 @@ const Major = () => {
   //변경 버튼 클릭시
   const changeClickShowOpen = async () => {
     const tempStr = selectMajorName.trim();
-    const tempScore = parseInt(graduationScore);
-    // alert('항목을 입력하셔야 합니다.');
     const headers = { 'Content-Type': 'application/json' };
     const patchDatas = {
       imajor: selectMajorID,
       majorName: `${tempStr}`,
-      graduationScore: tempScore,
+      graduationScore: graduationScore,
     };
     try {
       await api.patch(`/api/admin/major`, patchDatas, { headers });
@@ -224,10 +219,10 @@ const Major = () => {
             // item.isChange = 1;
             item.originName = '구 ' + item.majorName;
             item.majorName = tempStr;
-            // item.graduationScore = tempScore;
+            // item.graduationScore = graduationScore;
           }
-          if (item.graduationScore !== tempScore) {
-            item.graduationScore = tempScore;
+          if (item.graduationScore !== graduationScore) {
+            item.graduationScore = graduationScore;
           }
         }
         return item;
@@ -270,10 +265,15 @@ const Major = () => {
   //전공추가 모달 창  확인버튼 누를 시
   const handleModalOk = () => {
     if (newMajorName != '' && newGraduationScore != '') {
-      MajorPostTest(newMajorName, parseInt(newGraduationScore));
-      setNewGraduationScore(); //post 후 화면에 전공추가 내용 바로 적용
-      setNewMajorName('');
-      setNewGraduationScore('');
+      const graduationScoreValue = parseInt(newGraduationScore);
+      if (newGraduationScore >= 110 && newGraduationScore <= 135) {
+        MajorPostTest(newMajorName, graduationScoreValue);
+        // setNewGraduationScore(); //post 후 화면에 전공추가 내용 바로 적용
+        setNewMajorName('');
+        setNewGraduationScore('');
+      } else {
+        alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
+      }
     } else {
       alert('내용을 입력해 주세요.');
 

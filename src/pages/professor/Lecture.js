@@ -12,17 +12,18 @@ import {
   ProfessorLectureDetail,
   ProfessorLectureBtn,
 } from '../../styles/LectureRoomCss';
+import { dayData } from '../../modules/timetable';
 const Lecture = () => {
   ////searchBar////
 
-  //학기 state
-  const [semester, setSemester] = useState('');
+  //연도 state
+  const [year, setYear] = useState('');
   //강의명 state
   const [lectureName, setLectureName] = useState('');
   //책 사진
   const [bookPic] = useState('');
   //검색 시 사용할 쿼리스트링
-  const queries = { semester, lectureName };
+  const queries = { year, lectureName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
@@ -111,20 +112,10 @@ const Lecture = () => {
   ];
 
   //강의명 임시 더미 데이터
-  const LectureNameList = [
-    {
-      id: '1',
-      title: '산업공학의 이해',
-    },
-    {
-      id: '2',
-      title: '디자인 마케팅 개론',
-    },
-    {
-      id: '3',
-      title: '디자인실습(1)',
-    },
-  ];
+  const LectureNameList = [];
+  // data?.lectureList?.forEach(item => {
+  //   LectureNameList.push({ id: item.lectureName, title: item.lectureName });
+  // });
 
   //임시 더미 데이터
   const _data = [
@@ -269,14 +260,14 @@ const Lecture = () => {
             length="short"
             placeholder="연도"
             data={data?.lectureList?.year}
-            value={semester}
-            setValue={setSemester}
+            value={year}
+            setValue={setYear}
             reset
           />
           <Dropdown
             length="long"
             placeholder="강의명"
-            data={LectureNameList}
+            data={data?.lectureList?.LectureNameList}
             value={lectureName}
             setValue={setLectureName}
             reset
@@ -299,13 +290,33 @@ const Lecture = () => {
               <div>{item.gradeLimit}</div>
 
               <div>{item.lectureName}</div>
-              <div>{item.lectureRoomName}</div>
+              <div>
+                {item.buildingName}
+                {''} {''}
+                {item.lectureRoomName}호
+              </div>
 
               <div>{item.score}</div>
-              <div>{item.lectureHour}</div>
+              <div>
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[item.dayWeek].charAt(0)}
+              </div>
               <div>{item.lectureMaxPeople}</div>
-              <div>{item.openingProceudres}</div>
-              <div>{item.delYn}</div>
+              <div>
+                {item.openingProceudres === 0
+                  ? '반려'
+                  : item.openingProceudres === 1
+                  ? '신청'
+                  : item.openingProceudres === 2
+                  ? '신청완료모집'
+                  : item.openingProceudres === 3
+                  ? '개강'
+                  : item.openingProceudres === 4
+                  ? '종료'
+                  : null}
+              </div>
+              <div>{item.delYn === 0 ? null : '삭제'}</div>
               <div>
                 <CommonButton
                   btnType="table"

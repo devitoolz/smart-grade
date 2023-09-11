@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook } from '@fortawesome/free-solid-svg-icons';
 import CommonButton from '../../components/CommonButton';
@@ -9,18 +9,19 @@ import Table from '../../components/Table';
 import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { StudentLectureDetail, StudentLectureBtn } from '../../styles/LectureRoomCss';
-
+import { dayData } from '../../modules/timetable';
 const Lecture = () => {
   ////searchBar////
 
-  //학기 state
-  const [semester, setSemester] = useState('');
+  //연도 state
+  const [year, setYear] = useState('');
+
   //강의명 state
   const [lectureName, setLectureName] = useState('');
   //교수명 state
   const [professorName, setProfessorName] = useState('');
   //검색 시 사용할 쿼리스트링
-  const queries = { semester, lectureName, professorName };
+  const queries = { year, lectureName, professorName };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
@@ -56,6 +57,10 @@ const Lecture = () => {
       title: '강의시간',
       width: '1.5',
     },
+    {
+      title: '상태',
+      width: '0.5',
+    },
 
     {
       title: '상세보기',
@@ -63,8 +68,8 @@ const Lecture = () => {
     },
   ];
 
-  //학기 임시 더미 데이터
-  const semesterList = [
+  //연도 임시 더미 데이터
+  const yearList = [
     {
       id: 1,
       title: '2022',
@@ -156,18 +161,93 @@ const Lecture = () => {
     setDisplay(false);
   };
   //상세보기 버튼 클릭시
-  const handlePageBtnClick = () => {
+  const handlePageBtnClick = _idx => {
     setDisplay(true);
+    setIndex(_idx);
+    console.log('aaaaaaaaaa');
   };
   //api get hook test
-  const url = '';
+  const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
+  const [contents, setContents] = useState([]);
+  const [index, setIndex] = useState();
+  useEffect(() => {
+    console.log(data);
+    setContents(data?.lectureList);
+    console.log(data?.lectureList);
+    console.log(contents);
+  }, [data]);
 
   //searchBar dropDown
   //데이터 추후 작성
 
   return (
     <div>
+      <div style={{ marginBottom: '94.41px' }}>
+        <SearchBar queries={queries} setPage={true} setClick={setClick}>
+          <Dropdown
+            length="short"
+            placeholder="연도"
+            data={data?.lectureList?.year}
+            value={year}
+            setValue={setYear}
+            reset
+          />
+          <Dropdown
+            length="long"
+            placeholder="강의명"
+            data={data?.lectureList?.lectureName}
+            value={lectureName}
+            setValue={setLectureName}
+            reset
+          />
+          <Input
+            length="long"
+            type="text"
+            placeholder="교수명"
+            value={professorName}
+            setValue={e => setProfessorName(e.target.value)}
+            reset={setProfessorName}
+          />
+        </SearchBar>
+      </div>
+
+      <Table
+        header={tableHeader}
+        data={data?.lectureList}
+        hasPage={true}
+        maxPage={data?.page?.maxPage}
+        pending={pending}
+        error={error}
+      >
+        {data?.lectureList?.map((item, idx) => {
+          return (
+            <div key={item.idx}>
+              <div>{item.year}</div>
+              <div>{item.isemester}</div>
+              <div>{item.grade}</div>
+              <div>{item.lectureName}</div>
+              <div>{item.professorName}</div>
+              <div>{item.score}</div>
+              <div>
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[item.dayWeek].charAt(0)}
+              </div>
+              <div>{item.finishedYn === 1 ? '수료' : '수강중'}</div>
+              <div>
+                <CommonButton
+                  btnType="table"
+                  color="gray"
+                  value="상세보기"
+                  onClick={() => handlePageBtnClick(idx)}
+                />
+              </div>
+            </div>
+          );
+        })}
+      </Table>
+
       {display === true ? (
         <CommonModal
           setDisplay={setDisplay}
@@ -181,34 +261,28 @@ const Lecture = () => {
           <StudentLectureDetail>
             <div className="innerContainer">
               <div className="lectureName">강의명</div>
-              <div className="inputLectureName">사람들의 퇴근법</div>
+              <div className="inputLectureName">{contents[index]?.lectureName}</div>
               <div className="grade">학년</div>
-              <div className="inputGrade">2</div>
+              <div className="inputGrade">{contents[index]?.grade}</div>
               <div className="semester">학기</div>
-              <div className="inputSemester">2</div>
+              <div className="inputSemester">{contents[index]?.isemester}</div>
               <div className="score">학점</div>
-              <div className="inputScore">3</div>
+              <div className="inputScore">{contents[index]?.score}</div>
               <div className="lectureHour">강의시간</div>
-              <div className="inputLectureHour">09:00~10:00 수,목 </div>
-              <div className="professorName">교수명</div>
-              <div className="inputProfessorName">박상렬</div>
-              <div className="bookName">교재명</div>
-              <div className="inputBookName">집을 가는 다양한 방법</div>
-              <div className="LectureInfo">강의설명</div>
-              <div className="inputLectureInfo">
-                최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
-                기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
-                응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
-                클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
-                실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한 연구
-                분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을 쌓는데
-                기여할 것이다.
+              <div className="inputLectureHour">
+                {contents[index]?.lectureStrTime}~{contents[index]?.lectureEndTime}
+                {''} {contents[index]?.dayWeek}
               </div>
+              <div className="professorName">교수명</div>
+              <div className="inputProfessorName">{contents[index]?.professorName}</div>
+              <div className="bookName">교재명</div>
+              <div className="inputBookName"></div>
+              <div className="LectureInfo">강의설명</div>
+              <div className="inputLectureInfo"></div>
 
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
                 <div>
-                  {/*  */}
                   {bookPic === false ? (
                     <img
                       src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
@@ -230,66 +304,6 @@ const Lecture = () => {
           </StudentLectureBtn>
         </CommonModal>
       ) : null}
-      <div style={{ marginBottom: '94.41px' }}>
-        <SearchBar queries={queries} setPage={true} setClick={setClick}>
-          <Dropdown
-            length="short"
-            placeholder="연도"
-            data={semesterList}
-            value={semester}
-            setValue={setSemester}
-            reset
-          />
-          <Dropdown
-            length="long"
-            placeholder="강의명"
-            data={LectureNameList}
-            value={lectureName}
-            setValue={setLectureName}
-            reset
-          />
-          <Input
-            length="long"
-            type="text"
-            placeholder="교수명"
-            value={professorName}
-            setValue={e => setProfessorName(e.target.value)}
-            reset={setProfessorName}
-          />
-        </SearchBar>
-      </div>
-      <Table
-        header={tableHeader}
-        data={_data}
-        hasPage={true}
-        maxPage={data?.page?.maxPage}
-        pending={pending}
-        error={error}
-      >
-        {' '}
-        {_data.map(item => {
-          return (
-            <div key={item.id}>
-              <div>{item.year}</div>
-              <div>{item.semester}</div>
-              <div>{item.grade}</div>
-              <div>{item.LectureName}</div>
-              <div>{item.professor}</div>
-              <div>{item.score}</div>
-              <div>{item.lectureHour}</div>
-
-              <div>
-                <CommonButton
-                  btnType="table"
-                  color="gray"
-                  value="상세보기"
-                  onClick={handlePageBtnClick}
-                />
-              </div>
-            </div>
-          );
-        })}
-      </Table>
     </div>
   );
 };

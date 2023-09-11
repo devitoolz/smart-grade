@@ -4,7 +4,6 @@ import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { getLectureList, putObjection } from '../../apis/studentGrade';
 import { dayData } from '../../modules/timetable';
 

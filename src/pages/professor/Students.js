@@ -8,6 +8,7 @@ import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import { dayData } from '../../modules/timetable';
 
 const Students = () => {
   //페이지 이동
@@ -163,7 +164,7 @@ const Students = () => {
         <SearchBar queries={queries} setPage={true} setClick={setClick}>
           <Dropdown
             length="short"
-            placeholder="학년"
+            placeholder="연도"
             data={data?.lectureList.gradeLimit}
             propertyName={{ key: 'id', value: 'title' }}
             value={grade}
@@ -198,16 +199,17 @@ const Students = () => {
               <div>{item.isemester}</div>
               <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
+              <div>{item.score}</div>
               <div>
-                {item.lectureStrTime}~{item.lectureEndTime}
-                {item.dayWeek}
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[item.dayWeek].charAt(0)}
               </div>
               <div>
-                {item.buildingName}
-                {item.lectureRoomName}
+                {item.buildingName} {''} {''}
+                {item.lectureRoomName}호
               </div>
               <div>{item.lectureMaxPeople}</div>
-              <div>{item.score}</div>
               <div>
                 <CommonButton btnType="table" color="gray" value="상세보기" onClick={pagemove} />
               </div>
@@ -215,7 +217,6 @@ const Students = () => {
           );
         })}
       </Table>
-      <CommonButton btnType="table" color="gray" value="상세보기" onClick={pagemove} />
     </div>
   );
 };
