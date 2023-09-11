@@ -75,7 +75,7 @@ const Dashboard = () => {
   const studentList: Array<ObjectType> = (student.data as ObjectType)?.students;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout className="admin">
       <DashboardContent className="chart">
         <div className="title">
           <span>연도별 입학생 추이</span>
@@ -134,7 +134,7 @@ const Dashboard = () => {
       <DashboardContent>
         <div className="title">
           <span>신규 교수 계정</span>
-          <button onClick={() => navigate('/admin/user/professor')}>상세보기</button>
+          <button onClick={() => navigate('/admin/user/professor')}>더보기</button>
         </div>
         <div>
           <Table
@@ -160,7 +160,7 @@ const Dashboard = () => {
       <DashboardContent>
         <div className="title">
           <span>신규 학생 계정</span>
-          <button onClick={() => navigate('/admin/user/students')}>상세보기</button>
+          <button onClick={() => navigate('/admin/user/students')}>더보기</button>
         </div>
         <div>
           <Table
@@ -168,6 +168,7 @@ const Dashboard = () => {
             data={studentList}
             pending={student.pending}
             error={student.error}
+            dashboard
           >
             {studentList?.map(item => {
               return (

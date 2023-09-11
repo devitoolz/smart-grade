@@ -5,8 +5,11 @@ const DashboardLayout = styled.div`
   height: 100%;
   padding: 20px;
   display: grid;
-  grid-template: auto auto / 1fr 1fr;
+  grid-template: 445.5px auto / auto 1fr;
   gap: 20px;
+  &.admin {
+    grid-template: auto auto / 1fr 1fr;
+  }
 `;
 
 const DashboardContent = styled.div`
@@ -36,7 +39,7 @@ const DashboardContent = styled.div`
     grid-column: span 2;
     > div {
       padding: 0 15px;
-      height: 300px !important;
+      height: 315px !important;
       &.title {
         height: auto !important;
       }
@@ -51,18 +54,17 @@ const DashboardTimetable = styled.div`
   display: flex;
   width: 100%;
   height: 100%;
-  padding-top: 15px;
   flex-direction: column;
   > div.timetable-header {
     display: grid;
-    height: 50px;
-    grid-template-columns: 120px repeat(5, auto);
+    grid-template-columns: 120px repeat(5, 100px);
     border-top: 2px solid var(--table-outline-color);
     border-bottom: 2px solid var(--table-outline-color);
     > div {
       display: flex;
       justify-content: center;
       align-items: center;
+      height: 45px;
       background: var(--main-bg-color);
       border-right: 1px solid var(--table-border-color);
       font-size: 16px;
@@ -78,13 +80,12 @@ const DashboardTimetable = styled.div`
   > div.timetable-content {
     display: flex;
     width: 100%;
-    height: 100%;
     border-bottom: 2px solid var(--table-outline-color);
     > div.timetable-time {
       display: grid;
       width: 120px;
       font-size: 16px;
-      grid-template-rows: repeat(9, auto);
+      grid-template-rows: repeat(9, 81.16px);
       border-right: 2px solid var(--table-outline-color);
       > div {
         display: flex;
@@ -104,12 +105,13 @@ const DashboardTimetable = styled.div`
     > div.timetable-lectures {
       display: grid;
       width: calc(100% - 120px);
-      grid-template: repeat(9, auto) / repeat(5, auto);
+      grid-template: repeat(9, 81.16px) / repeat(5, 100px);
       position: relative;
       > div {
         display: flex;
         justify-content: center;
         align-items: center;
+        padding: 10px;
         border-right: 1px solid var(--table-border-color);
         border-bottom: 1px solid var(--table-border-color);
         width: 100%;

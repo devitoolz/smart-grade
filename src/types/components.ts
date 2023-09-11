@@ -82,7 +82,7 @@ interface TableHeaderType {
 export interface TableProps {
   header: Array<TableHeaderType>;
   data: Array<any> | null;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   hasPage?: boolean;
   maxPage?: number;
   pending?: boolean;
@@ -112,6 +112,7 @@ export interface LectureTimetableData {
   startTime: string;
   endTime: string;
   dayWeek: number;
+  lectureName?: string;
 }
 
 export interface RegisterScoreProps {
