@@ -16,6 +16,7 @@ const DashboardContent = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  gap: 15px;
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px 1px;
   padding: 15px 0;
@@ -139,6 +140,30 @@ const DashboardTimetable = styled.div`
         > span {
           font-size: 16px;
         }
+      }
+
+      [data-tooltip-text]:hover {
+        position: relative;
+      }
+      [data-tooltip-text]:after {
+        transition: opacity 0.2s ease-in-out;
+        background-color: rgba(0, 0, 0, 0.5);
+        box-shadow: 0px 0px 2px 1px rgba(50, 50, 50, 0.4);
+        border-radius: 5px;
+        color: #ffffff;
+        font-size: 12px;
+        margin-bottom: 10px;
+        padding: 5px;
+        position: absolute;
+        z-index: 9999;
+        left: -9999px;
+        opacity: 0;
+        content: attr(data-tooltip-text);
+      }
+      [data-tooltip-text]:hover:after {
+        top: 130%;
+        left: 0;
+        opacity: 1;
       }
     }
     > div.timetable-error {

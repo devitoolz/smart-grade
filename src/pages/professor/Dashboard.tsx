@@ -13,11 +13,19 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const [time, setTime] = useState<ObjectType | null>(null);
 
-  const tableHeader = [
+  const noticeTableHeader = [
     { title: 'NO.', width: 1 },
     { title: '제목', width: 4 },
     { title: 'DATE', width: 2 },
     { title: '조회수', width: 1 },
+  ];
+
+  const objectionTableHeader = [
+    { title: '전공', width: 1 },
+    { title: '학번', width: 1 },
+    { title: '이름', width: 1 },
+    { title: '강의명', width: 1 },
+    { title: '이의 신청일', width: 1 },
   ];
 
   const timetable = useQuerySearch('/api/professor/schedule');
@@ -40,14 +48,16 @@ const Dashboard = () => {
     setTime(temp);
   }, [timetable.data]);
 
-  console.log(time);
-
   const importantNotice = useQuerySearch('/api/board');
   const importantNoticeList: Array<ObjectType> = importantNotice.data as Array<ObjectType>;
   const notice = useQuerySearch('/api/board/keyword?size=9');
   const noticeList: Array<ObjectType> = (notice.data as ObjectType)?.list;
 
-  const totalList = importantNotice && noticeList && [...importantNoticeList, ...noticeList];
+  const totalNoticeList = importantNoticeList &&
+    noticeList && [...importantNoticeList, ...noticeList];
+
+  const objection = useQuerySearch('/api/professor/objection');
+  const objectionList: Array<ObjectType> = objection.data as Array<ObjectType>;
 
   return (
     <DashboardLayout>
@@ -83,8 +93,14 @@ const Dashboard = () => {
                     .fill('')
                     .map((_, index) => {
                       return (
-                        <div key={index} style={{ background: colorData[time?.[index]?.idx % 9] }}>
-                          {time?.[index]?.lectureName}
+                        <div
+                          key={index}
+                          className="tooltip"
+                          style={{ background: colorData[time?.[index]?.idx % 9] }}
+                        >
+                          <span data-tooltip-text={time?.[index]?.lectureRoomName}>
+                            {time?.[index]?.lectureName}
+                          </span>
                         </div>
                       );
                     })}
@@ -112,13 +128,13 @@ const Dashboard = () => {
         </div>
         <div>
           <Table
-            header={tableHeader}
-            data={totalList}
+            header={noticeTableHeader}
+            data={totalNoticeList}
             pending={importantNotice.pending || notice.pending}
             error={importantNotice.error || notice.error}
             dashboard
           >
-            {totalList?.map(item => {
+            {totalNoticeList?.map(item => {
               return (
                 <div key={item.iboard}>
                   <div>
@@ -141,6 +157,17 @@ const Dashboard = () => {
       </DashboardContent>
       <DashboardContent>
         <div className="title">이의 신청</div>
+        <div>
+          <Table
+            header={objectionTableHeader}
+            data={objectionList}
+            pending={objection.pending}
+            error={objection.error}
+            dashboard
+          >
+            {/* {objectionList.map(item => {})} */}
+          </Table>
+        </div>
       </DashboardContent>
     </DashboardLayout>
   );
