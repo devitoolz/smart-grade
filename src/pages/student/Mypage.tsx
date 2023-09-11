@@ -18,7 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import mainSlice from '../../slices/mainSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleExclamation, faPencil, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
-import { checkValidEmail, checkValidPhone } from '../../modules/regex';
+import { checkValidPhone } from '../../modules/regex';
 import api from '../../apis/api';
 import ChangePassword from '../../components/ChangePassword';
 import OTPRegister from '../../components/OTPRegister';

@@ -4,8 +4,8 @@ import CommonButton from '../../components/CommonButton';
 import { useNavigate } from 'react-router-dom';
 import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { getLectureList } from '../../apis/professorGrade';
+import { dayData } from '../../modules/timetable';
 
 const Grade = () => {
   const navigate = useNavigate();

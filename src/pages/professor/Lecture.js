@@ -42,7 +42,7 @@ const Lecture = () => {
     },
     {
       title: '강의명 ',
-      width: '2',
+      width: '1.5',
     },
 
     {
@@ -60,6 +60,15 @@ const Lecture = () => {
 
     {
       title: '정원',
+      width: '1',
+    },
+
+    {
+      title: '상태',
+      width: '1',
+    },
+    {
+      title: '삭제여부',
       width: '1',
     },
     {
@@ -184,7 +193,7 @@ const Lecture = () => {
   };
 
   //api get hook test
-  const url = `/api/professor/lecture-list?`;
+  const url = `/api/professor/lecture-list`;
 
   const { data, pending, error } = useQuerySearch(url, click);
   return (
@@ -253,7 +262,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={semesterList}
+            data={data.LectureList.year}
             value={semester}
             setValue={setSemester}
             reset
@@ -270,26 +279,28 @@ const Lecture = () => {
       </div>
       <Table
         header={tableHeader}
-        data={_data}
+        data={data?.lectureList}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
         {' '}
-        {_data.map(item => {
+        {data?.lectureList?.map(item => {
           return (
-            <div key={item.id}>
+            <div key={item.ilecture}>
               <div>{item.year}</div>
-              <div>{item.semester}</div>
-              <div>{item.grade}</div>
+              <div>{item.isemester}</div>
+              <div>{item.gradeLimit}</div>
 
-              <div>{item.LectureName}</div>
-              <div>{item.lectureRoom}</div>
+              <div>{item.lectureName}</div>
+              <div>{item.lectureRoomName}</div>
 
               <div>{item.score}</div>
               <div>{item.lectureHour}</div>
-              <div>{item.maxCapacity}</div>
+              <div>{item.lectureMaxPeople}</div>
+              <div>{item.openingProceudres}</div>
+              <div>{item.delYn}</div>
               <div>
                 <CommonButton
                   btnType="table"

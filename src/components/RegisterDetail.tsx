@@ -1,12 +1,12 @@
 import React from 'react';
-import CommonButton from '../CommonButton';
-import { ModalStyle } from '../../styles/MyStyleCSS';
-import { BookImage, InfoFormTable, RegisterLayout } from '../../styles/RegisterStyle';
-import { FormTable, Row } from '../../styles/UserStyle';
+import CommonButton from './CommonButton';
+import { ModalStyle } from '../styles/MyStyleCSS';
+import { BookImage, InfoFormTable, RegisterLayout } from '../styles/RegisterStyle';
+import { FormTable, Row } from '../styles/UserStyle';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faXmark } from '@fortawesome/free-solid-svg-icons';
-import { RegisterDetailProps } from '../../types/components';
-import { dayData } from '../../pages/professor/RegisterApply';
+import { RegisterDetailProps } from '../types/components';
+import { dayData } from '../modules/timetable';
 
 const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) => {
   const handleCancel = () => {
@@ -17,7 +17,7 @@ const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) =>
     <ModalStyle modalSize="small">
       <div className="modal-box" style={{ height: 'auto', width: '960px' }}>
         <div className="modal-title-small">
-          <div>배점 등록</div>
+          <div>{lectureData?.lectureName}</div>
           <button onClick={handleCancel}>
             <FontAwesomeIcon icon={faXmark} size="lg" />
           </button>
@@ -35,13 +35,14 @@ const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) =>
                 <div style={{ boxShadow: '0 -2px 0 0 var(--form-table-odd-border-color)' }}>
                   강의 시간
                 </div>
-                <div>{`${
-                  dayData[lectureData?.dayWeek]
-                } ${lectureData?.lectureStrTime} ~ ${lectureData?.lectureEndTime}`}</div>
+                <div>{`${dayData[lectureData?.dayWeek]} ${lectureData?.lectureStrTime.slice(
+                  0,
+                  -3
+                )} ~ ${lectureData?.lectureEndTime.slice(0, -3)}`}</div>
                 <div>수강 인원 수</div>
                 <div>{lectureData?.lectureMaxPeople}</div>
-                <div>학년 제한</div>
-                <div>{lectureData?.gradeLimit}</div>
+                <div>{lectureData?.professorName ? '담당 교수' : '학년 제한'}</div>
+                <div>{lectureData?.professorName ?? lectureData?.gradeLimit}</div>
                 <div>학점</div>
                 <div>{lectureData?.score}</div>
                 <div>배점</div>

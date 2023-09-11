@@ -272,10 +272,10 @@ const NotFoundLayout = styled.div`
     color: var(--negative-color);
   }
   > span {
-    cursor: pointer;
     font-size: 30px;
   }
   > button {
+    cursor: pointer;
     border: none;
     font-size: 18px;
     background: var(--primary-color);

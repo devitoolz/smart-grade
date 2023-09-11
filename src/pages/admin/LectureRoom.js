@@ -7,8 +7,10 @@ import Table from '../../components/Table';
 import CommonModal from '../../components/CommonModal';
 import api from '../../apis/api';
 import useQuerySearch from '../../hooks/useSearchFetch';
+import { useNavigate } from 'react-router-dom';
 
 const LectureRoom = () => {
+  const navigate = useNavigate();
   //강의실 pk값
   const [ilectureRoom, setIlectureRoom] = useState('');
   //강의실 추가시 건물명 state
@@ -58,7 +60,7 @@ const LectureRoom = () => {
   });
 
   //api post test
-  const postBuildinglist = async (ilectureRoom, lectureRoomName, buildingName, maxCapacity) => {
+  const postBuildinglist = async (lectureRoomName, buildingName, maxCapacity) => {
     const headers = { 'Content-Type': 'application/json' };
     try {
       // await api.post(
@@ -66,10 +68,15 @@ const LectureRoom = () => {
       //   { headers }
       // );
 
-      await api.post(
-        `/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+      const res = await api.post(
+        // `/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+        `/api/admin/lectureroom?lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+
         { headers }
       );
+      console.log(res);
+      // 목록을 갱신한다.
+      navigate('/admin/college/lecture-room');
     } catch (err) {
       console.log(err);
     }
@@ -83,22 +90,19 @@ const LectureRoom = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
 
+    console.log('buildingNameData', buildingNameData);
+    console.log('lectureRoomName', lectureRoomName);
+    console.log('maxCapacity', maxCapacity);
     if (
-      ilectureRoom !== '' &&
-      ilectureRoom !== null &&
-      buildingName !== '' &&
-      buildingName !== null &&
+      buildingNameData !== '' &&
+      buildingNameData !== null &&
       lectureRoomName !== null &&
       lectureRoomName !== '' &&
       maxCapacity !== null &&
       maxCapacity !== ''
     ) {
-      await postBuildinglist(ilectureRoom, lectureRoomName, buildingNameData, maxCapacity);
-      setIlectureRoom();
-      setLectureRoomName();
-      setBuildingName();
-      setMaxCapacity();
-      console.log(setIlectureRoom);
+      await postBuildinglist(lectureRoomName, buildingNameData, maxCapacity);
+
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
@@ -185,14 +189,23 @@ const LectureRoom = () => {
               length="short"
               maxLength={3}
               value={lectureRoomName}
-              setValue={() => {
-                // 입력값이 숫자인지 확인하는 정규표현식
-                const isNumeric = /^[0-9]*$/;
-                setBuildingNameData(isNumeric);
-                // 입력값이 숫자인 경우에만 setValue 함수 호출
-                // if (isNumeric.test(e.target.value)) {
-                //   setBuildingNameData(e.target.value);
-                // }
+              // setValue={() => {
+              //   // 입력값이 숫자인지 확인하는 정규표현식
+              //   const isNumeric = /^[0-9]*$/;
+              //   setBuildingNameData(isNumeric);
+              //   // 입력값이 숫자인 경우에만 setValue 함수 호출
+              //   // if (isNumeric.test(e.target.value)) {
+              //   //   setBuildingNameData(e.target.value);
+              //   // }
+              // }}
+              setValue={e => {
+                const value = e.target.value;
+                // 정규 표현식으로  3자리 숫자만 허용
+                if (/^\d{0,3}$/.test(value)) {
+                  setLectureRoomName(value);
+                } else {
+                  setLectureRoomName('');
+                }
               }}
             />
             <p>호</p>
@@ -215,9 +228,12 @@ const LectureRoom = () => {
               maxLength={2}
               value={maxCapacity}
               setValue={e => {
-                // 입력값이 숫자 또는 빈 문자열인 경우에만 setValue 함수 호출
-                if (/^[0-9]*$/.test(e.target.value) || e.target.value === '') {
-                  setBuildingNameData(e.target.value);
+                const value = e.target.value;
+                // 정규 표현식으로  3자리 숫자만 허용
+                if (/^\d{0,3}$/.test(value)) {
+                  setMaxCapacity(value);
+                } else {
+                  setMaxCapacity('');
                 }
               }}
             />
