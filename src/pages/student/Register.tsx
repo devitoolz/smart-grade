@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import RegisterDetail from '../../components/RegisterDetail';
@@ -7,10 +7,15 @@ import Table from '../../components/Table';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import { dayData } from '../../modules/timetable';
+import api from '../../apis/api';
+import { useDispatch, useSelector } from 'react-redux';
+import mainSlice from '../../slices/mainSlice';
+import { RootState } from '../../store';
 
 const Register = () => {
   const [lectureName, setLectureName] = useState<string>('');
   const [lectureData, setLectureData] = useState<ObjectType | null>(null);
+  const [lectureListResult, setLectureListResult] = useState<Array<ObjectType> | null>(null);
 
   const [click, setClick] = useState<boolean>(false);
 
@@ -34,6 +39,46 @@ const Register = () => {
 
   const lectureList: Array<ObjectType> = (data as ObjectType)?.lectureList;
 
+  useEffect(() => {
+    setLectureListResult(lectureList);
+  }, [lectureList]);
+
+  const { user } = useSelector((state: RootState) => state.main);
+  const dispatch = useDispatch();
+
+  const main = mainSlice.actions;
+
+  const changeApplyYn = (ilecture: number) => {
+    if (lectureListResult) {
+      setLectureListResult(
+        lectureListResult.map(lecture =>
+          lecture.ilecture === ilecture ? { ...lecture, applyYn: !lecture.applyYn } : lecture
+        )
+      );
+    }
+  };
+
+  const handleRegister = async (ilecture: number) => {
+    try {
+      await api.post('/api/student', { ilecture });
+      alert('수강 신청되었습니다.');
+      dispatch(main.setUser({ ...user, lectureList: [...user!.lectureList] }));
+      changeApplyYn(ilecture);
+    } catch {
+      alert('수강 신청에 실패하였습니다.');
+    }
+  };
+
+  const handleUnregister = async (ilecture: number) => {
+    const { data } = await api.delete(`/api/student/lecture?ilecture=${ilecture}`);
+    if (data) {
+      alert('수강 신청이 취소되었습니다.');
+      changeApplyYn(ilecture);
+    } else {
+      alert('수강 신청 취소에 실패하였습니다.');
+    }
+  };
+
   return (
     <>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -49,13 +94,13 @@ const Register = () => {
       <div style={{ height: 95 }} />
       <Table
         header={tableHeader}
-        data={lectureList}
+        data={lectureListResult ?? lectureList}
         hasPage={true}
         maxPage={(data as ObjectType)?.page.maxPage}
         pending={pending}
         error={error}
       >
-        {lectureList?.map(item => {
+        {lectureListResult?.map(item => {
           return (
             <div key={item.ilecture}>
               <div>{item.lectureName}</div>
@@ -77,10 +122,14 @@ const Register = () => {
               </div>
               <div>
                 <CommonButton
-                  value="수강 신청"
+                  value={item.applyYn ? '수강 신청' : '수강 취소'}
                   btnType="table"
-                  color="blue"
-                  onClick={() => alert('dd')}
+                  color={item.applyYn ? 'blue' : 'red'}
+                  onClick={
+                    item.applyYn
+                      ? () => handleRegister(item.ilecture)
+                      : () => handleUnregister(item.ilecture)
+                  }
                 />
               </div>
             </div>

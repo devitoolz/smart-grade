@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { getCookie, removeCookie, setCookie } from '../modules/cookies';
 
 const api = axios.create({
-  timeout: 3000,
+  timeout: 10000,
   headers: {
     Authorization: `Bearer ${getCookie('accessToken')}`,
   },
