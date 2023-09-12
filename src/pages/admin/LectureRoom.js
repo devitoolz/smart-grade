@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const LectureRoom = () => {
   const navigate = useNavigate();
   //강의실 pk값
-  const [ilectureRoom, setIlectureRoom] = useState('');
+  const [, setIlectureRoom] = useState('');
   //강의실 추가시 건물명 state
 
   const [buildingNameData, setBuildingNameData] = useState('');
@@ -21,6 +21,19 @@ const LectureRoom = () => {
 
   //강의실 추가시 최대수용인원 state
   const [maxCapacity, setMaxCapacity] = useState('');
+
+  // 삭제된 강의실을 추적하기 위한 state
+  const [deletedLectureRoom, setDeletedLectureRoom] = useState('');
+
+  // 강의실을 삭제로 표시하는 함수
+  const markLectureRoomAsDeleted = ilectureRoomId => {
+    setDeletedLectureRoom(prevDeletedRooms => [...prevDeletedRooms, ilectureRoomId]);
+  };
+
+  // 강의실이 삭제되었는지 확인하는 함수
+  const isLectureRoomDeleted = ilectureRoomId => {
+    return deletedLectureRoom.includes(ilectureRoomId);
+  };
 
   ////SearchBar//////
 
@@ -51,7 +64,7 @@ const LectureRoom = () => {
   const queries = { buildingName };
 
   //api get hook test
-  const url = '/api/admin/lectureroom';
+  const url = `/api/admin/lectureroom`;
   const { data, pending, error } = useQuerySearch(url, click);
   //searchBar dropdown
   const buildingDataList = [];
@@ -67,10 +80,15 @@ const LectureRoom = () => {
       //   `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
       //   { headers }
       // );
-
+      const postData = {
+        lectureRoomName,
+        buildingName,
+        maxCapacity,
+      };
       const res = await api.post(
         // `/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
-        `/api/admin/lectureroom?lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+        `/api/admin/lectureroom`,
+        postData,
 
         { headers }
       );
@@ -90,9 +108,6 @@ const LectureRoom = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
 
-    console.log('buildingNameData', buildingNameData);
-    console.log('lectureRoomName', lectureRoomName);
-    console.log('maxCapacity', maxCapacity);
     if (
       buildingNameData !== '' &&
       buildingNameData !== null &&
@@ -102,22 +117,21 @@ const LectureRoom = () => {
       maxCapacity !== ''
     ) {
       await postBuildinglist(lectureRoomName, buildingNameData, maxCapacity);
-      console.log('되나?', setIlectureRoom);
-      setIlectureRoom();
-      setLectureRoomName();
-      setBuildingName();
-      setMaxCapacity();
+
+      alert('등록되었습니다.');
+      setIlectureRoom('');
+      setLectureRoomName('');
+      setBuildingName('');
+      setMaxCapacity('');
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-
       setIlectureRoom('');
       setBuildingNameData('');
       setLectureRoomName('');
       setMaxCapacity('');
     }
   };
-
   //강의실추가 모달창 취소 버튼 클릭시
   const handleModalCancel = () => {
     //setDisplay(false);
@@ -141,7 +155,8 @@ const LectureRoom = () => {
   const [saveId, setSaveId] = useState('');
   const deleteModalOk = async () => {
     LectureRoomDeleteTest(saveId);
-    window.location.reload();
+    markLectureRoomAsDeleted(saveId); // "사용불가"로 상태 변경
+    // window.location.reload();
   };
 
   return (
@@ -266,29 +281,29 @@ const LectureRoom = () => {
         error={error}
       >
         {data?.lectureRoomList?.map(item => {
+          const isDeleted = isLectureRoomDeleted(item.ilectureRoom); //강의실 삭제 되었는지 체크
           return (
             <div key={item.ilectureRoom}>
               <div>
                 {item.buildingName}
                 {'  '}
-                {item.lectureRoomName?.includes('호') === false
-                  ? item.lectureRoomName?.concat('호')
-                  : item.lectureRoomName}
+                {item.lectureRoomName} {'  '}호
               </div>
               <div>{item.maxCapacity}</div>
               <div>
                 <CommonButton
                   btnType="table"
                   value="삭제"
-                  color={item.delYn === 1 ? 'gray' : 'red'}
-                  disabled={item.delYn}
+                  color={item.delYn === 1 || isDeleted ? 'gray' : 'red'}
+                  disabled={item.delYn || isDeleted} // 삭제된 경우 버튼 비활성화
                   onClick={() => {
                     setDisplay(true);
                     setSaveId(item.ilectureRoom);
+                    // markLectureRoomAsDeleted(item.ilectureRoom);  강의실을 삭제로 표시
                   }}
-                ></CommonButton>
+                />
               </div>
-              <div>{item.delYn === 1 ? '사용불가' : null}</div>
+              <div>{isDeleted ? '사용불가' : item.delYn === 1 ? '사용불가' : null}</div>
             </div>
           );
         })}

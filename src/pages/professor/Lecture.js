@@ -12,17 +12,19 @@ import {
   ProfessorLectureDetail,
   ProfessorLectureBtn,
 } from '../../styles/LectureRoomCss';
+import { dayData } from '../../modules/timetable';
 const Lecture = () => {
   ////searchBar////
 
-  //학기 state
-  const [semester, setSemester] = useState('');
+  //연도 state
+  const [year, setYear] = useState('');
   //강의명 state
   const [lectureName, setLectureName] = useState('');
   //책 사진
   const [bookPic] = useState('');
+
   //검색 시 사용할 쿼리스트링
-  const queries = { semester, lectureName };
+  const queries = { year, lectureName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
@@ -79,103 +81,87 @@ const Lecture = () => {
   ];
 
   //학기 임시 더미 데이터
-  const semesterList = [
-    {
-      id: 1,
-      title: '2017',
-    },
-    {
-      id: 2,
-      title: '2018',
-    },
-    {
-      id: 3,
-      title: '2019',
-    },
-    {
-      id: 4,
-      title: '2020',
-    },
-    {
-      id: 4,
-      title: '2021',
-    },
-    {
-      id: 4,
-      title: '2022',
-    },
-    {
-      id: 4,
-      title: '2023하드',
-    },
-  ];
-
-  //강의명 임시 더미 데이터
-  const LectureNameList = [
-    {
-      id: '1',
-      title: '산업공학의 이해',
-    },
-    {
-      id: '2',
-      title: '디자인 마케팅 개론',
-    },
-    {
-      id: '3',
-      title: '디자인실습(1)',
-    },
-  ];
+  // const semesterList = [
+  //   {
+  //     id: 1,
+  //     title: '2017',
+  //   },
+  //   {
+  //     id: 2,
+  //     title: '2018',
+  //   },
+  //   {
+  //     id: 3,
+  //     title: '2019',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: '2020',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: '2021',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: '2022',
+  //   },
+  //   {
+  //     id: 4,
+  //     title: '2023하드',
+  //   },
+  // ];
 
   //임시 더미 데이터
-  const _data = [
-    {
-      id: '1',
-      year: '1',
-      semester: 2,
-      grade: '3',
-      LectureName: '콘크리트 구조 이해',
-      lectureRoom: '백매관 303호',
-      score: 3,
-      lectureHour: '09:00~10:00 수,목',
-      maxCapacity: '25 / 30',
-    },
-    {
-      id: '2 ',
-      content: '1',
-    },
-    {
-      id: '3 ',
-      content: '1',
-    },
-    {
-      id: '4 ',
-      content: '1',
-    },
-    {
-      id: '5 ',
-      content: '1',
-    },
-    {
-      id: '6  ',
-      content: '1',
-    },
-    {
-      id: '7   ',
-      content: '1',
-    },
-    {
-      id: '8    ',
-      content: '1',
-    },
-    {
-      id: '9',
-      content: '1',
-    },
-    {
-      id: '10',
-      content: '1',
-    },
-  ];
+  // const _data = [
+  //   {
+  //     id: '1',
+  //     year: '1',
+  //     semester: 2,
+  //     grade: '3',
+  //     LectureName: '콘크리트 구조 이해',
+  //     lectureRoom: '백매관 303호',
+  //     score: 3,
+  //     lectureHour: '09:00~10:00 수,목',
+  //     maxCapacity: '25 / 30',
+  //   },
+  //   {
+  //     id: '2 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '3 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '4 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '5 ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '6  ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '7   ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '8    ',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '9',
+  //     content: '1',
+  //   },
+  //   {
+  //     id: '10',
+  //     content: '1',
+  //   },
+  // ];
 
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
@@ -193,85 +179,37 @@ const Lecture = () => {
     setDisplay(true);
   };
 
+  // 교수 강의조회 상세보기 modal창 get
+  const professor = useQuerySearch('/api/professor/lecture/list');
+
   //api get hook test
   const url = `/api/professor/lecture-list`;
 
   const { data, pending, error } = useQuerySearch(url, click);
+  // 연도 드랍다운 데이터
+  const yearList = [];
+  data?.yearList?.forEach(item => {
+    yearList.push({ id: item.year, title: item.year });
+  });
+
+  //강의명 드랍다운 데이터
+  const LectureNameList = [];
+  data?.lectureList?.forEach(item => {
+    LectureNameList.push({ id: item.lectureName, title: item.lectureName });
+  });
+
   return (
     <div>
-      {display === true ? (
-        <CommonModal
-          setDisplay={setDisplay}
-          modalSize="big"
-          modalTitle="강의 상세정보"
-          handleModalOk={handleModalOk}
-          handleModalCancel={handleModalCancel}
-        >
-          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
-          <ProfessorCaution>
-            <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
-            <p className="callNum">전산실 전화번호: 053-000-0000</p>
-          </ProfessorCaution>
-          <ProfessorLectureDetail>
-            <div className="innerContainer">
-              <div className="lectureName">강의명</div>
-              <div className="inputLectureName">강의명들어갈자리</div>
-              <div className="grade">학년</div>
-              <div className="inputGrade">학년들어갈자리</div>
-              <div className="semester">학기</div>
-              <div className="inputSemester">학기들어갈자리</div>
-              <div className="score">학점</div>
-              <div className="inputScore">학점들어갈자리</div>
-              <div className="lectureHour">강의시간</div>
-              <div className="inputLectureHour">09:00~10:00 수,목 </div>
-              <div className="capacity">정원</div>
-              <div className="inputCapacity">현재인원/최대인원</div>
-              <div className="bookName">교재명</div>
-              <div className="inputBookName">교재명들어갈자리</div>
-              <div className="LectureInfo">강의설명</div>
-              <div className="inputLectureInfo">
-                최근 기술 혁신과 성장은 대부분 클라우드를 기반으로 하고 있으며, 4차 산업혁명의
-                기술은 클라우드를 통해 컴퓨팅 파워와 플랫폼을 제공받고 있다. 클라우드에 대한 기본/
-                응용 지식은 향후 전개될 IT 서비스 운영/개발에 필수 역량이 되어가고 있다. 이 수업은
-                클라우드 컴퓨팅 핵심 이론을 이해하고, 산업 현장에서 실제 활용되고 있는 기술을
-                실습함으로써 참여자의 역량을 증진할 것이다. 수업 이수 후 대학원 과정에서 필요한 연구
-                분야에서 활용할 수 있으며, 향후 진로에 도움이 될 수 있는 이론 및 실무 역량을 쌓는데
-                기여할 것이다.
-              </div>
-
-              <div className="bookPic">교재사진</div>
-              <div className="inputBookPic">
-                <div>
-                  {bookPic === false ? (
-                    <img
-                      src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
-                      alt="교재 이미지"
-                    />
-                  ) : (
-                    <div className="icon">
-                      <FontAwesomeIcon icon={faBook} className="fa-4x" />
-                      <p>교재가 없습니다.</p>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </ProfessorLectureDetail>
-
-          <ProfessorLectureBtn>
-            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-          </ProfessorLectureBtn>
-        </CommonModal>
-      ) : null}
       <div style={{ marginBottom: '94.41px' }}>
         <SearchBar queries={queries} setPage={true} setClick={setClick}>
           <Dropdown
             length="short"
             placeholder="연도"
-            data={data?.lectureList?.year}
-            value={semester}
-            setValue={setSemester}
+            data={yearList}
+            value={year}
+            setValue={setYear}
             reset
+            search
           />
           <Dropdown
             length="long"
@@ -299,13 +237,33 @@ const Lecture = () => {
               <div>{item.gradeLimit}</div>
 
               <div>{item.lectureName}</div>
-              <div>{item.lectureRoomName}</div>
+              <div>
+                {item.buildingName}
+                {''} {''}
+                {item.lectureRoomName}호
+              </div>
 
               <div>{item.score}</div>
-              <div>{item.lectureHour}</div>
+              <div>
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[item.dayWeek]}
+              </div>
               <div>{item.lectureMaxPeople}</div>
-              <div>{item.openingProceudres}</div>
-              <div>{item.delYn}</div>
+              <div>
+                {item.openingProceudres === 0
+                  ? '반려'
+                  : item.openingProceudres === 1
+                  ? '신청'
+                  : item.openingProceudres === 2
+                  ? '신청완료모집'
+                  : item.openingProceudres === 3
+                  ? '개강'
+                  : item.openingProceudres === 4
+                  ? '종료'
+                  : null}
+              </div>
+              <div>{item.delYn === 0 ? null : '삭제'}</div>
               <div>
                 <CommonButton
                   btnType="table"
@@ -318,6 +276,70 @@ const Lecture = () => {
           );
         })}
       </Table>
+
+      {display === true
+        ? professor.data?.lectureList?.map(item => {
+            return (
+              <div key={item.idx}>
+                <CommonModal
+                  setDisplay={setDisplay}
+                  modalSize="big"
+                  modalTitle="강의 상세정보"
+                  handleModalOk={handleModalOk}
+                  handleModalCancel={handleModalCancel}
+                >
+                  <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+                  <ProfessorCaution>
+                    <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
+                    <p className="callNum">전산실 전화번호: 053-000-0000</p>
+                  </ProfessorCaution>
+                  <ProfessorLectureDetail>
+                    <div className="innerContainer">
+                      <div className="lectureName">강의명</div>
+                      <div className="inputLectureName">{item.lectureName}</div>
+                      <div className="grade">학년</div>
+                      <div className="inputGrade">{item.gradeLimit}</div>
+                      <div className="semester">학기</div>
+                      <div className="inputSemester">{item.isemester}</div>
+                      <div className="score">학점</div>
+                      <div className="inputScore">{item.score}</div>
+                      <div className="lectureHour">강의시간</div>
+                      <div className="inputLectureHour">
+                        {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
+                        {''} {''}
+                        {dayData[item.dayWeek]}
+                      </div>
+                      <div className="capacity">정원</div>
+                      <div className="inputCapacity">{item.attendance}</div>
+                      <div className="bookName">교재명</div>
+                      <div className="inputBookName">{item.textbook}</div>
+                      <div className="LectureInfo">강의설명</div>
+                      <div className="inputLectureInfo">{item.ctnt}</div>
+
+                      <div className="bookPic">교재사진</div>
+                      <div className="inputBookPic">
+                        <div>
+                          {bookPic === true ? (
+                            <img src={item?.bookUrl} alt="교재 이미지" />
+                          ) : (
+                            <div className="icon">
+                              <FontAwesomeIcon icon={faBook} className="fa-4x" />
+                              <p>교재가 없습니다.</p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </ProfessorLectureDetail>
+
+                  <ProfessorLectureBtn>
+                    <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+                  </ProfessorLectureBtn>
+                </CommonModal>
+              </div>
+            );
+          })
+        : null}
     </div>
   );
 };
