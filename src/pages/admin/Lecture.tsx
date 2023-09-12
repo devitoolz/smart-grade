@@ -248,7 +248,7 @@ const Lecture = () => {
                       </BookImage>
                     </div>
                   </div>
-                  <div className="row pt-2">
+                  <div className="row" style={{paddingTop: 1}}>
                     <div>교재명</div>
                     <div>
                       {/^(null|undefined|)$/.test(contents.textBook) ? (
