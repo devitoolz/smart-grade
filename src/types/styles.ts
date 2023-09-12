@@ -50,5 +50,5 @@ export interface ButtonBarLayoutProps {
 }
 
 export interface TableLayoutProps {
-  dashboard?: boolean;
+  dashboard?: number;
 }

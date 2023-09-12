@@ -82,12 +82,12 @@ interface TableHeaderType {
 export interface TableProps {
   header: Array<TableHeaderType>;
   data: Array<any> | null;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   hasPage?: boolean;
   maxPage?: number;
   pending?: boolean;
   error?: boolean;
-  dashboard?: boolean;
+  dashboard?: number;
 }
 
 export interface FindPasswordProps {
@@ -112,6 +112,8 @@ export interface LectureTimetableData {
   startTime: string;
   endTime: string;
   dayWeek: number;
+  lectureName?: string;
+  lectureRoomName?: string;
 }
 
 export interface RegisterScoreProps {
