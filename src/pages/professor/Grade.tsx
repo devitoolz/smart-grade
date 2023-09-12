@@ -49,7 +49,7 @@ const Grade = () => {
               <div>{item.gradeLimit}</div>
               <div>{item.lectureName}</div>
               <div>
-                {item.lectureStrTime}~{item.lectureEndTime} ({dayData[item.dayWeek].charAt(0)})
+                {item.lectureStrTime}~{item.lectureEndTime} {dayData[item.dayWeek]}
               </div>
               <div>
                 {item.buildingName} {item.lectureRoomName}호

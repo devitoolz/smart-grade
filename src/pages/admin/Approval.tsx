@@ -147,7 +147,7 @@ const Approval = () => {
                 {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
-                {item.strTime}~{item.endTime} ({dayData[item.dayWeek].charAt(0)})
+                {item.strTime}~{item.endTime} {dayData[item.dayWeek]}
               </div>
               <div>
                 {item.currentPeople}/{item.maxPeople}

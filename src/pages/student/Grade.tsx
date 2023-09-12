@@ -76,8 +76,8 @@ const Grade = () => {
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
               <div>
-                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)} (
-                {dayData[item.dayWeek].charAt(0)})
+                {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}{' '}
+                {dayData[item.dayWeek]}
               </div>
               <div>{item.score}</div>
               <div>{item.finishedYn === 0 ? '-' : item.totalScore}</div>
