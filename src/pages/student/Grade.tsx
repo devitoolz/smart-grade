@@ -1,10 +1,8 @@
 import { useState, useEffect } from 'react';
 import Table from '../../components/Table';
 import CommonButton from '../../components/CommonButton';
-import SearchBar from '../../components/SearchBar';
-import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
-import { getLectureList, putObjection } from '../../apis/studentGrade';
+import { getGradeFile, getLectureList, putObjection } from '../../apis/studentGrade';
 import { dayData } from '../../modules/timetable';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
 
@@ -49,6 +47,14 @@ const Grade = () => {
     await putObjection(objectionUrl, setData);
   };
 
+  // 학생 성적 엑셀파일 다운로드
+  const handleDownLoadGradeFile = async () => {
+    const check = confirm('성적 엑셀 파일을 다운 받으시겠습니까?');
+    if (check) {
+      await getGradeFile();
+    }
+  };
+
   return (
     <>
       <SearchBarLayout>
@@ -58,9 +64,7 @@ const Grade = () => {
       <CommonButton
         btnType="page"
         value="엑셀 다운로드"
-        onClick={() => {
-          alert('학생 성적 엑셀파일 다운로드(예정)');
-        }}
+        onClick={() => handleDownLoadGradeFile()}
       />
 
       <Table header={tableHeader} hasPage={true} data={data} pending={false} error={false}>
