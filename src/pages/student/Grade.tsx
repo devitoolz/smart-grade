@@ -90,8 +90,12 @@ const Grade = () => {
                     btnType="table"
                     color="blue"
                     onClick={() => {
-                      setIlectureStudent(item.ilectureStudent);
-                      setDemur(true);
+                      if (item.finishedYn === 0) {
+                        alert('성적 입력이 완료되지 않으면 이의신청을 할 수 없습니다');
+                      } else {
+                        setIlectureStudent(item.ilectureStudent);
+                        setDemur(true);
+                      }
                     }}
                   />
                 ) : (
