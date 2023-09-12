@@ -4,9 +4,9 @@ import CommonButton from '../../components/CommonButton';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
-import { dayData } from '../../pages/professor/RegisterApply';
 import { getLectureList, putObjection } from '../../apis/studentGrade';
 import { dayData } from '../../modules/timetable';
+import { SearchBarLayout } from '../../styles/SearchBarStyle';
 
 const Grade = () => {
   const tableHeader = [
@@ -20,7 +20,7 @@ const Grade = () => {
     { title: '최종성적', width: 1 },
     { title: '평점', width: 1 },
     { title: '등급', width: 1 },
-    { title: '비고', width: 1.5 },
+    { title: '이의신청', width: 1.5 },
   ];
 
   // 검색
@@ -33,9 +33,6 @@ const Grade = () => {
     { id: 3, title: '2학년 1학기' },
     { id: 4, title: '2학년 2학기' },
   ];
-  // XXX 타입 수정 필요 !!
-  const [dropValue, setDropValue] = useState<any>('');
-
   // 강의 pk
   const [ilectureStudent, setIlectureStudent] = useState<number | null>(null);
   // 이의신청 모달창
@@ -50,7 +47,7 @@ const Grade = () => {
     setIlectureStudent(null);
   };
 
-  // 임시데이터
+  // 데이터
   const [data, setData] = useState([]);
   const getLectureListWait = async () => {
     await getLectureList(setData);
@@ -65,17 +62,9 @@ const Grade = () => {
 
   return (
     <>
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <div>학생 개인의 성적 조회</div>
-        <Dropdown
-          length="middle"
-          placeholder="학년학기"
-          data={dropData}
-          value={dropValue}
-          setValue={setDropValue}
-          reset={true}
-        />
-      </SearchBar>
+      <SearchBarLayout>
+        <div style={{ height: 35, lineHeight: '35px' }}>성적 조회</div>
+      </SearchBarLayout>
 
       <CommonButton
         btnType="page"
@@ -83,7 +72,11 @@ const Grade = () => {
         onClick={() => {
           alert('학생 성적 엑셀파일 다운로드(예정)');
         }}
-      />
+      >
+        <span style={{ fontSize: 12, color: 'red' }}>
+          * 성적 입력이 완료되지 않으면 이의신청을 할 수 없습니다
+        </span>
+      </CommonButton>
 
       <Table header={tableHeader} hasPage={true} data={data} pending={false} error={false}>
         {data?.map((item: any, idx) => {
@@ -111,6 +104,7 @@ const Grade = () => {
                       setIlectureStudent(item.ilectureStudent);
                       setDemur(true);
                     }}
+                    disabled={!item.finishedYn}
                   />
                 ) : (
                   <>
