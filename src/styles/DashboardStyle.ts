@@ -126,6 +126,10 @@ const DashboardTimetable = styled.div`
         &:nth-of-type(n + 41) {
           border-bottom: none;
         }
+        > span {
+          text-align: center;
+          word-break: break-word;
+        }
       }
       > div.timetable-loading {
         position: absolute;

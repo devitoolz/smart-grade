@@ -102,7 +102,7 @@ const Dashboard = () => {
                           className="tooltip"
                           style={{ background: colorData[time?.[index]?.idx % 9] }}
                         >
-                          <span data-tooltip-text={time?.[index]?.lectureRoomName}>
+                          <span data-tooltip-text={time?.[index]?.lectureRoomName?.concat('호')}>
                             {time?.[index]?.lectureName}
                           </span>
                         </div>
