@@ -10,6 +10,9 @@ const DashboardLayout = styled.div`
   &.admin {
     grid-template: auto auto / 1fr 1fr;
   }
+  &.student {
+    grid-template: auto 481.5px / auto 1fr;
+  }
 `;
 
 const DashboardContent = styled.div`
@@ -123,6 +126,10 @@ const DashboardTimetable = styled.div`
         &:nth-of-type(n + 41) {
           border-bottom: none;
         }
+        > span {
+          text-align: center;
+          word-break: break-word;
+        }
       }
       > div.timetable-loading {
         position: absolute;
@@ -181,4 +188,49 @@ const DashboardTimetable = styled.div`
   }
 `;
 
-export { DashboardLayout, DashboardContent, DashboardTimetable };
+const DashboardScore = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  position: relative;
+  > div.percent {
+    width: 260px;
+    position: absolute;
+    left: 20px;
+  }
+  > div.student-info {
+    width: 100%;
+    font-size: 16px;
+    padding-left: 215px;
+    > div {
+      display: grid;
+      grid-template-columns: 1.5fr 3fr;
+      height: 45px;
+      border-bottom: 1px solid var(--table-border-color);
+      &:first-of-type {
+        border-top: 2px solid var(--table-outline-color);
+      }
+      &:last-of-type {
+        border-bottom: 2px solid var(--table-outline-color);
+      }
+      > span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      > span:first-of-type {
+        padding-left: 60px;
+        font-weight: bold;
+        background: var(--main-bg-color);
+        border-right: 2px solid var(--table-outline-color);
+      }
+    }
+  }
+  span.percent-txt {
+    font-size: 40px;
+    font-weight: bold;
+  }
+`;
+
+export { DashboardLayout, DashboardContent, DashboardTimetable, DashboardScore };
