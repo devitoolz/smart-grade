@@ -6,6 +6,7 @@ import GradeDemur from '../../components/professor/GradeDemur';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
 import { getLectureList } from '../../apis/professorGrade';
 import { dayData } from '../../modules/timetable';
+import { NoDatas } from '../../styles/MyStyleCSS';
 
 const Grade = () => {
   const navigate = useNavigate();
@@ -36,18 +37,9 @@ const Grade = () => {
   return (
     <>
       <SearchBarLayout>
-        <div style={{ height: 35 }}>교수가 현재 수업 중인 강의리스트</div>
+        <div style={{ lineHeight: '35px' }}>교수가 현재 수업 중인 강의리스트</div>
       </SearchBarLayout>
-      <div>
-        <span>flow</span>
-        <ul>
-          <li>1. 수업리스트 불러옴</li>
-          <li>2. 해당 강의 클릭</li>
-          <li>3. 해당 강의를 듣는 학생들의 성적입력</li>
-          <li>4. 이의신청온 목록 확인 가능</li>
-          <li>5. 이의신청 확인 후 처리</li>
-        </ul>
-      </div>
+      <NoDatas />
       <Table header={tableHeader} data={data} hasPage={true} pending={false} error={false}>
         {data?.map((item: any, idx) => {
           return (

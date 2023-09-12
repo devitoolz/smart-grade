@@ -6,6 +6,7 @@ import Dropdown from '../../components/Dropdown';
 import CommonModal from '../../components/CommonModal';
 import { getLectureList, putObjection } from '../../apis/studentGrade';
 import { dayData } from '../../modules/timetable';
+import { SearchBarLayout } from '../../styles/SearchBarStyle';
 
 const Grade = () => {
   const tableHeader = [
@@ -19,28 +20,14 @@ const Grade = () => {
     { title: '최종성적', width: 1 },
     { title: '평점', width: 1 },
     { title: '등급', width: 1 },
-    { title: '비고', width: 1.5 },
+    { title: '이의신청', width: 1.5 },
   ];
-
-  // 검색
-  const queries = {};
-  const [click, setClick] = useState(false);
-  // 검색 - 드롭다운 - 학년학기 검색?
-  const dropData = [
-    { id: 1, title: '1학년 1학기' },
-    { id: 2, title: '1학년 2학기' },
-    { id: 3, title: '2학년 1학기' },
-    { id: 4, title: '2학년 2학기' },
-  ];
-  // XXX 타입 수정 필요 !!
-  const [dropValue, setDropValue] = useState<any>('');
 
   // 강의 pk
   const [ilectureStudent, setIlectureStudent] = useState<number | null>(null);
   // 이의신청 모달창
   const [demur, setDemur] = useState(false);
   const handleApplyDemurOk = async () => {
-    console.log(ilectureStudent);
     putObjectionWait();
     setDemur(false);
   };
@@ -49,7 +36,7 @@ const Grade = () => {
     setIlectureStudent(null);
   };
 
-  // 임시데이터
+  // 데이터
   const [data, setData] = useState([]);
   const getLectureListWait = async () => {
     await getLectureList(setData);
@@ -64,17 +51,9 @@ const Grade = () => {
 
   return (
     <>
-      <SearchBar queries={queries} setPage={true} setClick={setClick}>
-        <div>학생 개인의 성적 조회</div>
-        <Dropdown
-          length="middle"
-          placeholder="학년학기"
-          data={dropData}
-          value={dropValue}
-          setValue={setDropValue}
-          reset={true}
-        />
-      </SearchBar>
+      <SearchBarLayout>
+        <div style={{ lineHeight: '35px' }}>학생 개인의 성적 조회</div>
+      </SearchBarLayout>
 
       <CommonButton
         btnType="page"
