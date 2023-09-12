@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 const LectureRoom = () => {
   const navigate = useNavigate();
   //강의실 pk값
-  const [ilectureRoom, setIlectureRoom] = useState('');
+  const [, setIlectureRoom] = useState('');
   //강의실 추가시 건물명 state
 
   const [buildingNameData, setBuildingNameData] = useState('');
@@ -108,9 +108,6 @@ const LectureRoom = () => {
     //setDisplay(false); //setter쓰면 이중으로 됨.
     //하지만 function은 써줘야 함.
 
-    console.log('buildingNameData', buildingNameData);
-    console.log('lectureRoomName', lectureRoomName);
-    console.log('maxCapacity', maxCapacity);
     if (
       buildingNameData !== '' &&
       buildingNameData !== null &&
@@ -120,15 +117,15 @@ const LectureRoom = () => {
       maxCapacity !== ''
     ) {
       await postBuildinglist(lectureRoomName, buildingNameData, maxCapacity);
-      console.log('되나?', setIlectureRoom);
-      setIlectureRoom();
-      setLectureRoomName();
-      setBuildingName();
-      setMaxCapacity();
+
+      alert('등록되었습니다.');
+      setIlectureRoom('');
+      setLectureRoomName('');
+      setBuildingName('');
+      setMaxCapacity('');
       //window.location.reload();
     } else {
       alert('입력되지 않은 정보가 있습니다.');
-
       setIlectureRoom('');
       setBuildingNameData('');
       setLectureRoomName('');

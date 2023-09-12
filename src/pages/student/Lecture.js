@@ -71,87 +71,6 @@ const Lecture = () => {
     },
   ];
 
-  //연도 임시 더미 데이터
-  const yearList = [
-    {
-      id: 1,
-      title: '2022',
-    },
-    {
-      id: 2,
-      title: '2023',
-    },
-  ];
-
-  //강의명 임시 더미 데이터
-  const LectureNameList = [
-    {
-      id: '1',
-      title: '산업공학의 이해',
-    },
-    {
-      id: '2',
-      title: '디자인 마케팅 개론',
-    },
-    {
-      id: '1',
-      title: '디자인실습(1)',
-    },
-  ];
-
-  // 테이블 임시 더미 데이터
-  const _data = [
-    {
-      id: '1',
-      year: 2023,
-      semester: '1',
-      grade: '3',
-      LectureName: '콘크리트 구조 이해',
-      professor: '도하나',
-      lectureHour: '09:00~10:00 화,목',
-      score: 3,
-    },
-    {
-      id: '2 ',
-      content: '1',
-    },
-    {
-      id: '3 ',
-      content: '1',
-    },
-    {
-      id: '4 ',
-      content: '1',
-    },
-    {
-      id: '5 ',
-      content: '1',
-    },
-    {
-      id: '6  ',
-      content: '1',
-    },
-    {
-      id: '7   ',
-      content: '1',
-    },
-    {
-      id: '8    ',
-      content: '1',
-    },
-    {
-      id: '9',
-      content: '1',
-    },
-    {
-      id: '10',
-      content: '1',
-    },
-  ];
-
-  //임시로 get 확인
-  // const get
-
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기
@@ -174,26 +93,28 @@ const Lecture = () => {
   //api get hook test
   const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
+
+  // 연도 드랍다운 데이터
+  const yearList = [];
+  data?.yearList?.forEach(item => {
+    yearList.push({ id: item.year, title: item.year });
+  });
+
+  //강의명 드랍다운 데이터
+  const LectureNameList = [];
+  data?.lectureList?.forEach(item => {
+    LectureNameList.push({ id: item.lectureName, title: item.lectureName });
+  });
   const [contents, setContents] = useState([]);
-  const [index, setIndex] = useState();
+
   useEffect(() => {
     console.log(data);
-
-    // const parseData = data?.lectureList.map(item => {
-    //   item.weekWord = weekStr[item.dayWeek];
-    //   return item;
-    // });
-    // console.log('새로 만든 데이터 ', parseData);
-    // setContents(parseData);
 
     setContents(data?.lectureList);
 
     console.log(data?.lectureList);
     console.log(contents);
   }, [data]);
-
-  //searchBar dropDown
-  //데이터 추후 작성
 
   return (
     <div>
@@ -202,7 +123,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={data?.lectureList?.year}
+            data={yearList}
             value={year}
             setValue={setYear}
             reset
@@ -210,7 +131,7 @@ const Lecture = () => {
           <Dropdown
             length="long"
             placeholder="강의명"
-            data={data?.lectureList?.lectureName}
+            data={LectureNameList}
             value={lectureName}
             setValue={setLectureName}
             reset
@@ -234,7 +155,7 @@ const Lecture = () => {
         pending={pending}
         error={error}
       >
-        {data?.lectureList?.map((item, idx) => {
+        {data?.lectureList?.map(item => {
           return (
             <div key={item.idx}>
               <div>{item.year}</div>
@@ -246,7 +167,7 @@ const Lecture = () => {
               <div>
                 {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
                 {''} {''}
-                {dayData[item.dayWeek].charAt(0)}
+                {dayData[item.dayWeek]}
               </div>
               <div>{item.finishedYn === 1 ? '수료' : '수강중'}</div>
               <div>
@@ -287,7 +208,7 @@ const Lecture = () => {
               <div className="inputLectureHour">
                 {selectItem.lectureStrTime.substr(0, 5)}~{selectItem.lectureEndTime.substr(0, 5)}
                 {''} {''}
-                {dayData[selectItem.dayWeek].charAt(0)}
+                {dayData[selectItem.dayWeek]}
               </div>
               <div className="professorName">교수명</div>
               <div className="inputProfessorName">{selectItem.professorName}</div>
@@ -313,7 +234,7 @@ const Lecture = () => {
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
                 <div>
-                  {bookPic === false ? (
+                  {bookPic === true ? (
                     <img
                       src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
                       alt="교재 이미지"

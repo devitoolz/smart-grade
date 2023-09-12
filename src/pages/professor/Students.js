@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../../apis/api';
 import CommonButton from '../../components/CommonButton';
 import Dropdown from '../../components/Dropdown';
-import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
@@ -24,9 +21,9 @@ const Students = () => {
   //전공 state
   const [major, setMajor] = useState('');
   //학번 state
-  const [studentID, setStudentID] = useState('');
+  const [studentID] = useState('');
   //이름 state
-  const [studentName, setStudentName] = useState('');
+  const [studentName] = useState('');
   //쿼리스트링
   const queries = { grade, major, studentID, studentName };
 
@@ -72,91 +69,23 @@ const Students = () => {
       width: '1',
     },
   ];
-  //학기 임시 더미데이터
-  const majorList = [
-    {
-      id: 1,
-      title: '산업디자인학과',
-    },
-    {
-      id: 2,
-      title: '컴퓨터 공학과',
-    },
-    {
-      id: 3,
-      title: '신소재 공학과',
-    },
-  ];
-  //학년 임시 더미데이터
-  const gradeList = [
-    {
-      id: 1,
-      title: '1학년',
-    },
-    {
-      id: 2,
-      title: '2학년',
-    },
-    {
-      id: 3,
-      title: '3학년',
-    },
-    {
-      id: 4,
-      title: '4학년',
-    },
-  ];
-
-  //테이블 임시 더미데이터
-  // const _data = [
-  //   {
-  //     id: '1',
-  //     grade: '3',
-  //     major: '산업디자인',
-  //     StudentID: 23720004,
-  //     name: '도하나',
-  //     phoneNumber: '010 - 1234 - 5678',
-  //   },
-  //   {
-  //     id: '2 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '3 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '4 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '5 ',
-  //     content: '1',
-  //   },
-  // ];
 
   //api get hook test
   const url = `/api/professor/lecture-list`;
-  //바꾼거
-  // const url = `/api/student/lecture-list?page=${page}&size=10&sort=finishedYn=${degree}`;
 
-  const { data, pending, error } = useQuerySearch(url);
+  const { data, pending, error } = useQuerySearch(url, click);
 
-  // const getstudent = async () => {
-  //   try {
-  //     const res = await api.get(`/api/student/${studentNum}`);
-  // const res= await api.get(`/api/student/lecture-list?page=${page}&size=10&sort=finishedYn=${degree}`);
-  //     const result = res.data;
-  //     console.log('갈치가 천원', result);
-  //     return result;
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  //연도 드랍다운 데이터
+  const yearList = [];
+  data?.yearList?.forEach(item => {
+    yearList.push({ id: item.year, title: item.year });
+  });
 
-  // useEffect(() => {
-  //   getstudent();
-  // });
+  //강의명 드랍다운 데이터
+  const LectureNameList = [];
+  data?.lectureList?.forEach(item => {
+    LectureNameList.push({ id: item.lectureName, title: item.lectureName });
+  });
 
   return (
     <div>
@@ -165,8 +94,7 @@ const Students = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={data?.lectureList.gradeLimit}
-            propertyName={{ key: 'id', value: 'title' }}
+            data={yearList}
             value={grade}
             setValue={setGrade}
             reset
@@ -175,8 +103,7 @@ const Students = () => {
           <Dropdown
             length="long"
             placeholder="강의명"
-            data={data?.lectureList.lectureName}
-            propertyName={{ key: 'id', value: 'title' }}
+            data={LectureNameList}
             value={major}
             setValue={setMajor}
             reset
@@ -203,7 +130,7 @@ const Students = () => {
               <div>
                 {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
                 {''} {''}
-                {dayData[item.dayWeek].charAt(0)}
+                {dayData[item.dayWeek]}
               </div>
               <div>
                 {item.buildingName} {''} {''}
