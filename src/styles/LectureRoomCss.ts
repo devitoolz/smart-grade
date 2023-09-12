@@ -209,6 +209,7 @@ export const ProfessorLectureDetail = styled.div`
     height: 100%;
     /* justify-content: space-around; */
     div {
+      object-fit: cover;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -221,6 +222,7 @@ export const ProfessorLectureDetail = styled.div`
       img {
         object-fit: cover;
         width: 100%;
+        height: 100%; 
       }
       .icon {
         display: flex;

@@ -80,93 +80,34 @@ const Lecture = () => {
     },
   ];
 
-  //학기 임시 더미 데이터
-  // const semesterList = [
+  //연도 리스트 데이터
+  // const yearDataList = {
   //   {
-  //     id: 1,
-  //     title: '2017',
-  //   },
-  //   {
-  //     id: 2,
-  //     title: '2018',
-  //   },
-  //   {
-  //     id: 3,
-  //     title: '2019',
-  //   },
-  //   {
-  //     id: 4,
+  //     id: '2020',
   //     title: '2020',
   //   },
   //   {
-  //     id: 4,
+  //     id: '2021',
   //     title: '2021',
   //   },
   //   {
-  //     id: 4,
+  //     id: '2022',
   //     title: '2022',
   //   },
   //   {
-  //     id: 4,
-  //     title: '2023하드',
+  //     id: '2023',
+  //     title: '폐지',
   //   },
-  // ];
+  // }
 
-  //임시 더미 데이터
-  // const _data = [
-  //   {
-  //     id: '1',
-  //     year: '1',
-  //     semester: 2,
-  //     grade: '3',
-  //     LectureName: '콘크리트 구조 이해',
-  //     lectureRoom: '백매관 303호',
-  //     score: 3,
-  //     lectureHour: '09:00~10:00 수,목',
-  //     maxCapacity: '25 / 30',
-  //   },
-  //   {
-  //     id: '2 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '3 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '4 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '5 ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '6  ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '7   ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '8    ',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '9',
-  //     content: '1',
-  //   },
-  //   {
-  //     id: '10',
-  //     content: '1',
-  //   },
-  // ];
+  // 선택된 상세보기 객체
+  const [selectItem, setSelectItem] = useState(null);
 
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기
-  const handleModalOk = () => {
+  const handleModalOk = _item => {
+    setSelectItem(_item);
     setDisplay(true);
   };
 
@@ -174,13 +115,6 @@ const Lecture = () => {
   const handleModalCancel = () => {
     setDisplay(false);
   };
-  //상세보기 버튼 클릭시
-  const handlePageBtnClick = () => {
-    setDisplay(true);
-  };
-
-  // 교수 강의조회 상세보기 modal창 get
-  const professor = useQuerySearch('/api/professor/lecture/list');
 
   //api get hook test
   const url = `/api/professor/lecture-list`;
@@ -269,7 +203,7 @@ const Lecture = () => {
                   btnType="table"
                   color="gray"
                   value="상세보기"
-                  onClick={handlePageBtnClick}
+                  onClick={() => handleModalOk(item)}
                 />
               </div>
             </div>
@@ -277,69 +211,63 @@ const Lecture = () => {
         })}
       </Table>
 
-      {display === true
-        ? professor.data?.lectureList?.map(item => {
-            return (
-              <div key={item.idx}>
-                <CommonModal
-                  setDisplay={setDisplay}
-                  modalSize="big"
-                  modalTitle="강의 상세정보"
-                  handleModalOk={handleModalOk}
-                  handleModalCancel={handleModalCancel}
-                >
-                  <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
-                  <ProfessorCaution>
-                    <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
-                    <p className="callNum">전산실 전화번호: 053-000-0000</p>
-                  </ProfessorCaution>
-                  <ProfessorLectureDetail>
-                    <div className="innerContainer">
-                      <div className="lectureName">강의명</div>
-                      <div className="inputLectureName">{item.lectureName}</div>
-                      <div className="grade">학년</div>
-                      <div className="inputGrade">{item.gradeLimit}</div>
-                      <div className="semester">학기</div>
-                      <div className="inputSemester">{item.isemester}</div>
-                      <div className="score">학점</div>
-                      <div className="inputScore">{item.score}</div>
-                      <div className="lectureHour">강의시간</div>
-                      <div className="inputLectureHour">
-                        {item.lectureStrTime.substr(0, 5)}~{item.lectureEndTime.substr(0, 5)}
-                        {''} {''}
-                        {dayData[item.dayWeek]}
-                      </div>
-                      <div className="capacity">정원</div>
-                      <div className="inputCapacity">{item.attendance}</div>
-                      <div className="bookName">교재명</div>
-                      <div className="inputBookName">{item.textbook}</div>
-                      <div className="LectureInfo">강의설명</div>
-                      <div className="inputLectureInfo">{item.ctnt}</div>
-
-                      <div className="bookPic">교재사진</div>
-                      <div className="inputBookPic">
-                        <div>
-                          {bookPic === true ? (
-                            <img src={item?.bookUrl} alt="교재 이미지" />
-                          ) : (
-                            <div className="icon">
-                              <FontAwesomeIcon icon={faBook} className="fa-4x" />
-                              <p>교재가 없습니다.</p>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    </div>
-                  </ProfessorLectureDetail>
-
-                  <ProfessorLectureBtn>
-                    <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
-                  </ProfessorLectureBtn>
-                </CommonModal>
+      {display === true ? (
+        <CommonModal
+          setDisplay={setDisplay}
+          modalSize="big"
+          modalTitle="강의 상세정보"
+          handleModalOk={handleModalOk}
+          handleModalCancel={handleModalCancel}
+        >
+          <div style={{ marginBottom: '20px', borderBottom: '1px solid #dae8ff' }} />
+          <ProfessorCaution>
+            <p>* 수정사항이 있을 시 전산실로 연락 주시기 바랍니다.</p>
+            <p className="callNum">전산실 전화번호: 053-000-0000</p>
+          </ProfessorCaution>
+          <ProfessorLectureDetail>
+            <div className="innerContainer">
+              <div className="lectureName">강의명</div>
+              <div className="inputLectureName">{selectItem.lectureName}</div>
+              <div className="grade">학년</div>
+              <div className="inputGrade">{selectItem.gradeLimit}</div>
+              <div className="semester">학기</div>
+              <div className="inputSemester">{selectItem.isemester}</div>
+              <div className="score">학점</div>
+              <div className="inputScore">{selectItem.score}</div>
+              <div className="lectureHour">강의시간</div>
+              <div className="inputLectureHour">
+                {selectItem.lectureStrTime.substr(0, 5)}~{selectItem.lectureEndTime.substr(0, 5)}
+                {''} {''}
+                {dayData[selectItem.dayWeek]}
               </div>
-            );
-          })
-        : null}
+              <div className="capacity">정원</div>
+              <div className="inputCapacity">{selectItem.attendance}</div>
+              <div className="bookName">교재명</div>
+              <div className="inputBookName">{selectItem.textbook}</div>
+              <div className="LectureInfo">강의설명</div>
+              <div className="inputLectureInfo">{selectItem.ctnt}</div>
+
+              <div className="bookPic">교재사진</div>
+              <div className="inputBookPic">
+                <div>
+                  {selectItem?.bookUrl ? (
+                    <img src={selectItem?.bookUrl} alt="교재 이미지" />
+                  ) : (
+                    <div className="icon">
+                      <FontAwesomeIcon icon={faBook} className="fa-4x" />
+                      <p>교재가 없습니다.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </ProfessorLectureDetail>
+
+          <ProfessorLectureBtn>
+            <CommonButton btnType="modal" value="닫기" onClick={handleModalCancel} />
+          </ProfessorLectureBtn>
+        </CommonModal>
+      ) : null}
     </div>
   );
 };

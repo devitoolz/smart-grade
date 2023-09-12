@@ -9,8 +9,10 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
 import api from '../../apis/api';
+import { useNavigate } from 'react-router-dom';
 
 const Major = () => {
+  const navigator = useNavigate();
   //searchBar
   const [majorName, setMajorName] = useState(''); //전공명 state
   //searchBar 전공명 상태 state
@@ -35,7 +37,6 @@ const Major = () => {
 
   //전공리스트 state 전역관리
   const { allMajorList } = useSelector(state => state.major);
-  // console.log(allMajorList);
 
   // 변경전 졸업학점
   const [graduationScore, setGraduationScore] = useState('');
@@ -194,8 +195,6 @@ const Major = () => {
     }
   };
 
-  // console.log(data?.major);
-
   //변경 버튼 클릭시
   const changeClickShowOpen = async () => {
     const tempStr = selectMajorName.trim();
@@ -207,10 +206,8 @@ const Major = () => {
     };
     try {
       await api.patch(`/api/admin/major`, patchDatas, { headers });
-
-      //변경 전 전공명 state
-      // setSelectMajorNameNow(tempStr);
-      // console.log('전공명 서버 수정 완료 : ', result);
+      const res = await api.get(url);
+      setDataArr(res.data.vo);
 
       // 여기서 화면을 갱신한다.
       const temp = isDataArr.map(item => {
@@ -227,7 +224,7 @@ const Major = () => {
         }
         return item;
       });
-      // console.log(temp);
+
       setDataArr(temp);
       setSelectMajorID('');
       setSelectMajorName('');
@@ -263,7 +260,7 @@ const Major = () => {
   };
 
   //전공추가 모달 창  확인버튼 누를 시
-  const handleModalOk = () => {
+  const handleModalOk = async () => {
     if (newMajorName != '' && newGraduationScore != '') {
       const graduationScoreValue = parseInt(newGraduationScore);
       if (newGraduationScore >= 110 && newGraduationScore <= 135) {
@@ -271,6 +268,9 @@ const Major = () => {
         // setNewGraduationScore(); //post 후 화면에 전공추가 내용 바로 적용
         setNewMajorName('');
         setNewGraduationScore('');
+
+        const res = await api.get(url);
+        setDataArr(res.data.vo);
       } else {
         alert('졸업학점은 110점 이상 135학점 이하로 입력하세요.');
       }
@@ -309,8 +309,6 @@ const Major = () => {
   // api 전공리스트 전체 보기
   const [isDataArr, setDataArr] = useState([]);
   useEffect(() => {
-    // console.log(data);
-
     if (data) {
       const temp = data?.vo?.map(item => {
         // 강제로 변경상태 기록
