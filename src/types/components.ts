@@ -113,6 +113,7 @@ export interface LectureTimetableData {
   endTime: string;
   dayWeek: number;
   lectureName?: string;
+  lectureRoomName?: string;
 }
 
 export interface RegisterScoreProps {

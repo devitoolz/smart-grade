@@ -1,66 +1,34 @@
-import React from 'react';
-import { ResponsiveLine } from '@nivo/line';
+import React, { useEffect, useState } from 'react';
+import { ResponsiveLine, Serie } from '@nivo/line';
 import { DashboardContent, DashboardLayout } from '../../styles/DashboardStyle';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import { useNavigate } from 'react-router-dom';
+import api from '../../apis/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [chartData, setChartData] = useState<Serie[]>([]);
 
-  const data = [
-    {
-      id: '남',
-      data: [
-        {
-          x: '2019',
-          y: 54,
-        },
-        {
-          x: '2020',
-          y: 62,
-        },
-        {
-          x: '2021',
-          y: 70,
-        },
-        {
-          x: '2022',
-          y: 60,
-        },
-        {
-          x: '2023',
-          y: 66,
-        },
-      ],
-    },
-    {
-      id: '여',
-      data: [
-        {
-          x: '2019',
-          y: 69,
-        },
-        {
-          x: '2020',
-          y: 55,
-        },
-        {
-          x: '2021',
-          y: 50,
-        },
-        {
-          x: '2022',
-          y: 54,
-        },
-        {
-          x: '2023',
-          y: 62,
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const getChartData = async () => {
+      try {
+        const { data } = await api.get<ObjectType>('/api/admin/student/ratio');
+
+        const newData = ['man', 'female'].map(gender => ({
+          id: gender === 'man' ? '남' : '여',
+          data: data[gender].map((item: ObjectType) => ({ x: item.year, y: item.count })),
+        }));
+
+        setChartData(newData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getChartData();
+  }, []);
 
   const tableHeader = [
     { title: '전공', width: 5 },
@@ -81,7 +49,7 @@ const Dashboard = () => {
           <span>연도별 입학생 추이</span>
         </div>
         <ResponsiveLine
-          data={data}
+          data={chartData}
           theme={{
             fontSize: 14,
             fontFamily: 'Pretendard',

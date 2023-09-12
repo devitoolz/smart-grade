@@ -41,7 +41,7 @@ const Dashboard = () => {
       );
       for (let i = 0; i < end - start; i++) {
         const index = 5 * startKey + item.dayWeek - 1 + 5 * i;
-        temp[index] = { lectureName: item.lectureName, idx };
+        temp[index] = { lectureName: item.lectureName, lectureRoomName: item.lectureRoomName, idx };
       }
     });
 
