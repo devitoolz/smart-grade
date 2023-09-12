@@ -20,15 +20,7 @@ const Dashboard = () => {
     { title: '조회수', width: 1 },
   ];
 
-  const objectionTableHeader = [
-    { title: '전공', width: 4 },
-    { title: '학번', width: 2 },
-    { title: '이름', width: 2 },
-    { title: '강의명', width: 4 },
-    { title: '이의 신청일', width: 2 },
-  ];
-
-  const timetable = useQuerySearch('/api/professor/schedule');
+  const timetable = useQuerySearch('/api/student/schedule');
 
   useEffect(() => {
     let temp: ObjectType = {};
@@ -58,8 +50,8 @@ const Dashboard = () => {
   const totalNoticeList = importantNoticeList &&
     noticeList && [...importantNoticeList, ...noticeList];
 
-  const objection = useQuerySearch('/api/professor/objection?size=8');
-  const objectionList: Array<ObjectType> = objection.data as Array<ObjectType>;
+  const score = useQuerySearch('/api/student/score');
+  console.log(score.data);
 
   return (
     <DashboardLayout>
@@ -125,6 +117,12 @@ const Dashboard = () => {
       </DashboardContent>
       <DashboardContent>
         <div className="title">
+          <span>이수 학점</span>
+        </div>
+        <div></div>
+      </DashboardContent>
+      <DashboardContent>
+        <div className="title">
           <span>공지사항</span>
           <button onClick={() => navigate('/professor/notice')}>더보기</button>
         </div>
@@ -144,31 +142,6 @@ const Dashboard = () => {
                 <div onClick={() => navigate(`/professor/notice/${item.iboard}`)}>{item.title}</div>
                 <div>{item.createdAt.split('T')[0]}</div>
                 <div>{item.boardView}</div>
-              </div>
-            ))}
-          </Table>
-        </div>
-      </DashboardContent>
-      <DashboardContent>
-        <div className="title">
-          <span>이의 신청</span>
-          <button onClick={() => navigate('/professor/grade')}>더보기</button>
-        </div>
-        <div>
-          <Table
-            header={objectionTableHeader}
-            data={objectionList}
-            pending={objection.pending}
-            error={objection.error}
-            dashboard={8}
-          >
-            {objectionList?.map((item, index) => (
-              <div key={index}>
-                <div>{item.majorName}</div>
-                <div>{item.studentNum}</div>
-                <div>{item.studentName}</div>
-                <div>{item.lectureName}</div>
-                <div>{item.correctionAt}</div>
               </div>
             ))}
           </Table>

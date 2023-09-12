@@ -29,6 +29,7 @@ import { PulseLoader } from 'react-spinners';
 import { RootState } from '../../store';
 import { ObjectType } from '../../types/components';
 import { ProfessorProfileData, StudentProfileData, UserProfile } from '../../types/apis';
+import { checkValidEmail } from '../../modules/regex';
 
 const UserDetail = () => {
   const navigate = useNavigate();
@@ -55,6 +56,9 @@ const UserDetail = () => {
   const getUserDetail = async () => {
     try {
       const { data } = await api.get<UserProfile>(`/api/admin/${state}/${id}`);
+      if (data.profile.email && !checkValidEmail(data.profile.email)) {
+        data.profile.email = '';
+      }
       setUserDetail(data.profile);
       setLectureList(data.lectureList);
       setName(data.profile.name);
