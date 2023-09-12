@@ -2,11 +2,11 @@ import { TimetableData } from '../types/components';
 import { DayData } from '../types/pages';
 
 const dayData: DayData = {
-  1: '월요일',
-  2: '화요일',
-  3: '수요일',
-  4: '목요일',
-  5: '금요일',
+  1: '(월)',
+  2: '(화)',
+  3: '(수)',
+  4: '(목)',
+  5: '(금)',
 };
 
 const timeData: TimetableData = {
@@ -21,6 +21,18 @@ const timeData: TimetableData = {
   8: 17,
 };
 
+const colorData = [
+  '#ffadad',
+  '#ffd6a5',
+  '#fdffb6',
+  '#caffbf',
+  '#9bf6ff',
+  '#a0c4ff',
+  '#bdb2ff',
+  '#ffc6ff',
+  '#fffffc',
+];
+
 const numberToString = (number: number) => {
   if (number < 10) {
     return `0${number}:00`;
@@ -33,4 +45,4 @@ const stringToNumber = (string: string) => {
   return parseInt(string.slice(0, 2));
 };
 
-export { dayData, timeData, numberToString, stringToNumber };
+export { dayData, timeData, colorData, numberToString, stringToNumber };
