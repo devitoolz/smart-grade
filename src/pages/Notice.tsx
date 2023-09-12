@@ -8,9 +8,6 @@ import useQuerySearch from '../hooks/useSearchFetch';
 import CommonModal from '../components/CommonModal';
 import { deleteBoard } from '../apis/board';
 import { ObjectType } from '../types/components';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../store';
-import mainSlice from '../slices/mainSlice';
 
 const Notice = () => {
   const navigate = useNavigate();
@@ -45,34 +42,15 @@ const Notice = () => {
   // 중요공지
   const urlImport = '/api/board';
   const important = useQuerySearch(urlImport, click);
-
   // 데이터 가공
-  const { search } = useLocation();
-  // useEffect(() => {
-  //   data === null
-  //     ? null
-  //     : important.data === null
-  //     ? null
-  //     : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]);
-  // }, [data, important.data]);
   useEffect(() => {
-    const match = search.search(/\?keyword=([^&]+)/);
-    // 일반+중요 공지
-    const noticeList = () => {
-      data === null
-        ? null
-        : important.data === null
-        ? null
-        : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]);
-    };
-    // 검색결과
-    const noticeSearch = () => {
-      data !== null ? setNoticeData([...(data as ObjectType).list]) : null;
-    };
-    match === 0 ? noticeSearch() : noticeList();
+    data === null
+      ? null
+      : important.data === null
+      ? null
+      : setNoticeData([...(important as ObjectType).data, ...(data as ObjectType).list]);
   }, [data, important.data]);
 
-  // XXX 수정수정
   const tableHeader = adminMode
     ? [
         { title: 'NO.', width: 1 },
@@ -132,7 +110,7 @@ const Notice = () => {
         header={tableHeader}
         data={noticeData}
         hasPage={true}
-        maxPage={(data as ObjectType)?.page?.maxPage - 1}
+        maxPage={(data as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
