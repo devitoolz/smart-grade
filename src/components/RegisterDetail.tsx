@@ -35,10 +35,9 @@ const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) =>
                 <div style={{ boxShadow: '0 -2px 0 0 var(--form-table-odd-border-color)' }}>
                   강의 시간
                 </div>
-                <div>{`${dayData[lectureData?.dayWeek]} ${lectureData?.lectureStrTime.slice(
-                  0,
-                  -3
-                )} ~ ${lectureData?.lectureEndTime.slice(0, -3)}`}</div>
+                <div>{`${
+                  dayData[lectureData?.dayWeek]
+                } ${lectureData?.lectureStrTime} ~ ${lectureData?.lectureEndTime}`}</div>
                 <div>수강 인원 수</div>
                 <div>{lectureData?.lectureMaxPeople}</div>
                 <div>{lectureData?.professorName ? '담당 교수' : '학년 제한'}</div>

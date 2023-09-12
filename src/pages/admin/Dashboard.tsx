@@ -1,66 +1,34 @@
-import React from 'react';
-import { ResponsiveLine } from '@nivo/line';
+import React, { useEffect, useState } from 'react';
+import { ResponsiveLine, Serie } from '@nivo/line';
 import { DashboardContent, DashboardLayout } from '../../styles/DashboardStyle';
 import Table from '../../components/Table';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { ObjectType } from '../../types/components';
 import { useNavigate } from 'react-router-dom';
+import api from '../../apis/api';
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [chartData, setChartData] = useState<Serie[]>([]);
 
-  const data = [
-    {
-      id: '남',
-      data: [
-        {
-          x: '2019',
-          y: 54,
-        },
-        {
-          x: '2020',
-          y: 62,
-        },
-        {
-          x: '2021',
-          y: 70,
-        },
-        {
-          x: '2022',
-          y: 60,
-        },
-        {
-          x: '2023',
-          y: 66,
-        },
-      ],
-    },
-    {
-      id: '여',
-      data: [
-        {
-          x: '2019',
-          y: 69,
-        },
-        {
-          x: '2020',
-          y: 55,
-        },
-        {
-          x: '2021',
-          y: 50,
-        },
-        {
-          x: '2022',
-          y: 54,
-        },
-        {
-          x: '2023',
-          y: 62,
-        },
-      ],
-    },
-  ];
+  useEffect(() => {
+    const getChartData = async () => {
+      try {
+        const { data } = await api.get<ObjectType>('/api/admin/student/ratio');
+
+        const newData = ['man', 'female'].map(gender => ({
+          id: gender === 'man' ? '남' : '여',
+          data: data[gender].map((item: ObjectType) => ({ x: item.year, y: item.count })),
+        }));
+
+        setChartData(newData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getChartData();
+  }, []);
 
   const tableHeader = [
     { title: '전공', width: 5 },
@@ -75,13 +43,13 @@ const Dashboard = () => {
   const studentList: Array<ObjectType> = (student.data as ObjectType)?.students;
 
   return (
-    <DashboardLayout>
+    <DashboardLayout className="admin">
       <DashboardContent className="chart">
         <div className="title">
           <span>연도별 입학생 추이</span>
         </div>
         <ResponsiveLine
-          data={data}
+          data={chartData}
           theme={{
             fontSize: 14,
             fontFamily: 'Pretendard',
@@ -134,7 +102,7 @@ const Dashboard = () => {
       <DashboardContent>
         <div className="title">
           <span>신규 교수 계정</span>
-          <button onClick={() => navigate('/admin/user/professor')}>상세보기</button>
+          <button onClick={() => navigate('/admin/user/professor')}>더보기</button>
         </div>
         <div>
           <Table
@@ -142,7 +110,7 @@ const Dashboard = () => {
             data={professorList}
             pending={professor.pending}
             error={professor.error}
-            dashboard
+            dashboard={9}
           >
             {professorList?.map(item => {
               return (
@@ -160,7 +128,7 @@ const Dashboard = () => {
       <DashboardContent>
         <div className="title">
           <span>신규 학생 계정</span>
-          <button onClick={() => navigate('/admin/user/students')}>상세보기</button>
+          <button onClick={() => navigate('/admin/user/students')}>더보기</button>
         </div>
         <div>
           <Table
@@ -168,6 +136,7 @@ const Dashboard = () => {
             data={studentList}
             pending={student.pending}
             error={student.error}
+            dashboard={9}
           >
             {studentList?.map(item => {
               return (

@@ -159,7 +159,7 @@ const Lecture = () => {
                 {item.buildingNm} {item.lectureRoomNm}호
               </div>
               <div>
-                {item.strTime}~{item.endTime} ({dayData[item.dayWeek].charAt(0)})
+                {item.strTime}~{item.endTime} {dayData[item.dayWeek]}
               </div>
               <div>
                 {item.currentPeople}/{item.maxPeople}
@@ -208,7 +208,7 @@ const Lecture = () => {
                   <div>강의시간</div>
                   <div>
                     {contents.lectureStrTime}~{contents.lectureEndTime} (
-                    {dayData[contents.dayWeek].charAt(0)})
+                    {dayData[contents.dayWeek]})
                   </div>
                 </Row>
                 <Row col={2}>
@@ -248,7 +248,7 @@ const Lecture = () => {
                       </BookImage>
                     </div>
                   </div>
-                  <div className="row pt-2">
+                  <div className="row" style={{paddingTop: 1}}>
                     <div>교재명</div>
                     <div>
                       {/^(null|undefined|)$/.test(contents.textBook) ? (

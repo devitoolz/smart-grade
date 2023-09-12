@@ -50,7 +50,8 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
 
   const handleAuthEmail = async () => {
     try {
-      // TODO: 확인 API
+      const { data } = await api.get('/api/send-email/email-success');
+      console.log(data);
       setIsEmailAuth(true);
     } catch {
       alert('인증 확인이 되지 않았습니다.');

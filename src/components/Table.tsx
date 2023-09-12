@@ -95,7 +95,7 @@ const Table = ({
               <PulseLoader color="#47b5ff" margin={6} size={12} speedMultiplier={0.7} />
               <span>로딩 중...</span>
             </div>
-            {Array(dashboard ? 9 : 10)
+            {Array(dashboard ? dashboard : 10)
               .fill('')
               .map((_, index) => (
                 <div key={index}>
@@ -111,7 +111,7 @@ const Table = ({
           <>
             <TableBody template={width}>
               {children}
-              {Array((dashboard ? 9 : 10) - data.length)
+              {Array((dashboard ? dashboard : 10) - data.length)
                 .fill('')
                 .map((_, index) => (
                   <div key={index}>

@@ -33,3 +33,31 @@ export const putObjection = async (
     return false;
   }
 };
+
+// 학생 성적 엑셀파일 다운로드
+export const getGradeFile = async () => {
+  try {
+    const res = await api.get('/api/student/grade-file', { responseType: 'blob' });
+
+    let fileName = 'grade';
+    const defaultFileName = res.headers['content-disposition'];
+    if (defaultFileName) {
+      fileName = defaultFileName.replace(/attachment;filename=/, '');
+    }
+
+    const url = URL.createObjectURL(new Blob([res.data], { type: res.headers['content-type'] }));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', fileName);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url); //메모리 누수 방지
+
+    return true;
+  } catch (err) {
+    console.log(err);
+    alert('다운로드에 실패했습니다');
+    return false;
+  }
+};

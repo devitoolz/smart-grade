@@ -28,31 +28,36 @@ const Professor = () => {
   const dispatch = useDispatch();
   const main = mainSlice.actions;
 
-  useEffect(() => {
-    const getProfile = async () => {
-      try {
-        const { data } = await api.get<UserProfile>(`/api/professor`);
-        data.profile.secretKey = JSON.parse(data.profile.secretKey);
-        if (data.profile.email && !checkValidEmail(data.profile.email)) {
-          data.profile.email = '';
-        }
-        dispatch(main.setUser({ ...data }));
-      } catch {
-        if (getAuth()) {
-          alert('교수님만 접근할 수 있습니다.');
-          navigate(-2);
-        } else {
-          alert('로그인이 필요합니다.');
-          removeAuth();
-        }
+  const getProfile = async () => {
+    try {
+      const { data } = await api.get<UserProfile>(`/api/professor`);
+      data.profile.secretKey = JSON.parse(data.profile.secretKey);
+      if (data.profile.email && !checkValidEmail(data.profile.email)) {
+        data.profile.email = '';
       }
-    };
+      dispatch(main.setUser({ ...data }));
+    } catch {
+      if (getAuth()) {
+        alert('교수님만 접근할 수 있습니다.');
+        navigate(-2);
+      } else {
+        alert('로그인이 필요합니다.');
+        removeAuth();
+      }
+    }
+  };
+
+  useEffect(() => {
     getProfile();
   }, []);
 
   useEffect(() => {
     if (pathname === '/professor') {
       navigate('home');
+    }
+
+    if (pathname === '/professor/mypage') {
+      getProfile();
     }
   }, [pathname]);
 
