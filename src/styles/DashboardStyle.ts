@@ -148,14 +148,14 @@ const DashboardTimetable = styled.div`
       [data-tooltip-text]:after {
         transition: opacity 0.2s ease-in-out;
         background-color: rgba(0, 0, 0, 0.5);
-        box-shadow: 0px 0px 2px 1px rgba(50, 50, 50, 0.4);
+        text-align: center;
         border-radius: 5px;
         color: #ffffff;
         font-size: 12px;
-        margin-bottom: 10px;
         padding: 5px;
         position: absolute;
         z-index: 9999;
+        width: 100%;
         left: -9999px;
         opacity: 0;
         content: attr(data-tooltip-text);

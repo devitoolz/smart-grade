@@ -8,9 +8,6 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import { dayData } from '../../modules/timetable';
 import api from '../../apis/api';
-import { useDispatch, useSelector } from 'react-redux';
-import mainSlice from '../../slices/mainSlice';
-import { RootState } from '../../store';
 
 const Register = () => {
   const [lectureName, setLectureName] = useState<string>('');
@@ -40,13 +37,14 @@ const Register = () => {
   const lectureList: Array<ObjectType> = (data as ObjectType)?.lectureList;
 
   useEffect(() => {
-    setLectureListResult(lectureList);
+    setLectureListResult(
+      lectureList?.map(lecture => {
+        lecture.lectureStrTime = lecture.lectureStrTime.slice(0, -3);
+        lecture.lectureEndTime = lecture.lectureEndTime.slice(0, -3);
+        return lecture;
+      })
+    );
   }, [lectureList]);
-
-  const { user } = useSelector((state: RootState) => state.main);
-  const dispatch = useDispatch();
-
-  const main = mainSlice.actions;
 
   const changeApplyYn = (ilecture: number) => {
     if (lectureListResult) {
@@ -62,7 +60,6 @@ const Register = () => {
     try {
       await api.post('/api/student', { ilecture });
       alert('수강 신청되었습니다.');
-      dispatch(main.setUser({ ...user, lectureList: [...user!.lectureList] }));
       changeApplyYn(ilecture);
     } catch {
       alert('수강 신청에 실패하였습니다.');
@@ -106,10 +103,9 @@ const Register = () => {
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
               <div>{`${item.buildingName} ${item.lectureRoomName}호`}</div>
-              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime.slice(
-                0,
-                -3
-              )} ~ ${item.lectureEndTime.slice(0, -3)}`}</div>
+              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime} ~ ${
+                item.lectureEndTime
+              }`}</div>
               <div>{item.score}</div>
               <div>{item.lectureMaxPeople}</div>
               <div>
