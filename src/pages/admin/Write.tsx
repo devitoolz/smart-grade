@@ -64,8 +64,6 @@ const Write = () => {
       setTitle(title.trim());
     }
     const markdownContent = editorRef.current?.getInstance().getMarkdown();
-    console.log(markdownContent);
-    console.log(imgList);
     if (/^\s*$/.test(markdownContent as string)) {
       alert('내용을 입력하세요');
       return;

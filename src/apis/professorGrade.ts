@@ -5,7 +5,6 @@ export const getLectureList = async () => {
   const url = `/api/professor/lecture-list?openingProcedures=3`;
   try {
     const { data } = await api.get(url);
-    console.log(data.lectureList);
     return data;
   } catch (err) {
     console.log(err);
@@ -43,7 +42,6 @@ export const getObjectionList = async (lectureId: any, _setFunc: any) => {
   const url = `/api/professor/objection?ilecture=${lectureId}&objection=1`;
   try {
     const { data } = await api.get(url);
-    console.log(data);
     _setFunc(data);
     return true;
   } catch (err) {
@@ -55,8 +53,7 @@ export const getObjectionList = async (lectureId: any, _setFunc: any) => {
 // 학생 이의신청 수리
 export const putObjection = async (url: string) => {
   try {
-    const result = await api.put(url);
-    console.log(result);
+    await api.put(url);
     alert('성공했습니다');
     return true;
   } catch (err) {
