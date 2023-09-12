@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NoDatas, TableMini, StudentInfo } from '../../styles/MyStyleCSS';
 import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
@@ -9,13 +9,11 @@ import Table from '../../components/Table';
 import { getStudentInfo } from '../../apis/fetch';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { FormTable, Row } from '../../styles/UserStyle';
-import { useNavigate } from 'react-router-dom';
 import CommonProgressBar from '../../components/CommonProgressBar';
 import { ObjectType } from '../../types/components';
+import { useSearchParams } from 'react-router-dom';
 
 const Grade = () => {
-  const navigate = useNavigate();
-  // 드롭다운
   const gradeData = [
     { id: 1, title: '1학년' },
     { id: 2, title: '2학년' },
@@ -49,9 +47,15 @@ const Grade = () => {
 
   // 쿼리
   const [click, setClick] = useState(false);
-  const queries = { grade, studentNum };
-  const url = '/api/admin/grade-mngmn';
+  const queries = studentNum ? { grade, studentNum } : { grade, studentNum: '0' };
+  const [query] = useSearchParams();
+  const studentNumCheck = query.get('studentNum');
+  const url = studentNumCheck ? '/api/admin/grade-mngmn' : '/api/admin/grade-mngmn?studentNum=0';
   const { data, pending, error } = useQuerySearch(url, click);
+  const [tableData, setTableData] = useState<any>({});
+  useEffect(() => {
+    setTableData(data);
+  }, [data]);
 
   return (
     <>
@@ -74,27 +78,25 @@ const Grade = () => {
         />
       </SearchBar>
 
-      {(data as ObjectType)?.student === null || data === null ? (
+      {(tableData as ObjectType)?.student === null || data === null ? (
         <NoDatas />
       ) : (
         <CommonButton
           btnType="page"
           value="학생상세정보"
-          onClick={() => handleGetStudentInfo((data as ObjectType)?.student?.studentNum)}
-        >
-          {(data as ObjectType)?.student?.name} {(data as ObjectType)?.student?.studentNum}
-        </CommonButton>
+          onClick={() => handleGetStudentInfo((tableData as ObjectType)?.student?.studentNum)}
+        />
       )}
 
       <Table
         header={tableHeader}
-        data={(data as ObjectType)?.voList || Array(10).fill('')}
+        data={(tableData as ObjectType)?.voList || Array(10).fill('')}
         hasPage={true}
-        maxPage={(data as ObjectType)?.page?.maxPage}
+        maxPage={(tableData as ObjectType)?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {((data as ObjectType)?.voList || Array(10).fill('')).map(
+        {((tableData as ObjectType)?.voList || Array(10).fill('')).map(
           (item: ObjectType, idx: number) => {
             return (
               <div key={idx}>
@@ -114,7 +116,7 @@ const Grade = () => {
       {display && (
         <CommonModal
           modalSize="big"
-          modalTitle={`${(data as ObjectType)?.student?.name} 님의 상세정보`}
+          modalTitle={`${(tableData as ObjectType)?.student?.name} 님의 상세정보`}
           setDisplay={setDisplay}
         >
           <StudentInfo>
@@ -132,10 +134,10 @@ const Grade = () => {
                     .map((_, idx) => {
                       return (
                         <div key={idx}>
-                          <div>{(data as ObjectType)?.avgVo[idx]?.grade}</div>
-                          <div>{(data as ObjectType)?.avgVo[idx]?.semester}</div>
-                          <div>{(data as ObjectType)?.avgVo[idx]?.avgRating}</div>
-                          <div>{(data as ObjectType)?.avgVo[idx]?.avgScore}</div>
+                          <div>{(tableData as ObjectType)?.avgVo[idx]?.grade}</div>
+                          <div>{(tableData as ObjectType)?.avgVo[idx]?.semester}</div>
+                          <div>{(tableData as ObjectType)?.avgVo[idx]?.avgRating}</div>
+                          <div>{(tableData as ObjectType)?.avgVo[idx]?.avgScore}</div>
                         </div>
                       );
                     })}
