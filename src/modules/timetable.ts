@@ -2,11 +2,11 @@ import { TimetableData } from '../types/components';
 import { DayData } from '../types/pages';
 
 const dayData: DayData = {
-  1: '월요일',
-  2: '화요일',
-  3: '수요일',
-  4: '목요일',
-  5: '금요일',
+  1: '(월)',
+  2: '(화)',
+  3: '(수)',
+  4: '(목)',
+  5: '(금)',
 };
 
 const timeData: TimetableData = {
