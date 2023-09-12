@@ -1,17 +1,25 @@
 import { useState, useEffect } from 'react';
 import CommonButton from '../../components/CommonButton';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 import Table from '../../components/Table';
 import Input from '../../components/Input';
 import { SearchBarLayout } from '../../styles/SearchBarStyle';
 import { ObjectType } from '../../types/components';
 import api from '../../apis/api';
-import { getGradeList, putStudentGrade } from '../../apis/professorGrade';
+import { putStudentGrade } from '../../apis/professorGrade';
+import useQuerySearch from '../../hooks/useSearchFetch';
 
 const GradeInput = () => {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const ilecture = pathname.split('/').at(-1);
+  const [query, setQuery] = useSearchParams();
+  const getPageIdx = query.get('page');
+  const pageIdx = getPageIdx ? getPageIdx : 1;
+  useEffect(() => {
+    query.set('ilecture', ilecture as string);
+    setQuery(query);
+  }, []);
 
   // table
   const tableHeader = [
@@ -25,16 +33,14 @@ const GradeInput = () => {
   ];
   const [tableData, setTableData] = useState<Array<any>>([]);
   const [maxPage, setMaxPage] = useState();
-  const getGradeListWait = async () => {
-    const data = await getGradeList(Number(ilecture));
-    setTableData((data as ObjectType)?.lectureList);
-    setMaxPage((data as ObjectType)?.page?.maxPage);
-  };
+  const url = '/api/professor/grade';
+  const { data, pending, error } = useQuerySearch(url);
   useEffect(() => {
-    getGradeListWait();
-  }, []);
+    setTableData((data as ObjectType)?.lecturelist);
+    setMaxPage((data as ObjectType)?.page?.maxPage);
+  }, [data]);
 
-  // 성적입력 input 창 출력
+  // 성적입력
   const [studentId, setStudentId] = useState<number | null>(null);
   const [attendance, setAttendance] = useState('');
   const [middleEx, setMiddleEx] = useState('');
@@ -55,9 +61,9 @@ const GradeInput = () => {
       );
       if (result) {
         setStudentId(null);
-        const url = `/api/professor/grade?ilectureStudent=${ilectureStudent}&ilecture=${ilecture}`;
+        const url = `/api/professor/grade?ilecture=${ilecture}&page=${Number(pageIdx) - 1}`;
         const { data } = await api.get(url);
-        setTableData(data?.lectureList);
+        setTableData(data?.lecturelist);
       }
     }
   };
@@ -70,16 +76,23 @@ const GradeInput = () => {
   return (
     <>
       <SearchBarLayout>
-        <div style={{ height: 35 }}>해당 과목 성적입력</div>
+        <div style={{ height: 35, lineHeight: '35px' }}>해당 과목 성적입력</div>
       </SearchBarLayout>
 
       <CommonButton value="뒤로가기" btnType="page" onClick={() => navigate(`/professor/grade`)} />
 
-      <Table header={tableHeader} hasPage={true} data={tableData} maxPage={maxPage}>
+      <Table
+        header={tableHeader}
+        pending={pending}
+        error={error}
+        hasPage={true}
+        data={tableData}
+        maxPage={2}
+      >
         {tableData?.map((item: any) => {
           return (
             <div key={item.ilectureStudent}>
-              <div>{item.sudentNum}</div>
+              <div>{item.studentNum}</div>
               <div>{item.majorName}</div>
               <div>{item.studentName}</div>
               <div>
@@ -93,7 +106,7 @@ const GradeInput = () => {
                     reset={setAttendance}
                   />
                 ) : (
-                  <>{item.attendance}</>
+                  <>{item.finishedYn ? item.attendance : '-'}</>
                 )}
               </div>
               <div>
@@ -107,7 +120,7 @@ const GradeInput = () => {
                     reset={setMiddleEx}
                   />
                 ) : (
-                  <>{item.midtermExamination}</>
+                  <>{item.finishedYn ? item.midtermExamination : '-'}</>
                 )}
               </div>
               <div>
@@ -121,7 +134,7 @@ const GradeInput = () => {
                     reset={setFinalEx}
                   />
                 ) : (
-                  <>{item.finalExamination}</>
+                  <>{item.finishedYn ? item.finalExamination : '-'}</>
                 )}
               </div>
               <div>

@@ -12,17 +12,6 @@ export const getLectureList = async () => {
     alert('데이터를 불러오는데 실패했습니다');
   }
 };
-// 해당 과목 성적리스트 불러오기
-export const getGradeList = async (ilecture: number) => {
-  const url = `/api/professor/grade?ilecture=${ilecture}`;
-  try {
-    const { data } = await api.get(url);
-    console.log(data);
-    return data;
-  } catch (err) {
-    console.log(err);
-  }
-};
 
 // 해당 과목 성적 입력
 export const putStudentGrade = async (
