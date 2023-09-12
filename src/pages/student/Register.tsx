@@ -58,7 +58,7 @@ const Register = () => {
 
   const handleRegister = async (ilecture: number) => {
     try {
-      await api.post('/api/student', { ilecture });
+      await api.post('/api/student/lecture', { ilecture });
       alert('수강 신청되었습니다.');
       changeApplyYn(ilecture);
     } catch {
