@@ -51,10 +51,14 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
   const handleAuthEmail = async () => {
     try {
       const { data } = await api.get('/api/send-email/email-success');
-      console.log(data);
-      setIsEmailAuth(true);
+      if (data) {
+        alert('이메일 확인이 완료 되었습니다.');
+        setIsEmailAuth(true);
+      } else {
+        alert('이메일 확인이 되지 않았습니다.');
+      }
     } catch {
-      alert('인증 확인이 되지 않았습니다.');
+      alert('Error');
     }
   };
 
@@ -64,6 +68,7 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
       return;
     }
     setEmail(value);
+    setOpenChangeEmail(false);
   };
 
   const handleCancel = () => {
