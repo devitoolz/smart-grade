@@ -131,6 +131,7 @@ export interface ExcelDataProps {
   setExcelDataHasError: React.Dispatch<React.SetStateAction<boolean>>;
   viewData: Array<string>;
   postData: Array<string>;
+  setClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export interface RegisterDetailProps {

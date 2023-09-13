@@ -7,8 +7,8 @@ import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
 import { Pagination } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/pagination';
-import axios from 'axios';
 import { FindPasswordProps, ObjectType } from '../types/components';
+import api from '../apis/api';
 
 const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
   const swiperRef = useRef<SwiperRef>(null);
@@ -42,7 +42,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
       return;
     }
     try {
-      await axios.put(`/api/forget-password?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
+      await api.put(`/api/forget-password?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
       setActiveIndex(prevActiveIndex => prevActiveIndex + 1);
       swiperRef.current?.swiper.slideNext();
     } catch {
@@ -69,7 +69,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
     };
 
     try {
-      await axios.put(`/api/change-password`, data);
+      await api.put(`/api/change-password`, data);
       alert('비밀번호가 변경되었습니다.');
       setOpenFindPw(false);
     } catch {

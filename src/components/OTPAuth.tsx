@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import { useNavigate } from 'react-router';
 import { setCookie } from '../modules/cookies';
@@ -8,6 +7,7 @@ import Input from './Input';
 import { OTPAuthProps } from '../types/components';
 import { OTPAuthData } from '../types/apis';
 import { SendOTP } from '../styles/LoginStyle';
+import api from '../apis/api';
 
 const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
   const [OTP, setOTP] = useState<string>('');
@@ -32,7 +32,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
 
     try {
       // TODO: data 타입 지정
-      const { data } = await axios.post(`/api/otp-valid`, authPayload);
+      const { data } = await api.post(`/api/otp-valid`, authPayload);
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
@@ -46,7 +46,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
 
   const handleResendQR = async () => {
     try {
-      await axios.post(`/api/send-email`, payload);
+      await api.post(`/api/send-email`, payload);
       alert('등록한 이메일로 QR 코드 URL이 발송 되었습니다.');
     } catch {
       alert('이메일 발송에 실패하였습니다.');

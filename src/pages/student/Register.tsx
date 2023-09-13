@@ -95,8 +95,8 @@ const Register = () => {
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
               <div>{`${item.buildingName} ${item.lectureRoomName}호`}</div>
-              <div>{`${dayData[item.dayWeek]} ${item.lectureStrTime} ~ ${
-                item.lectureEndTime
+              <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime} ${
+                dayData[item.dayWeek]
               }`}</div>
               <div>{item.score}</div>
               <div>{`${item.studentsEnrolled} / ${item.lectureMaxPeople}`}</div>
