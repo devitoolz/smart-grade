@@ -72,7 +72,7 @@ const Grade = () => {
           return (
             <div key={idx}>
               <div>{item.year}</div>
-              <div>2</div>
+              <div>{item.isemester}</div>
               <div>{item.lectureName}</div>
               <div>{item.professorName}</div>
               <div>
