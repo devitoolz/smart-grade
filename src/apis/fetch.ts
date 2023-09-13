@@ -5,7 +5,6 @@ export const getStudentList = async (_ilecture: number, _pageIdx?: number) => {
   try {
     const res = await api.get(`/api/admin/lecture/${_ilecture}`);
     const result = res.data;
-    console.log(result);
     return result;
   } catch (err) {
     console.log(err);
