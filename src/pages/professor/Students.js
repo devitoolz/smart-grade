@@ -11,8 +11,8 @@ const Students = () => {
   //페이지 이동
   const navigate = useNavigate();
   //페이지 이동 함수
-  const pagemove = () => {
-    navigate('/professor/students/detail');
+  const pagemove = ilecture => {
+    navigate('/professor/students/detail', { state: ilecture });
   };
 
   ////searchBar////
@@ -148,7 +148,12 @@ const Students = () => {
               </div>
               <div>{item.lectureMaxPeople}</div>
               <div>
-                <CommonButton btnType="table" color="gray" value="상세보기" onClick={pagemove} />
+                <CommonButton
+                  btnType="table"
+                  color="gray"
+                  value="상세보기"
+                  onClick={() => pagemove(item.ilecture)}
+                />
               </div>
             </div>
           );

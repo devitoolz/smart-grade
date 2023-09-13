@@ -174,19 +174,7 @@ const Lecture = () => {
                 {dayData[item.dayWeek]}
               </div>
               <div>{item.lectureMaxPeople}</div>
-              <div>
-                {item.openingProceudres === 0
-                  ? '반려'
-                  : item.openingProceudres === 1
-                  ? '신청'
-                  : item.openingProceudres === 2
-                  ? '신청완료모집'
-                  : item.openingProceudres === 3
-                  ? '개강'
-                  : item.openingProceudres === 4
-                  ? '종료'
-                  : null}
-              </div>
+              <div>{item.openingProceudres === 3 ? '개강' : '종료'}</div>
 
               <div>
                 <CommonButton

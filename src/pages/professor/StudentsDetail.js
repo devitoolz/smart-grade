@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
@@ -11,10 +11,11 @@ const StudentsDetail = () => {
   const [studentNum, setStudentNum] = useState('');
   //searchBar 이름 state
   const [nm, setNm] = useState('');
+  const { state } = useLocation();
 
   const queries = { studentNum, nm };
 
-  const url = `/api/professor/grade/list`;
+  const url = `/api/professor/grade/lecture-student-list?ilecture=${state}`;
 
   const [click, setClick] = useState(false);
   const { data, pending, error } = useQuerySearch(url, click);
