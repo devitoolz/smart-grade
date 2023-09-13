@@ -27,9 +27,7 @@ const Register = () => {
     { title: '수강 신청', width: 1.5 },
   ];
 
-  const LectureName = lectureName;
-
-  const queries = { LectureName };
+  const queries = { lectureName };
   const url = '/api/student/lecturelist';
 
   const { data, pending, error } = useQuerySearch(url, click);

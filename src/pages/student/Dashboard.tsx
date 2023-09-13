@@ -61,7 +61,9 @@ const Dashboard = () => {
   const { user } = useSelector((state: RootState) => state.main);
   const score = useQuerySearch('/api/student/score');
   const scoreData = score?.data as ObjectType;
-  const percent = (scoreData?.selfStudyCredit / scoreData?.graduationScore) * 100;
+  const percent = parseFloat(
+    ((scoreData?.selfStudyCredit / scoreData?.graduationScore) * 100).toFixed(1)
+  );
 
   return (
     <DashboardLayout className="student">
