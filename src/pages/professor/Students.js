@@ -12,7 +12,7 @@ const Students = () => {
   const navigate = useNavigate();
   //페이지 이동 함수
   const pagemove = ilecture => {
-    navigate('/professor/students/detail', { state: ilecture });
+    navigate(`/professor/students/detail?ilecture=${ilecture}`);
   };
 
   ////searchBar////
