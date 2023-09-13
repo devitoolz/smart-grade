@@ -70,6 +70,25 @@ const Students = () => {
     },
   ];
 
+  //연도 리스트 데이터
+  const yearDataList = [
+    {
+      id: '2020',
+      title: '2020',
+    },
+    {
+      id: '2021',
+      title: '2021',
+    },
+    {
+      id: '2022',
+      title: '2022',
+    },
+    {
+      id: '2023',
+      title: '2023',
+    },
+  ];
   //api get hook test
   const url = `/api/professor/lecture-list`;
 
@@ -94,7 +113,7 @@ const Students = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={yearList}
+            data={yearDataList}
             value={grade}
             setValue={setGrade}
             reset
