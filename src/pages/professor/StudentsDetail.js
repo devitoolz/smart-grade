@@ -8,11 +8,11 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 
 const StudentsDetail = () => {
   //searchBar 학번 state
-  const [studentID, setStudentID] = useState('');
+  const [studentNum, setStudentNum] = useState('');
   //searchBar 이름 state
-  const [studentName, setStudentName] = useState('');
+  const [nm, setNm] = useState('');
 
-  const queries = { studentID, studentName };
+  const queries = { studentNum, nm };
 
   const url = `/api/professor/grade/list`;
 
@@ -57,17 +57,17 @@ const StudentsDetail = () => {
           length="long"
           type="number"
           placeholder="학번"
-          value={studentID}
-          setValue={e => setStudentID(e.target.value)}
-          reset={setStudentID}
+          value={studentNum}
+          setValue={e => setStudentNum(e.target.value)}
+          reset={setStudentNum}
         />
         <Input
           length="short"
           type="text"
           placeholder="이름"
-          value={studentName}
-          setValue={e => setStudentName(e.target.value)}
-          reset={setStudentName}
+          value={nm}
+          setValue={e => setNm(e.target.value)}
+          reset={setNm}
         />
       </SearchBar>
 
