@@ -9,10 +9,8 @@ import useQuerySearch from '../../hooks/useSearchFetch';
 import CommonModal from '../../components/CommonModal';
 import { useSelector } from 'react-redux';
 import api from '../../apis/api';
-import { useNavigate } from 'react-router-dom';
 
 const Major = () => {
-  const navigator = useNavigate();
   //searchBar
   const [majorName, setMajorName] = useState(''); //전공명 state
   //searchBar 전공명 상태 state
