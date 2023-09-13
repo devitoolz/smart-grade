@@ -205,9 +205,10 @@ const Mypage = () => {
                     <div key={index} className="lecture-table-content">
                       <div>{item.lectureName}</div>
                       <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
-                      <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime} ${
-                        dayData[item.dayWeek]
-                      }`}</div>
+                      <div>{`${item.lectureStrTime.slice(0, -3)} ~ ${item.lectureEndTime.slice(
+                        0,
+                        -3
+                      )} ${dayData[item.dayWeek]}`}</div>
                     </div>
                   ))}
                   {lectureList.length === 0 && (

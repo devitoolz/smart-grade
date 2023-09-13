@@ -75,8 +75,8 @@ const RegisterDetail = ({ lectureData, setLectureData }: RegisterDetailProps) =>
                     overflow: 'hidden',
                   }}
                 >
-                  {lectureData?.textBook ? (
-                    <div className="ellipsis">{lectureData?.textBook}</div>
+                  {lectureData?.textbook ? (
+                    <div className="ellipsis">{lectureData?.textbook}</div>
                   ) : (
                     <span>교재가 없습니다.</span>
                   )}
