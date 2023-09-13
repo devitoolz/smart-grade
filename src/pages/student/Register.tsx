@@ -22,7 +22,7 @@ const Register = () => {
     { title: '강의실', width: 2 },
     { title: '강의 시간', width: 2.5 },
     { title: '학점', width: 1 },
-    { title: '정원', width: 1 },
+    { title: '정원', width: 1.5 },
     { title: '상세보기', width: 1.5 },
     { title: '수강 신청', width: 1.5 },
   ];
@@ -46,21 +46,15 @@ const Register = () => {
     );
   }, [lectureList]);
 
-  const changeApplyYn = (ilecture: number) => {
-    if (lectureListResult) {
-      setLectureListResult(
-        lectureListResult.map(lecture =>
-          lecture.ilecture === ilecture ? { ...lecture, applyYn: !lecture.applyYn } : lecture
-        )
-      );
-    }
-  };
-
   const handleRegister = async (ilecture: number) => {
     try {
-      await api.post('/api/student/lecture', { ilecture });
-      alert('수강 신청되었습니다.');
-      changeApplyYn(ilecture);
+      const { data } = await api.post('/api/student/lecture', { ilecture });
+      if (data.success) {
+        alert('수강 신청되었습니다.');
+        setClick(prev => !prev);
+      } else {
+        alert(data.message);
+      }
     } catch {
       alert('수강 신청에 실패하였습니다.');
     }
@@ -70,7 +64,7 @@ const Register = () => {
     const { data } = await api.delete(`/api/student/lecture?ilecture=${ilecture}`);
     if (data) {
       alert('수강 신청이 취소되었습니다.');
-      changeApplyYn(ilecture);
+      setClick(prev => !prev);
     } else {
       alert('수강 신청 취소에 실패하였습니다.');
     }
@@ -107,7 +101,7 @@ const Register = () => {
                 item.lectureEndTime
               }`}</div>
               <div>{item.score}</div>
-              <div>{item.lectureMaxPeople}</div>
+              <div>{`${item.studentsEnrolled} / ${item.lectureMaxPeople}`}</div>
               <div>
                 <CommonButton
                   btnType="table"
@@ -117,16 +111,20 @@ const Register = () => {
                 ></CommonButton>
               </div>
               <div>
-                <CommonButton
-                  value={item.applyYn ? '수강 신청' : '수강 취소'}
-                  btnType="table"
-                  color={item.applyYn ? 'blue' : 'red'}
-                  onClick={
-                    item.applyYn
-                      ? () => handleRegister(item.ilecture)
-                      : () => handleUnregister(item.ilecture)
-                  }
-                />
+                {item.studentsEnrolled === item.lectureMaxPeople ? (
+                  <span>신청 불가</span>
+                ) : (
+                  <CommonButton
+                    value={item.applyYn ? '수강 신청' : '수강 취소'}
+                    btnType="table"
+                    color={item.applyYn ? 'blue' : 'red'}
+                    onClick={
+                      item.applyYn
+                        ? () => handleRegister(item.ilecture)
+                        : () => handleUnregister(item.ilecture)
+                    }
+                  />
+                )}
               </div>
             </div>
           );
