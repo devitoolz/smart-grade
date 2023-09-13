@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import CommonButton from '../../components/CommonButton';
 import Input from '../../components/Input';
 import SearchBar from '../../components/SearchBar';
@@ -11,10 +11,9 @@ const StudentsDetail = () => {
   const [studentNum, setStudentNum] = useState('');
   //searchBar 이름 state
   const [nm, setNm] = useState('');
-
   const queries = { studentNum, nm };
 
-  const url = `/api/professor/grade/list`;
+  const url = `/api/professor/grade/lecture-student-list`;
 
   const [click, setClick] = useState(false);
   const { data, pending, error } = useQuerySearch(url, click);
@@ -74,19 +73,19 @@ const StudentsDetail = () => {
       <CommonButton btnType="page" value="뒤로가기" onClick={pagemove} />
       <Table
         header={tableHeader}
-        data={data?.lecturelist}
+        data={data?.list}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.lecturelist?.map(item => {
+        {data?.list?.map(item => {
           return (
             <div key={item.ilectureStudent}>
               <div>{item.grade}</div>
               <div>{item.majorName}</div>
               <div>{item.studentNum}</div>
-              <div>{item.studentName}</div>
+              <div>{item.nm}</div>
               <div>{item.gender === 'M' ? '남' : '여'}</div>
               <div>{item.phone}</div>
             </div>
