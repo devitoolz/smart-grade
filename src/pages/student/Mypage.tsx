@@ -26,6 +26,7 @@ import { STUDENT_IMG_URL } from './Main';
 import { LectureData, StudentProfileData } from '../../types/apis';
 import { RootState } from '../../store';
 import ChangeEmail from '../../components/ChangeEmail';
+import { dayData } from '../../modules/timetable';
 
 const Mypage = () => {
   const [lectureList, setLectureList] = useState<Array<LectureData> | null>(null);
@@ -207,7 +208,7 @@ const Mypage = () => {
                       <div>{`${item.lectureStrTime.slice(0, -3)} ~ ${item.lectureEndTime.slice(
                         0,
                         -3
-                      )}`}</div>
+                      )} ${dayData[item.dayWeek]}`}</div>
                     </div>
                   ))}
                   {lectureList.length === 0 && (
@@ -269,7 +270,7 @@ const Mypage = () => {
           </Row>
           <Row col={2}>
             <div>학년</div>
-            <div>{(user?.profile as StudentProfileData)?.grade}</div>
+            <div>{(user?.profile as StudentProfileData)?.grade}학년</div>
             <div>이수 학점</div>
             <div>{(user?.profile as StudentProfileData)?.score}</div>
           </Row>

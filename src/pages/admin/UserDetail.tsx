@@ -278,7 +278,7 @@ const UserDetail = () => {
         {state === 'students' && (
           <Row col={2}>
             <div>학년</div>
-            <div>{userDetail?.grade}</div>
+            <div>{userDetail?.grade}학년</div>
             <div>이수학점</div>
             <div>{userDetail?.score}</div>
           </Row>

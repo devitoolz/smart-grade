@@ -150,7 +150,7 @@ const LectureTableLayout = styled.div`
   div.lecture-table-header {
     border-bottom: 1px solid var(--table-border-color);
     display: grid;
-    grid-template-columns: 2fr 2fr 1fr;
+    grid-template-columns: 2fr 2fr 1.5fr;
     background: var(--main-bg-color);
     > div {
       display: flex;
@@ -187,7 +187,7 @@ const LectureTableLayout = styled.div`
     }
     > div.lecture-table-content {
       display: grid;
-      grid-template-columns: 2fr 2fr 1fr;
+      grid-template-columns: 2fr 2fr 1.5fr;
       border-bottom: 1px solid var(--table-border-color);
       &:last-of-type {
         border-bottom: none;

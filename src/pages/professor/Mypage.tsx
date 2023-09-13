@@ -26,6 +26,7 @@ import { PROFESSOR_IMG_URL } from './Main';
 import { RootState } from '../../store';
 import { LectureData, ProfessorProfileData } from '../../types/apis';
 import ChangeEmail from '../../components/ChangeEmail';
+import { dayData } from '../../modules/timetable';
 
 const Mypage = () => {
   const [lectureList, setLectureList] = useState<Array<LectureData> | null>(null);
@@ -204,7 +205,9 @@ const Mypage = () => {
                     <div key={index} className="lecture-table-content">
                       <div>{item.lectureName}</div>
                       <div>{`${item.lectureStrDate} ~ ${item.lectureEndDate}`}</div>
-                      <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime}`}</div>
+                      <div>{`${item.lectureStrTime} ~ ${item.lectureEndTime} ${
+                        dayData[item.dayWeek]
+                      }`}</div>
                     </div>
                   ))}
                   {lectureList.length === 0 && (

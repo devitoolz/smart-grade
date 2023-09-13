@@ -5,6 +5,7 @@ export interface LectureData {
   lectureStrTime: string;
   lectureEndTime: string;
   lectureName: string;
+  dayWeek: number;
 }
 
 export interface ProfileData {
