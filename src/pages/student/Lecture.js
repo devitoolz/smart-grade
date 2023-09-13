@@ -167,9 +167,9 @@ const Lecture = () => {
         pending={pending}
         error={error}
       >
-        {data?.lectureList?.map(item => {
+        {data?.lectureList?.map((item, index) => {
           return (
-            <div key={item.index}>
+            <div key={index}>
               <div>{item.year}</div>
               <div>{item.isemester}</div>
               <div>{item.grade}</div>
