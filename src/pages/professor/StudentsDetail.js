@@ -49,7 +49,7 @@ const StudentsDetail = () => {
       width: '1.0',
     },
   ];
-  
+
   return (
     <div>
       <SearchBar queries={queries} setPage={true} setClick={setClick}>
@@ -71,7 +71,7 @@ const StudentsDetail = () => {
         />
       </SearchBar>
 
-      <CommonButton btnType="page" value="상세보기" onClick={pagemove} />
+      <CommonButton btnType="page" value="뒤로가기" onClick={pagemove} />
       <Table
         header={tableHeader}
         data={data?.lecturelist}
