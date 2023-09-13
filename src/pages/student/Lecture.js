@@ -10,6 +10,7 @@ import Input from '../../components/Input';
 import useQuerySearch from '../../hooks/useSearchFetch';
 import { StudentLectureDetail, StudentLectureBtn } from '../../styles/LectureRoomCss';
 import { dayData } from '../../modules/timetable';
+import api from '../../apis/api';
 const Lecture = () => {
   ////searchBar////
 
@@ -27,6 +28,9 @@ const Lecture = () => {
 
   // 선택된 상세보기 객체
   const [selectItem, setSelectItem] = useState(null);
+
+  // 강의명 드랍다운 선택시 여러개 불러오기 state
+  const [, setLectureNameList] = useState([]);
 
   //tabel header
   const tableHeader = [
@@ -116,6 +120,24 @@ const Lecture = () => {
   useEffect(() => {
     setContents(data?.lectureList);
   }, [data]);
+
+  //강의명 선택시 드롭다운 여러개 나오게 하는것
+  const getLectureNameList = async () => {
+    try {
+      const { data } = await api.get('/api/student/lecture-list');
+      const lectureList = [];
+      data?.lectureList?.forEach(item => {
+        lectureList.push({ id: item.lectureName, title: item.lectureName });
+      });
+      setLectureNameList(lectureList);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  useEffect(() => {
+    getLectureNameList();
+  }, []);
 
   return (
     <div>
@@ -234,10 +256,7 @@ const Lecture = () => {
               <div className="inputBookPic">
                 <div>
                   {selectItem?.bookUrl ? (
-                    <img
-                      src={`https://shopping-phinf.pstatic.net` + selectItem?.bookUrl}
-                      alt="교재 이미지"
-                    />
+                    <img src={selectItem?.bookUrl} alt="교재 이미지" />
                   ) : (
                     <div className="icon">
                       <FontAwesomeIcon icon={faBook} className="fa-4x" />
