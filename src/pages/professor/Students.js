@@ -17,15 +17,12 @@ const Students = () => {
 
   ////searchBar////
   //학년 state
-  const [grade, setGrade] = useState('');
+  const [year, setYear] = useState('');
   //전공 state
-  const [major, setMajor] = useState('');
-  //학번 state
-  const [studentID] = useState('');
-  //이름 state
-  const [studentName] = useState('');
+  const [lectureName, setLectureName] = useState('');
+
   //쿼리스트링
-  const queries = { grade, major, studentID, studentName };
+  const queries = { year, lectureName };
 
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
@@ -94,12 +91,6 @@ const Students = () => {
 
   const { data, pending, error } = useQuerySearch(url, click);
 
-  //연도 드랍다운 데이터
-  const yearList = [];
-  data?.yearList?.forEach(item => {
-    yearList.push({ id: item.year, title: item.year });
-  });
-
   //강의명 드랍다운 데이터
   const LectureNameList = [];
   data?.lectureList?.forEach(item => {
@@ -114,8 +105,8 @@ const Students = () => {
             length="short"
             placeholder="연도"
             data={yearDataList}
-            value={grade}
-            setValue={setGrade}
+            value={year}
+            setValue={setYear}
             reset
             search
           />
@@ -123,8 +114,8 @@ const Students = () => {
             length="long"
             placeholder="강의명"
             data={LectureNameList}
-            value={major}
-            setValue={setMajor}
+            value={lectureName}
+            setValue={setLectureName}
             reset
             search
           />
