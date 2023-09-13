@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar';
 import Dropdown from '../../components/Dropdown';
 import Input from '../../components/Input';
@@ -66,6 +66,10 @@ const LectureRoom = () => {
   //api get hook test
   const url = `/api/admin/lectureroom`;
   const { data, pending, error } = useQuerySearch(url, click);
+  const [roomListData, setRoomListData] = useState([]);
+  useEffect(() => {
+    setRoomListData(data?.lectureRoomList);
+  }, [data]);
   //searchBar dropdown
   const buildingDataList = [];
   data?.lectureRoom?.forEach(item => {
@@ -117,6 +121,10 @@ const LectureRoom = () => {
       maxCapacity !== ''
     ) {
       await postBuildinglist(lectureRoomName, buildingNameData, maxCapacity);
+
+      const { data } = await api.get(url);
+      console.log(data?.lectureRoomList);
+      setRoomListData(data?.lectureRoomList);
 
       alert('등록되었습니다.');
       setIlectureRoom('');
@@ -274,13 +282,13 @@ const LectureRoom = () => {
 
       <Table
         header={tableHeader}
-        data={data?.lectureRoomList}
+        data={roomListData}
         hasPage={true}
         maxPage={data?.page?.maxPage}
         pending={pending}
         error={error}
       >
-        {data?.lectureRoomList?.map(item => {
+        {roomListData?.map(item => {
           const isDeleted = isLectureRoomDeleted(item.ilectureRoom); //강의실 삭제 되었는지 체크
           return (
             <div key={item.ilectureRoom}>

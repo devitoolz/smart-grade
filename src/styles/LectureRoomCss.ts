@@ -202,13 +202,14 @@ export const ProfessorLectureDetail = styled.div`
     justify-content: center;
     grid-row: 5/6;
     grid-column: 4/5;
-    /* border-bottom: 2px solid var(--form-table-even-border-color); */
+
     padding: 10px 10px;
     background: var(--form-table-bg-color);
     width: 100%;
     height: 100%;
-    /* justify-content: space-around; */
+
     div {
+      object-fit: cover;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -221,6 +222,7 @@ export const ProfessorLectureDetail = styled.div`
       img {
         object-fit: cover;
         width: 100%;
+        height: 100%;
       }
       .icon {
         display: flex;
@@ -391,10 +393,7 @@ export const StudentLectureDetail = styled.div`
     align-items: center;
     grid-row: 5/6;
     grid-column: 1/2;
-    /* border-right: 2px solid var(--form-table-odd-border-color); */
-    /* border-top: 2px solid var(--form-table-odd-border-color); */
     border-bottom: 2px solid var(--form-table-odd-border-color);
-    /* border-left: 2px solid var(--form-table-odd-border-color); */
     padding: 10px 10px;
     background: var(--primary-color);
     color: #fff;

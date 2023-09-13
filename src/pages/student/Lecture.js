@@ -28,8 +28,6 @@ const Lecture = () => {
   // 선택된 상세보기 객체
   const [selectItem, setSelectItem] = useState(null);
 
-  //책 사진
-  const [bookPic] = useState('');
   //tabel header
   const tableHeader = [
     {
@@ -71,10 +69,31 @@ const Lecture = () => {
     },
   ];
 
+  //연도 리스트 데이터
+  const yearDataList = [
+    {
+      id: '2020',
+      title: '2020',
+    },
+    {
+      id: '2021',
+      title: '2021',
+    },
+    {
+      id: '2022',
+      title: '2022',
+    },
+    {
+      id: '2023',
+      title: '2023',
+    },
+  ];
+
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기
-  const handleModalOk = () => {
+  const handleModalOk = _item => {
+    setSelectItem(_item);
     setDisplay(true);
   };
 
@@ -82,38 +101,20 @@ const Lecture = () => {
   const handleModalCancel = () => {
     setDisplay(false);
   };
-  //상세보기 버튼 클릭시
-  const handlePageBtnClick = _item => {
-    console.log(_item);
-    setSelectItem(_item);
-    setDisplay(true);
-    // setIndex(_idx);
-    // console.log('aaaaaaaaaa');
-  };
+
   //api get hook test
   const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
-
-  // 연도 드랍다운 데이터
-  const yearList = [];
-  data?.yearList?.forEach(item => {
-    yearList.push({ id: item.year, title: item.year });
-  });
 
   //강의명 드랍다운 데이터
   const LectureNameList = [];
   data?.lectureList?.forEach(item => {
     LectureNameList.push({ id: item.lectureName, title: item.lectureName });
   });
-  const [contents, setContents] = useState([]);
+  const [, setContents] = useState([]);
 
   useEffect(() => {
-    console.log(data);
-
     setContents(data?.lectureList);
-
-    console.log(data?.lectureList);
-    console.log(contents);
   }, [data]);
 
   return (
@@ -123,7 +124,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={yearList}
+            data={yearDataList}
             value={year}
             setValue={setYear}
             reset
@@ -151,13 +152,13 @@ const Lecture = () => {
         header={tableHeader}
         data={data?.lectureList}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        maxPage={data?.page.maxPage}
         pending={pending}
         error={error}
       >
         {data?.lectureList?.map(item => {
           return (
-            <div key={item.idx}>
+            <div key={item.isemester}>
               <div>{item.year}</div>
               <div>{item.isemester}</div>
               <div>{item.grade}</div>
@@ -176,7 +177,7 @@ const Lecture = () => {
                   color="gray"
                   value="상세보기"
                   // onClick={() => handlePageBtnClick(idx)}
-                  onClick={() => handlePageBtnClick(item)}
+                  onClick={() => handleModalOk(item)}
                 />
               </div>
             </div>
@@ -213,7 +214,7 @@ const Lecture = () => {
               <div className="professorName">교수명</div>
               <div className="inputProfessorName">{selectItem.professorName}</div>
               <div className="bookName">교재명</div>
-              <div className="inputBookName"></div>
+              <div className="inputBookName">{selectItem.textbook}</div>
               <div className="LectureInfo">강의설명</div>
               <div className="inputLectureInfo">
                 <div
@@ -225,18 +226,16 @@ const Lecture = () => {
                     overflowY: 'auto',
                   }}
                 >
-                  {
-                    // '안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.안녕하세요. 반가워요.'
-                  }
+                  {selectItem.ctnt}
                 </div>
               </div>
 
               <div className="bookPic">교재사진</div>
               <div className="inputBookPic">
                 <div>
-                  {bookPic === true ? (
+                  {selectItem?.bookUrl ? (
                     <img
-                      src="https://shopping-phinf.pstatic.net/main_3247335/32473359191.20221019132422.jpg"
+                      src={`https://shopping-phinf.pstatic.net` + selectItem?.bookUrl}
                       alt="교재 이미지"
                     />
                   ) : (
