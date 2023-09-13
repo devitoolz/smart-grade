@@ -162,7 +162,7 @@ const DashboardTimetable = styled.div`
         padding: 5px;
         position: absolute;
         z-index: 9999;
-        width: 100%;
+        width: 80px;
         left: -9999px;
         opacity: 0;
         content: attr(data-tooltip-text);
