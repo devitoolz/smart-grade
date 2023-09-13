@@ -20,9 +20,9 @@ const Lecture = () => {
   //강의명 state
   const [lectureName, setLectureName] = useState('');
   //교수명 state
-  const [professorName, setProfessorName] = useState('');
+  const [nm, setNm] = useState('');
   //검색 시 사용할 쿼리스트링
-  const queries = { year, lectureName, professorName };
+  const queries = { year, lectureName, nm };
   //검색 버튼 클릭 시
   const [click, setClick] = useState(false);
 
@@ -30,7 +30,7 @@ const Lecture = () => {
   const [selectItem, setSelectItem] = useState(null);
 
   // 강의명 드랍다운 선택시 여러개 불러오기 state
-  const [, setLectureNameList] = useState([]);
+  const [lecureNameList, setLectureNameList] = useState([]);
 
   //tabel header
   const tableHeader = [
@@ -110,26 +110,16 @@ const Lecture = () => {
   const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
 
-  //강의명 드랍다운 데이터
-  const LectureNameList = [];
-  data?.lectureList?.forEach(item => {
-    LectureNameList.push({ id: item.lectureName, title: item.lectureName });
-  });
-  const [, setContents] = useState([]);
-
-  useEffect(() => {
-    setContents(data?.lectureList);
-  }, [data]);
-
+  
   //강의명 선택시 드롭다운 여러개 나오게 하는것
   const getLectureNameList = async () => {
     try {
-      const { data } = await api.get('/api/student/lecture-list');
-      const lectureList = [];
+      const { data } = await api.get(`/api/student/lecture-list`);
+      let inputLectureList = [];
       data?.lectureList?.forEach(item => {
-        lectureList.push({ id: item.lectureName, title: item.lectureName });
+        inputLectureList.push({ id: item.lectureName, title: item.lectureName });
       });
-      setLectureNameList(lectureList);
+      setLectureNameList(inputLectureList);
     } catch (err) {
       console.log(err);
     }
@@ -154,7 +144,7 @@ const Lecture = () => {
           <Dropdown
             length="long"
             placeholder="강의명"
-            data={LectureNameList}
+            data={lecureNameList}
             value={lectureName}
             setValue={setLectureName}
             reset
@@ -163,9 +153,9 @@ const Lecture = () => {
             length="long"
             type="text"
             placeholder="교수명"
-            value={professorName}
-            setValue={e => setProfessorName(e.target.value)}
-            reset={setProfessorName}
+            value={nm}
+            setValue={e => setNm(e.target.value)}
+            reset={setNm}
           />
         </SearchBar>
       </div>
