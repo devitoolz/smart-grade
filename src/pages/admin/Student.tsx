@@ -172,6 +172,7 @@ const Student = () => {
           setExcelDataHasError={setExcelDataHasError}
           viewData={viewData}
           postData={postData}
+          setClick={setClick}
         />
       )}
     </>

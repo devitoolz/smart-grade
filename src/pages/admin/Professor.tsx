@@ -141,6 +141,7 @@ const Professor = () => {
           setExcelDataHasError={setExcelDataHasError}
           viewData={viewData}
           postData={postData}
+          setClick={setClick}
         />
       )}
     </>

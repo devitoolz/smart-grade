@@ -106,7 +106,7 @@ const RegisterTimetable = ({
         endTime,
       };
 
-      if (confirm(`${dayData[week]} ${startTime} ~ ${endTime} 가 맞습니까?`)) {
+      if (confirm(`${startTime} ~ ${endTime} ${dayData[week]} 이 맞습니까?`)) {
         setOpenRegisterTimetable(false);
         setTime(time);
         setPrevLectureRoom(lectureRoom);

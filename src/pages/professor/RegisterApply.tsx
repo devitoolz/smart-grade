@@ -210,7 +210,7 @@ const RegisterApply = () => {
               {lectureRoom !== prevLectureRoom ? (
                 <span>강의 시간 선택 중</span>
               ) : time ? (
-                `${dayData[time.week]} / ${time.startTime} ~ ${time.endTime}`
+                `${time.startTime} ~ ${time.endTime} ${dayData[time.week]}`
               ) : (
                 <span>(강의실 선택 필요)</span>
               )}

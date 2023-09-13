@@ -23,9 +23,9 @@ import adminActiveImg from '../images/admin_active.png';
 import RoleRadioButton from '../components/RoleRadioButton';
 import OTPAuth from '../components/OTPAuth';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import FindPassword from '../components/FindPassword';
 import { LoginData, LoginResult } from '../types/apis';
+import api from '../apis/api';
 
 const Login = () => {
   const initialState = {
@@ -62,7 +62,7 @@ const Login = () => {
     }
 
     try {
-      const { data } = await axios.post<LoginResult>(`/api/sign-in`, payload);
+      const { data } = await api.post<LoginResult>(`/api/sign-in`, payload);
 
       if (!data.success) {
         throw Error('틀린 비번');

@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ExcelDataProps, ObjectType } from '../types/components';
-import { ExcelDataLayout, PendingLayout } from '../styles/ExcelDataStyle';
+import { ExcelDataLayout } from '../styles/ExcelDataStyle';
 import { ModalStyle } from '../styles/MyStyleCSS';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import CommonButton from './CommonButton';
 import api from '../apis/api';
-import { CircularProgressBar } from '@tomickigrzegorz/react-circular-progress-bar';
 
 const ExcelData = ({
   role,
@@ -17,11 +16,8 @@ const ExcelData = ({
   setExcelDataHasError,
   viewData,
   postData,
+  setClick,
 }: ExcelDataProps) => {
-  // const [progress, setProgress] = useState(0);
-
-  // const percent = Math.ceil((progress / excelData.length) * 100);
-
   const template = excelDataHeader?.map(item => item.width + 'fr').join(' ');
 
   const handleSubmit = async () => {
@@ -42,7 +38,7 @@ const ExcelData = ({
 
     try {
       await api.post(`/api/admin/${role}`, payloadList);
-      // setProgress(prevState => prevState + 1);
+      setClick(prev => !prev);
     } catch {
       alert('오류가 발생하였습니다.');
     }
@@ -52,7 +48,6 @@ const ExcelData = ({
 
   const handleCancel = () => {
     setExcelData(null);
-    // setProgress(0);
     setExcelDataHasError(false);
   };
 
