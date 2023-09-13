@@ -69,6 +69,26 @@ const Lecture = () => {
     },
   ];
 
+  //연도 리스트 데이터
+  const yearDataList = [
+    {
+      id: '2020',
+      title: '2020',
+    },
+    {
+      id: '2021',
+      title: '2021',
+    },
+    {
+      id: '2022',
+      title: '2022',
+    },
+    {
+      id: '2023',
+      title: '2023',
+    },
+  ];
+
   //상세보기 모달창 활성화
   const [display, setDisplay] = useState(false);
   //상세보기 모달창 열기
@@ -85,12 +105,6 @@ const Lecture = () => {
   //api get hook test
   const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
-
-  // 연도 드랍다운 데이터
-  const yearList = [];
-  data?.yearList?.forEach(item => {
-    yearList.push({ id: item.year, title: item.year });
-  });
 
   //강의명 드랍다운 데이터
   const LectureNameList = [];
@@ -110,7 +124,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={yearList}
+            data={yearDataList}
             value={year}
             setValue={setYear}
             reset

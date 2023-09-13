@@ -20,8 +20,6 @@ const Lecture = () => {
   const [year, setYear] = useState('');
   //강의명 state
   const [lectureName, setLectureName] = useState('');
-  //책 사진
-  const [bookPic] = useState('');
 
   //검색 시 사용할 쿼리스트링
   const queries = { year, lectureName };
@@ -70,10 +68,7 @@ const Lecture = () => {
       title: '상태',
       width: '1',
     },
-    {
-      title: '삭제여부',
-      width: '1',
-    },
+
     {
       title: '상세보기',
       width: '1',
@@ -81,24 +76,24 @@ const Lecture = () => {
   ];
 
   //연도 리스트 데이터
-  // const yearDataList = {
-  //   {
-  //     id: '2020',
-  //     title: '2020',
-  //   },
-  //   {
-  //     id: '2021',
-  //     title: '2021',
-  //   },
-  //   {
-  //     id: '2022',
-  //     title: '2022',
-  //   },
-  //   {
-  //     id: '2023',
-  //     title: '폐지',
-  //   },
-  // }
+  const yearDataList = [
+    {
+      id: '2020',
+      title: '2020',
+    },
+    {
+      id: '2021',
+      title: '2021',
+    },
+    {
+      id: '2022',
+      title: '2022',
+    },
+    {
+      id: '2023',
+      title: '2023',
+    },
+  ];
 
   // 선택된 상세보기 객체
   const [selectItem, setSelectItem] = useState(null);
@@ -120,11 +115,6 @@ const Lecture = () => {
   const url = `/api/professor/lecture-list`;
 
   const { data, pending, error } = useQuerySearch(url, click);
-  // 연도 드랍다운 데이터
-  const yearList = [];
-  data?.yearList?.forEach(item => {
-    yearList.push({ id: item.year, title: item.year });
-  });
 
   //강의명 드랍다운 데이터
   const LectureNameList = [];
@@ -139,7 +129,7 @@ const Lecture = () => {
           <Dropdown
             length="short"
             placeholder="연도"
-            data={yearList}
+            data={yearDataList}
             value={year}
             setValue={setYear}
             reset
@@ -197,7 +187,7 @@ const Lecture = () => {
                   ? '종료'
                   : null}
               </div>
-              <div>{item.delYn === 0 ? null : '삭제'}</div>
+
               <div>
                 <CommonButton
                   btnType="table"
@@ -241,7 +231,7 @@ const Lecture = () => {
                 {dayData[selectItem.dayWeek]}
               </div>
               <div className="capacity">정원</div>
-              <div className="inputCapacity">{selectItem.attendance}</div>
+              <div className="inputCapacity">{selectItem.lectureMaxPeople}</div>
               <div className="bookName">교재명</div>
               <div className="inputBookName">{selectItem.textbook}</div>
               <div className="LectureInfo">강의설명</div>
