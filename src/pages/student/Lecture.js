@@ -110,7 +110,6 @@ const Lecture = () => {
   const url = '/api/student/lecture-list';
   const { data, pending, error } = useQuerySearch(url, click);
 
-  
   //강의명 선택시 드롭다운 여러개 나오게 하는것
   const getLectureNameList = async () => {
     try {
@@ -170,7 +169,7 @@ const Lecture = () => {
       >
         {data?.lectureList?.map(item => {
           return (
-            <div key={item.isemester}>
+            <div key={item.index}>
               <div>{item.year}</div>
               <div>{item.isemester}</div>
               <div>{item.grade}</div>
