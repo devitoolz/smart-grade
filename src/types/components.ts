@@ -142,4 +142,5 @@ export interface RegisterDetailProps {
 export interface ChangeEmailProps {
   setOpenChangeEmail: React.Dispatch<React.SetStateAction<boolean>>;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setEmailChanged: React.Dispatch<React.SetStateAction<boolean>>;
 }

@@ -296,6 +296,17 @@ const EmailForm = styled.form`
     align-items: center;
     padding-right: 15px;
   }
+  > span.complete {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    background: #c0c3c6;
+    color: white;
+    border-radius: 5px;
+    padding: 0 25px;
+    height: 35px;
+  }
 `;
 
 export {

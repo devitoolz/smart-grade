@@ -11,7 +11,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../store';
 import { checkValidEmail } from '../modules/regex';
 
-const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
+const ChangeEmail = ({ setOpenChangeEmail, setEmail, setEmailChanged }: ChangeEmailProps) => {
   const [value, setValue] = useState<string>('');
   const [isEmailSent, setIsEmailSent] = useState<boolean>(false);
   const [isEmailAuth, setIsEmailAuth] = useState<boolean>(false);
@@ -67,11 +67,15 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
       alert('이메일 인증 확인이 되지 않았습니다.');
       return;
     }
+    console.log(value);
+    setEmailChanged(true);
     setEmail(value);
     setOpenChangeEmail(false);
   };
 
   const handleCancel = () => {
+    setValue('');
+    setEmailChanged(false);
     setOpenChangeEmail(false);
   };
 
@@ -99,9 +103,13 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail }: ChangeEmailProps) => {
               value={value}
               setValue={handleEmailChange}
             />
-            <Button onClick={isEmailSent ? handleAuthEmail : handleSendEmail}>
-              {isEmailSent ? '확인' : '인증'}
-            </Button>
+            {!isEmailAuth ? (
+              <Button onClick={isEmailSent ? handleAuthEmail : handleSendEmail}>
+                {isEmailSent ? '확인' : '인증'}
+              </Button>
+            ) : (
+              <span className="complete">완료</span>
+            )}
           </EmailForm>
         </div>
         <div className="modal-footer">

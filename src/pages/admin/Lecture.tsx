@@ -207,8 +207,8 @@ const Lecture = () => {
                   </div>
                   <div>강의시간</div>
                   <div>
-                    {contents.lectureStrTime}~{contents.lectureEndTime} (
-                    {dayData[contents.dayWeek]})
+                    {contents.lectureStrTime}~{contents.lectureEndTime}
+                    {dayData[contents.dayWeek]}
                   </div>
                 </Row>
                 <Row col={2}>
@@ -248,7 +248,7 @@ const Lecture = () => {
                       </BookImage>
                     </div>
                   </div>
-                  <div className="row" style={{paddingTop: 1}}>
+                  <div className="row" style={{ paddingTop: 1 }}>
                     <div>교재명</div>
                     <div>
                       {/^(null|undefined|)$/.test(contents.textBook) ? (

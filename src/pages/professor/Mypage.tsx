@@ -37,6 +37,7 @@ const Mypage = () => {
   const [address, setAddress] = useState<string>('');
   const [imgFile, setImgFile] = useState<File | null>(null);
 
+  const [emailChanged, setEmailChanged] = useState<boolean>(false);
   const [openChangeEmail, setOpenChangeEmail] = useState<boolean>(false);
   const [openChangePassword, setOpenChangePassword] = useState<boolean>(false);
   const [openOTPRegister, setOpenOTPRegister] = useState<boolean>(false);
@@ -45,6 +46,8 @@ const Mypage = () => {
   const dispatch = useDispatch();
 
   const main = mainSlice.actions;
+
+  console.log(email);
 
   useEffect(() => {
     if (user) {
@@ -289,7 +292,7 @@ const Mypage = () => {
               {!disabled && <FontAwesomeIcon icon={faPencil} />}
             </div>
             <div onClick={disabled ? undefined : () => setOpenChangeEmail(true)}>
-              {user?.profile.email ? (
+              {user?.profile.email && !emailChanged ? (
                 user?.profile.email
               ) : email ? (
                 email
@@ -327,7 +330,11 @@ const Mypage = () => {
       )}
       {openOTPRegister && <OTPRegister setOpenOTPRegister={setOpenOTPRegister} />}
       {openChangeEmail && (
-        <ChangeEmail setOpenChangeEmail={setOpenChangeEmail} setEmail={setEmail} />
+        <ChangeEmail
+          setOpenChangeEmail={setOpenChangeEmail}
+          setEmail={setEmail}
+          setEmailChanged={setEmailChanged}
+        />
       )}
     </>
   );
