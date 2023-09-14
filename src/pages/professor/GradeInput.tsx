@@ -87,7 +87,7 @@ const GradeInput = () => {
         error={error}
         hasPage={true}
         data={tableData}
-        maxPage={2}
+        maxPage={1}
       >
         {tableData?.map((item: any) => {
           return (

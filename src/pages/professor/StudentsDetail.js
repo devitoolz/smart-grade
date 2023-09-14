@@ -75,7 +75,8 @@ const StudentsDetail = () => {
         header={tableHeader}
         data={data?.list}
         hasPage={true}
-        maxPage={data?.page?.maxPage}
+        // maxPage={data?.page?.maxPage}
+        maxPage={1}
         pending={pending}
         error={error}
       >
