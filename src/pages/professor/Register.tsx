@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '../../components/SearchBar';
 import ButtonBar from '../../components/ButtonBar';
 import Table from '../../components/Table';
@@ -10,6 +10,9 @@ import { ObjectType } from '../../types/components';
 import CommonButton from '../../components/CommonButton';
 import RegisterDetail from '../../components/RegisterDetail';
 import { dayData } from '../../modules/timetable';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import moment from 'moment';
 
 const Register = () => {
   const navigate = useNavigate();
@@ -19,6 +22,15 @@ const Register = () => {
   const [lectureData, setLectureData] = useState<ObjectType | null>(null);
 
   const [click, setClick] = useState<boolean>(false);
+
+  const { user } = useSelector((state: RootState) => state.main);
+
+  useEffect(() => {
+    if (user && new Date(Date.now()) > new Date(user.deadline)) {
+      alert('강의 개설 기간이 아닙니다.');
+      navigate(-1);
+    }
+  }, [user]);
 
   const tableHeader = [
     { title: '상태', width: 1.5 },

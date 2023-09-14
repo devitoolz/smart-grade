@@ -8,13 +8,27 @@ import SearchBar from '../../components/SearchBar';
 import Input from '../../components/Input';
 import { dayData } from '../../modules/timetable';
 import api from '../../apis/api';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../store';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
+  const navigate = useNavigate();
+
   const [lectureName, setLectureName] = useState<string>('');
   const [lectureData, setLectureData] = useState<ObjectType | null>(null);
   const [lectureListResult, setLectureListResult] = useState<Array<ObjectType> | null>(null);
 
   const [click, setClick] = useState<boolean>(false);
+
+  const { user } = useSelector((state: RootState) => state.main);
+
+  useEffect(() => {
+    if (user && new Date(Date.now()) > new Date(user.deadline)) {
+      alert('수강 신청 기간이 아닙니다.');
+      navigate(-1);
+    }
+  }, [user]);
 
   const tableHeader = [
     { title: '강의명', width: 5 },

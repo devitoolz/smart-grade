@@ -37,6 +37,7 @@ export interface StudentProfileData extends ProfileData {
 export interface UserProfile {
   lectureList: Array<LectureData>;
   profile: ProfessorProfileData | StudentProfileData;
+  deadline: string;
 }
 
 export interface LoginData {
