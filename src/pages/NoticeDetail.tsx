@@ -212,9 +212,7 @@ const NoticeDetail = () => {
                             >
                               X
                             </button>
-                            <img
-                              src={`http://192.168.0.144:5002/imgs/boardPic/${iboard}/${item.pic}`}
-                            />
+                            <img src={`/imgs/boardPic/${iboard}/${item.pic}`} />
                           </div>
                         );
                       })}

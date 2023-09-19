@@ -33,8 +33,7 @@ import { RootState } from '../../store';
 import { MenuDataType } from '../../types/pages';
 import { ProfessorProfileData } from '../../types/apis';
 
-// export const PROFESSOR_IMG_URL = '/imgs/professor';
-export const PROFESSOR_IMG_URL = 'http://192.168.0.144:5002/imgs/professor';
+export const PROFESSOR_IMG_URL = '/imgs/professor';
 
 const Main = () => {
   const { pathname } = useLocation();
