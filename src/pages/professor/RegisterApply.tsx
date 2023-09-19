@@ -43,7 +43,9 @@ const RegisterApply = () => {
   useEffect(() => {
     const getLectureRoomList = async () => {
       try {
-        const { data } = await api.get<Array<LectureRoomData>>(`/api/lectureroom/list`);
+        const { data } = await api.get<Array<LectureRoomData>>(
+          `${process.env.REACT_APP_API_URL}/api/lectureroom/list`
+        );
         const newData = data.map(item => {
           return {
             ...item,
@@ -78,7 +80,9 @@ const RegisterApply = () => {
   useEffect(() => {
     const getBookInfo = async (isbn: string) => {
       try {
-        const { data } = await api.get<ObjectType>(`/api/professor/find-book?isbn=${isbn}`);
+        const { data } = await api.get<ObjectType>(
+          `${process.env.REACT_APP_API_URL}/api/professor/find-book?isbn=${isbn}`
+        );
         if (!(data.title && data.image)) {
           setIsbn('');
           throw '책을 찾을 수 없습니다. ISBN을 확인해주세요.';
@@ -153,7 +157,7 @@ const RegisterApply = () => {
     const payload = { ...requiredPayload, ...bookPayload };
 
     try {
-      await api.post(`/api/professor/lecture/apply`, payload);
+      await api.post(`${process.env.REACT_APP_API_URL}/api/professor/lecture/apply`, payload);
       navigate(-1);
     } catch (err) {
       console.log(err);

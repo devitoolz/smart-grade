@@ -30,7 +30,9 @@ const Admin = () => {
     // TODO: 전공 목록 api 수정 예정, 타입 추후 추가
     const getMajorList = async () => {
       try {
-        const { data } = await api.get<Array<MajorData>>(`/api/major/list`);
+        const { data } = await api.get<Array<MajorData>>(
+          `${process.env.REACT_APP_API_URL}/api/major/list`
+        );
         dispatch(major.setAllMajorList(data));
       } catch {
         if (getAuth()) {

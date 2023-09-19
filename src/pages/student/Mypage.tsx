@@ -88,7 +88,7 @@ const Mypage = () => {
       if (imgFile) formData.append('pic', imgFile);
       formData.append('param', JSON.stringify(payload));
 
-      await api.put(`/api/student`, formData, {
+      await api.put(`${process.env.REACT_APP_API_URL}/api/student`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

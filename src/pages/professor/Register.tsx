@@ -47,7 +47,7 @@ const Register = () => {
   const LectureName = lectureName;
 
   const queries = { openingProcedures, LectureName };
-  const url = '/api/professor/lecture/list';
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/lecture/list`;
 
   const { data, pending, error } = useQuerySearch(url, click);
 

@@ -37,7 +37,7 @@ const ExcelData = ({
     }
 
     try {
-      await api.post(`/api/admin/${role}`, payloadList);
+      await api.post(`${process.env.REACT_APP_API_URL}/api/admin/${role}`, payloadList);
       setClick(prev => !prev);
     } catch {
       alert('오류가 발생하였습니다.');

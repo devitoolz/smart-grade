@@ -28,7 +28,7 @@ const Dashboard = () => {
     { title: '이의 신청일', width: 2 },
   ];
 
-  const timetable = useQuerySearch('/api/professor/schedule');
+  const timetable = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/professor/schedule`);
 
   useEffect(() => {
     let temp: ObjectType = {};
@@ -48,9 +48,9 @@ const Dashboard = () => {
     setTime(temp);
   }, [timetable.data]);
 
-  const importantNotice = useQuerySearch('/api/board');
+  const importantNotice = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/board`);
   const importantNoticeList: Array<ObjectType> = importantNotice.data as Array<ObjectType>;
-  const notice = useQuerySearch('/api/board/keyword');
+  const notice = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/board/keyword`);
   const noticeList: Array<ObjectType> = (notice.data as ObjectType)?.list?.filter(
     (_: any, index: number) => index < 8 - importantNoticeList?.length
   );
@@ -58,7 +58,9 @@ const Dashboard = () => {
   const totalNoticeList = importantNoticeList &&
     noticeList && [...importantNoticeList, ...noticeList];
 
-  const objection = useQuerySearch('/api/professor/objection?size=8');
+  const objection = useQuerySearch(
+    `${process.env.REACT_APP_API_URL}/api/professor/objection?size=8`
+  );
   const objectionList: Array<ObjectType> = objection.data as Array<ObjectType>;
 
   return (

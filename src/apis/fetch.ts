@@ -3,7 +3,7 @@ import api from './api';
 // 통합 강의 관리 - 해당 강의 수강 학생 리스트 출력
 export const getStudentList = async (_ilecture: number, _pageIdx?: number) => {
   try {
-    const res = await api.get(`/api/admin/lecture/${_ilecture}`);
+    const res = await api.get(`${process.env.REACT_APP_API_URL}/api/admin/lecture/${_ilecture}`);
     const result = res.data;
     return result;
   } catch (err) {
@@ -20,7 +20,9 @@ export const patchRejectLecture = async (_ilecture: number, reason: string) => {
     procedures: 0,
   };
   try {
-    const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
+    const res = await api.patch(`${process.env.REACT_APP_API_URL}/api/admin/lecture`, patchData, {
+      headers,
+    });
     const result = res.data;
     return result;
   } catch (err) {
@@ -35,7 +37,9 @@ export const patchApproveLecture = async (_ilecture: number, _procedure: number)
     procedures: _procedure + 1,
   };
   try {
-    const res = await api.patch(`/api/admin/lecture`, patchData, { headers });
+    const res = await api.patch(`${process.env.REACT_APP_API_URL}/api/admin/lecture`, patchData, {
+      headers,
+    });
     const result = res.data;
     return result;
   } catch (err) {
@@ -46,7 +50,9 @@ export const patchApproveLecture = async (_ilecture: number, _procedure: number)
 // 통합 성적관리 - 특정 학생의 상세정보 불러오기
 export const getStudentInfo = async (_istudent: number, _setFunc: any) => {
   try {
-    const res = await api.get(`/api/admin/grade-mngmn/${_istudent}`);
+    const res = await api.get(
+      `${process.env.REACT_APP_API_URL}/api/admin/grade-mngmn/${_istudent}`
+    );
     const result = await res.data;
     _setFunc(result);
   } catch (err) {

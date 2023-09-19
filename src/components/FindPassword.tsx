@@ -42,7 +42,9 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
       return;
     }
     try {
-      await api.put(`/api/forget-password?uid=${id}&role=${payload.role}&inputCode=${OTP}`);
+      await api.put(
+        `${process.env.REACT_APP_API_URL}/api/forget-password?uid=${id}&role=${payload.role}&inputCode=${OTP}`
+      );
       setActiveIndex(prevActiveIndex => prevActiveIndex + 1);
       swiperRef.current?.swiper.slideNext();
     } catch {
@@ -69,7 +71,7 @@ const FindPassword = ({ setOpenFindPw, payload }: FindPasswordProps) => {
     };
 
     try {
-      await api.put(`/api/change-password`, data);
+      await api.put(`${process.env.REACT_APP_API_URL}/api/change-password`, data);
       alert('비밀번호가 변경되었습니다.');
       setOpenFindPw(false);
     } catch {

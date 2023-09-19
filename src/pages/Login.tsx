@@ -62,7 +62,10 @@ const Login = () => {
     }
 
     try {
-      const { data } = await api.post<LoginResult>(`/api/sign-in`, payload);
+      const { data } = await api.post<LoginResult>(
+        `${process.env.REACT_APP_API_URL}/api/sign-in`,
+        payload
+      );
 
       if (!data.success) {
         throw Error('틀린 비번');

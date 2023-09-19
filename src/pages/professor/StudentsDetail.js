@@ -13,7 +13,7 @@ const StudentsDetail = () => {
   const [nm, setNm] = useState('');
   const queries = { studentNum, nm };
 
-  const url = `/api/professor/grade/lecture-student-list`;
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/grade/lecture-student-list`;
 
   const [click, setClick] = useState(false);
   const { data, pending, error } = useQuerySearch(url, click);

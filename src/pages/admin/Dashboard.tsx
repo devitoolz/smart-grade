@@ -14,7 +14,9 @@ const Dashboard = () => {
   useEffect(() => {
     const getChartData = async () => {
       try {
-        const { data } = await api.get<ObjectType>('/api/admin/student/ratio');
+        const { data } = await api.get<ObjectType>(
+          `${process.env.REACT_APP_API_URL}/api/admin/student/ratio`
+        );
 
         const newData = ['man', 'female'].map(gender => ({
           id: gender === 'man' ? '남' : '여',
@@ -36,8 +38,8 @@ const Dashboard = () => {
     { title: '성별', width: 1 },
   ];
 
-  const professor = useQuerySearch('/api/admin/professor?size=9');
-  const student = useQuerySearch('/api/admin/students?size=9');
+  const professor = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/admin/professor?size=9`);
+  const student = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/admin/students?size=9`);
 
   const professorList: Array<ObjectType> = (professor.data as ObjectType)?.professors;
   const studentList: Array<ObjectType> = (student.data as ObjectType)?.students;

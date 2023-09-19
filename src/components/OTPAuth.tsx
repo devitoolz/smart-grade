@@ -32,7 +32,10 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
 
     try {
       // TODO: data 타입 지정
-      const { data } = await api.post(`/api/otp-valid`, authPayload);
+      const { data } = await api.post(
+        `${process.env.REACT_APP_API_URL}/api/otp-valid`,
+        authPayload
+      );
       if (data.success) {
         setCookie('accessToken', data.accessToken);
         setCookie('refreshToken', data.refreshToken);
@@ -46,7 +49,7 @@ const OTPAuth = ({ payload, setOpenOTP }: OTPAuthProps) => {
 
   const handleResendQR = async () => {
     try {
-      await api.post(`/api/send-email`, payload);
+      await api.post(`${process.env.REACT_APP_API_URL}/api/send-email`, payload);
       alert('등록한 이메일로 QR 코드 URL이 발송 되었습니다.');
     } catch {
       alert('이메일 발송에 실패하였습니다.');

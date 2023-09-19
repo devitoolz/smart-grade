@@ -30,7 +30,7 @@ const NoticeDetail = () => {
   const boardnum = pathname.split('/');
   const iboard = boardnum[boardnum.length - 1];
   const [click] = useState(false);
-  const url = `/api/board/${iboard}`;
+  const url = `${process.env.REACT_APP_API_URL}/api/board/${iboard}`;
   const { data } = useQuerySearch(url, click);
   const settingBoard = () => {
     setTitle((data as ObjectType)?.title);

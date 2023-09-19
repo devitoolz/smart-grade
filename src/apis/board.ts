@@ -25,7 +25,9 @@ export const postBoard = async (
     })
   );
   try {
-    const res = await api.post(`/api/board/pics`, postData, { headers });
+    const res = await api.post(`${process.env.REACT_APP_API_URL}/api/board/pics`, postData, {
+      headers,
+    });
     const result = res.data;
     return result;
   } catch (err) {
@@ -37,7 +39,7 @@ export const postBoard = async (
 // 게시판 - 게시판 글 삭제
 export const deleteBoard = async (_iboard: number) => {
   try {
-    await api.delete(`/api/board?iboard=${_iboard}`);
+    await api.delete(`${process.env.REACT_APP_API_URL}/api/board?iboard=${_iboard}`);
   } catch (err) {
     console.log(err);
     return;
@@ -70,7 +72,7 @@ export const putBoard = async (
   );
   _putPic?.forEach(item => putData.append('pics', item));
   try {
-    await api.put(`/api/board`, putData, { headers });
+    await api.put(`${process.env.REACT_APP_API_URL}/api/board`, putData, { headers });
     alert('처리되었습니다');
     return true;
   } catch (err) {

@@ -55,7 +55,9 @@ const UserDetail = () => {
 
   const getUserDetail = async () => {
     try {
-      const { data } = await api.get<UserProfile>(`/api/admin/${state}/${id}`);
+      const { data } = await api.get<UserProfile>(
+        `${process.env.REACT_APP_API_URL}/api/admin/${state}/${id}`
+      );
       if (data.profile.email && !checkValidEmail(data.profile.email)) {
         data.profile.email = '';
       }

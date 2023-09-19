@@ -60,7 +60,7 @@ const Lecture = () => {
   useEffect(() => {
     const getLectureName = async () => {
       try {
-        const { data } = await api.get(`/api/admin/lecture-name`);
+        const { data } = await api.get(`${process.env.REACT_APP_API_URL}/api/admin/lecture-name`);
         setLectureNameList(data);
       } catch (err) {
         console.log(err);
@@ -74,7 +74,7 @@ const Lecture = () => {
     setProfessorName(e.target.value);
   };
   const queries = { procedures, ilectureName, nm };
-  const url = '/api/admin/lecture';
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/lecture`;
 
   // table header
   const tableHeader = [

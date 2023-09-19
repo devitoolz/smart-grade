@@ -4,7 +4,7 @@ import api from './api';
 // 학생 성적리스트 불러오기
 export const getLectureList = async (setData: React.Dispatch<React.SetStateAction<any>>) => {
   try {
-    const { data } = await api.get('/api/student');
+    const { data } = await api.get(`${process.env.REACT_APP_API_URL}/api/student`);
     setData(data);
     return true;
   } catch (err) {
@@ -23,7 +23,7 @@ export const putObjection = async (
   const putData = { objection: 1 };
   try {
     await api.put(objectionUrl, putData, { headers });
-    const { data } = await api.get('/api/student');
+    const { data } = await api.get(`${process.env.REACT_APP_API_URL}/api/student`);
     setData(data);
     alert('처리되었습니다');
     return true;
@@ -37,7 +37,9 @@ export const putObjection = async (
 // 학생 성적 엑셀파일 다운로드
 export const getGradeFile = async () => {
   try {
-    const res = await api.get('/api/student/grade-file', { responseType: 'blob' });
+    const res = await api.get(`${process.env.REACT_APP_API_URL}/api/student/grade-file`, {
+      responseType: 'blob',
+    });
 
     let fileName = 'grade';
     const defaultFileName = res.headers['content-disposition'];

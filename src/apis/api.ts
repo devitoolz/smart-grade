@@ -52,13 +52,13 @@ const Interceptor = ({ children }: { children: ReactNode }) => {
         const response = error.response as AxiosResponse;
 
         if (!response || response.status === 500) {
-          removeAuth();
-          alert('서버와의 연결이 원활하지 않습니다.');
-          navigate('/');
+          alert('오류가 발생했습니다.');
         } else if (response.status === 401 && refreshToken) {
           try {
             // TODO: data 타입 지정
-            const { data } = await api.get(`/api/refresh-token?refreshToken=${refreshToken}`);
+            const { data } = await api.get(
+              `${process.env.REACT_APP_API_URL}/api/refresh-token?refreshToken=${refreshToken}`
+            );
             const accessToken = data.accessToken;
             setCookie('accessToken', accessToken);
             setCookie('refreshToken', data.refreshToken);

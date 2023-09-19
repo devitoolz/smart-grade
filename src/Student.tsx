@@ -26,7 +26,9 @@ const Student = () => {
 
   const getProfile = async () => {
     try {
-      const { data } = await api.get<UserProfile>(`/api/student/detail`);
+      const { data } = await api.get<UserProfile>(
+        `${process.env.REACT_APP_API_URL}/api/student/detail`
+      );
       data.profile.secretKey = JSON.parse(data.profile.secretKey);
       if (data.profile.email && !checkValidEmail(data.profile.email)) {
         data.profile.email = '';

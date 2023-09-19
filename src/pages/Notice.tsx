@@ -37,10 +37,10 @@ const Notice = () => {
   // 공지사항 = 일반공지+중요공지 같이 불러오기
   const [noticeData, setNoticeData] = useState<Array<any>>([]);
   // 일반
-  const url = '/api/board/keyword';
+  const url = `${process.env.REACT_APP_API_URL}/api/board/keyword`;
   const { data, pending, error } = useQuerySearch(url, click);
   // 중요공지
-  const urlImport = '/api/board';
+  const urlImport = `${process.env.REACT_APP_API_URL}/api/board`;
   const important = useQuerySearch(urlImport, click);
   // 데이터 가공
   useEffect(() => {

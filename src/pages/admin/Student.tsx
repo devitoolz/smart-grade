@@ -48,7 +48,7 @@ const Student = () => {
   ];
 
   const queries = { grade, imajor, studentNum, nm };
-  const url = '/api/admin/students';
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/students`;
 
   const { data, pending, error } = useQuerySearch(url, click);
 

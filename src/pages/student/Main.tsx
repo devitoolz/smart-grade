@@ -93,7 +93,7 @@ const Main = () => {
 
   const handleLogout = async () => {
     try {
-      await api.post(`/api/logout`);
+      await api.post(`${process.env.REACT_APP_API_URL}/api/logout`);
       removeCookie('accessToken');
       removeCookie('refreshToken');
       alert('로그아웃 되었습니다.');

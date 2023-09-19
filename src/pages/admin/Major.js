@@ -81,7 +81,7 @@ const Major = () => {
   ];
 
   //api get hook test
-  const url = '/api/admin/major';
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/major`;
   const { data, pending, error } = useQuerySearch(url, click);
 
   //버튼 onClick시 전공, 졸업학점 추가 모달창 열기
@@ -174,7 +174,7 @@ const Major = () => {
       graduationScore: parseInt(newGraduationScore),
     };
     try {
-      await api.post(`/api/admin/major`, postData, { headers });
+      await api.post(`${process.env.REACT_APP_API_URL}/api/admin/major`, postData, { headers });
       handleModalCancel();
       alert('등록되었습니다.');
     } catch (err) {
@@ -185,7 +185,9 @@ const Major = () => {
   //api delete test
   const MajorDeleteTest = async _id => {
     try {
-      const res = await api.delete(`/api/admin/major?imajor=${_id}`);
+      const res = await api.delete(
+        `${process.env.REACT_APP_API_URL}/api/admin/major?imajor=${_id}`
+      );
       const result = res.data;
       return result;
     } catch (err) {
@@ -203,7 +205,7 @@ const Major = () => {
       graduationScore: graduationScore,
     };
     try {
-      await api.patch(`/api/admin/major`, patchDatas, { headers });
+      await api.patch(`${process.env.REACT_APP_API_URL}/api/admin/major`, patchDatas, { headers });
       const res = await api.get(url);
       setDataArr(res.data.vo);
 

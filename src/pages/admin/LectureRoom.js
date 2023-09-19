@@ -64,7 +64,7 @@ const LectureRoom = () => {
   const queries = { buildingName };
 
   //api get hook test
-  const url = `/api/admin/lectureroom`;
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/lectureroom`;
   const { data, pending, error } = useQuerySearch(url, click);
   const [roomListData, setRoomListData] = useState([]);
   useEffect(() => {
@@ -81,7 +81,7 @@ const LectureRoom = () => {
     const headers = { 'Content-Type': 'application/json' };
     try {
       // await api.post(
-      //   `/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+      //   `${process.env.REACT_APP_API_URL}/api/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
       //   { headers }
       // );
       const postData = {
@@ -90,8 +90,8 @@ const LectureRoom = () => {
         maxCapacity,
       };
       const res = await api.post(
-        // `/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
-        `/api/admin/lectureroom`,
+        // `${process.env.REACT_APP_API_URL}/api/admin/lectureroom?ilectureRoom=${ilectureRoom}&lectureRoomName=${lectureRoomName}&buildingName=${buildingName}&maxCapacity=${maxCapacity}&delYn=0`,
+        `${process.env.REACT_APP_API_URL}/api/admin/lectureroom`,
         postData,
 
         { headers }
@@ -151,7 +151,9 @@ const LectureRoom = () => {
   //api delete test
   const LectureRoomDeleteTest = async _id => {
     try {
-      await api.delete(`/api/admin/lectureroom?ilectureRoom=${_id}`);
+      await api.delete(
+        `${process.env.REACT_APP_API_URL}/api/admin/lectureroom?ilectureRoom=${_id}`
+      );
       //await getBuildingTestLoad()s;
     } catch (err) {
       console.log(err);

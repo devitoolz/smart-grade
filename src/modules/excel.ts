@@ -7,7 +7,10 @@ import api from '../apis/api';
 
 const handleExportExcel = async (role: 'professor' | 'student') => {
   try {
-    const { data, headers } = await api.get(`/api/admin/${role}-file`, { responseType: 'blob' });
+    const { data, headers } = await api.get(
+      `${process.env.REACT_APP_API_URL}/api/admin/${role}-file`,
+      { responseType: 'blob' }
+    );
     const url = URL.createObjectURL(new Blob([data]));
     const link = document.createElement('a');
     const contentDisposition = headers['content-disposition'];

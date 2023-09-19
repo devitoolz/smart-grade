@@ -2,7 +2,7 @@ import api from './api';
 
 // 교수가 강의 중인 과목리스트 불러오기
 export const getLectureList = async () => {
-  const url = `/api/professor/lecture-list?openingProcedures=3`;
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/lecture-list?openingProcedures=3`;
   try {
     const { data } = await api.get(url);
     return data;
@@ -20,7 +20,7 @@ export const putStudentGrade = async (
   midtermExamination: number,
   finalExamination: number
 ) => {
-  const url = `/api/professor/grade?ilectureStudent=${ilectureStudent}&ilecture=${ilecture}`;
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/grade?ilectureStudent=${ilectureStudent}&ilecture=${ilecture}`;
   const putData = {
     attendance,
     midtermExamination,
@@ -39,7 +39,7 @@ export const putStudentGrade = async (
 
 // 과목별 이의신청 리스트 출력
 export const getObjectionList = async (lectureId: any, _setFunc: any) => {
-  const url = `/api/professor/objection?ilecture=${lectureId}&objection=1`;
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/objection?ilecture=${lectureId}&objection=1`;
   try {
     const { data } = await api.get(url);
     _setFunc(data);

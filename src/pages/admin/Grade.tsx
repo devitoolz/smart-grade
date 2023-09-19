@@ -50,7 +50,9 @@ const Grade = () => {
   const queries = studentNum ? { grade, studentNum } : { grade, studentNum: '0' };
   const [query] = useSearchParams();
   const studentNumCheck = query.get('studentNum');
-  const url = studentNumCheck ? '/api/admin/grade-mngmn' : '/api/admin/grade-mngmn?studentNum=0';
+  const url = studentNumCheck
+    ? `${process.env.REACT_APP_API_URL}/api/admin/grade-mngmn`
+    : `${process.env.REACT_APP_API_URL}/api/admin/grade-mngmn?studentNum=0`;
   const { data, pending, error } = useQuerySearch(url, click);
   const [tableData, setTableData] = useState<any>({});
   useEffect(() => {

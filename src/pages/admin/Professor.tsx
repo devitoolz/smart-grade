@@ -36,7 +36,7 @@ const Professor = () => {
   ];
 
   const queries = { imajor, name };
-  const url = '/api/admin/professor';
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/professor`;
 
   const { data, pending, error } = useQuerySearch(url, click);
 

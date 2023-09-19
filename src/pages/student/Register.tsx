@@ -42,7 +42,7 @@ const Register = () => {
   ];
 
   const queries = { lectureName };
-  const url = '/api/student/lecturelist';
+  const url = `${process.env.REACT_APP_API_URL}/api/student/lecturelist`;
 
   const { data, pending, error } = useQuerySearch(url, click);
 
@@ -60,7 +60,9 @@ const Register = () => {
 
   const handleRegister = async (ilecture: number) => {
     try {
-      const { data } = await api.post('/api/student/lecture', { ilecture });
+      const { data } = await api.post(`${process.env.REACT_APP_API_URL}/api/student/lecture`, {
+        ilecture,
+      });
       if (data.success) {
         alert('수강 신청되었습니다.');
         setClick(prev => !prev);
@@ -73,7 +75,9 @@ const Register = () => {
   };
 
   const handleUnregister = async (ilecture: number) => {
-    const { data } = await api.delete(`/api/student/lecture?ilecture=${ilecture}`);
+    const { data } = await api.delete(
+      `${process.env.REACT_APP_API_URL}/api/student/lecture?ilecture=${ilecture}`
+    );
     if (data) {
       alert('수강 신청이 취소되었습니다.');
       setClick(prev => !prev);

@@ -84,7 +84,7 @@ const Approval = () => {
   //   query.set('procedures', '-2');
   //   setQuery(query);
   // }, []);
-  const url = '/api/admin/lecture';
+  const url = `${process.env.REACT_APP_API_URL}/api/admin/lecture`;
   const { data, pending, error } = useQuerySearch(url, click);
 
   // textarea

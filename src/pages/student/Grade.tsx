@@ -43,7 +43,7 @@ const Grade = () => {
     getLectureListWait();
   }, []);
   const putObjectionWait = async () => {
-    const objectionUrl = `/api/student/objection?&ilectureStudent=${ilectureStudent}`;
+    const objectionUrl = `${process.env.REACT_APP_API_URL}/api/student/objection?&ilectureStudent=${ilectureStudent}`;
     await putObjection(objectionUrl, setData);
   };
 

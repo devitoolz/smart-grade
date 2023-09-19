@@ -19,7 +19,7 @@ const OTPRegister = ({ setOpenOTPRegister }: OTPRegisterProps) => {
   useEffect(() => {
     const registerOTP = async () => {
       try {
-        const { data } = await api.get<OTPData>(`/api/otp`);
+        const { data } = await api.get<OTPData>(`${process.env.REACT_APP_API_URL}/api/otp`);
         setQRUrl(data.barcodeUrl.replace('www.google', 'chart.googleapis'));
         dispatch(main.setUser({ ...user, profile: { ...user?.profile, secretKey: true } }));
       } catch {

@@ -21,7 +21,7 @@ const RegisterTimetable = ({
   const timeBtnRef = useRef<Array<HTMLButtonElement> | null>([]);
   const [usedTime, setUsedTime] = useState<Array<number>>([]);
 
-  const url = `/api/professor/lecture/room?ilectureRoom=${lectureRoom}`;
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/lecture/room?ilectureRoom=${lectureRoom}`;
 
   const { data, pending, error } = useQuerySearch(url);
 

@@ -23,7 +23,7 @@ const GradeDemur = ({ setDemur, lectureId }: GradeDemurProps) => {
     getObjectionListWait();
   }, []);
   const putObjectionWait = async (ilectureStudent: number) => {
-    const objectionUrl = `/api/professor/grade/objection?ilecture=${lectureId}&ilectureStudent=${ilectureStudent}&newObjection=2`;
+    const objectionUrl = `${process.env.REACT_APP_API_URL}/api/professor/grade/objection?ilecture=${lectureId}&ilectureStudent=${ilectureStudent}&newObjection=2`;
     const result = await putObjection(objectionUrl);
     result ? setDemur(false) : null;
   };

@@ -30,7 +30,7 @@ const Dashboard = () => {
     { title: '조회수', width: 1 },
   ];
 
-  const timetable = useQuerySearch('/api/student/schedule');
+  const timetable = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/student/schedule`);
 
   useEffect(() => {
     let temp: ObjectType = {};
@@ -50,16 +50,16 @@ const Dashboard = () => {
     setTime(temp);
   }, [timetable.data]);
 
-  const importantNotice = useQuerySearch('/api/board');
+  const importantNotice = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/board`);
   const importantNoticeList: Array<ObjectType> = importantNotice.data as Array<ObjectType>;
-  const notice = useQuerySearch('/api/board/keyword');
+  const notice = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/board/keyword`);
   const noticeList: Array<ObjectType> = (notice.data as ObjectType)?.list;
 
   const totalNoticeList = importantNoticeList &&
     noticeList && [...importantNoticeList, ...noticeList];
 
   const { user } = useSelector((state: RootState) => state.main);
-  const score = useQuerySearch('/api/student/score');
+  const score = useQuerySearch(`${process.env.REACT_APP_API_URL}/api/student/score`);
   const scoreData = score?.data as ObjectType;
   const percent = parseFloat(
     ((scoreData?.selfStudyCredit / scoreData?.graduationScore) * 100).toFixed(1)

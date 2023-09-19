@@ -40,7 +40,7 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail, setEmailChanged }: ChangeEm
     }
 
     try {
-      await api.post('/api/send-email/check-mail', { mail: value });
+      await api.post('${process.env.REACT_APP_API_URL}/api/send-email/check-mail', { mail: value });
       alert('이메일 인증 확인 메일이 발송되었습니다.');
       setIsEmailSent(true);
     } catch {
@@ -50,7 +50,9 @@ const ChangeEmail = ({ setOpenChangeEmail, setEmail, setEmailChanged }: ChangeEm
 
   const handleAuthEmail = async () => {
     try {
-      const { data } = await api.get('/api/send-email/email-success');
+      const { data } = await api.get(
+        '${process.env.REACT_APP_API_URL}/api/send-email/email-success'
+      );
       if (data) {
         alert('이메일 확인이 완료 되었습니다.');
         setIsEmailAuth(true);

@@ -46,7 +46,7 @@ const ChangePassword = ({ setOpenChangePassword, setOpenOTPRegister }: ChangePas
 
     try {
       await api.put(
-        `/api/${role}/change-password`,
+        `${process.env.REACT_APP_API_URL}/api/${role}/change-password`,
         (role === 'professor' && professorPayload) || (role === 'student' && studentPayload)
       );
       alert('비밀번호가 변경되었습니다.');

@@ -107,13 +107,13 @@ const Lecture = () => {
   };
 
   //api get hook test
-  const url = '/api/student/lecture-list';
+  const url = `${process.env.REACT_APP_API_URL}/api/student/lecture-list`;
   const { data, pending, error } = useQuerySearch(url, click);
 
   //강의명 선택시 드롭다운 여러개 나오게 하는것
   const getLectureNameList = async () => {
     try {
-      const { data } = await api.get(`/api/student/lecture-list`);
+      const { data } = await api.get(`${process.env.REACT_APP_API_URL}/api/student/lecture-list`);
       let inputLectureList = [];
       data?.lectureList?.forEach(item => {
         inputLectureList.push({ id: item.lectureName, title: item.lectureName });

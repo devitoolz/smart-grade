@@ -33,7 +33,7 @@ const GradeInput = () => {
   ];
   const [tableData, setTableData] = useState<Array<any>>([]);
   const [maxPage, setMaxPage] = useState();
-  const url = '/api/professor/grade';
+  const url = `${process.env.REACT_APP_API_URL}/api/professor/grade`;
   const { data, pending, error } = useQuerySearch(url);
   useEffect(() => {
     setTableData((data as ObjectType)?.lecturelist);
@@ -61,7 +61,9 @@ const GradeInput = () => {
       );
       if (result) {
         setStudentId(null);
-        const url = `/api/professor/grade?ilecture=${ilecture}&page=${Number(pageIdx) - 1}`;
+        const url = `${
+          process.env.REACT_APP_API_URL
+        }/api/professor/grade?ilecture=${ilecture}&page=${Number(pageIdx) - 1}`;
         const { data } = await api.get(url);
         setTableData(data?.lecturelist);
       }
