@@ -1,7 +1,11 @@
 # Smart Grade
 
 #### 프론트엔드 리액트 개발자 양성 과정 2~3차 협업 프로젝트
-<a target="_blank" href="https://devitoolz.notion.site/Smart-Grade-16edfa278b294dc3b734ac0331a3ef4f?pvs=4" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/notion.svg" /></a>
+<a target="_blank" href="https://devitoolz.notion.site/Smart-Grade-16edfa278b294dc3b734ac0331a3ef4f?pvs=4" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/notion.svg" />  Notion</a>
+    
+<a target="_blank" href="https://www.canva.com/design/DAFqdlZQ_Kw/ImlqE3lc4j39Pafd-eWYjQ/view?utm_content=DAFqdlZQ_Kw&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  1차 발표 자료</a>
+    
+<a target="_blank" href="https://www.canva.com/design/DAFsJrG-sMY/16uoToOaZtHxGkM3KQzVqw/view?utm_content=DAFsJrG-sMY&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  2차 발표 자료</a>
 
 ## 🎓  Smart Grade: 대학 성적 관리 서비스
 
@@ -15,17 +19,12 @@ React와 Spring Boot로 협업을 통해 개발된 **대학 성적 관리 서비
 
 https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?pvs=4
 
-### `발표 자료`
-<a target="_blank" href="https://www.canva.com/design/DAFqdlZQ_Kw/ImlqE3lc4j39Pafd-eWYjQ/view?utm_content=DAFqdlZQ_Kw&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  1차</a>
-    
-<a target="_blank" href="https://www.canva.com/design/DAFsJrG-sMY/16uoToOaZtHxGkM3KQzVqw/view?utm_content=DAFsJrG-sMY&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink" ><img height="30" width="30" src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/canva.svg" />  2차</a>
-
 ## 🎥  시연
 
 
-##### 시연 영상 YouTube : 
+시연 영상 YouTube : 
 
-##### 배포 URL : https://web-smart-grade-2rrqq2blmpn233b.sel5.cloudtype.app
+배포 URL : https://web-smart-grade-2rrqq2blmpn233b.sel5.cloudtype.app
 
 ## 👥  팀 구성
 
