@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { setCookie } from '../modules/cookies';
 import {
   FindAccountForm,
@@ -37,6 +37,22 @@ const Login = () => {
   const [payload, setPayload] = useState<LoginData>(initialState);
   const [openOTP, setOpenOTP] = useState<boolean>(false);
   const [openFindPw, setOpenFindPw] = useState<boolean>(false);
+
+  useEffect(() => {
+    switch (payload.role) {
+      case 'ROLE_ADMIN':
+        setPayload({ ...payload, id: 'admin', password: '1234' });
+        break;
+      case 'ROLE_PROFESSOR':
+        setPayload({ ...payload, id: '100187', password: '19911111' });
+        break;
+      case 'ROLE_STUDENT':
+        setPayload({ ...payload, id: '23010009', password: '19990909' });
+        break;
+      default:
+        setPayload(initialState);
+    }
+  }, [payload.role]);
 
   const navigate = useNavigate();
 
