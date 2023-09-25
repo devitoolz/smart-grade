@@ -21,8 +21,11 @@ https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?
 
 ## 🎥  시연
 
+![2차](https://github.com/devitoolz/smart-grade/assets/4100341/c55ee7d8-b1f7-4137-9941-baf8e2482940)  2차
+![3차](https://github.com/devitoolz/smart-grade/assets/4100341/629a5725-3dd4-4b76-84c9-a9ad4936c8bb)  3차
 
-시연 영상 YouTube : 
+시연 영상 YouTube (2차) : https://youtu.be/yoO-EUvjzqU  
+시연 영상 YouTube (3차) : https://youtu.be/HvXvZ4t30IA
 
 배포 URL : https://web-smart-grade-2rrqq2blmpn233b.sel5.cloudtype.app
 
@@ -42,7 +45,7 @@ https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?
 
 - 공통 컴포넌트 제작
 - 관리자 / 교수 / 학생 - 공지사항 페이지
-- 관리자 - 학사 관리(통합 강의 관리, 통합 성적 관리) 페이지
+- 관리자 - 학사 관리(통합 강의 관리, 강의 요청 관리, 통합 성적 관리) 페이지
 - 교수 - 성적 관리 페이지
 - 학생 - 성적 조회 페이지
 
@@ -89,6 +92,7 @@ https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?
 ### `공통`
 
 - 공지사항
+    - 공지사항 작성, 수정, 삭제는 관리자만 허용
     - 공지 작성 시 다중 이미지 업로드 가능
     - 중요 공지, 일반 공지 분리하여 작성 가능
 - 마이 페이지
@@ -107,7 +111,8 @@ https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?
         - 양식에 맞지 않을 경우 오류 내용 표시
 - 학사 관리
     - 통합 성적 관리 - 특정 학생 통합 성적 조회
-    - 통합 강의 관리 - 대학 내 강의 목록 조회 및 강의 개설 / 개강 승인 관리
+    - 통합 강의 관리 - 대학 내 강의 목록 조회 및 강의 개설
+    - 강의 요청 관리 - 강의 개설, 개강 승인 및 거절
 - 대학 관리
     - 강의실 관리 - 대학 내 강의실 목록 조회 및 강의실 등록 / 삭제
     - 전공 관리 - 대학 내 전공 목록 조회 및 전공 등록 / 삭제
