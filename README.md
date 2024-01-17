@@ -27,7 +27,6 @@ https://devitoolz.notion.site/Custom-Component-184d3ab1fd0146ad960b395a049156ac?
 시연 영상 YouTube (2차) : https://youtu.be/yoO-EUvjzqU  
 시연 영상 YouTube (3차) : https://youtu.be/HvXvZ4t30IA
 
-배포 URL : https://web-smart-grade-2rrqq2blmpn233b.sel5.cloudtype.app
 
 ## 👥  팀 구성
 
